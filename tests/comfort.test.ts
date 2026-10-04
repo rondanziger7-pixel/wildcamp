@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import moiry from './fixtures/comfort-moiry.json';
 import zermatt from './fixtures/comfort-zermatt.json';
 import { comfortFor, rate } from '../src/comfort/comfort';
+import type { WaterInfo } from '../src/comfort/water';
 import { distanceTo, minDistance, parseNames, parseStops } from '../src/comfort/surroundings';
 import { formatLocalTime, solarPosition, sunTimes } from '../src/comfort/sun';
 import { analyseTerrain, horizonToward, parseProfile, ray, type Profiles, type TerrainMetrics } from '../src/comfort/terrain';
@@ -206,9 +207,10 @@ describe('comfort rating', () => {
   const terrain = (over: Partial<TerrainMetrics> = {}): TerrainMetrics => ({
     elevation: 2400, slopeDeg: 3, horizon: [12, 12, 12, 12, 12, 12, 12, 12], meanHorizon: 12, tpi: 0, steepAboveM: undefined, dropNearM: undefined, ...over,
   });
-  const quiet = { trailM: Infinity, waterM: 80, huts: [], stops: [], settlementM: Infinity, parkingM: Infinity };
+  const quiet = { trailM: Infinity, huts: [], stops: [], settlementM: Infinity, parkingM: Infinity };
+  const near: WaterInfo = { kind: 'stream', meters: 80, upstreamPlants: [], failed: [] };
   it('flat, sheltered, quiet, water: great', () => {
-    const c = comfortFor({ terrain: terrain(), surroundings: quiet });
+    const c = comfortFor({ terrain: terrain(), surroundings: quiet, water: near });
     expect(c.rating).toBe('great');
     expect(c.factors.map((f) => f.title)).toEqual(expect.arrayContaining(['Flat ground', 'Sheltered by terrain', 'Likely quiet', 'Water close by']));
   });
@@ -244,7 +246,7 @@ describe('comfort rating', () => {
   });
   it('lists the checks that could not be made instead of treating them as good', () => {
     const c = comfortFor({});
-    expect(c.missing).toEqual(['terrain (slope, wind shelter, hazards)', 'overnight forecast', 'crowds (trails, huts, transport)']);
+    expect(c.missing).toEqual(['terrain (slope, wind shelter, hazards)', 'overnight forecast', 'crowds (trails, huts, transport)', 'water']);
     expect(c.factors).toEqual([]);
   });
   it('a hollow warns about cold air, and morning sun is reported', () => {

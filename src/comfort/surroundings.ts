@@ -74,8 +74,6 @@ export interface Stop extends Named {
 export interface Surroundings {
   /** Distance to the nearest marked hiking trail (Infinity if none within 300 m, undefined if the lookup failed). */
   trailM?: number;
-  /** Distance to the nearest stream, river or lake shore in the hydrography network. */
-  waterM?: number;
   /** Mountain huts, inns and hotels nearby, nearest first. */
   huts: Named[];
   /** Bus, rail and cableway stops nearby, nearest first. */
@@ -142,16 +140,14 @@ async function identify(layer: string, e: number, n: number, tolerance: number) 
 /** Looks up trails, water, huts, stops and settlements around a spot. Each part fails on its own. */
 export async function fetchSurroundings(lat: number, lon: number): Promise<Partial<Surroundings>> {
   const { e, n } = wgs84ToLv95(lat, lon);
-  const [trails, water, names, stops] = await Promise.allSettled([
+  const [trails, names, stops] = await Promise.allSettled([
     identify('ch.swisstopo.swisstlm3d-wanderwege', e, n, 300),
-    identify('ch.swisstopo.swisstlm3d-gewaessernetz', e, n, 400),
     identify('ch.swisstopo.swissnames3d', e, n, 400),
     identify('ch.bav.haltestellen-oev', e, n, 500),
   ]);
   const out: Partial<Surroundings> = {};
   // A successful lookup that finds nothing within the radius is Infinity; undefined means the lookup failed.
   if (trails.status === 'fulfilled') out.trailM = minDistance(trails.value, e, n) ?? Infinity;
-  if (water.status === 'fulfilled') out.waterM = minDistance(water.value, e, n) ?? Infinity;
   if (names.status === 'fulfilled') {
     const nm = parseNames(names.value, e, n);
     Object.assign(out, { huts: nm.huts, settlementM: nm.settlementM ?? Infinity, parkingM: nm.parkingM ?? Infinity });

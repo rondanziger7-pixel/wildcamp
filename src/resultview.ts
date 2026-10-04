@@ -1,0 +1,219 @@
+import type { Assessment } from './assess';
+import type { Comfort } from './comfort/comfort';
+import { compassName, describeCode, type Night } from './comfort/weather';
+import type { WaterInfo } from './comfort/water';
+import { legalityScore, sleepScore, type Score } from './scores';
+
+const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
+const VISIBLE = 4;
+
+const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: string }> = {
+  no: { icon: '⛔', label: 'Not allowed', sub: 'A recorded rule or protected zone prohibits camping here.' },
+  caution: { icon: '⚠️', label: 'Be careful', sub: 'Possibly restricted. Read the points below before you go.' },
+  likely_ok: { icon: '✅', label: 'Likely OK', sub: 'No restriction found in the data checked. Not a guarantee.' },
+  unknown: { icon: '❔', label: 'Unknown', sub: 'Not enough data to say. Check locally.' },
+};
+const RATING: Record<Comfort['rating'], string> = { great: 'Great for sleeping', good: 'Good for sleeping', fair: 'Okay for sleeping', poor: 'Poor for sleeping' };
+const RATING_SHORT: Record<Comfort['rating'], string> = { great: 'Great', good: 'Good', fair: 'Okay', poor: 'Poor' };
+const RATING_WORD: Record<Comfort['rating'], string> = { great: 'great', good: 'good', fair: 'okay', poor: 'poor' };
+
+export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: string; sources?: string[] }[], more: string) {
+  const list = el('ul', 'checks');
+  const sorted = [...items].sort((x, y) => TONE_ORDER[x.tone] - TONE_ORDER[y.tone]);
+  sorted.forEach((it, i) => {
+    const li = el('li', `check ${it.tone}${i >= VISIBLE ? ' more' : ''}`);
+    li.append(el('h3', undefined, it.title), el('p', undefined, it.text));
+    if (it.sources?.length) {
+      const s = el('div', 'srcs');
+      s.append('Source: ');
+      it.sources.forEach((u, k) => {
+        if (k) s.append(', ');
+        const link = el('a', undefined, new URL(u).hostname);
+        link.href = u;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        s.append(link);
+      });
+      li.append(s);
+    }
+    list.append(li);
+  });
+  const parts: Node[] = [list];
+  if (sorted.length > VISIBLE) {
+    const btn = el('button', 'linkish', `Show all ${sorted.length} ${more}`);
+    btn.type = 'button';
+    btn.onclick = () => {
+      const open = list.classList.toggle('expanded');
+      btn.textContent = open ? 'Show fewer' : `Show all ${sorted.length} ${more}`;
+    };
+    parts.push(btn);
+  }
+  return parts;
+}
+
+export interface ResultUi {
+  /** Where the weather card is drawn. */
+  weatherHost: HTMLElement;
+  setSleepLoading(): void;
+  setSleep(c: Comfort, nightLabel: string): void;
+  setSleepUnavailable(why: string): void;
+  setWater(w: WaterInfo | undefined, failed?: boolean): void;
+  setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
+}
+
+function scoreCard(kind: string, title: string) {
+  const b = el('button', `score-card ${kind}`);
+  b.type = 'button';
+  b.setAttribute('aria-expanded', 'false');
+  const value = el('strong', 'sc-value');
+  const label = el('span', 'sc-label');
+  const bar = el('div', 'sc-bar');
+  bar.append(el('i'));
+  b.append(el('span', 'sc-title', title), value, label, bar, el('span', 'sc-more', 'Details'));
+  const set = (score: Score, text: string) => {
+    b.dataset.tone = score.tone;
+    value.replaceChildren(score.value === undefined ? '–' : String(score.value), el('small', undefined, score.value === undefined ? '' : '/100'));
+    label.textContent = text;
+    (bar.firstChild as HTMLElement).style.width = `${score.value ?? 0}%`;
+  };
+  return { b, set };
+}
+
+function chip(kind: string) {
+  const b = el('button', `chip ${kind}`);
+  b.type = 'button';
+  b.setAttribute('aria-expanded', 'false');
+  return b;
+}
+
+/** Draws the result: two score cards (legality, sleep) that open into details, plus water and weather chips. */
+export function renderResult(root: HTMLElement, a: Assessment, elevation: number | undefined): ResultUi {
+  const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · '));
+
+  const legal = scoreCard('legal', 'Legality');
+  const sleep = scoreCard('sleep', 'Sleep');
+  const L = legalityScore(a);
+  const b = BANNER[a.verdict];
+  legal.set(L, `${b.icon} ${b.label}`);
+  sleep.set({ tone: 'none' }, 'Checking…');
+  const scores = el('div', 'scores');
+  scores.append(legal.b, sleep.b);
+
+  const waterChip = chip('water');
+  const weatherChip = chip('weather');
+  waterChip.textContent = '💧 Checking water…';
+  weatherChip.textContent = '🌦️ Loading forecast…';
+  const chips = el('div', 'chips');
+  chips.append(waterChip, weatherChip);
+
+  const legalPanel = el('section', 'panel legal');
+  legalPanel.hidden = true;
+  legalPanel.append(el('p', 'panel-lead', b.sub), ...checklist(a.items, 'details'));
+  const sleepPanel = el('section', 'panel sleep');
+  sleepPanel.hidden = true;
+  const weatherPanel = el('section', 'panel weather');
+  weatherPanel.hidden = true;
+
+  const opener: [HTMLElement, HTMLElement][] = [
+    [legal.b, legalPanel],
+    [sleep.b, sleepPanel],
+    [waterChip, sleepPanel],
+    [weatherChip, weatherPanel],
+  ];
+  const panels = [legalPanel, sleepPanel, weatherPanel];
+  for (const [button, panel] of opener) {
+    button.onclick = () => {
+      const open = panel.hidden;
+      for (const p of panels) p.hidden = true;
+      panel.hidden = !open;
+      for (const [bt, pn] of opener) bt.setAttribute('aria-expanded', String(!pn.hidden));
+      if (open) panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+  }
+
+  const share = el('button', 'linkish', 'Copy link');
+  share.type = 'button';
+  share.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      share.textContent = 'Link copied';
+    } catch {
+      share.textContent = location.href;
+    }
+  };
+
+  root.replaceChildren(where, scores, chips, legalPanel, sleepPanel, weatherPanel, share);
+
+  return {
+    weatherHost: weatherPanel,
+    setSleepLoading() {
+      sleep.set({ tone: 'none' }, 'Checking…');
+      sleepPanel.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
+    },
+    setSleep(c, nightLabel) {
+      const s = sleepScore(c);
+      sleep.set(s, RATING_SHORT[c.rating]);
+      const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
+      const head = el('div', `comfort-head ${c.rating}`);
+      const t = el('div');
+      t.append(el('h2', undefined, `${RATING[c.rating]} · ${nightLabel}`), el('p', 'comfort-split', `The spot alone: ${RATING_WORD[c.spotRating]}. For this night ${wx}.`), el('p', undefined, c.summary));
+      head.append(t);
+      const parts: Node[] = [];
+      if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', 'Camping is not allowed here, so this only shows what the spot would be like.'));
+      parts.push(head, ...checklist(c.factors, 'comfort details'));
+      if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
+      parts.push(el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees, rock and snow are not modelled and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
+      sleepPanel.replaceChildren(...parts);
+    },
+    setSleepUnavailable(why) {
+      sleep.set({ tone: 'none' }, 'Unavailable');
+      sleepPanel.replaceChildren(el('p', 'where', why));
+    },
+    setWater(w, failed) {
+      waterChip.className = 'chip water';
+      if (failed || !w || w.failed.includes('water')) {
+        waterChip.textContent = '💧 Water: could not check';
+        return;
+      }
+      const kind = w.kind === 'lake' ? 'Lake' : w.kind === 'stream' ? 'Stream' : '';
+      const base = w.kind === 'none' ? '💧 No water within 800 m' : `💧 ${kind}${w.name ? ` ${w.name}` : ''} · ${Math.round(w.meters / 10) * 10 || 5} m`;
+      waterChip.replaceChildren(base);
+      if (w.kind !== 'none') {
+        if (w.upstreamPlants.length) {
+          waterChip.classList.add('dirty');
+          waterChip.append(el('span', 'tag bad', 'dirty: sewage upstream'));
+        }
+        if (w.glacierM !== undefined) {
+          waterChip.classList.add('glacier');
+          waterChip.append(el('span', 'tag ice', w.glacierM <= 1000 ? 'glacier water' : 'maybe glacier water'));
+        }
+      }
+      if (w.meters > 400 || w.kind === 'none') waterChip.classList.add('far');
+    },
+    setWeatherChip(night, nightLabel, failed) {
+      weatherChip.className = 'chip weather';
+      if (failed || !night) {
+        weatherChip.textContent = '🌦️ Weather: unavailable';
+        return;
+      }
+      const sky = night.worstCode !== undefined ? describeCode(night.worstCode).emoji : '🌙';
+      weatherChip.textContent = `${sky} ${nightLabel}: ${Math.round(night.minTempC)} °C, gusts ${Math.round(night.maxGustKmh)} km/h ${compassName(night.windFromDeg)}${night.precipMm >= 1 ? `, ${night.precipMm.toFixed(0)} mm rain` : ''}`;
+      if (night.thunder || night.maxGustKmh >= 80) weatherChip.classList.add('bad');
+      else if (night.maxGustKmh >= 50 || night.precipMm >= 5 || night.minTempC <= -5) weatherChip.classList.add('warn');
+    },
+  };
+}
+
+/** Result for a spot outside Switzerland. */
+export function renderOutside(root: HTMLElement) {
+  const card = el('div', 'outside');
+  card.append(el('strong', undefined, '🌍 Outside Switzerland'), el('p', undefined, 'This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.'));
+  root.replaceChildren(card);
+}

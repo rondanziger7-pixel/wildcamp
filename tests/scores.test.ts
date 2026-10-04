@@ -1,0 +1,75 @@
+import { describe, expect, it } from 'vitest';
+import { assess } from '../src/assess';
+import { comfortFor } from '../src/comfort/comfort';
+import { legalityScore, sleepScore } from '../src/scores';
+import { ZONE_LAYERS } from '../src/zones';
+
+const layer = (severity: 'prohibited' | 'restricted' | 'caution' | 'info') => ({ id: 'x', label: 'Zone', severity, note: 'n' });
+
+describe('legality score', () => {
+  it('not allowed is 0', () => {
+    const a = assess({ zones: [{ layer: layer('prohibited') }], treeline: 'above' });
+    expect(legalityScore(a)).toEqual({ value: 0, tone: 'bad' });
+  });
+  it('likely OK is 85, never 100', () => {
+    const a = assess({ zones: [], treeline: 'above' });
+    expect(a.verdict).toBe('likely_ok');
+    expect(legalityScore(a)).toEqual({ value: 85, tone: 'good' });
+  });
+  it('caution drops with each warning but never below 25', () => {
+    const one = legalityScore(assess({ zones: [{ layer: layer('caution'), name: 'A' }], treeline: 'above' }));
+    const three = legalityScore(assess({ zones: ['A', 'B', 'C'].map((name) => ({ layer: layer('caution'), name })), treeline: 'forest' }));
+    const many = legalityScore(assess({ zones: ['A', 'B', 'C', 'D', 'E', 'F'].map((name) => ({ layer: layer('caution'), name })), treeline: 'forest' }));
+    expect(one.value).toBe(45);
+    expect(three.value!).toBeLessThan(one.value!);
+    expect(many.value).toBe(25);
+  });
+  it('forest and below-treeline are cautions with a score between 25 and 55', () => {
+    const v = legalityScore(assess({ zones: [], treeline: 'forest' })).value!;
+    expect(v).toBeGreaterThanOrEqual(25);
+    expect(v).toBeLessThan(55);
+  });
+  it('unknown is 40 and outside Switzerland has no score', () => {
+    expect(legalityScore(assess({ zones: [], treeline: 'unknown' }))).toEqual({ value: 40, tone: 'warn' });
+    expect(legalityScore(assess({ zones: [], treeline: 'above', outsideSwitzerland: true })).value).toBeUndefined();
+  });
+  it('is ordered like the verdicts: no < unknown < caution <= likely OK', () => {
+    const v = (a: ReturnType<typeof assess>) => legalityScore(a).value!;
+    const no = v(assess({ zones: [{ layer: layer('restricted') }], treeline: 'above' }));
+    const unknown = v(assess({ zones: [], treeline: 'unknown' }));
+    const ok = v(assess({ zones: [], treeline: 'above' }));
+    expect(no).toBeLessThan(unknown);
+    expect(unknown).toBeLessThan(ok);
+  });
+  it('uses real layer definitions without error', () => {
+    for (const l of ZONE_LAYERS) expect(legalityScore(assess({ zones: [{ layer: l }], treeline: 'above' })).value).toBeGreaterThanOrEqual(0);
+  });
+});
+
+describe('sleep score', () => {
+  const water = { kind: 'stream' as const, meters: 80, upstreamPlants: [], failed: [] };
+  it('has no score without comfort data', () => {
+    expect(sleepScore(undefined)).toEqual({ tone: 'none' });
+  });
+  it('is 50 at a net score of zero and moves 6.25 per point, within 0 to 100', () => {
+    const c = comfortFor({});
+    expect(c.score).toBe(0);
+    expect(sleepScore(c).value).toBe(50);
+    expect(sleepScore({ ...c, score: 4 }).value).toBe(75);
+    expect(sleepScore({ ...c, score: -4 }).value).toBe(25);
+    expect(sleepScore({ ...c, score: 100 }).value).toBe(100);
+    expect(sleepScore({ ...c, score: -100 }).value).toBe(0);
+  });
+  it('a storm caps it at 25 whatever the spot is like', () => {
+    const c = comfortFor({ water, night: { from: 'a', to: 'b', minTempC: 8, maxGustKmh: 20, meanWindKmh: 10, windFromDeg: 0, precipMm: 0, thunder: true } });
+    expect(c.weatherStop).toBe(true);
+    expect(sleepScore({ ...c, score: 10 }).value).toBe(25);
+    expect(sleepScore(c).tone).toBe('bad');
+  });
+  it('its tone follows the rating', () => {
+    const c = comfortFor({});
+    expect(sleepScore({ ...c, rating: 'great' }).tone).toBe('good');
+    expect(sleepScore({ ...c, rating: 'fair' }).tone).toBe('warn');
+    expect(sleepScore({ ...c, rating: 'poor' }).tone).toBe('bad');
+  });
+});

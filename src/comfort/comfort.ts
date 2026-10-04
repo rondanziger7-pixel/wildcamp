@@ -3,6 +3,7 @@ import { compassName, type Night } from './weather';
 import { formatLocalTime, type SunTimes } from './sun';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
+import type { WaterInfo } from './water';
 
 export type ComfortRating = 'great' | 'good' | 'fair' | 'poor';
 
@@ -28,6 +29,8 @@ export interface ComfortInput {
   terrain?: TerrainMetrics;
   night?: Night;
   surroundings?: Partial<Surroundings>;
+  /** Nearest water, glacier and treatment-plant flags. */
+  water?: WaterInfo;
   sun?: SunTimes;
   /** True when the forest map says the spot is in forest. */
   inForest?: boolean;
@@ -156,12 +159,36 @@ export function comfortFor(input: ComfortInput): Comfort {
     else f.push({ tone: 'ok', score: 1, title: 'Likely quiet', text: 'No marked trail within 50 m and no hut, stop, car park or village within 400 m. Judged from distances only; weekends and holidays are busier.' });
   } else missing.push('crowds (trails, huts, transport)');
 
-  // water
-  if (s?.waterM !== undefined) {
-    if (s.waterM <= 150) f.push({ tone: 'ok', score: 1, title: 'Water close by', text: `Stream or lake about ${m(s.waterM)} away. Treat water before drinking.${s.waterM <= 20 ? ' Right beside water is noisy and floods in heavy rain.' : ''}`, ...(s.waterM <= 20 ? { tone: 'warn' as const, score: 0 } : {}) });
-    else if (s.waterM <= 400) f.push({ tone: 'info', score: 0, title: 'Water within 400 m', text: `Nearest stream or lake about ${m(s.waterM)} away. Treat water before drinking.` });
-    else f.push({ tone: 'info', score: 0, title: 'No water found nearby', text: 'No stream or lake in the map within 400 m. Carry your water.' });
-  }
+  // water: proximity is one of the main criteria, and the type of water matters
+  if (input.water) {
+    const w = input.water;
+    const what = w.kind === 'lake' ? 'lake' : 'stream';
+    const label = w.name ? `${what} ${w.name}` : what;
+    const treat = ' Treat or filter all surface water before drinking: livestock and wildlife can contaminate it.';
+    if (w.failed.includes('water')) missing.push('water');
+    else if (w.kind === 'none') f.push({ tone: 'warn', score: -1, title: 'No water found nearby', text: `No stream or lake within 800 m in the hydrography map. Carry all the water you need, and check for springs.` });
+    else if (w.meters <= 20) f.push({ tone: 'warn', score: 1, title: 'Water right beside the spot', text: `A ${label} is about ${m(w.meters)} away. Handy, but noisy, damp and prone to flooding in heavy rain; camp a bit higher if you can.${treat}` });
+    else if (w.meters <= 150) f.push({ tone: 'ok', score: 2, title: 'Water close by', text: `A ${label} about ${m(w.meters)} away.${treat}` });
+    else if (w.meters <= 400) f.push({ tone: 'ok', score: 1, title: 'Water within 400 m', text: `A ${label} about ${m(w.meters)} away.${treat}` });
+    else f.push({ tone: 'info', score: 0, title: 'Water 400 to 800 m away', text: `A ${label} about ${m(w.meters)} away: a walk to fetch water.${treat}` });
+
+    if (w.kind !== 'none') {
+      if (w.glacierM !== undefined && w.glacierM <= 1000)
+        f.push({ tone: 'warn', score: 0, title: 'Glacier water', text: `Glacier ice lies within 1 km of this water, so it probably carries meltwater: very cold and milky with rock flour, and its level rises in the afternoon and evening on warm days. Let it settle or filter it, and do not camp beside it.` });
+      else if (w.glacierM !== undefined)
+        f.push({ tone: 'info', score: 0, title: 'Possibly glacier water', text: 'Glacier ice lies within 3 km of this water, so it may carry meltwater (cold, milky). Judged from distance only: the map does not say where the water comes from.' });
+      const plant = w.upstreamPlants[0];
+      if (plant)
+        f.push({
+          tone: 'bad',
+          score: -1,
+          title: 'Dirty water: treated sewage upstream',
+          text: `The ${plant.name} treatment plant discharges into the same watercourse${plant.receiving ? ` (${plant.receiving})` : ''} about ${(plant.meters / 1000).toFixed(1)} km upstream${plant.sharePct !== undefined ? `, and treated wastewater is about ${plant.sharePct.toFixed(0)} % of its low flow` : ''}. Do not use this water for drinking or cooking.`,
+        });
+      if (w.failed.includes('plants')) missing.push('treatment plants upstream');
+      if (w.failed.includes('glacier')) missing.push('glacier water check');
+    }
+  } else missing.push('water');
 
   // sun
   if (sun?.sunrise && sun.sunOnSpot) {

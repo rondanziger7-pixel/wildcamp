@@ -126,9 +126,9 @@ describe('sky codes', () => {
 
 describe('weather changes the sleeping place rating', () => {
   const terrain = (over: Partial<TerrainMetrics> = {}): TerrainMetrics => ({ elevation: 2400, slopeDeg: 3, horizon: Array(8).fill(12), meanHorizon: 12, tpi: 0, steepAboveM: undefined, dropNearM: undefined, ...over });
-  const quiet = { trailM: Infinity, waterM: 80, huts: [], stops: [], settlementM: Infinity, parkingM: Infinity };
+  const quiet = { trailM: Infinity, huts: [], stops: [], settlementM: Infinity, parkingM: Infinity };
   const night = (over: Partial<Night> = {}): Night => ({ from: 'a', to: 'b', minTempC: 6, maxGustKmh: 20, meanWindKmh: 10, windFromDeg: 270, precipMm: 0, maxPrecipProb: 5, thunder: false, ...over });
-  const rate = (n?: Night, t = terrain()) => comfortFor({ terrain: t, surroundings: quiet, night: n });
+  const rate = (n?: Night, t = terrain()) => comfortFor({ terrain: t, surroundings: quiet, night: n, water: { kind: 'stream', meters: 80, upstreamPlants: [], failed: [] } });
 
   it('the same spot rates better on a calm dry night than in a storm', () => {
     const good = rate(night());
