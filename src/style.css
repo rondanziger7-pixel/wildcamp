@@ -63,3 +63,13 @@ button { font: inherit; cursor: pointer; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .disclaimer { font-size: .72rem; color: var(--muted); margin: 10px 0 0; line-height: 1.35; }
 .leaflet-container { font-family: inherit; }
+
+.comfort { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.comfort-head { border-radius: 14px; padding: 10px 14px; }
+.comfort-head h2 { margin: 0; font-size: 1.05rem; }
+.comfort-head p { margin: 3px 0 0; font-size: .85rem; }
+.comfort-head.great { background: var(--ok-bg); color: var(--ok); }
+.comfort-head.good { background: var(--ok-bg); color: var(--ok); }
+.comfort-head.fair { background: var(--warn-bg); color: var(--warn); }
+.comfort-head.poor { background: var(--bad-bg); color: var(--bad); }
+.check.warn { border-left-color: #e08e0b; }

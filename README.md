@@ -24,6 +24,13 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 
 **Interface**: mobile-first map with place search (geo.admin.ch SearchServer), a locate-me button, a bottom sheet with a verdict banner and a checklist (worst findings first, sources linked), a zones layer toggle and a copy-link button. Every spot has a shareable `#lat,lon,zoom` link.
 
+6. **Sleep comfort** (separate from legality; not shown where camping is not allowed or outside Switzerland). Code in `src/comfort/`. Rule-of-thumb rating (great / good / okay / poor) from:
+   - *Terrain*, from the swisstopo elevation model through the geo.admin.ch profile service (2 m model, four lines through the spot, 10 m spacing within 500 m and 50 m spacing within 5 km): slope over 20 m (can you pitch a tent), wind shelter (average horizon angle around the spot, and whether it is an open ridge or top), hollows (cold air), steep slopes above and drops close by.
+   - *Overnight forecast* from Open-Meteo (CC BY 4.0, adjusted to the spot's elevation): lowest temperature, gusts, rain, and the wind direction compared with the terrain horizon in that direction.
+   - *Crowds*, judged from distances only (no visitor counts exist in these datasets): marked hiking trails, huts and inns, public transport and cableway stops, car parks and villages.
+   - *Water* in the swissTLM3D hydrography within 400 m, and *morning sun* (sun position against the terrain horizon).
+   The factor thresholds and the rating cut-offs are my own judgement and have not been tested against campers' experience. Trees, rock, snow and local wind effects are not modelled. A check that could not run is listed as missing and never counted as good.
+
 Verdicts are `Not allowed`, `Caution`, `Likely OK` or `Unknown`. The app never says "legal".
 
 ## Limits
@@ -64,4 +71,4 @@ npm test        # rules, parsing and coordinate tests
 LIVE=1 npm test # also hit the real API (in a proxied sandbox add NODE_USE_ENV_PROXY=1)
 npm run build
 ```
-Map data: © swisstopo, © BAFU.
+Map data: © swisstopo, © BAFU. Elevation: swisstopo swissALTI3D. Forecast: Open-Meteo.com (CC BY 4.0).

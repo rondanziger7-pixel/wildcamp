@@ -71,5 +71,5 @@ Absence from the texts below is not proof that no rule exists elsewhere (municip
 
 ## Swiss National Park
 - The Nationalparkgesetz (SR 454, state 2017-01-01, text read) has no camping clause; Art. 7 hands the rules to the Parkordnung. The park's own page (nationalpark.ch/schutzbestimmungen, saved as `docs/sources/CH/454_Nationalpark_Schutzbestimmungen.txt`) states: stay is allowed only by day (civil twilight to civil twilight), the marked trails and rest places must not be left, no fires, and the park is closed in winter. So overnight camping is prohibited. I did not find the Parkordnung text itself on fedlex (the 1963 ordinance's PDF is not served).
-- It is the only national park in Switzerland. Parks such as Parco Val Calanca or Parc Ela are "parks of national importance" without a blanket camping ban.
+- It is the only national park in Switzerland. The other parks of national importance (regional nature parks) were treated as having no blanket camping ban; I did not read each park's rules.
 - Parco Nazionale della Val Grande is in Italy (Piedmont). A first version treated every point inside a rough Swiss bounding box as Swiss, so spots in Italy, France, Germany and Austria near the border could read "Likely OK". The app now says "Outside Switzerland" when the canton lookup finds no canton.

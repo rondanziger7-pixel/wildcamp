@@ -12,6 +12,12 @@ import { findMunicipalRule } from './municipalities';
 import { fetchJuraReserves } from './jura';
 import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { searchPlaces, type Place } from './search';
+import { comfortFor, type Comfort } from './comfort/comfort';
+import { fetchSurroundings } from './comfort/surroundings';
+import { sunTimes } from './comfort/sun';
+import { analyseTerrain, fetchProfiles, FAR, NEAR } from './comfort/terrain';
+import { fetchForecast, nightWindow, summariseNight, zurichNow } from './comfort/weather';
+import { forestAt } from './forestmask';
 import { ZONE_LAYERS } from './zones';
 
 // Optional deep link: #lat,lon,zoom
@@ -137,8 +143,71 @@ function render(a: Assessment, lat: number, lng: number, elevation?: number) {
     }
   };
   actions.append(share);
-  result.replaceChildren(banner, where, list, actions);
+  const comfort = el('section', 'comfort');
+  result.replaceChildren(banner, where, list, actions, comfort);
   sheet.scrollTop = 0;
+  return comfort;
+}
+
+const RATING: Record<Comfort['rating'], string> = { great: 'Great spot to sleep', good: 'Good spot to sleep', fair: 'Okay spot to sleep', poor: 'Poor spot to sleep' };
+
+function renderComfort(host: HTMLElement, c: Comfort) {
+  const head = el('div', `comfort-head ${c.rating}`);
+  const title = el('div');
+  title.append(el('h2', undefined, RATING[c.rating]), el('p', undefined, c.summary));
+  head.append(title);
+  const list = el('ul', 'checks');
+  const factors = [...c.factors].sort((x, y) => TONE_ORDER[x.tone] - TONE_ORDER[y.tone]);
+  factors.forEach((it, i) => {
+    const li = el('li', `check ${it.tone}${i >= VISIBLE ? ' more' : ''}`);
+    li.append(el('h3', undefined, it.title), el('p', undefined, it.text));
+    list.append(li);
+  });
+  const parts: Node[] = [head, list];
+  if (factors.length > VISIBLE) {
+    const more = el('button', undefined, `Show all ${factors.length} comfort details`);
+    more.type = 'button';
+    more.onclick = () => {
+      const open = list.classList.toggle('expanded');
+      more.textContent = open ? 'Show fewer' : `Show all ${factors.length} comfort details`;
+    };
+    const row = el('div', 'actions');
+    row.append(more);
+    parts.push(row);
+  }
+  if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
+  parts.push(
+    el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the overnight forecast (Open-Meteo) and distances to trails, huts and stops. Trees, rock and snow are not modelled and the thresholds are judgement, not measurements.'),
+  );
+  host.replaceChildren(...parts);
+}
+
+/** Sleep comfort: terrain, forecast and surroundings, shown under the legal result once loaded. */
+async function loadComfort(host: HTMLElement, lat: number, lng: number, elevation: number | undefined, id: number) {
+  host.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
+  const { e, n } = wgs84ToLv95(lat, lng);
+  const win = nightWindow(zurichNow(new Date()));
+  const [near, far, around, forecast] = await Promise.allSettled([
+    fetchProfiles(lat, lng, NEAR),
+    fetchProfiles(lat, lng, FAR),
+    fetchSurroundings(lat, lng),
+    fetchForecast(lat, lng, elevation),
+  ]);
+  if (id !== checkId) return;
+  const terrain = near.status === 'fulfilled' ? analyseTerrain(near.value, far.status === 'fulfilled' ? far.value : undefined) : undefined;
+  const night = forecast.status === 'fulfilled' ? summariseNight(forecast.value, win) : undefined;
+  const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
+  const morning = new Date(`${win.to.slice(0, 10)}T12:00:00Z`);
+  renderComfort(
+    host,
+    comfortFor({
+      terrain,
+      night,
+      surroundings: around.status === 'fulfilled' ? around.value : undefined,
+      sun: sunTimes(morning, lat, lng, horizon),
+      inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
+    }),
+  );
 }
 
 let marker: L.Marker | undefined;
@@ -168,8 +237,7 @@ async function checkSpot(lat: number, lng: number) {
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
   const { e, n } = wgs84ToLv95(lat, lng);
   const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
-  render(
-    assess({
+  const assessment = assess({
       zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...(jura.status === 'fulfilled' ? jura.value : [])],
       zoneLookupFailed: zones.status === 'rejected',
       treeline,
@@ -178,11 +246,11 @@ async function checkSpot(lat: number, lng: number) {
       municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
       municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
       outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
-    }),
-    lat,
-    lng,
-    elevation,
-  );
+  });
+  const comfortHost = render(assessment, lat, lng, elevation);
+  if (assessment.outside) comfortHost.remove();
+  else if (assessment.verdict === 'no') comfortHost.replaceChildren(el('p', 'where', 'Sleep comfort is not shown where camping is not allowed.'));
+  else void loadComfort(comfortHost, lat, lng, elevation, id);
 }
 
 map.on('click', (ev: L.LeafletMouseEvent) => {
