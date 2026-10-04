@@ -16,7 +16,7 @@ L.tileLayer(
 L.tileLayer
   .wms('https://wms.geo.admin.ch/', {
     layers: ZONE_LAYERS.filter((l) => l.severity !== 'info')
-      .map((l) => l.id)
+      .map((l) => l.overlayId ?? l.id)
       .join(','),
     format: 'image/png',
     transparent: true,

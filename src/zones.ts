@@ -1,8 +1,12 @@
 export type Severity = 'prohibited' | 'restricted' | 'info';
 
 export interface ZoneLayer {
-  /** geo.admin.ch layerBodId. UNVERIFIED against the live catalogue — see README. */
+  /** geo.admin.ch layerBodId (verified queryable via the identify endpoint). */
   id: string;
+  /** Layer drawn on the map, if different from `id`. */
+  overlayId?: string;
+  /** Only count features whose attributes pass this test. */
+  accept?: (attrs: Record<string, unknown>) => boolean;
   label: string;
   severity: Severity;
   note: string;
@@ -15,7 +19,11 @@ export interface ZoneLayer {
  */
 export const ZONE_LAYERS: ZoneLayer[] = [
   {
-    id: 'ch.bafu.schutzgebiete-schweizerischer_nationalpark',
+    // The dedicated national-park layer is not queryable; the parks layer is, and
+    // category SNP is the Swiss National Park (other parks have no blanket ban).
+    id: 'ch.bafu.schutzgebiete-paerke_nationaler_bedeutung',
+    overlayId: 'ch.bafu.schutzgebiete-schweizerischer_nationalpark',
+    accept: (a) => a.kategorie === 'SNP',
     label: 'Swiss National Park',
     severity: 'prohibited',
     note: 'Camping and leaving marked trails are prohibited.',

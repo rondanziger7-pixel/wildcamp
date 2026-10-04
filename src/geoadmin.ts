@@ -29,18 +29,30 @@ export async function fetchZoneHits(lat: number, lon: number): Promise<ZoneHit[]
   });
   const res = await fetch(`${API}/api/MapServer/identify?${params}`);
   if (!res.ok) throw new Error(`identify ${res.status}`);
-  const body = (await res.json()) as {
-    results?: { layerBodId: string; attributes?: Record<string, unknown> }[];
-  };
+  return parseZoneHits(await res.json());
+}
+
+interface IdentifyResult {
+  layerBodId: string;
+  attributes?: Record<string, unknown>;
+}
+
+const str = (v: unknown) => (typeof v === 'string' && v !== '' ? v : undefined);
+
+/** Turn an identify response into zone hits, dropping features a layer's filter rejects. */
+export function parseZoneHits(body: { results?: IdentifyResult[] }): ZoneHit[] {
   const hits: ZoneHit[] = [];
   for (const r of body.results ?? []) {
-    const layer = ZONE_LAYERS.find((l) => l.id === r.layerBodId);
-    if (!layer) continue;
     const a = r.attributes ?? {};
-    const name = [a.name, a.gebietsname, a.objname].find((v) => typeof v === 'string') as
-      | string
-      | undefined;
-    hits.push({ layer, name });
+    const layer = ZONE_LAYERS.find((l) => l.id === r.layerBodId && (l.accept?.(a) ?? true));
+    if (!layer) continue;
+    let detail: string | undefined;
+    if (r.layerBodId === 'ch.bafu.wrz-wildruhezonen_portal') {
+      detail = [str(a.best_de), str(a.schutzzeit) && `(${str(a.schutzzeit)})`, str(a.kanton) && `[${str(a.kanton)}]`]
+        .filter(Boolean)
+        .join(' ');
+    }
+    hits.push({ layer, name: str(a.label), detail });
   }
   return hits;
 }

@@ -6,6 +6,8 @@ export type Verdict = 'no' | 'caution' | 'likely_ok' | 'unknown';
 export interface ZoneHit {
   layer: ZoneLayer;
   name?: string;
+  /** Extra specifics from the source data, e.g. season or canton. */
+  detail?: string;
 }
 
 export interface Assessment {
@@ -40,7 +42,7 @@ export function assess(input: {
 
   for (const z of zones) {
     const where = z.name ? `${z.layer.label}: ${z.name}` : z.layer.label;
-    reasons.push(`${where}. ${z.layer.note}`);
+    reasons.push(`${where}. ${z.layer.note}${z.detail ? ` ${z.detail}` : ''}`);
   }
 
   let verdict: Verdict;
