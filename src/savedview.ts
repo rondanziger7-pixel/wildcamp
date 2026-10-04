@@ -1,3 +1,4 @@
+import { downloadText, spotsToGpx } from './gpx';
 import { ageLabel, compareRows, type SavedSpot } from './saved';
 import { el } from './resultview';
 
@@ -69,5 +70,8 @@ export function renderSaved(root: HTMLElement, spots: SavedSpot[], h: SavedHandl
     out.replaceChildren(wrap, el('p', 'disclaimer', 'Scores are as they were when you saved each spot (weather for the night shown). Open a spot to check it again. The best score in a row is highlighted.'));
     out.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   };
-  root.replaceChildren(title, list, cmp, out);
+  const exp = el('button', 'linkish', 'Export all as GPX (for a navigation app)');
+  exp.type = 'button';
+  exp.onclick = () => downloadText('wildcamp-spots.gpx', spotsToGpx(spots));
+  root.replaceChildren(title, list, cmp, out, exp);
 }

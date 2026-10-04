@@ -9,6 +9,7 @@ import { fetchCanton, fetchElevation, fetchMunicipality, fetchZoneHits } from '.
 import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
+import { downloadText, shareText, spotsToGpx } from './gpx';
 import { reportUrl } from './report';
 import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
@@ -344,6 +345,29 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
     syncSavedCount();
   };
   result.append(save);
+  const name = defaultName(assessment.municipality, elevation, lat, lng);
+  const share = el('button', 'save-btn', '↗ Share this spot');
+  share.type = 'button';
+  share.onclick = async () => {
+    const text = shareText(name, ui.snapshot(), location.href);
+    try {
+      if (navigator.share) await navigator.share({ title: `Wild camping: ${name}`, text });
+      else {
+        await navigator.clipboard.writeText(text);
+        say('Copied the scores and link.');
+      }
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') say('Could not share. Use "Copy link" instead.');
+    }
+  };
+  const gpx = el('button', 'linkish', 'Download as GPX');
+  gpx.type = 'button';
+  gpx.onclick = () =>
+    downloadText(
+      'wildcamp-spot.gpx',
+      spotsToGpx([{ id: sid, lat, lng, name, elevation, municipality: assessment.municipality, canton: assessment.canton?.name, snapshot: { ...ui.snapshot(), savedAt: Date.now() } }]),
+    );
+  result.append(share, gpx);
   const report = el('a', 'linkish report-link', 'Report a missing or wrong rule');
   report.href = reportUrl({ lat, lng, municipality: assessment.municipality, canton: assessment.canton?.name, verdict: assessment.verdict, link: location.href });
   report.target = '_blank';
