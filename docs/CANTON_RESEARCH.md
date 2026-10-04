@@ -13,14 +13,17 @@ Last updated 2026-10-04. The source texts are saved in `docs/sources/<canton cod
 `restricted` caps the verdict at "Caution"; `tolerated` adds the note only. Leaflets are cantonal *guidance*, which the summaries say.
 
 ## Read, but no general camping rule found
-- **GR**: the Police Act (BR 613.000) and Police Ordinance (BR 613.100) contain no camping provisions. This is consistent with reports that municipalities decide, but it is not proof there is no other cantonal rule. Municipal rules were not checked.
-- **UR**: the Campingverordnung (RB 70.2431) covers commercial campsites only. A separate reserve ordinance (RB 10.5110) bans camping on the Urnersee south shore. No general rule found.
+Absence from the texts below is not proof that no rule exists elsewhere (municipal police regulations, reserve decrees, other laws).
+- **GR**: Police Act (BR 613.000) and Police Ordinance (BR 613.100) contain no camping provisions. Consistent with reports that municipalities decide. Municipal rules not checked.
+- **UR**: Campingverordnung (RB 70.2431) covers commercial campsites only. A separate reserve ordinance (RB 10.5110) bans camping on the Urnersee south shore.
+- **BE**: Kantonale Waldverordnung (BSG 921.111) and Naturschutzverordnung (BSG 426.111) contain no camping provisions. Individual reserve decrees (e.g. Napf) reportedly ban camping, and the *city* of Bern bans it on public land (media, not read).
+- **VS**: Construction ordinance (OC 705.100) requires a building permit for tents or caravans outside a campsite only if they stay over 3 weeks or number more than 12, so it does not govern a hiker's tent. The cantonal master plan sheet B.3 (a **draft** modification with tracked changes) states as planning policy that camping outside suitable zones should be prohibited except short special cases and youth camps with landowner and commune consent, and that communes set wild-camping rules in their police regulations. That is not a statute binding hikers, so no rule is recorded.
+- **FR**: Forest law (RSF 921.1/921.11) and nature law (RSF 721.0.1) contain no camping provisions. Official web pages recommend camping "only where expressly authorised" in forests and biotopes and ban "staying" (with or without a tent) in wildlife quiet zones. These are recommendations and a restatement of the quiet-zone layer, so no rule is recorded.
+- **JU**: official statements (2023 communiqué, Doubs reserve page) say overnighting outside official campsites is prohibited in all nature reserves, and the fines ordinance (OLiLAO 324.111, item 1.6) sets a CHF 100 fine for camping in the Doubs reserve. No general cantonal ban or permission was found. The media claim that Jura is "generally allowed" is unverified.
 
 ## Not found or not researched
-- **BE**: only the *city* of Bern's rule turned up (reported ban on public land, fines to CHF 2,000); no cantonal law found.
-- **VS**: nothing verified. A law that a search attributed to Valais (935.61) is Vaud's (RSV 935.61), so it was **not** used.
-- **VD**: Vaud's camping law (RSV 935.61) exists but has not been read.
-- **JU, ZH, GE, BS, AG, AI, AR, BL, FR, GL, LU, NE, SH, SO, SZ, TG, ZG**: not researched. The widely repeated claim that Aargau allows one night is unverified and one article calls it questionable.
+- **VD**: Vaud's camping law (RSV 935.61, 1978) exists and has not been read. A web-search summary that attributed it to Valais was wrong and was not used.
+- **ZH, GE, BS, AG, AI, AR, BL, GL, LU, NE, SH, SO, SZ, TG, ZG**: not researched or nothing found. Reports that Aargau allows one night are unverified (one article calls the claim questionable). Glarus reportedly relies on protected-area bans and dialogue (media).
 
 ## Federal and cross-cutting points seen in official texts
 - Federal ordinance on hunting reserves (SR 922.31) Art. 5 para. 1 let. e bans camping and free tenting, including bivouacking, in federal hunting reserves. This is cited in the SG leaflet; the ordinance itself was not read.

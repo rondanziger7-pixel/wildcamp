@@ -1,0 +1,349 @@
+Source: https://geo.vs.ch/documents/25401094/36734778/B.3_Camping+FR_05022025.pdf/ec51fc62-4ada-71bf-3366-4daa920a9687?t=1738137085083&v=1.0
+Retrieved 2026-10-04 via pdftotext.
+NOTE: this is a draft partial modification of the cantonal master plan (decision dates 'XX.XX.2025'), with tracked changes (deleted and inserted wording) mixed into the text. Principle 3 is planning policy addressed to authorities, not a rule binding hikers.
+
+-----
+
+B.3 Camping
+
+Interaction avec fiches : A.1, A.6, A.8, A.15, A.16, B.1, B.2, B.6, C.1, D.1, E.3
+
+                                     Révision globale        Modification partielle   version 1 du 27.04.2020
+Décision du Conseil d’État           14.06.2017              XX. XX. 2025
+Adoption par le Grand Conseil        08.03.2018              XX. XX. 2025
+Approbation par la Confédération     27.04.2020              XX. XX. 2026
+
+
+
+
+ Stratégie de développement territorial
+ 2.1 : Développer le tourisme dans une approche intégrée
+ 2.4 : Renforcer des formes innovantes d’hébergement touristique
+ 2.6 : Renforcer le secteur touristique dans une complémentarité extensif/intensif dans les espaces ruraux en
+       valorisant le patrimoine naturel, paysager et culturel
+ 2.7 : Mettre en place une offre variée de types de mobilités de loisirs
+
+
+ Instances
+ Responsable : SDT
+ Concernées :          • Confédération
+                       • Canton : SAJMTE, SCA, SDANA, SDM, SEFH, SEN, SETI, SFCEP, SFNP, SICT
+                       • Commune(s) : Toutes
+                       • Autres : Association Campings Valais Wallis (ACVW)
+
+
+
+ Contexte
+ L’hébergement passager ou en plein air complète l'offre touristique valaisanne. Il est le premier de Suisse en
+ nombre avec 65 établissements soit 15% des campings helvétiques. Ce type d’hébergement produisait, en
+ 2014, environ 380’000 nuitées, ce qui représente une part importante du total des nuitées de l’hébergement
+ structuré. Les campings se situent principalement en basse altitude et, pour le 75%, dans la plaine du Rhône.
+ Le camping, sous diverses formes, représente une alternative aux vacances traditionnelles en hôtel ou en ap-
+ partement. Dans le contexte de concurrence entre les différentes formes d'hébergement, le camping occupe
+ une place privilégiée grâce à ses coûts avantageux.
+ Le camping en tant que pratique se définit entre autres par des hébergements en plein air et une vocation
+ touristique. Ces hébergements peuvent être de différents types : une simple toile de bivouac, une tente, un
+ camping-car, une caravane, un van ou autres véhicules assimilés (ci-après : van), un mobilhome, un bungalow
+ ou encore un hébergement de type glamping. En comparaison avec les autres formes d'hébergement et au vu
+ de l’essor d’un tourisme davantage itinérant, la pratique du camping occupe une place privilégiée grâce à ses
+ coûts qui peuvent être plus avantageux et l’expérience unique qu’elle offre. Dans le but de renforcer le secteur
+ touristique et d’en augmenter le nombre de visiteurs, le canton du Valais souhaite promouvoir des formes
+ innovantes et alternatives d’hébergement touristique.
+ En 2024, il existe en Valais plus de 70 structures proposant des emplacements pour les différents types d’hé-
+ bergements mentionnés ci-dessus. Des terrains de camping (ci-après: campings) accueillent les campeurs sur
+ des sites définis et participent à la diversité de l'offre touristique valaisanne. En 2022, environ 500'000 nuitées
+ ont été recensées dans les campings, ce qui représente une part importante du total des nuitées de l’héber-
+ gement structuré. Les campings se situent principalement en basse altitude et, pour le 75%, dans la plaine du
+ Rhône. En 2024, 32 campings sont membres de l’Association Campings Valais Wallis.
+
+
+
+
+Fiche de coordination du plan directeur cantonal VS                        1
+B.3       Camping
+
+
+ Le camping traditionnel est subdivisé en 4 types : le camping rural, de passage, mixte et résidentiel.
+          le camping rural : ce type d’hébergement privilégie l’aspect naturel et permet un séjour saisonnier en
+           pleine nature avec un équipement rudimentaire et beaucoup d’espace. Les abris sont des tentes à
+           même le sol. Les infrastructures complémentaires (sanitaires) sont regroupées dans une construction
+           existante à proximité (p.ex. ferme, mayen). Hors saison, l’activité agricole reprend ses droits. Le cam-
+           ping rural peut représenter un apport financier complémentaire pour les agriculteurs (surtout en mon-
+           tagne).
+           Ce type d’hébergement n’implique pas la création d’une zone spéciale, mais une autorisation d’exploi-
+           tation préjudiciable (servitude forestière) est nécessaire en forêt.
+          le camping de passage : des emplacements sont aménagés en vue de recevoir, à la saison, des ins-
+           tallations mobiles servant à l’habitation passagère ou saisonnière favorisant le tourisme de passage.
+           Les abris sont des tentes en toile, des camping-cars, sans fondations ou fixations définitives. Les in-
+           frastructures complémentaires (sanitaires) sont regroupées dans une seule construction. Les cam-
+           pings accueillant des camping-cars seront situés de manière appropriée à proximité des voies de tran-
+           sit ou de points d’intérêt touristique.
+           Ce type d’hébergement implique la création d’une zone spéciale (art. 18 de la loi fédérale sur l’amé-
+           nagement du territoire (LAT), art. 25 de la loi cantonale d’application de la loi fédérale sur l’aménage-
+           ment du territoire (LcAT)). En forêt, une autorisation d’exploitation préjudiciable (servitude forestière)
+           est nécessaire, notamment pour les emplacements et les accès non goudronnés. Une autorisation de
+           défrichement est en principe nécessaire pour les constructions et installations fixes.
+          le camping résidentiel : ces secteurs permettent de recevoir des installations résidentielles pour une
+           part minimale de 30%, mais maximale de 80% (en nombre de places et en surface), à la saison ou à
+           l’année. Les constructions sont en dur mais déplaçables, avec fondations, installations sanitaires et
+           infrastructures communes regroupées.
+           Ce type d’hébergement implique la création d’une zone à bâtir (art. 15 LAT, 21 LcAT). En forêt, un
+           défrichement est nécessaire. La législation sur les résidences secondaires s’applique aux construc-
+           tions fixes.
+          le camping mixte : ces secteurs permettent de recevoir des installations mobiles et résidentielles pour
+           une part maximale de 30% (en nombre de places et en surface) à la saison ou à l’année.
+           Ce type d’hébergement implique la création d’une zone à bâtir en ce qui concerne la partie résiden-
+           tielle (art. 15 LAT, 21 LcAT). En forêt, une autorisation de défrichement est nécessaire. La législation
+           sur les résidences secondaires s’applique aux constructions fixes.
+ En fonction de sa localisation, un terrain de camping peut être plus ou moins équipé et accueillir plus ou moins
+ d’hébergements occupant durablement le même emplacement, selon les indications ci-dessous. Les infras-
+ tructures nécessaires à l’exploitation du camping (accueil, sanitaires, …) et les infrastructures communes (p.
+ ex. un restaurant, un commerce, …) sont en principe regroupées dans un même secteur.
+          Un camping hors zone à bâtir présente un équipement minimum, nécessaire à l’exploitation du cam-
+           ping. Il accueille principalement des tentes, des caravanes, des campings-cars et des vans sur des
+           emplacements communément appelés « emplacements de passage ». Une part maximale de 20% de
+           la surface du camping est à disposition d’hébergements occupant durablement le même emplace-
+           ment. Dans ce cas, des hébergements gérés par l’exploitant du camping (par ex. location d’héberge-
+           ment de type glamping) sont à prioriser. Ils sont regroupés dans un même secteur. Celui-ci doit obliga-
+           toirement être délimité sur un plan d’affectation détaillé (PAD). Un camping hors zone à bâtir est
+           affecté à une zone camping de type autre zone à l’extérieur de la zone à bâtir (art. 18 de la loi fédérale
+           sur l’aménagement du territoire (LAT), art. 25 de la loi cantonale d’application de la loi fédérale sur
+           l’aménagement du territoire (LcAT)).
+
+
+
+
+Fiche de coordination du plan directeur cantonal VS          2
+B.3       Camping
+
+
+      Un camping en zone à bâtir peut présenter un équipement plus complet. Une part maximale de 80% de sa
+      surface est à disposition d’hébergements occupant durablement le même emplacement. Ces emplace-
+      ments sont communément appelés emplacements « saisonniers » ou « annuels ». L’autre part minimale de
+      20% de sa surface est à disposition des hébergements utilisant des « emplacements de passage ». Il est
+      conseillé de représenter les différents secteurs sur un plan. Un camping en zone à bâtir est affecté à une
+      zone camping de type zone à bâtir (art. 15 LAT, 21 LcAT).
+ Les communes peuvent prévoir des dispositions plus restrictives dans leur règlement communal des construc-
+ tions et des zones (RCCZ).
+ La réalisation d’un camping nécessite une analyse détaillée de son intégration au site, en considérant les don-
+ nées locales et l'environnement naturel. Il convient, en particulier, d'effectuer une analyse approfondie des
+ dangers naturels ainsi que des impacts, notamment sur le paysage et la nature, ainsi que des dangers naturels.
+ L’élaboration d’un plan d'alarme et d'intervention (PAI), coordonné avec le PAI communal, sera requise pour
+ les campings exposés au danger. Les campings ne sont pas autorisés dans les espaces réservés aux cours
+ d’eau et lacs (ERE, art. 36 a LEaux, 41a-c OEaux, 14 LDNACE). Les campings accueillant des véhicules (cara-
+ vanes, camping-cars et vans) seront situés de manière appropriée à proximité des voies de transit de voies
+ d’accès existantes ou de points d’intérêt touristique.
+ La zone camping est une affectation primaire, non superposable à la forêt, qui entraîne un changement d’af-
+ fectation du sol forestier (art. 4 de la loi fédérale sur les forêts (LFo)). Ainsi, une autorisation de défrichement
+ est nécessaire pour délimiter la zone camping indépendamment de l’utilisation temporaire ou durable du sol
+ forestier. La zone camping comprend l’ensemble de l’espace utilisé pour le camping (emplacements et accès
+ (même non goudronnés) pour caravanes, camping-cars et vans, constructions et installations fixes). Sans égard
+ aux modalités d’exploitation du camping qu’il soit saisonnier ou ouvert durant toute l’année, l’ensemble de la
+ zone vouée à l’activité du camping nécessite en principe une autorisation de défrichement. Dans le cadre d’une
+ autorisation de défrichement, une constatation forestière est effectuée. Si un camping se trouve à proximité
+ de l’aire forestière (contigu sans superposition directe à l’aire forestière), une constatation forestière est né-
+ cessaire au sens de l’art. 10 al.2 LFo.
+ Les structures existantes campings existants sont toutefois souvent saturés durant les mois de juillet et d'août
+ lors des pics saisonniers, période durant laquelle se concentrent 70% des nuitées. L'offre se révèle donc pé-
+ riodiquement insuffisante, et cette demande excédentaire du « tourisme de passage » durant la saison d’été
+ estivale pourrait se résorber par la création, à proximité d'installations existantes, de « secteurs-tampons »,
+ utilisables en juillet et août, situés hors aire forestière et de l’ERE, et dans lesquels aucune construction n’est
+ possible. Ces « secteurs-tampons » sont à utiliser en particulier lors des périodes de grande affluence (saison
+ touristique, évènements particuliers au niveau culturel, sportif, etc.). La création de places communales dans
+ des zones d’affectation appropriées peut également pallier cette demande supplémentaire ou aider à mieux
+ canaliser les camping-cars et les vans qui cherchent à s’installer hors des campings traditionnels.
+          Les places communales : une place d’accueil pour camping-cars, caravanes et vans est située à proxi-
+           mité d’infrastructures touristiques, disposant d’un nombre d’emplacements limité (selon les besoins)
+           et éventuellement d’un équipement minimal (p. ex. sanitaires, système de vidange et arrivée d’eau).
+           La commune élabore le règlement d’utilisation. Elle peut être conforme aux zones d’affectations sui-
+           vantes (hors zone camping) :
+           Si équipements supplémentaires prévus :
+                    Zones d’activités touristiques (art. 15 ou 18 LAT / art. 24a LcAT)
+                    Zones de constructions et d’installations publiques B ou C (art. 24 LcAT)
+
+
+
+
+Fiche de coordination du plan directeur cantonal VS         3
+B.3       Camping
+
+
+          Si pas d’équipements supplémentaires prévus :
+                    Zones de transport à l’intérieur ou à l’extérieur de la zone à bâtir, seulement si à proximité
+                    d’aménagements liés à des infrastructures touristiques (p.ex. parkings) ou de panoramas ex-
+                    ceptionnels
+          L’admissibilité de telles zones doit être analysée au cas par cas et leur mise en œuvre peut être effec-
+          tuée, suivant les cas, par la création d’une zone ou par l’introduction d’une disposition supplémentaire
+          pour la zone concernée. Les places communales ne doivent pas concurrencer les campings tradition-
+          nels.
+ En parallèle à ces formes traditionnelles de camping se développent de nouvelles tendances s'orientant de
+ plus en plus vers « l'hôtellerie de plein air », avec des exigences accrues en qualité, confort et installations
+ sanitaires. Des emplacements équipés d’un habitat léger s’avèrent être jusqu’à cinq fois plus rentables que
+ des emplacements nus.
+ Les pods (capsules), glamping (camping glamour), roulottes, hôtels éphémères (endroits inaccessibles à l’hô-
+ tellerie traditionnelle), entre autres, recherchent tous à proposer une expérience unique produisant de la valeur
+ ajoutée. Ces différentes formes d’hébergement en plein air doivent être traitées par analogie aux types de
+ camping plus traditionnels. Les cabanes dans les arbres sont traitées dans la fiche spécifique liée à l’héberge-
+ ment touristique.
+ Dans le but de renforcer le secteur touristique en augmentant le nombre de visiteurs, le canton du Valais
+ souhaite promouvoir des formes innovantes et alternatives d’hébergement touristique.
+ Sur le plan de l'aménagement du territoire, le camping représente une forme d'hébergement intéressante, dans
+ la mesure où il garde un caractère « léger » par rapport à des constructions immobilières, et rend une éventuelle
+ modification de l'utilisation du sol plus aisée.
+ En parallèle aux formes traditionnelles de camping se développent de nouvelles pratiques touristiques comme
+ le camping en zone agricole ou des offres alternatives de camping orientées plutôt vers « l'hôtellerie de plein
+ air ».
+          Camping en zone agricole : cette pratique s’assimile à de l’agritourisme (art. 24b LAT Activités acces-
+           soires non agricoles hors de la zone à bâtir et art. 40 OAT Activités accessoires non agricoles). Une
+           telle activité peut représenter un apport financier complémentaire pour les agriculteurs. Elle permet
+           un séjour de courte durée proche d’une entreprise agricole (art.7 Loi sur le droit foncier rural (LDFR)).
+           Elle doit s’inscrire dans un concept global, établi par le requérant (agriculteur), faisant ressortir un lien
+           avec l’exploitation agricole (p. ex. en prévoyant que les visiteurs mangent des produits de l’exploitation
+           sur place, participent à une visite pédagogique ou tout autre activité de ce type). A défaut de ce lien,
+           une telle activité reste envisageable, aux conditions des art. 24b al. 1 LAT et 40 al. 1 OAT, mais le
+           requérant devra apporter la preuve, au moyen d’un concept de gestion, que la survie de l’entreprise
+           dépend d’un revenu complémentaire (art. 40 al. 2 OAT). Cette pratique n’implique pas la création d’une
+           zone spéciale, mais nécessite une autorisation de construire auprès de la Commission cantonale des
+           constructions (CCC) aux conditions des art. 24b LAT et 40 OAT. Les emplacements proposés sont pré-
+           vus pour le tourisme de passage et se situent à proximité des infrastructures existantes de l’exploita-
+           tion. Ils n’affectent pas les surfaces d’assolement (SDA). Pour l’accueil de véhicules, il s’agit d’empla-
+           cements délimités sur des surfaces stabilisées préexistantes. Les infrastructures complémentaires
+           (sanitaires) sont regroupées dans une construction à proximité (p.ex. ferme). Les emplacements sont
+           situés à proximité des voies d’accès existantes pour éviter de générer un trafic supplémentaire et pour
+           limiter les impacts sur les terres cultivées. Hors saison, l’activité agricole reprend ses droits.
+          Offres alternatives : Les pods (capsules), glamping (camping glamour), roulottes, hôtels éphémères
+           (endroits inaccessibles à l’hôtellerie traditionnelle), entre autres, cherchent à proposer une expérience
+           unique générant de la valeur ajoutée. Ces différentes formes d’hébergement en plein air répondent à
+
+
+
+Fiche de coordination du plan directeur cantonal VS           4
+B.3      Camping
+
+
+           des exigences accrues en matière de qualité, confort et installations sanitaires. Elles doivent être trai-
+           tées par analogie aux hébergements du camping traditionnel. Selon le type d’hébergement et son
+           mode d’exploitation (p. ex. les pods ou les cabanes dans les arbres), une zone d’activités touristiques
+           (art. 18 LAT, 24a LcAT) peut être plus adéquate. Selon le cas, le projet peut être traité dans la fiche
+           spécifique liée à l’hébergement touristique (B.2).
+
+
+ Les hébergements occupant durablement un même emplacement entrent dans le champ d’application de la
+ législation sur les résidences secondaires. Ce n’est pas le cas des locaux de séjour sans coin cuisine (pods),
+ des tentes, ainsi que des camping-cars/caravanes qui changent d’emplacement chaque année.
+
+
+
+ Coordination
+ Principes
+ 1. Soutenir la pratique du camping Maintenir les campings en tant qu’alternative à l’d’hébergement
+    touristique et en promouvoir les formes innovantes.
+ 2. Garantir que Favoriser les équipements et installations des terrains de camping qui répondent aux
+    exigences actuelles en matière de confort, d'hygiène, de protection de l’environnement, de consommation
+    d’énergie et de divertissement.
+ 3. Interdire la pratique du le camping en dehors des zones adéquates, à l'exception de cas particuliers de
+    courte durée et pour des camps de jeunesse moyennant l'accord des propriétaires du terrain et de la
+    commune.
+ 4. Implanter les campings terrains de camping dans les endroits adéquats en tenant compte de l’intérêt
+    économique, de l’agriculture, de l’environnement, de la nature, de l’aire forestière, du paysage et des
+    dangers naturels, ainsi que de la possibilité de s’approvisionner avec des énergies renouvelables.
+ 5. Coordonner l’offre à l’échelle régionale, si nécessaire au travers d’un plan directeur intercommunal.
+ 5. 6. Prévoir Favoriser des places spécialement aménagées pour les véhicules d’habitation (camping-car)
+    camping-cars, caravanes et vans à des endroits appropriés, déterminés notamment en fonction de leur
+    accessibilité et de leur situation proche d’un lieu d’intérêt touristique.
+ 6. Assurer la vocation touristique des campings.
+
+
+
+ Marche à suivre
+ Le canton :
+ a) élabore et met à jour l’inventaire des campings terrains de camping et des places communales ;
+ b) délivre, via la Commission cantonale des constructions (CCC), les autorisations de construire pour les
+    infrastructures et les éléments fixes et durables ainsi que pour l’utilisation des parcelles agricoles ;
+ c)   b) coordonne l'utilisation du sol avec l'aire forestière.
+
+ Les communes :
+ a) intègrent la thématique du camping dans leurs lignes directrices de la politique locale du tourisme ;
+ b) coordonnent, si nécessaire, les différentes offres pour la pratique du camping à l’échelle régionale, p.ex.
+    au travers d’un plan directeur intercommunal ;
+
+
+
+Fiche de coordination du plan directeur cantonal VS           5
+B.3      Camping
+
+
+ c)a) délimitent, dans leur plan d’affectation des zones (PAZ), les zones campings (art. 15 ou 18 LAT, 21 ou 25
+      LcAT) selon les différents types (de passage, mixte, résidentiel), en justifiant le besoin, la localisation et
+      l'aptitude l’adéquation du site. Elles prennent en compte l'ensemble des intérêts en présence, et en
+      particulier ceux concernant les valeurs naturelles et paysagères et les dangers naturels à travers une pesée
+      des intérêts ;
+
+
+       Camping           En zone agricole         Zone camping 18 LAT (autre zone à         Zone camping 15 LAT (zone à bâtir)   Place communale
+                                                  l’extérieur de la zone à bâtir)
+       Aménagement       Aucun aménagement
+                                                                                               Aménagements possibles
+       du terrain
+
+       Infrastructures   Infrastructures          Équipement minimum (nécessaire à          Équipement complet et en principe    Équipement minimum (nécessaire à
+       (accueil,         existantes à proximité   l’exploitation) et en principe regroupé   regroupé dans un même secteur        l’exploitation) et regroupé dans un
+       sanitaires, …)    (p. ex. ferme)           dans un même secteur                                                           même secteur
+       Emplacements      100%                     Min. 80 %                                 Min. 20 %                            100%
+       de passage
+
+       Compétences       CCC ou SCA               CCC                                       Commune                              Commune ou CCC
+       (autorisations)
+
+
+
+
+ d) lient les zones de camping mixte et résidentiel à exigent l’élaboration d’un plan d’aménagement détaillé
+      (PAD) pour les terrains de camping hors zone à bâtir comportant des hébergements occupant durablement
+      le même emplacement ;
+
+
+
+
+ e)b) collaborent à planifient la délimitation des secteurs de camping rural places communales et des éventuels
+      « secteurs-tampons » des campings de passage terrains de camping hors zone à bâtir, en accord
+      collaboration avec les services cantonaux concernés (CCC autorité décisionnelle) et les propriétaires ;
+ f)   c) fixent les prescriptions relatives pour à chaque type terrain de camping dans le règlement communal
+      des constructions et des zones (RCCZ) ou dans un PAD le cas échéant ;
+ g)   d) élaborent le plan des équipements des campings résidentiels et mixtes terrains de camping ;
+ e) délivrent les autorisations de construire dans les zones de camping de type résidentiel (y.c. secteurs
+     résidentiels des campings mixtes) ;
+
+
+
+
+Fiche de coordination du plan directeur cantonal VS                                     6
+B.3      Camping
+
+
+ h) f) prennent les mesures nécessaires concernant la vente d’emplacements de camping résidentiel pour les
+    communes entrant dans le champ d’application de la législation sur les résidences secondaires pour
+    assurer la vocation touristique des terrains de camping, notamment en limitant au maximum la résidence
+    principale (dépôt du domicile) dans les zones d’affectation dédiée au camping ;
+ i)   g) veillent à la parfaite intégration paysagère des terrains de camping et à la limitation des nuisances (p.ex.
+      bruit, vue, odeurs) ;
+ j)   h) s’assurent veillent à ce que les hébergements, installations et constructions éléments fixes et durables
+      fassent l’objet d’une autorisation de construire, si besoin est ;
+ k) fixent les prescriptions relatives à la pratique du camping sauvage et aux places communales dans leur
+    règlement de police ou autre règlement communal.
+
+
+ Documentation
+ SDT, Fiches pratiques Camping, 2023
+ Espace Suisse, Inforum, Conseil juridique : camper à la ferme, avril 2022
+ ARVr, Rapport sur les échanges d’expérience Camping-cars et vans, 2021
+ Observatoire valaisan du tourisme, Campings 2014, Focus 5|2014, 2014
+ SCA, Vade-mecum agritourisme, 2012
+ Bureau d’ingénieurs SA & Büro ABW, Fiche de coordination A.4 « Camping-caravaning - Motorhomes » – Etude
+ sectorielle, Canton du Valais, 1995
+
+
+
+
+Fiche de coordination du plan directeur cantonal VS         7
+

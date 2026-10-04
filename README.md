@@ -31,7 +31,8 @@ Forest map accuracy (checked against the source polygons): 294/300 points inside
 Also verified: the API sends `access-control-allow-origin: *`, and the built app runs in headless Chromium (forest map download/decompression, lookup, and rendering).
 
 ## To do
-- [ ] **Verify the remaining canton rules** (22 of 26 still unverified; VS, BE, VD, GR and the rest). See `docs/CANTON_RESEARCH.md`.
+- [ ] **Remaining canton rules**: 22 of 26 have no recorded rule. For GR, VS, BE, FR, JU and UR the cantonal texts were read and contain no general rule for a hiker's tent (municipal police rules decide); VD and the rest are unresearched. See `docs/CANTON_RESEARCH.md`.
+- [ ] **Cantonal nature reserves** are not in the protected-zone layers (only federal inventories). Jura, Bern and others ban camping in cantonal reserves, so a spot inside one can still read "Likely OK".
 - [ ] Municipal rules and the municipality name for each spot.
 - [ ] Add GPS "my location" and offline caching (PWA).
 - [ ] Use quiet-zone protection season to show "restricted only 21.12.–30.04." instead of a flat no.
