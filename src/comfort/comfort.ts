@@ -3,6 +3,7 @@ import { compassName, type Night } from './weather';
 import { formatLocalTime, type SunTimes } from './sun';
 import type { MoonNight } from './moon';
 import type { NoiseInfo } from './noise';
+import type { HazardInfo } from './hazards';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
@@ -45,6 +46,8 @@ export interface ComfortInput {
   ground?: GroundInfo;
   /** The avalanche bulletin's reading for the spot. */
   avalanche?: AvalancheInfo;
+  /** The hazard lookup failed altogether. */
+  hazardsFailed?: boolean;
   /** The noise lookup failed altogether. */
   noiseFailed?: boolean;
   /** The bulletin could not be fetched (so its absence is not read as "no danger"). */
@@ -54,6 +57,8 @@ export interface ComfortInput {
   sun?: SunTimes;
   /** Sun times of the evening the night begins (for evening sun at the spot). */
   eveningSun?: SunTimes;
+  /** National hazard indications at the spot (flood, rockfall, landslide, debris flow). */
+  hazards?: HazardInfo;
   /** Modelled night-time road and rail noise. */
   noise?: NoiseInfo;
   /** The moon over the chosen night. */
@@ -293,6 +298,22 @@ export function comfortFor(input: ComfortInput): Comfort {
   if (alp && alp.meters <= 500 && month !== undefined && month >= 6 && month <= 9) {
     f.push({ tone: 'warn', score: -1, title: 'Cowbells and livestock likely', text: `${alp.name} is mapped ${km(alp.meters)} away. Alps are grazed roughly from June to September, and cattle bells and animals walking past can be heard and met at night. Camp well away from the herd and keep food and dogs under control.` });
   }
+
+  // natural hazards: coarse national indications (FOEN), not the cantonal hazard maps
+  const hz = input.hazards;
+  if (hz) {
+    const has = (k: HazardInfo['inside'][number]) => hz.inside.includes(k);
+    const src = ' Source: FOEN national hazard indication; a coarse model, not the cantonal hazard map, and a spot outside it is not guaranteed safe.';
+    if (has('flood50')) f.push({ tone: 'bad', score: -2, title: 'In a frequent flood area', text: `The spot lies in the area flooded by a 50-year flood (Aquaprotect model). A summer thunderstorm or snowmelt can put it under water or bring debris. Camp on higher ground away from the stream.${src}` });
+    else if (has('flood100')) f.push({ tone: 'warn', score: -1, title: 'In a flood area', text: `The spot lies in the area flooded by a 100-year flood (Aquaprotect model). Rare, but a night of heavy rain or a thunderstorm upstream makes it worth camping higher.${src}` });
+    if (has('rockfall')) {
+      const steep = !!t && (t.steepAboveM !== undefined || t.slopeDeg >= 25);
+      f.push({ tone: steep ? 'warn' : 'info', score: steep ? -1 : 0, title: 'In a rockfall area', text: `A national indication map marks this spot inside a rockfall process area (release, fall or run-out).${steep ? ' A steep slope rises close to the spot.' : ''} Do not pitch directly below cliffs, steep scree or gullies; look for fresh rock debris on the ground.${src}` });
+    }
+    if (has('landslide')) f.push({ tone: 'info', score: 0, title: 'In a landslide-prone area', text: `A national indication map marks this area as prone to shallow landslides, mainly after long rain or snowmelt on steep slopes. Avoid camping on or under steep wet slopes in bad weather.${src}` });
+    if (has('debris')) f.push({ tone: 'info', score: 0, title: 'In a debris-flow area', text: `A national indication map marks this area as reachable by debris flows (mud and rock surging down a gully after heavy rain). Do not camp in or at the mouth of a gully or stream channel when heavy rain is forecast.${src}` });
+    if (hz.failed.length) missing.push('natural hazards');
+  } else if (input.hazardsFailed) missing.push('natural hazards');
 
   // ground cover: what the tent sits on
   const g = input.ground;
