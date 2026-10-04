@@ -29,6 +29,8 @@ export interface Assessment {
   treeline: TreelineStatus;
   canton?: Canton;
   municipality?: string;
+  /** True when the spot is outside Switzerland, where none of these checks apply. */
+  outside?: boolean;
   /** How the treeline status was determined, shown to the user. */
   treelineNote?: string;
 }
@@ -58,7 +60,13 @@ export function assess(input: {
   municipality?: string;
   /** A verified municipal rule for that municipality, if one is recorded. */
   municipalRule?: CantonRule;
+  /** Set when the canton lookup worked but found no canton: the spot is outside Switzerland. */
+  outsideSwitzerland?: boolean;
 }): Assessment {
+  if (input.outsideSwitzerland) {
+    const text = 'This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.';
+    return { verdict: 'unknown', reasons: [text], items: [{ tone: 'warn', title: 'Outside Switzerland', text }], zones: [], treeline: input.treeline, outside: true };
+  }
   const { zones, treeline, treelineNote, canton, municipality, municipalRule } = input;
   const reasons: string[] = [];
   const items: Item[] = [];

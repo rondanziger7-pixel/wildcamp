@@ -29,6 +29,7 @@ describe.skipIf(!live)('live geo.admin.ch', () => {
     expect((await fetchCanton(46.02, 7.75))?.code).toBe('VS'); // Zermatt
     expect((await fetchCanton(46.8, 9.84))?.code).toBe('GR'); // Davos
     expect(await fetchCanton(48.8566, 2.3522)).toBeUndefined(); // Paris
+    expect(await fetchCanton(46.0, 8.55)).toBeUndefined(); // Val Grande national park, Italy, inside the bounding box
   });
   it('finds the municipality', async () => {
     expect(await fetchMunicipality(46.02, 7.75)).toMatchObject({ name: 'Zermatt', canton: 'VS' });

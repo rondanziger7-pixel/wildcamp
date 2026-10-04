@@ -62,3 +62,12 @@ describe('coords', () => {
     expect(isInSwitzerland(48.85, 2.35)).toBe(false);
   });
 });
+
+describe('outside Switzerland', () => {
+  it('says nothing about a spot with no canton, even above the treeline and with no zone hits', () => {
+    const a = assess({ zones: [], treeline: 'above', outsideSwitzerland: true });
+    expect(a.verdict).toBe('unknown');
+    expect(a.outside).toBe(true);
+    expect(a.items[0]?.title).toBe('Outside Switzerland');
+  });
+});

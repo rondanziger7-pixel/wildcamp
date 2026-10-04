@@ -28,7 +28,7 @@ export const ZONE_LAYERS: ZoneLayer[] = [
     accept: (a) => a.kategorie === 'SNP',
     label: 'Swiss National Park',
     severity: 'prohibited',
-    note: 'Camping and leaving marked trails are prohibited.',
+    note: 'Staying is only allowed by day (civil twilight to civil twilight) and only on the marked trails and rest places, so overnight camping is prohibited (park rules, nationalpark.ch/schutzbestimmungen). The park is closed in winter.',
   },
   {
     id: 'ch.bafu.bundesinventare-jagdbanngebiete',

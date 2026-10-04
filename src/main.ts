@@ -65,6 +65,7 @@ const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: 
   likely_ok: { icon: '✅', label: 'Likely OK', sub: 'No restriction found in the data checked. Not a guarantee.' },
   unknown: { icon: '❔', label: 'Unknown', sub: 'Not enough data to say. Check locally.' },
 };
+const OUTSIDE = { icon: '🌍', label: 'Outside Switzerland', sub: 'This app only covers Swiss rules and zones.' };
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
 const VISIBLE = 4;
 
@@ -86,7 +87,7 @@ function showLoading() {
 
 function render(a: Assessment, lat: number, lng: number, elevation?: number) {
   sheet.dataset.state = 'result';
-  const b = BANNER[a.verdict];
+  const b = a.outside ? OUTSIDE : BANNER[a.verdict];
   const banner = el('div', `banner ${a.verdict}`);
   const text = el('div');
   text.append(el('h2', undefined, b.label), el('p', undefined, b.sub));
@@ -176,6 +177,7 @@ async function checkSpot(lat: number, lng: number) {
       canton: canton.status === 'fulfilled' ? canton.value : undefined,
       municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
       municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
+      outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
     }),
     lat,
     lng,
