@@ -7,6 +7,7 @@ import { wgs84ToLv95 } from './coords';
 import { loadForestMask, type ForestMask } from './forestmask';
 import { fetchElevation, fetchZoneHits } from './geoadmin';
 import { classifyTreeline } from './treeline';
+import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { ZONE_LAYERS } from './zones';
 
 // Optional deep link: #lat,lon,zoom
@@ -36,6 +37,11 @@ let forestMask: ForestMask | undefined;
 loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
   .then((m) => (forestMask = m))
   .catch((err) => console.warn('forest map failed to load', err));
+
+let treelineSurface: TreelineSurface | undefined;
+loadTreelineSurface(`${import.meta.env.BASE_URL}treeline-surface.bin.gz`)
+  .then((t) => (treelineSurface = t))
+  .catch((err) => console.warn('treeline surface failed to load', err));
 
 let marker: L.Marker | undefined;
 const result = document.getElementById('result')!;
@@ -77,7 +83,7 @@ map.on('click', async (ev: L.LeafletMouseEvent) => {
   const [elev, zones] = await Promise.allSettled([fetchElevation(lat, lng), fetchZoneHits(lat, lng)]);
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
   const { e, n } = wgs84ToLv95(lat, lng);
-  const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, e, n, elevation);
+  const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
   render(
     assess({
       zones: zones.status === 'fulfilled' ? zones.value : [],

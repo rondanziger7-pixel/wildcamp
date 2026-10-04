@@ -6,10 +6,10 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 1. **Federal protected zones** (national park, wildlife reserves and quiet zones, floodplains, bogs, fens, dry meadows, amphibian sites) via the geo.admin.ch `identify` API. See `src/zones.ts`.
 2. **Forest / treeline**: a forest map built from swissTLM3D forest polygons (`public/forest-mask.bin.gz`, 25 m grid, 3.7 MB, loaded by the browser at startup) combined with elevation. See `src/treeline.ts`:
    - in forest (closed, open, or shrub forest) → `forest`
-   - below 1500 m → `below`
-   - not in forest but forest within 500 m → `unknown` (the local treeline altitude isn't known, so it won't guess)
-   - no forest within 500 m and ≥ 1800 m → `above`
-   - otherwise → `unknown`
+   - otherwise compare elevation with the **local upper forest limit** (`public/treeline-surface.bin.gz`, 1 km grid, 29 KB): ≥ limit + 100 m → `above`; < limit − 100 m → `below`; within ±100 m → `unknown`
+   - where there is no local estimate (no forest within 5 km): fixed bands — below 1500 m → `below`; forest within 500 m → `unknown`; ≥ 1800 m → `above`; else `unknown`
+
+   The local limit comes from the swissTLM3D forest polygons' vertex heights: the 98th percentile per 1 km cell, then the *maximum* over a 5 km neighbourhood. That max is deliberately conservative, so the limit tends to read high (e.g. ~2045 m in the Gantrisch where ~1750 m is typical). The effect is that spots genuinely above the treeline may get "below"/"unknown" (a caution), not the reverse.
 
    If the forest map fails to load, it falls back to an elevation-only estimate and says so.
 
@@ -29,16 +29,16 @@ Forest map accuracy (checked against the source polygons): 294/300 points inside
 Also verified: the API sends `access-control-allow-origin: *`, and the built app runs in headless Chromium (forest map download/decompression, lookup, and rendering).
 
 ## To do
-- [ ] **Local treeline altitude.** Forest presence is now real, but the "above treeline" call still uses fixed elevation bands (1500 / 1800 m). Precomputing the upper forest limit per area from the forest map plus a height model would remove the `unknown` band near forest edges.
 - [ ] Add per-canton rules (Valais, Graubünden, Ticino, Bern, ... differ) with a source link for each.
 - [ ] Add GPS "my location" and offline caching (PWA).
 - [ ] Use quiet-zone protection season to show "restricted only 21.12.–30.04." instead of a flat no.
 
-## Rebuilding the forest map
+## Rebuilding the forest data
 ```
 pip install -r scripts/requirements.txt
 # download swissTLM3D (shapefile) from https://data.geo.admin.ch/ch.swisstopo.swisstlm3d/ and extract TLM_BB/
 python3 scripts/build_forest_mask.py <dir-with-BODENBEDECKUNG-shp> public/forest-mask.bin.gz 25
+python3 scripts/build_treeline_surface.py <dir-with-BODENBEDECKUNG-shp> public/treeline-surface.bin.gz
 ```
 The full download is about 3.6 GB; only the land-cover files are used. Takes ~1 minute.
 

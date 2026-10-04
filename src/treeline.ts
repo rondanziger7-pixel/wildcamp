@@ -1,11 +1,14 @@
 import type { TreelineStatus } from './assess';
 import { estimateTreeline } from './assess';
 import { FOREST_CLASS_LABEL, forestAt, nearestForestM, type ForestMask } from './forestmask';
+import { treelineAt, type TreelineSurface } from './treelinesurface';
 
 /** Elevation above which a spot with no forest nearby counts as above the treeline. */
 export const ABOVE_TREELINE_MIN_M = 1800;
 /** Below this, an unforested spot is valley/lowland, not alpine. */
 export const BELOW_TREELINE_MAX_M = 1500;
+/** With a local treeline estimate, spots within this many metres of it count as undecided. */
+export const TREELINE_MARGIN_M = 100;
 /** How far to look for forest before trusting that a spot is clear of it. */
 export const FOREST_SEARCH_M = 500;
 
@@ -15,12 +18,13 @@ export interface TreelineResult {
 }
 
 /**
- * Combine the forest map with elevation. The forest map says where trees are;
- * the local treeline altitude isn't known, so unforested spots near forest, or
- * at mid elevations, stay "unknown" rather than guessing.
+ * Combine the forest map, the local treeline altitude, and elevation. Where no
+ * local treeline estimate exists, fixed elevation bands are used and unforested
+ * spots near forest or at mid elevations stay "unknown" rather than guessing.
  */
 export function classifyTreeline(
   mask: ForestMask | undefined,
+  surface: TreelineSurface | undefined,
   e: number,
   n: number,
   elevationM: number | undefined,
@@ -36,6 +40,13 @@ export function classifyTreeline(
     return { status: 'forest', note: `Mapped as ${FOREST_CLASS_LABEL[cls]} (swissTLM3D).` };
   }
   const m = elevationM === undefined ? undefined : Math.round(elevationM);
+  const local = surface ? treelineAt(surface, e, n) : undefined;
+  if (elevationM !== undefined && local !== undefined) {
+    const where = `${m} m, local upper forest limit about ${local} m`;
+    if (elevationM >= local + TREELINE_MARGIN_M) return { status: 'above', note: `Above the treeline: ${where}.` };
+    if (elevationM < local - TREELINE_MARGIN_M) return { status: 'below', note: `Not in forest, but below the local treeline: ${where}.` };
+    return { status: 'unknown', note: `Close to the local treeline, can't tell which side: ${where}.` };
+  }
   // Lowland is below the treeline whatever is around it.
   if (elevationM !== undefined && elevationM < BELOW_TREELINE_MAX_M) {
     return { status: 'below', note: `Not in forest, but ${m} m is below the usual treeline.` };

@@ -1,3 +1,4 @@
+import { gunzipIfNeeded } from './binary';
 import { wgs84ToLv95 } from './coords';
 
 /** Forest cover grid built by scripts/build_forest_mask.py from swissTLM3D. */
@@ -36,14 +37,8 @@ export function parseForestMask(bytes: Uint8Array): ForestMask {
   return { width, height, cell, x0, y0, data: bytes.subarray(HEADER) };
 }
 
-/** Gunzip (if the bytes are still gzipped) and parse. Hosts that send Content-Encoding: gzip hand us plain bytes. */
 export async function decodeForestMask(buf: ArrayBuffer): Promise<ForestMask> {
-  let bytes = new Uint8Array(buf);
-  if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
-    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-    bytes = new Uint8Array(await new Response(stream).arrayBuffer());
-  }
-  return parseForestMask(bytes);
+  return parseForestMask(await gunzipIfNeeded(buf));
 }
 
 export async function loadForestMask(url: string): Promise<ForestMask> {
