@@ -2,6 +2,7 @@ import type { Item } from '../assess';
 import { compassName, type Night } from './weather';
 import { formatLocalTime, type SunTimes } from './sun';
 import type { MoonNight } from './moon';
+import type { NoiseInfo } from './noise';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
@@ -44,6 +45,8 @@ export interface ComfortInput {
   ground?: GroundInfo;
   /** The avalanche bulletin's reading for the spot. */
   avalanche?: AvalancheInfo;
+  /** The noise lookup failed altogether. */
+  noiseFailed?: boolean;
   /** The bulletin could not be fetched (so its absence is not read as "no danger"). */
   avalancheFailed?: boolean;
   /** Huts, bivouac boxes, inns and alps nearby. */
@@ -51,6 +54,8 @@ export interface ComfortInput {
   sun?: SunTimes;
   /** Sun times of the evening the night begins (for evening sun at the spot). */
   eveningSun?: SunTimes;
+  /** Modelled night-time road and rail noise. */
+  noise?: NoiseInfo;
   /** The moon over the chosen night. */
   moon?: MoonNight;
   /** True when the forest map says the spot is in forest. */
@@ -269,6 +274,25 @@ export function comfortFor(input: ComfortInput): Comfort {
   }
 
   if (input.avalancheFailed) missing.push('avalanche bulletin');
+
+  // night noise from roads and railways (modelled, BAFU), and livestock bells near alps in the grazing season
+  const nz = input.noise;
+  if (nz) {
+    for (const [what, db] of [['Road', nz.roadDb], ['Rail', nz.railDb]] as const) {
+      if (db === undefined) continue;
+      const v = Math.round(db);
+      if (v >= 55) f.push({ tone: 'bad', score: -2, title: `${what} noise at night: ${v} dB(A)`, text: `Modelled ${what.toLowerCase()} noise here is about ${v} dB(A) at night, loud enough to keep many people awake outdoors (above the 50 dB(A) night planning value of the noise ordinance for housing). Move away from the ${what.toLowerCase()}.` });
+      else if (v >= 45) f.push({ tone: 'warn', score: -1, title: `${what} noise at night: ${v} dB(A)`, text: `Modelled ${what.toLowerCase()} noise here is about ${v} dB(A) at night: clearly audible from the tent. Earplugs help, distance and a ridge between you and it help more.` });
+      else if (v >= 35) f.push({ tone: 'info', score: 0, title: `Faint ${what.toLowerCase()} noise at night: ${v} dB(A)`, text: `Modelled ${what.toLowerCase()} noise is about ${v} dB(A) at night, faint background. Modelled from traffic counts, not measured.` });
+    }
+    if (nz.roadDb === undefined && nz.railDb === undefined && !nz.failed.length) f.push({ tone: 'ok', score: 0, title: 'No modelled traffic noise', text: 'The federal noise map (BAFU sonBASE) models no road or railway noise at this spot at night. It covers the road and rail networks, so aircraft, mountain huts, cableways and livestock are not in it.' });
+  }
+  if (nz?.failed.length || input.noiseFailed) missing.push('night noise');
+  const alp = input.shelters?.shelters.find((x) => x.kind === 'alp');
+  const month = night ? Number(night.from.slice(5, 7)) : undefined;
+  if (alp && alp.meters <= 500 && month !== undefined && month >= 6 && month <= 9) {
+    f.push({ tone: 'warn', score: -1, title: 'Cowbells and livestock likely', text: `${alp.name} is mapped ${km(alp.meters)} away. Alps are grazed roughly from June to September, and cattle bells and animals walking past can be heard and met at night. Camp well away from the herd and keep food and dogs under control.` });
+  }
 
   // ground cover: what the tent sits on
   const g = input.ground;

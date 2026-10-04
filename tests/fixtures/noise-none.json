@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "ch.bafu.laerm-strassenlaerm_nacht_full",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2056" } },
+"xy_coordinate_resolution": 0.001,
+                                                                                                                                   
+"features": [
+
+]
+}
