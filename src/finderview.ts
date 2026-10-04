@@ -2,6 +2,7 @@ import type { Candidate } from './finder';
 import { compass8 } from './finder';
 import { el } from './resultview';
 import type { Score } from './scores';
+import { tr } from './i18n';
 
 export interface FinderRow {
   candidate: Candidate;
@@ -47,10 +48,10 @@ export function renderFinder(root: HTMLElement, heading: string, onPick: (c: Can
           head.append(el('span', 'finder-num', String(i + 1)), el('strong', undefined, `${Math.round(c.elevation)} m · ${Math.round(c.meters / 10) * 10} m ${compass8(c.bearing)}`));
           const scores = el('div', 'finder-scores');
           scores.append(
-            el('span', `chip-score ${r.legal ? r.legal.tone : 'none'}`, r.legal ? `${VERDICT_ICON[r.legal.verdict]} Legal ${r.legal.value ?? '–'}` : '… checking legality'),
-            el('span', `chip-score ${r.sleep.tone}`, `😴 Sleep ${r.sleep.value ?? '–'}`),
+            el('span', `chip-score ${r.legal ? r.legal.tone : 'none'}`, r.legal ? `${VERDICT_ICON[r.legal.verdict]} ${tr('Legal')} ${r.legal.value ?? '–'}` : '… ' + tr('checking legality')),
+            el('span', `chip-score ${r.sleep.tone}`, `😴 ${tr('Sleep')} ${r.sleep.value ?? '–'}`),
           );
-          b.append(head, scores, el('p', 'finder-note', r.note + (r.waterDone ? '' : ' Looking up water…')));
+          b.append(head, scores, el('p', 'finder-note', r.note + (r.waterDone ? '' : ' ' + tr('Looking up water…'))));
           li.append(b);
           return li;
         }),

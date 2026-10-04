@@ -1,3 +1,5 @@
+import { tr } from './i18n';
+
 /** Spots the user saved, kept in this browser (localStorage) with the scores they had when saved. */
 export const SAVED_KEY = 'wildcamp.saved.v1';
 export const MAX_SAVED = 50;
@@ -100,7 +102,7 @@ function bestIndex(values: (number | undefined)[]): number | undefined {
   return known.filter((v) => v === max).length === 1 ? values.indexOf(max) : undefined;
 }
 
-const VERDICT = { no: 'Not allowed', caution: 'Be careful', likely_ok: 'Likely OK', unknown: 'Unknown' } as const;
+const VERDICT = { no: tr('Not allowed'), caution: tr('Be careful'), likely_ok: tr('Likely OK'), unknown: tr('Unknown') } as const;
 
 /** Side-by-side rows for 2 or more saved spots. Scores are as saved, not re-checked. */
 export function compareRows(spots: SavedSpot[]): CompareRow[] {
@@ -108,20 +110,20 @@ export function compareRows(spots: SavedSpot[]): CompareRow[] {
   const row = (label: string, cells: string[], best?: number): CompareRow => ({ label, cells, best });
   const combined = s.map((x) => (x.legal === undefined || x.sleep === undefined ? undefined : Math.round(0.5 * x.legal + 0.5 * x.sleep)));
   return [
-    row('Legality', s.map((x) => `${num(x.legal)} ${VERDICT[x.verdict]}`), bestIndex(s.map((x) => x.legal))),
-    row('Sleep', s.map((x) => `${num(x.sleep)}${x.sleepLabel ? ` ${x.sleepLabel}` : ''}${x.sleep !== undefined && !x.complete ? ' (partial)' : ''}`), bestIndex(s.map((x) => x.sleep))),
-    row('Weather', s.map((x) => (x.weather === undefined ? '–' : `${num(x.weather)}${x.night ? ` ${x.night}` : ''}`)), bestIndex(s.map((x) => x.weather))),
-    row('Both (half and half)', combined.map(num), bestIndex(combined)),
-    row('Elevation', spots.map((x) => (x.elevation === undefined ? '–' : `${Math.round(x.elevation)} m`))),
-    row('Place', spots.map((x) => [x.municipality, x.canton].filter(Boolean).join(', ') || '–')),
-    row('Water', s.map((x) => x.water ?? '–')),
-    row('Hut', s.map((x) => x.hut ?? '–')),
-    row('For', s.map((x) => x.pros.join('; ') || '–')),
-    row('Against', s.map((x) => x.cons.join('; ') || '–')),
+    row(tr('Legality'), s.map((x) => `${num(x.legal)} ${VERDICT[x.verdict]}`), bestIndex(s.map((x) => x.legal))),
+    row(tr('Sleep'), s.map((x) => `${num(x.sleep)}${x.sleepLabel ? ` ${x.sleepLabel}` : ''}${x.sleep !== undefined && !x.complete ? ' ' + tr('(partial)') : ''}`), bestIndex(s.map((x) => x.sleep))),
+    row(tr('Weather'), s.map((x) => (x.weather === undefined ? '–' : `${num(x.weather)}${x.night ? ` ${x.night}` : ''}`)), bestIndex(s.map((x) => x.weather))),
+    row(tr('Both (half and half)'), combined.map(num), bestIndex(combined)),
+    row(tr('Elevation'), spots.map((x) => (x.elevation === undefined ? '–' : `${Math.round(x.elevation)} m`))),
+    row(tr('Place'), spots.map((x) => [x.municipality, x.canton].filter(Boolean).join(', ') || '–')),
+    row(tr('Water'), s.map((x) => x.water ?? '–')),
+    row(tr('Hut'), s.map((x) => x.hut ?? '–')),
+    row(tr('For'), s.map((x) => x.pros.join('; ') || '–')),
+    row(tr('Against'), s.map((x) => x.cons.join('; ') || '–')),
   ];
 }
 
 export function ageLabel(savedAt: number, now = Date.now()): string {
   const d = Math.floor((now - savedAt) / 86400000);
-  return d <= 0 ? 'today' : d === 1 ? 'yesterday' : `${d} days ago`;
+  return d <= 0 ? tr('today') : d === 1 ? tr('yesterday') : tr('{n} days ago', { n: d });
 }

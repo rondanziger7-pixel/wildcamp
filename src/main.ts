@@ -10,6 +10,7 @@ import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import { downloadText, shareText, spotsToGpx } from './gpx';
+import { LANGS, applyStatic, getLang, setLang, tr, type Lang } from './i18n';
 import { reportUrl } from './report';
 import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
@@ -41,6 +42,12 @@ import { fetchForecast, nightWindows, summariseNight, windowHours, zurichNow, ty
 import { renderWeather } from './weatherview';
 import { forestAt } from './forestmask';
 import { ZONE_LAYERS } from './zones';
+
+// Language: static text is translated first, then the selector in the layers panel (a change reloads the page).
+applyStatic();
+const langSelect = document.getElementById('lang-select') as HTMLSelectElement;
+langSelect.append(...LANGS.map(([code, name]) => Object.assign(document.createElement('option'), { value: code, textContent: name, selected: code === getLang() })));
+langSelect.onchange = () => setLang(langSelect.value as Lang);
 
 // Optional deep link: #lat,lon,zoom
 const [hLat, hLon, hZoom] = location.hash.slice(1).split(',').map(Number);
@@ -117,7 +124,7 @@ const dataReady = Promise.all(loading).then(() => (dataLoaded = true));
 const sheet = document.getElementById('sheet')!;
 document.getElementById('sheet-close')!.onclick = () => sheet.classList.add('closed');
 const result = document.getElementById('result')!;
-const introFind = el('button', 'finder-btn', '🔍 Find the best spots around the map centre');
+const introFind = el('button', 'finder-btn', '🔍 ' + tr('Find the best spots around the map centre'));
 introFind.type = 'button';
 introFind.onclick = () => {
   const c = map.getCenter();
@@ -130,7 +137,7 @@ function showLoading() {
   result.hidden = false;
   result.replaceChildren();
   const p = el('p', 'where');
-  p.append(el('span', 'spinner'), dataLoaded ? 'Checking this spot…' : 'Checking this spot (loading the map data for the first time)…');
+  p.append(el('span', 'spinner'), dataLoaded ? tr('Checking this spot…') : tr('Checking this spot (loading the map data for the first time)…'));
   result.append(p);
 }
 
@@ -150,7 +157,7 @@ const PART_MS = 6000;
  */
 async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number, tappedAt: number) {
   ui.setSleepLoading();
-  ui.weatherHost.replaceChildren(el('p', 'where', 'Loading the forecast…'));
+  ui.weatherHost.replaceChildren(el('p', 'where', tr('Loading the forecast…')));
   const { e, n } = wgs84ToLv95(lat, lng);
   const windows = nightWindows(zurichNow(new Date()));
   const abort = new AbortController();
@@ -192,7 +199,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     if (waiting.length < 9 || done.near) ui.setSleep(comfort, nightName, waiting);
     ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, done.forecast && !got.hourly);
     if (!done.forecast) return;
-    if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', 'Weather'), el('p', 'where', 'The forecast could not be loaded.'));
+    if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', tr('Weather')), el('p', 'where', tr('The forecast could not be loaded.')));
     else
       renderWeather(ui.weatherHost, {
         windows,
@@ -299,7 +306,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   if (!isInSwitzerland(lat, lng)) {
     sheet.dataset.state = 'result';
     result.hidden = false;
-    result.replaceChildren(el('p', 'where', 'This app only covers Switzerland.'));
+    result.replaceChildren(el('p', 'where', tr('This app only covers Switzerland.')));
     return;
   }
   showLoading();
@@ -314,7 +321,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   sheet.dataset.state = 'result';
   const ui = renderResult(result, assessment, elevation, focusOn);
   if (fromFinder && finderBack) {
-    const back = el('button', 'linkish', '← Back to best spots');
+    const back = el('button', 'linkish', '← ' + tr('Back to best spots'));
     back.type = 'button';
     back.onclick = finderBack;
     result.prepend(back);
@@ -341,14 +348,14 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
         canton: assessment.canton?.name,
         snapshot: { ...ui.snapshot(), savedAt: Date.now() },
       };
-      if (!saveSpot(store, spot).stored) say('This browser would not keep the spot (private mode or storage blocked).');
+      if (!saveSpot(store, spot).stored) say(tr('This browser would not keep the spot (private mode or storage blocked).'));
     }
     paintSave();
     syncSavedCount();
   };
   result.append(save);
   const name = defaultName(assessment.municipality, elevation, lat, lng);
-  const share = el('button', 'save-btn', '↗ Share this spot');
+  const share = el('button', 'save-btn', '↗ ' + tr('Share this spot'));
   share.type = 'button';
   share.onclick = async () => {
     const text = shareText(name, ui.snapshot(), location.href);
@@ -356,13 +363,13 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
       if (navigator.share) await navigator.share({ title: `Wild camping: ${name}`, text });
       else {
         await navigator.clipboard.writeText(text);
-        say('Copied the scores and link.');
+        say(tr('Copied the scores and link.'));
       }
     } catch (err) {
-      if ((err as Error).name !== 'AbortError') say('Could not share. Use "Copy link" instead.');
+      if ((err as Error).name !== 'AbortError') say(tr('Could not share. Use "Copy link" instead.'));
     }
   };
-  const gpx = el('button', 'linkish', 'Download as GPX');
+  const gpx = el('button', 'linkish', tr('Download as GPX'));
   gpx.type = 'button';
   gpx.onclick = () =>
     downloadText(
@@ -370,11 +377,11 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
       spotsToGpx([{ id: sid, lat, lng, name, elevation, municipality: assessment.municipality, canton: assessment.canton?.name, snapshot: { ...ui.snapshot(), savedAt: Date.now() } }]),
     );
   result.append(share, gpx);
-  const report = el('a', 'linkish report-link', 'Report a missing or wrong rule');
+  const report = el('a', 'linkish report-link', tr('Report a missing or wrong rule'));
   report.href = reportUrl({ lat, lng, municipality: assessment.municipality, canton: assessment.canton?.name, verdict: assessment.verdict, link: location.href });
   report.target = '_blank';
   report.rel = 'noopener';
-  const find = el('button', 'finder-btn', '🔍 Find the best spots near here');
+  const find = el('button', 'finder-btn', '🔍 ' + tr('Find the best spots near here'));
   find.type = 'button';
   find.onclick = () => void findBest(lat, lng);
   result.append(find, report);
@@ -394,7 +401,7 @@ const store = (() => {
 const savedBtn = el('button', 'finder-btn');
 savedBtn.type = 'button';
 function syncSavedCount() {
-  savedBtn.textContent = `★ Saved spots (${loadSaved(store).length})`;
+  savedBtn.textContent = `★ ${tr('Saved spots ({n})', { n: loadSaved(store).length })}`;
 }
 syncSavedCount();
 function showSaved() {
@@ -419,7 +426,7 @@ function showSaved() {
 }
 async function showPlan(picked: SavedSpot[]) {
   const windows = nightWindows(zurichNow(new Date()));
-  result.replaceChildren(el('p', 'where', 'Loading the forecast for each spot…'));
+  result.replaceChildren(el('p', 'where', tr('Loading the forecast for each spot…')));
   const forecasts = await Promise.allSettled(picked.map((sp) => withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000)));
   const plan = planNights(picked, windows, forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined)));
   renderPlan(result, plan, forecasts.slice(0, plan.rows.length).filter((f) => f.status === 'rejected').length, showSaved);
@@ -457,11 +464,11 @@ async function findBest(lat: number, lng: number) {
   sheet.dataset.state = 'result';
   result.hidden = false;
   const gone = () => id !== finderId;
-  const mount = () => renderFinder(result, 'Best spots nearby', (c) => void checkSpot(c.lat, c.lon, true));
+  const mount = () => renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true));
   let ui = mount();
   finderBack = undefined;
-  ui.update([], 'Reading the terrain and ground around here…', false);
-  if (!isInSwitzerland(lat, lng)) return ui.update([], 'This app only covers Switzerland.', true);
+  ui.update([], tr('Reading the terrain and ground around here…'), false);
+  if (!isInSwitzerland(lat, lng)) return ui.update([], tr('This app only covers Switzerland.'), true);
   const { e, n } = wgs84ToLv95(lat, lng);
   const abort = new AbortController();
   const stop = window.setTimeout(() => abort.abort(), 40000);
@@ -471,7 +478,7 @@ async function findBest(lat: number, lng: number) {
     const covers = await withTimeout(fetchCoverGrid({ e, n }, abort.signal), 10000).catch(() => new Map());
     if (gone()) return;
     const cands = rankCells(grid, { e, n }, covers, FINDER_CANDIDATES);
-    if (!cands.length) return ui.update([], 'No suitable flat ground found within about 700 m (steep, glacier, water or built-up). Try another place.', true);
+    if (!cands.length) return ui.update([], tr('No suitable flat ground found within about 700 m (steep, glacier, water or built-up). Try another place.'), true);
 
     const rows: FinderRow[] = cands.map((c) => ({ candidate: c, sleep: sleepScore(c.comfort), note: finderNote(c, undefined, false), waterDone: false }));
     let hidden = 0;
@@ -484,7 +491,7 @@ async function findBest(lat: number, lng: number) {
       if (gone()) return;
       const list = done ? shown().slice(0, FINDER_SHOWN) : shown();
       const checked = rows.filter((r) => r.legal && r.waterDone).length;
-      ui.update(list, done ? `${list.length} spot${list.length === 1 ? '' : 's'} within about 700 m${hidden ? `; ${hidden} more skipped because camping is not allowed there` : ''}.` : `Checking legality and water: ${checked} of ${rows.length} done…`, done);
+      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about 700 m' : '{n} spots within about 700 m', { n: list.length }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + '.' : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done);
       finderPins.clearLayers();
       list.forEach((r, i) =>
         L.marker([r.candidate.lat, r.candidate.lon], { icon: L.divIcon({ className: '', html: `<div class="finder-pin">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) })
@@ -529,7 +536,7 @@ async function findBest(lat: number, lng: number) {
   } catch (err) {
     console.warn('best spots failed', err);
     const why = err instanceof Error ? err.message : String(err);
-    if (!gone()) ui.update([], `The terrain could not be loaded (${why}). Check your connection and try again.`, true);
+    if (!gone()) ui.update([], tr('The terrain could not be loaded ({why}). Check your connection and try again.', { why }), true);
   } finally {
     window.clearTimeout(stop);
   }
@@ -605,7 +612,7 @@ document.getElementById('locate')!.addEventListener('click', () => {
       sheet.classList.remove('closed');
       sheet.dataset.state = 'result';
       result.hidden = false;
-      result.replaceChildren(el('p', 'where', 'Location unavailable. Allow location access, or tap the map instead.'));
+      result.replaceChildren(el('p', 'where', tr('Location unavailable. Allow location access, or tap the map instead.')));
     },
     { enableHighAccuracy: true, timeout: 10000 },
   );
@@ -660,9 +667,9 @@ function showMe(pos: GeolocationPosition, recentre: boolean) {
 }
 
 function locateMe() {
-  if (!navigator.geolocation) return say('This browser cannot share your location.');
+  if (!navigator.geolocation) return say(tr('This browser cannot share your location.'));
   if (me) return void map.flyTo(me.at, Math.max(map.getZoom(), MY_ZOOM), { duration: 0.6 }); // already tracking: just come back
-  say('Finding your location…');
+  say(tr('Finding your location…'));
   let first = true;
   watchId = navigator.geolocation.watchPosition(
     (pos) => {
@@ -673,7 +680,7 @@ function locateMe() {
     (err) => {
       if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
       watchId = undefined;
-      say(err.code === err.PERMISSION_DENIED ? 'Location is blocked. Allow it for this site in your browser settings, then try again.' : 'Could not get your location. Try again outdoors or with a better signal.');
+      say(err.code === err.PERMISSION_DENIED ? tr('Location is blocked. Allow it for this site in your browser settings, then try again.') : tr('Could not get your location. Try again outdoors or with a better signal.'));
     },
     { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 },
   );
@@ -683,8 +690,8 @@ const LocateControl = L.Control.extend({
   onAdd() {
     const btn = L.DomUtil.create('button', 'map-locate') as HTMLButtonElement;
     btn.type = 'button';
-    btn.title = 'Center the map on my location';
-    btn.setAttribute('aria-label', 'Center the map on my location');
+    btn.title = tr('Center the map on my location');
+    btn.setAttribute('aria-label', tr('Center the map on my location'));
     btn.innerHTML =
       '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
     L.DomEvent.disableClickPropagation(btn);
@@ -708,18 +715,18 @@ async function saveArea() {
     saving.abort();
     return;
   }
-  if (!('caches' in window)) return say('This browser cannot store maps for offline use.');
-  if (!navigator.onLine) return say('You are offline: connect to save a map area.');
+  if (!('caches' in window)) return say(tr('This browser cannot store maps for offline use.'));
+  if (!navigator.onLine) return say(tr('You are offline: connect to save a map area.'));
   const b = map.getBounds();
   const plan = planTiles({ south: b.getSouth(), west: b.getWest(), north: b.getNorth(), east: b.getEast() }, Math.round(map.getZoom()));
-  if (!plan.tiles.length) return say(`This view is too large to save (more than ${MAX_TILES} tiles). Zoom in and try again.`);
+  if (!plan.tiles.length) return say(tr('This view is too large to save (more than {max} tiles). Zoom in and try again.', { max: MAX_TILES }));
   const ctl = (saving = new AbortController());
-  say(`Saving ${plan.tiles.length} map tiles (about ${megabytes(plan.tiles.length)} MB, zoom ${plan.from} to ${plan.to}). Tap the button again to stop.`);
+  say(tr('Saving {n} map tiles (about {mb} MB, zoom {from} to {to}). Tap the button again to stop.', { n: plan.tiles.length, mb: megabytes(plan.tiles.length), from: plan.from, to: plan.to }));
   void navigator.storage?.persist?.();
   try {
     await saveShell(import.meta.env.BASE_URL);
-    const r = await saveTiles(plan.tiles.map((t) => tileUrl(t.z, t.x, t.y)), (p) => say(`Saving map: ${p.done} of ${p.total} tiles…`), ctl.signal);
-    say(ctl.signal.aborted ? `Stopped: ${r.done - r.failed} tiles saved.` : r.failed ? `Saved ${r.total - r.failed} of ${r.total} tiles; ${r.failed} failed. Try again with a better connection.` : `Saved ${r.total} tiles (zoom ${plan.from} to ${plan.to}) and the app data. The map and local checks now work offline here; zone, water and weather lookups still need a connection.`);
+    const r = await saveTiles(plan.tiles.map((tl) => tileUrl(tl.z, tl.x, tl.y)), (p) => say(tr('Saving map: {done} of {total} tiles…', { done: p.done, total: p.total })), ctl.signal);
+    say(ctl.signal.aborted ? tr('Stopped: {n} tiles saved.', { n: r.done - r.failed }) : r.failed ? tr('Saved {ok} of {total} tiles; {failed} failed. Try again with a better connection.', { ok: r.total - r.failed, total: r.total, failed: r.failed }) : tr('Saved {n} tiles (zoom {from} to {to}) and the app data. The map and local checks now work offline here; zone, water and weather lookups still need a connection.', { n: r.total, from: plan.from, to: plan.to }));
   } finally {
     saving = undefined;
   }
@@ -729,8 +736,8 @@ const SaveControl = L.Control.extend({
   onAdd() {
     const btn = L.DomUtil.create('button', 'map-locate') as HTMLButtonElement;
     btn.type = 'button';
-    btn.title = 'Save this map area for offline use';
-    btn.setAttribute('aria-label', 'Save this map area for offline use');
+    btn.title = tr('Save this map area for offline use');
+    btn.setAttribute('aria-label', tr('Save this map area for offline use'));
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 18v2h14v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     L.DomEvent.disableClickPropagation(btn);
     L.DomEvent.on(btn, 'click', () => void saveArea());
@@ -743,8 +750,8 @@ const SavedControl = L.Control.extend({
   onAdd() {
     const btn = L.DomUtil.create('button', 'map-locate map-saved') as HTMLButtonElement;
     btn.type = 'button';
-    btn.title = 'Saved spots';
-    btn.setAttribute('aria-label', 'Saved spots');
+    btn.title = tr('Saved spots');
+    btn.setAttribute('aria-label', tr('Saved spots'));
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
     L.DomEvent.disableClickPropagation(btn);
     L.DomEvent.on(btn, 'click', showSaved);

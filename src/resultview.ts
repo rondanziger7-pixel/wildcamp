@@ -8,18 +8,19 @@ import type { SpotSnapshot } from './saved';
 import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
 import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
+import { tr } from './i18n';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
 const VISIBLE = 4;
 
 const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: string }> = {
-  no: { icon: '⛔', label: 'Not allowed', sub: 'A recorded rule or protected zone prohibits camping here.' },
-  caution: { icon: '⚠️', label: 'Be careful', sub: 'Possibly restricted. Read the points below before you go.' },
-  likely_ok: { icon: '✅', label: 'Likely OK', sub: 'No restriction found in the data checked. Not a guarantee.' },
-  unknown: { icon: '❔', label: 'Unknown', sub: 'Not enough data to say. Check locally.' },
+  no: { icon: '⛔', label: tr('Not allowed'), sub: tr('A recorded rule or protected zone prohibits camping here.') },
+  caution: { icon: '⚠️', label: tr('Be careful'), sub: tr('Possibly restricted. Read the points below before you go.') },
+  likely_ok: { icon: '✅', label: tr('Likely OK'), sub: tr('No restriction found in the data checked. Not a guarantee.') },
+  unknown: { icon: '❔', label: tr('Unknown'), sub: tr('Not enough data to say. Check locally.') },
 };
-const RATING: Record<Comfort['rating'], string> = { great: 'Great for sleeping', good: 'Good for sleeping', fair: 'Okay for sleeping', poor: 'Poor for sleeping' };
-const RATING_SHORT: Record<Comfort['rating'], string> = { great: 'Great', good: 'Good', fair: 'Okay', poor: 'Poor' };
+const RATING: Record<Comfort['rating'], string> = { great: tr('Great for sleeping'), good: tr('Good for sleeping'), fair: tr('Okay for sleeping'), poor: tr('Poor for sleeping') };
+const RATING_SHORT: Record<Comfort['rating'], string> = { great: tr('Great'), good: tr('Good'), fair: tr('Okay'), poor: tr('Poor') };
 const RATING_WORD: Record<Comfort['rating'], string> = { great: 'great', good: 'good', fair: 'okay', poor: 'poor' };
 
 export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) {
@@ -39,14 +40,14 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
     li.append(el('h3', undefined, it.title), el('p', undefined, it.text));
     const at = it.at;
     if (at && focus) {
-      const go = el('button', 'linkish', '📍 Show on map');
+      const go = el('button', 'linkish', '📍 ' + tr('Show on map'));
       go.type = 'button';
       go.onclick = () => focus(at.e, at.n, at.label);
       li.append(go);
     }
     if (it.sources?.length) {
       const s = el('div', 'srcs');
-      s.append('Source: ');
+      s.append(tr('Source:') + ' ');
       it.sources.forEach((u, k) => {
         if (k) s.append(', ');
         const link = el('a', undefined, new URL(u).hostname);
@@ -65,7 +66,7 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
     btn.type = 'button';
     btn.onclick = () => {
       const open = list.classList.toggle('expanded');
-      btn.textContent = open ? 'Show fewer' : `Show all ${sorted.length} ${more}`;
+      btn.textContent = open ? tr('Show fewer') : tr('Show all {n} items', { n: sorted.length });
     };
     parts.push(btn);
   }
@@ -98,7 +99,7 @@ function scoreCard(kind: string, title: string) {
   const label = el('span', 'sc-label');
   const bar = el('div', 'sc-bar');
   bar.append(el('i'));
-  b.append(el('span', 'sc-title', title), value, label, bar, el('span', 'sc-more', 'Details'));
+  b.append(el('span', 'sc-title', title), value, label, bar, el('span', 'sc-more', tr('Details')));
   const set = (score: Score, text: string) => {
     b.dataset.tone = score.tone;
     value.replaceChildren(score.value === undefined ? '–' : String(score.value), el('small', undefined, score.value === undefined ? '' : '/100'));
@@ -122,14 +123,14 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const snap: { sleep?: Score; weather?: Score; night?: string; label?: string; pros: string[]; cons: string[]; complete: boolean; water?: string; hut?: string } = { pros: [], cons: [], complete: false };
   const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · '));
 
-  const legal = scoreCard('legal', 'Legality');
-  const sleep = scoreCard('sleep', 'Sleep');
-  const weather = scoreCard('weather', 'Weather');
+  const legal = scoreCard('legal', tr('Legality'));
+  const sleep = scoreCard('sleep', tr('Sleep'));
+  const weather = scoreCard('weather', tr('Weather'));
   const L = legalityScore(a);
   const b = BANNER[a.verdict];
   legal.set(L, `${b.icon} ${b.label}`);
-  sleep.set({ tone: 'none' }, 'Checking…');
-  weather.set({ tone: 'none' }, 'Checking…');
+  sleep.set({ tone: 'none' }, tr('Checking…'));
+  weather.set({ tone: 'none' }, tr('Checking…'));
   const scores = el('div', 'scores');
   scores.append(legal.b, sleep.b, weather.b);
 
@@ -138,9 +139,9 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const weatherChip = chip('weather');
   const avalancheChip = chip('avalanche');
   avalancheChip.hidden = true;
-  shelterChip.textContent = '🏠 Checking for huts…';
-  waterChip.textContent = '💧 Checking water…';
-  weatherChip.textContent = '🌦️ Loading forecast…';
+  shelterChip.textContent = '🏠 ' + tr('Checking for huts…');
+  waterChip.textContent = '💧 ' + tr('Checking water…');
+  weatherChip.textContent = '🌦️ ' + tr('Loading forecast…');
   const chips = el('div', 'chips');
   chips.append(waterChip, shelterChip, weatherChip, avalancheChip);
 
@@ -191,12 +192,12 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   jump(waterChip, () => waterAt);
   jump(shelterChip, () => hutAt);
 
-  const share = el('button', 'linkish', 'Copy link');
+  const share = el('button', 'linkish', tr('Copy link'));
   share.type = 'button';
   share.onclick = async () => {
     try {
       await navigator.clipboard.writeText(location.href);
-      share.textContent = 'Link copied';
+      share.textContent = tr('Link copied');
     } catch {
       share.textContent = location.href;
     }
@@ -207,8 +208,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   return {
     weatherHost,
     setSleepLoading() {
-      sleep.set({ tone: 'none' }, 'Checking…');
-      sleepPanel.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
+      sleep.set({ tone: 'none' }, tr('Checking…'));
+      sleepPanel.replaceChildren(el('p', 'where', tr('Checking sleep comfort…')));
     },
     setSleep(c, nightLabel, loading = []) {
       const s = sleepScore(c);
@@ -223,7 +224,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         pros: c.spotFactors.filter((x) => x.tone === 'ok').slice(0, 3).map((x) => x.title),
         cons: c.spotFactors.filter((x) => x.tone === 'bad' || x.tone === 'warn').slice(0, 3).map((x) => x.title),
       });
-      if (w.value !== undefined) weather.set(w, c.weatherStop ? 'Dangerous' : c.weatherScore >= 1 ? 'Good' : c.weatherScore >= 0 ? 'Fine' : c.weatherScore > -3 ? 'Poor' : 'Bad');
+      if (w.value !== undefined) weather.set(w, tr(c.weatherStop ? 'Dangerous' : c.weatherScore >= 1 ? 'Good' : c.weatherScore >= 0 ? 'Fine' : c.weatherScore > -3 ? 'Poor' : 'Bad'));
       weatherFactors.replaceChildren(...(c.weatherFactors.length ? [el('h3', 'wx-factors-title', `What the forecast means for ${nightLabel}`), ...checklist(c.weatherFactors, 'weather details', focus)] : []));
       const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
       const head = el('div', `comfort-head ${c.rating}`);
@@ -232,36 +233,36 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       head.append(t);
       const parts: Node[] = [];
       if (loading.length) parts.push(el('p', 'panel-lead', `Still checking: ${loading.join(', ')}. The score updates when they arrive.`));
-      if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', 'Camping is not allowed here, so this only shows what the spot would be like.'));
+      if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', tr('Camping is not allowed here, so this only shows what the spot would be like.')));
       parts.push(head, ...checklist(c.spotFactors, 'comfort details', focus));
       if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
       parts.push(el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees and snow are not modelled, ground cover is read from 100 m survey points, and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
       sleepPanel.replaceChildren(...parts);
     },
     setSleepUnavailable(why) {
-      sleep.set({ tone: 'none' }, 'Unavailable');
+      sleep.set({ tone: 'none' }, tr('Unavailable'));
       sleepPanel.replaceChildren(el('p', 'where', why));
     },
     setWater(w, failed) {
       waterChip.className = 'chip water';
       if (failed || !w || w.failed.includes('water')) {
-        waterChip.textContent = '💧 Water: could not check';
+        waterChip.textContent = '💧 ' + tr('Water: could not check');
         return;
       }
-      waterAt = w.kind !== 'none' && w.at ? { ...w.at, label: w.name ? `${w.kind === 'lake' ? 'Lake' : 'Stream'} ${w.name}` : w.kind === 'lake' ? 'Nearest lake' : 'Nearest stream' } : undefined;
-      const kind = w.kind === 'lake' ? 'Lake' : w.kind === 'stream' ? 'Stream' : '';
-      const base = w.kind === 'none' ? '💧 No water within 800 m' : `💧 ${kind}${w.name ? ` ${w.name}` : ''} · ${Math.round(w.meters / 10) * 10 || 5} m`;
+      waterAt = w.kind !== 'none' && w.at ? { ...w.at, label: w.name ? `${w.kind === 'lake' ? tr('Lake') : tr('Stream')} ${w.name}` : w.kind === 'lake' ? tr('Nearest lake') : tr('Nearest stream') } : undefined;
+      const kind = w.kind === 'lake' ? tr('Lake') : w.kind === 'stream' ? tr('Stream') : '';
+      const base = w.kind === 'none' ? '💧 ' + tr('No water within 800 m') : `💧 ${kind}${w.name ? ` ${w.name}` : ''} · ${Math.round(w.meters / 10) * 10 || 5} m`;
       snap.water = base.replace('💧 ', '') + (w.kind !== 'none' && w.glacierM !== undefined ? ', glacier water' : '') + (w.upstreamPlants.length ? ', sewage upstream' : '');
       waterChip.replaceChildren(base);
-      if (waterAt) waterChip.append(el('span', 'tag go', '📍 map'));
+      if (waterAt) waterChip.append(el('span', 'tag go', '📍 ' + tr('map')));
       if (w.kind !== 'none') {
         if (w.upstreamPlants.length) {
           waterChip.classList.add('dirty');
-          waterChip.append(el('span', 'tag bad', 'dirty: sewage upstream'));
+          waterChip.append(el('span', 'tag bad', tr('dirty: sewage upstream')));
         }
         if (w.glacierM !== undefined) {
           waterChip.classList.add('glacier');
-          waterChip.append(el('span', 'tag ice', w.glacierM <= 1000 ? 'glacier water' : 'maybe glacier water'));
+          waterChip.append(el('span', 'tag ice', w.glacierM <= 1000 ? tr('glacier water') : tr('maybe glacier water')));
         }
       }
       if (w.meters > 400 || w.kind === 'none') waterChip.classList.add('far');
@@ -269,7 +270,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     setShelter(r, failed) {
       shelterChip.className = 'chip shelter';
       if (failed || !r) {
-        shelterChip.textContent = '🏠 Huts: could not check';
+        shelterChip.textContent = '🏠 ' + tr('Huts: could not check');
         return;
       }
       const hut = r.shelters.find((x) => x.kind === 'hut' || x.kind === 'biwak');
@@ -277,13 +278,13 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       if (hut) {
         hutAt = { ...hut.at, label: hut.name };
         snap.hut = `${hut.name} · ${km(hut.meters)}`;
-        shelterChip.textContent = `🏠 ${hut.kind === 'biwak' ? 'Bivouac shelter' : hut.club ? 'Club hut' : 'Hut'}: ${hut.name} · ${km(hut.meters)}`;
-        shelterChip.append(el('span', 'tag go', '📍 map'));
+        shelterChip.textContent = `🏠 ${hut.kind === 'biwak' ? tr('Bivouac shelter') : hut.club ? tr('Club hut') : tr('Hut')}: ${hut.name} · ${km(hut.meters)}`;
+        shelterChip.append(el('span', 'tag go', '📍 ' + tr('map')));
         if (hut.meters > 1500) shelterChip.classList.add('far');
-      } else if (r.incomplete) shelterChip.textContent = '🏠 Huts: could not check fully';
+      } else if (r.incomplete) shelterChip.textContent = '🏠 ' + tr('Huts: could not check fully');
       else {
         const alp = r.shelters.find((x) => x.kind === 'alp');
-        shelterChip.textContent = `🏠 No hut within 5 km${alp ? ` · ${alp.name} ${km(alp.meters)}` : ''}`;
+        shelterChip.textContent = `🏠 ${tr('No hut within 5 km')}${alp ? ` · ${alp.name} ${km(alp.meters)}` : ''}`;
         shelterChip.classList.add('far');
       }
     },
@@ -291,7 +292,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const items = r ? restrictionItems(r) : [];
       rulesHost.replaceChildren(
         ...(items.length
-          ? [el('h3', 'rules-title', 'Fire and drones'), el('p', 'where', 'Live official data. These rules do not change the camping verdict above.'), ...checklist(items, 'fire and drone details')]
+          ? [el('h3', 'rules-title', tr('Fire and drones')), el('p', 'where', tr('Live official data. These rules do not change the camping verdict above.')), ...checklist(items, 'fire and drone details')]
           : []),
       );
     },
@@ -299,14 +300,14 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       avalancheChip.className = 'chip avalanche';
       avalancheChip.hidden = false;
       if (failed) {
-        avalancheChip.textContent = '❄️ Avalanche bulletin: could not check';
+        avalancheChip.textContent = '❄️ ' + tr('Avalanche bulletin: could not check');
         return;
       }
       if (av?.status !== 'ok' || av.level === undefined) {
         avalancheChip.hidden = true;
         return;
       }
-      avalancheChip.textContent = `❄️ Avalanche danger: ${LEVEL_NAME[av.level]} (${av.level}${av.subdivision === 'plus' ? '+' : av.subdivision === 'minus' ? '-' : ''})`;
+      avalancheChip.textContent = `❄️ ${tr('Avalanche danger:')} ${tr(LEVEL_NAME[av.level]!)} (${av.level}${av.subdivision === 'plus' ? '+' : av.subdivision === 'minus' ? '-' : ''})`;
       if (av.level >= 4) avalancheChip.classList.add('bad');
       else if (av.level === 3) avalancheChip.classList.add('warn');
     },
@@ -328,8 +329,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     setWeatherChip(night, nightLabel, failed) {
       weatherChip.className = 'chip weather';
       if (failed || !night) {
-        weatherChip.textContent = '🌦️ Weather: unavailable';
-        weather.set({ tone: 'none' }, 'Unavailable');
+        weatherChip.textContent = '🌦️ ' + tr('Weather: unavailable');
+        weather.set({ tone: 'none' }, tr('Unavailable'));
         return;
       }
       const sky = night.worstCode !== undefined ? describeCode(night.worstCode).emoji : '🌙';
@@ -343,6 +344,6 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
 /** Result for a spot outside Switzerland. */
 export function renderOutside(root: HTMLElement) {
   const card = el('div', 'outside');
-  card.append(el('strong', undefined, '🌍 Outside Switzerland'), el('p', undefined, 'This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.'));
+  card.append(el('strong', undefined, '🌍 ' + tr('Outside Switzerland')), el('p', undefined, tr('This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.')));
   root.replaceChildren(card);
 }

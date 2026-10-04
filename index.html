@@ -12,40 +12,42 @@
 
     <header id="topbar">
       <form id="search" role="search" autocomplete="off">
-        <input id="q" type="search" placeholder="Search a place or peak…" aria-label="Search a place" />
-        <button type="button" id="locate" title="Use my location" aria-label="Use my location">◎</button>
+        <input id="q" type="search" placeholder="Search a place or peak…" aria-label="Search a place" data-i18n-attr="placeholder,aria-label" />
+        <button type="button" id="locate" title="Use my location" aria-label="Use my location" data-i18n-attr="title,aria-label">◎</button>
         <ul id="suggest" hidden></ul>
       </form>
     </header>
 
-    <button id="layers-btn" type="button" aria-expanded="false" aria-controls="legend">Layers</button>
+    <button id="layers-btn" type="button" aria-expanded="false" aria-controls="legend" data-i18n>Layers</button>
     <section id="legend" hidden>
-      <h2>Map layers</h2>
-      <label><input type="checkbox" id="toggle-trails" checked /> Hiking trails</label>
+      <h2 data-i18n>Map layers</h2>
+      <label><input type="checkbox" id="toggle-trails" checked /> <span data-i18n>Hiking trails</span></label>
       <ul class="swatches">
-        <li><i style="background:#f2c200"></i> Hiking trail</li>
-        <li><i style="background:#e02020"></i> Mountain trail</li>
-        <li><i style="background:#1f3fe0"></i> Alpine trail</li>
+        <li><i style="background:#f2c200"></i> <span data-i18n>Hiking trail</span></li>
+        <li><i style="background:#e02020"></i> <span data-i18n>Mountain trail</span></li>
+        <li><i style="background:#1f3fe0"></i> <span data-i18n>Alpine trail</span></li>
       </ul>
-      <label><input type="checkbox" id="toggle-slope" /> Steep slopes over 30° (avalanche terrain)</label>
-      <p>Orange-red shading marks slopes of 30° or more (swisstopo, 10 m model). Avalanches release on slopes from about 30°, so keep the tent away from them and from the runout below them.</p>
-      <label><input type="checkbox" id="toggle-zones" checked /> Restricted zones</label>
-      <p>Colours come from the source layers (federal hunting reserves, wildlife quiet zones, floodplains, bogs and more). A coloured area is not always a ban: tap the spot to see what applies.</p>
-      <p>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, SO, JU) is checked when you tap a spot but is not drawn on the map.</p>
+      <label><input type="checkbox" id="toggle-slope" /> <span data-i18n>Steep slopes over 30° (avalanche terrain)</span></label>
+      <p data-i18n>Orange-red shading marks slopes of 30° or more (swisstopo, 10 m model). Avalanches release on slopes from about 30°, so keep the tent away from them and from the runout below them.</p>
+      <label><input type="checkbox" id="toggle-zones" checked /> <span data-i18n>Restricted zones</span></label>
+      <p data-i18n>Colours come from the source layers (federal hunting reserves, wildlife quiet zones, floodplains, bogs and more). A coloured area is not always a ban: tap the spot to see what applies.</p>
+      <p data-i18n>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, SO, JU) is checked when you tap a spot but is not drawn on the map.</p>
+      <label class="lang-row"><span data-i18n>Language</span> <select id="lang-select" aria-label="Language"></select></label>
+      <p class="lang-note" data-i18n>The interface is translated; the detailed explanations and legal summaries stay in English.</p>
     </section>
 
-    <div id="offline-banner" role="status" hidden>Offline: the saved map and bundled data still work. Zone, canton, water and weather lookups need a connection, so results are incomplete.</div>
+    <div id="offline-banner" role="status" data-i18n hidden>Offline: the saved map and bundled data still work. Zone, canton, water and weather lookups need a connection, so results are incomplete.</div>
     <div id="toast" role="status" hidden></div>
 
     <aside id="sheet" data-state="intro" aria-live="polite">
       <div id="grab" aria-hidden="true"></div>
-      <button id="sheet-close" type="button" aria-label="Close panel">✕</button>
+      <button id="sheet-close" type="button" aria-label="Close panel" data-i18n-attr="aria-label">✕</button>
       <div id="intro">
-        <h1>Can I camp here?</h1>
-        <p>Tap anywhere on the map to check a spot, or search for a place. You get a legality score and a sleep score, then tap either one for the details.</p>
+        <h1 data-i18n>Can I camp here?</h1>
+        <p data-i18n>Tap anywhere on the map to check a spot, or search for a place. You get a legality score and a sleep score, then tap either one for the details.</p>
       </div>
       <div id="result" hidden></div>
-      <p class="disclaimer">
+      <p class="disclaimer" data-i18n>
         Guidance only, not legal advice. Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.
       </p>
     </aside>

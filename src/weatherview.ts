@@ -1,5 +1,6 @@
 import { hourLabel, linePath, nearestIndex, niceScale, xAt } from './chart';
 import { compassName, describeCode, type HourPoint, type Night, type NightWindow } from './comfort/weather';
+import { tr } from './i18n';
 
 const SVG = 'http://www.w3.org/2000/svg';
 const W = 340;
@@ -43,7 +44,7 @@ function chart(spec: ChartSpec): HTMLElement {
   const dec = spec.decimals ?? 0;
   const fmt = (v: number) => `${v.toFixed(dec)} ${spec.unit}`;
   if (!present.length) {
-    wrap.append(el('p', 'where', 'No data for this window.'));
+    wrap.append(el('p', 'where', tr('No data for this window.')));
     return wrap;
   }
   const lo = Math.min(...present, ...(spec.include ?? []), ...(spec.kind === 'bars' ? [0] : []));
@@ -154,7 +155,7 @@ function tile(label: string, value: string, sub?: string, tone?: 'good' | 'warn'
 function table(hours: HourPoint[]) {
   const t = el('table', 'wx-table');
   const head = el('tr');
-  for (const h of ['Hour', 'Sky', '°C', 'Rain mm', 'Rain %', 'Wind km/h', 'Gusts', 'From']) head.append(el('th', undefined, h));
+  for (const h of ['Hour', 'Sky', '°C', 'Rain mm', 'Rain %', 'Wind km/h', 'Gusts', 'From']) head.append(el('th', undefined, tr(h)));
   t.append(head);
   for (const h of hours) {
     const r = el('tr');
@@ -201,20 +202,20 @@ export function renderWeather(host: HTMLElement, v: WeatherView) {
   });
   const span = el('p', 'where', `${fmtDay(w.from)} ${w.from.slice(11, 16)} to ${fmtDay(w.to)} ${w.to.slice(11, 16)}`);
 
-  const parts: Node[] = [el('h2', 'wx-title', 'Weather'), picker, span];
+  const parts: Node[] = [el('h2', 'wx-title', tr('Weather')), picker, span];
   const n = v.night;
   if (!n) {
-    parts.push(el('p', 'where', 'No forecast for this night.'));
+    parts.push(el('p', 'where', tr('No forecast for this night.')));
     host.replaceChildren(...parts);
     return;
   }
   const sky = n.worstCode !== undefined ? describeCode(n.worstCode) : undefined;
   const tiles = el('div', 'wx-tiles');
   tiles.append(
-    tile('Sky', sky ? `${sky.emoji} ${sky.label}` : '—', n.meanCloud !== undefined ? `${Math.round(n.meanCloud)} % cloud` : undefined, n.thunder ? 'bad' : undefined),
-    tile('Low', `${Math.round(n.minTempC)} °C`, n.freezingLevelM !== undefined ? `freezing level ${Math.round(n.freezingLevelM / 10) * 10} m` : undefined, n.minTempC <= -5 ? 'warn' : undefined),
-    tile('Gusts', `${Math.round(n.maxGustKmh)} km/h`, `from ${compassName(n.windFromDeg)}, mean ${Math.round(n.meanWindKmh)}`, n.maxGustKmh >= 80 ? 'bad' : n.maxGustKmh >= 50 ? 'warn' : undefined),
-    tile('Rain', `${n.precipMm.toFixed(1)} mm`, n.maxPrecipProb !== undefined ? `up to ${Math.round(n.maxPrecipProb)} %` : undefined, n.precipMm >= 5 ? 'warn' : undefined),
+    tile(tr('Sky'), sky ? `${sky.emoji} ${sky.label}` : '—', n.meanCloud !== undefined ? `${Math.round(n.meanCloud)} % cloud` : undefined, n.thunder ? 'bad' : undefined),
+    tile(tr('Low'), `${Math.round(n.minTempC)} °C`, n.freezingLevelM !== undefined ? `freezing level ${Math.round(n.freezingLevelM / 10) * 10} m` : undefined, n.minTempC <= -5 ? 'warn' : undefined),
+    tile(tr('Gusts'), `${Math.round(n.maxGustKmh)} km/h`, `from ${compassName(n.windFromDeg)}, mean ${Math.round(n.meanWindKmh)}`, n.maxGustKmh >= 80 ? 'bad' : n.maxGustKmh >= 50 ? 'warn' : undefined),
+    tile(tr('Rain'), `${n.precipMm.toFixed(1)} mm`, n.maxPrecipProb !== undefined ? `up to ${Math.round(n.maxPrecipProb)} %` : undefined, n.precipMm >= 5 ? 'warn' : undefined),
   );
   parts.push(tiles);
   if (v.note) parts.push(el('p', 'wx-note', v.note));
@@ -222,12 +223,12 @@ export function renderWeather(host: HTMLElement, v: WeatherView) {
   const hours = v.hours;
   const dirName = (i: number) => (hours[i]?.dir == null ? '' : `from ${compassName(hours[i]!.dir!)}`);
   parts.push(
-    chart({ title: 'Temperature', unit: '°C', kind: 'line', color: '--viz-temp', values: hours.map((h) => h.temp), hours, ref: { value: 0, label: '0 °C' }, decimals: 1 }),
-    chart({ title: 'Rain', unit: 'mm', kind: 'bars', color: '--viz-rain', values: hours.map((h) => h.rain), hours, decimals: 1, extra: (i) => (hours[i]?.prob == null ? '' : `${Math.round(hours[i]!.prob!)} % chance`) }),
-    chart({ title: 'Wind gusts', unit: 'km/h', kind: 'line', color: '--viz-wind', values: hours.map((h) => h.gust), hours, include: [0], extra: (i) => `wind ${hours[i]?.wind == null ? 'n/a' : Math.round(hours[i]!.wind!)} km/h ${dirName(i)}` }),
+    chart({ title: tr('Temperature'), unit: '°C', kind: 'line', color: '--viz-temp', values: hours.map((h) => h.temp), hours, ref: { value: 0, label: '0 °C' }, decimals: 1 }),
+    chart({ title: tr('Rain'), unit: 'mm', kind: 'bars', color: '--viz-rain', values: hours.map((h) => h.rain), hours, decimals: 1, extra: (i) => (hours[i]?.prob == null ? '' : `${Math.round(hours[i]!.prob!)} % chance`) }),
+    chart({ title: tr('Wind gusts'), unit: 'km/h', kind: 'line', color: '--viz-wind', values: hours.map((h) => h.gust), hours, include: [0], extra: (i) => `wind ${hours[i]?.wind == null ? 'n/a' : Math.round(hours[i]!.wind!)} km/h ${dirName(i)}` }),
   );
   const details = el('details', 'wx-details');
-  details.append(el('summary', undefined, 'Show as table'), table(hours));
+  details.append(el('summary', undefined, tr('Show as table')), table(hours));
   parts.push(details, el('p', 'disclaimer', 'Forecast: Open-Meteo.com (CC BY 4.0), adjusted to the spot’s elevation. Mountain weather changes fast; check the MeteoSwiss forecast and the avalanche bulletin before you go.'));
   host.replaceChildren(...parts);
 }

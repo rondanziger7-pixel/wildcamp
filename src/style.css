@@ -209,3 +209,10 @@ button { font: inherit; cursor: pointer; }
 .plan-list { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 8px; }
 .plan-row { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
 .plan-row.weakest { border-color: var(--bad); }
+.lang-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.lang-row select { flex: 1; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.lang-note { font-size: .78rem; color: var(--muted); margin: 4px 0 0; }
+/* the layers panel scrolls instead of running under the result sheet */
+#legend { max-height: calc(100vh - 130px - 62vh); overflow-y: auto; overscroll-behavior: contain; }
+@media (min-width: 720px) { #legend { max-height: calc(100vh - 140px); } }
+@media (min-width: 720px) { #legend { left: auto; right: 62px; top: 14px; } #layers-btn { left: auto; right: 62px; top: 14px; } }

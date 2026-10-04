@@ -1,15 +1,16 @@
 import { compassName } from './comfort/weather';
 import { el } from './resultview';
 import type { PlanRow, TripPlan } from './planner';
+import { tr } from './i18n';
 
 const tone = (v: number | undefined) => (v === undefined ? 'none' : v >= 60 ? 'good' : v >= 35 ? 'warn' : 'bad');
 
 /** The trip table: one row per night with the saved legality and the fresh weather for that spot. */
 export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, back: () => void): void {
-  const back1 = el('button', 'linkish', '← Back to saved spots');
+  const back1 = el('button', 'linkish', '← ' + tr('Back to saved spots'));
   back1.type = 'button';
   back1.onclick = back;
-  const title = el('h2', 'finder-title', `Trip plan: ${plan.rows.length} night${plan.rows.length === 1 ? '' : 's'}`);
+  const title = el('h2', 'finder-title', tr(plan.rows.length === 1 ? 'Trip plan: {n} night' : 'Trip plan: {n} nights', { n: plan.rows.length }));
   const list = el('ol', 'plan-list');
   plan.rows.forEach((r: PlanRow, i) => {
     const li = el('li', `plan-row${plan.weakest === i && plan.rows.length > 1 ? ' weakest' : ''}`);
@@ -17,8 +18,8 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, ba
     head.append(el('span', 'finder-num', String(i + 1)), el('strong', undefined, `${r.night}: ${r.spot.name}`));
     const chips = el('div', 'finder-scores');
     chips.append(
-      el('span', `chip-score ${tone(r.legal)}`, `Legal ${r.legal ?? '–'}`),
-      el('span', `chip-score ${r.stop ? 'bad' : tone(r.weather)}`, r.forecast ? `Weather ${r.weather ?? '–'}` : 'Weather: no forecast'),
+      el('span', `chip-score ${tone(r.legal)}`, `${tr('Legal')} ${r.legal ?? '–'}`),
+      el('span', `chip-score ${r.stop ? 'bad' : tone(r.weather)}`, r.forecast ? `${tr('Weather')} ${r.weather ?? '–'}` : tr('Weather: no forecast')),
     );
     const f = r.forecast;
     const detail = f

@@ -1,3 +1,5 @@
+import { tr } from './i18n';
+
 /** Protection seasons of wildlife quiet zones ("dd.mm.-dd.mm.", possibly wrapping the new year) as a month calendar. */
 export interface Season {
   from: { m: number; d: number };
@@ -57,5 +59,5 @@ export function nextChange(s: Season, today: Date): SeasonChange | undefined {
 /** "15 Dec to 30 Apr" */
 export function seasonLabel(s: Season): string {
   const mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return `${s.from.d} ${mon[s.from.m - 1]} to ${s.to.d} ${mon[s.to.m - 1]}`;
+  return tr('{a} to {b}', { a: `${s.from.d} ${tr(mon[s.from.m - 1]!)}`, b: `${s.to.d} ${tr(mon[s.to.m - 1]!)}` });
 }
