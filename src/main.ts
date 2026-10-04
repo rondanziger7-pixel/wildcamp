@@ -14,6 +14,7 @@ import { LANGS, applyStatic, getLang, setLang, tr, type Lang } from './i18n';
 import { reportUrl } from './report';
 import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
+import { RetryTileLayer, RetryWmsLayer } from './tilelayer';
 import { fetchJuraReserves } from './jura';
 import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { searchPlaces, type Place } from './search';
@@ -53,16 +54,15 @@ const map = L.map('map', { zoomControl: false }).setView(hashView ? [hLat!, hLon
 
 L.control.zoom({ position: 'topright' }).addTo(map);
 
-// Tile loading is kept light: tiles load when a pan or zoom settles, one ring of off-screen tiles is kept,
+// Tile loading is kept light: no tiles are requested mid-zoom, failed tiles are asked for again (see tilelayer.ts),
 // and the overlays below start only at the zooms where they say something and use 512 px tiles (a quarter of the requests).
-const LIGHT = { updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 } as const;
-const baseLayer = L.tileLayer(
+const LIGHT = { updateWhenZooming: false } as const;
+const baseLayer = new RetryTileLayer(
   'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg',
   { maxZoom: 18, attribution: '© swisstopo', ...LIGHT },
 ).addTo(map);
 
-const zoneOverlay = L.tileLayer
-  .wms('https://wms.geo.admin.ch/', {
+const zoneOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
     layers: ZONE_LAYERS.filter((l) => l.severity !== 'info')
       .map((l) => l.overlayId ?? l.id)
       .join(','),
@@ -77,7 +77,7 @@ const zoneOverlay = L.tileLayer
 zoneOverlay.addTo(map);
 
 // Signposted hiking trails (swissTLM3D): yellow hiking, red mountain, blue alpine trails.
-const trailOverlay = L.tileLayer.wms('https://wms.geo.admin.ch/', {
+const trailOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
   layers: 'ch.swisstopo.swisstlm3d-wanderwege',
   format: 'image/png',
   transparent: true,
@@ -90,7 +90,7 @@ const trailOverlay = L.tileLayer.wms('https://wms.geo.admin.ch/', {
 trailOverlay.addTo(map);
 
 // Slopes of 30 degrees or more (swisstopo): where avalanches release. Off by default, toggled in the layers panel.
-const slopeOverlay = L.tileLayer.wms('https://wms.geo.admin.ch/', {
+const slopeOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
   layers: 'ch.swisstopo-karto.hangneigung',
   format: 'image/png',
   transparent: true,

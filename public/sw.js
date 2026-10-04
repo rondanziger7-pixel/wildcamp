@@ -29,17 +29,37 @@ async function trim(name, max) {
   for (let i = 0; i < keys.length - max; i++) await cache.delete(keys[i]);
 }
 
-async function tile(req) {
+// Trimming scans the whole cache, so it runs once per 200 stored responses, not after every tile.
+const puts = { [TILES]: 0, [API]: 0 };
+function stored(name, max) {
+  if (++puts[name] % 200 === 0) trim(name, max);
+}
+
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** One tile: from the cache, else the network. A failed request is retried once; as a last resort the plain image request
+ *  is passed through, so a CORS hiccup shows the tile (uncached) instead of a grey hole. */
+async function tile(e) {
+  const req = e.request;
   const cache = await caches.open(TILES);
   const hit = await cache.match(req.url);
   if (hit) return hit;
-  // images are requested without CORS (an opaque response would cost megabytes of quota each), so ask again with CORS
-  const res = await fetch(req.url, { mode: 'cors' });
-  if (res.ok) {
-    await cache.put(req.url, res.clone());
-    trim(TILES, MAX_TILES);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      // images are requested without CORS (an opaque response would cost megabytes of quota each), so ask again with CORS
+      const res = await fetch(req.url, { mode: 'cors' });
+      if (res.ok) {
+        // answer at once and store in the background
+        e.waitUntil(cache.put(req.url, res.clone()).then(() => stored(TILES, MAX_TILES)).catch(() => undefined));
+        return res;
+      }
+      if (res.status < 500 && res.status !== 429) return res; // a real "not found": no point retrying
+    } catch {
+      /* network error: retry */
+    }
+    await wait(400);
   }
-  return res;
+  return fetch(req);
 }
 
 async function api(req) {
@@ -48,7 +68,7 @@ async function api(req) {
     const res = await fetch(req);
     if (res.ok) {
       await cache.put(req.url, res.clone());
-      trim(API, MAX_API);
+      stored(API, MAX_API);
     }
     return res;
   } catch (err) {
@@ -90,7 +110,7 @@ self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', (e) => {
   const kind = classify(e.request.url, e.request.method, self.location.origin);
-  if (kind === 'tile') e.respondWith(tile(e.request));
+  if (kind === 'tile') e.respondWith(tile(e));
   else if (kind === 'api') e.respondWith(api(e.request));
   else if (kind === 'data') e.respondWith(data(e.request));
   else if (kind === 'shell') e.respondWith(shell(e.request));
