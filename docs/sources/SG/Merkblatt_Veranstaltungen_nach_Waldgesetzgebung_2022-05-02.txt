@@ -1,0 +1,762 @@
+Kanton St.Gallen
+Volkswirtschaftsdepartement
+
+Kantonsforstamt
+
+
+
+
+Melde- und bewilligungspflichtige Veranstaltungen gemäss Waldgesetzgebung
+- Merkblatt für Veranstalter und politische Gemeinden – 2. Mai 2022
+
+Inhaltsverzeichnis
+1                Einleitung                                                                                                              2
+1.1              Waldgesetzgebung ...................................................................................................... 2
+1.2              Ziele der Regelung von Veranstaltungen .................................................................... 2
+2                Meldung von Veranstaltungen                                                                                                           2
+2.1              Meldung an die politische Gemeinde .......................................................................... 2
+2.2              Veranstaltung auf dem Gebiet mehrerer politischer Gemeinden................................ 3
+2.3              Weitere Bewilligungen und Einbezug Grundeigentümerinnen bzw. Grundeigentümer
+                 ..................................................................................................................................... 3
+3                Allgemeine Beurteilung von Veranstaltungen                                                                                        3
+3.1              Beurteilung im Geoportal ............................................................................................. 3
+3.2              Veranstaltungsart......................................................................................................... 4
+3.3              Teilnehmende .............................................................................................................. 4
+3.4              Reiten und Radfahren.................................................................................................. 4
+3.5              Zeltlager ....................................................................................................................... 4
+3.6              Biwakieren und Campieren ......................................................................................... 5
+3.7              Motorfahrzeuge ............................................................................................................ 5
+3.8              Durchführungsort ......................................................................................................... 5
+3.9              Verbote ........................................................................................................................ 6
+3.10             Gewässer ..................................................................................................................... 6
+3.11             Grundwasserschutzzonen/-areale ............................................................................... 6
+3.12             Sensible Objekte und Gebiete ..................................................................................... 6
+3.13             Bodenschutz ................................................................................................................ 6
+3.14             Naturgefahren .............................................................................................................. 7
+3.15             Durchführungszeit........................................................................................................ 7
+3.16             Nutzungsintensität ....................................................................................................... 7
+3.17             Nicht meldepflichtige Veranstaltungen ........................................................................ 7
+4                Meldepflichtige Veranstaltungen                                                                                                 8
+4.1              Verfahren ..................................................................................................................... 8
+4.2              Einvernehmliche Regelung .......................................................................................... 8
+4.3              Einschränkungen für meldepflichtige Veranstaltungen verfügen................................ 9
+4.4              Beurteilung meldepflichtiger Veranstaltungen und Hinweise ...................................... 9
+4.4.1            Sportliche Veranstaltungen                                                                                                      9
+4.4.2            Hundeveranstaltungen                                                                                                            9
+4.4.3            Technische Einrichtungen und Geräte                                                                                          10
+4.4.4            Kriegs- und Kampfspiele                                                                                                      10
+4.4.5            Mehrtägige Veranstaltungen / Dauer                                                                                           10
+5                Bewilligungspflichtige Veranstaltungen                                                                                        11
+5.1              Aufgaben der politischen Gemeinde bei bewilligungspflichtigen Veranstaltungen... 11
+5.2              Verfahren bewilligungspflichtige Veranstaltungen .................................................... 11
+5.3              Bewilligung ................................................................................................................. 11
+6                Anhänge                                                                                                            11
+6.1              Anhang 1: Zuständigkeiten ........................................................................................ 12
+6.2              Anhang 2: Weitere Informationen und Merkblätter ................................................... 13
+6.3              Anhang 3: Gesetzliche Grundlagen (in Vollzug ab 1. Mai 2022) .............................. 14
+6.4              Anhang 4: Rahmenbedingungen für Zeltlager .......................................................... 15
+6.5              Anhang 5: Formulierungsvorschlag für Verfügungen ............................................... 16
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                                                                             1/16
+1            Einleitung
+1.1          Waldgesetzgebung
+Das Waldgesetz (SR 921.0; abgekürzt WaG) verpflichtet die Kantone, dafür zu sorgen, dass der
+Wald für die Allgemeinheit zugänglich ist. Wo es die Erhaltung des Waldes oder andere öffentli-
+che Interessen, wie namentlich der Schutz von Pflanzen und wildlebenden Tieren erfordern, ha-
+ben die Kantone die Durchführung von grossen Veranstaltungen im Wald einer Bewilligungs-
+pflicht zu unterstellen. Im Kanton St.Gallen gilt dies nicht nur für Veranstaltungen im Wald, son-
+dern auch für Veranstaltungen in weiteren Lebensräumen von Pflanzen und wildlebenden Tieren.
+Damit sind nach der St.Galler Praxis Veranstaltungen ausserhalb der Bauzone gemeint.
+Das kantonale Recht sieht eine Meldepflicht für Veranstaltungen (Art. 17 des Einführungsgeset-
+zes zur eidgenössischen Waldgesetzgebung [sGS 651.1; abgekürzt EG-WaG] und Art. 19 f. der
+Verordnung zum EG-WaG [sGS 651.11; abgekürzt Vo EG-WaG]) und eine Bewilligungspflicht für
+grosse Veranstaltungen (Art. 18 EG-WaG und Art. 21 ff. Vo EG-WaG) vor. Mit dem IV. Nachtrag
+zur Vo EG-WaG vom 11. Januar 2022, in Vollzug ab dem 1. Mai 2022, erfolgte nach 20-jähriger
+Praxis eine Anpassung der kantonalen Regelung. Das vorliegende Merkblatt enthält die nötigen
+Informationen für die Beteiligten und soll einheitliche, transparente und effiziente Verfahren er-
+möglichen.
+
+
+1.2          Ziele der Regelung von Veranstaltungen
+Die Meldepflicht für Veranstaltungen und die Bewilligungspflicht für grosse Veranstaltungen die-
+nen dem Schutz der Lebensgemeinschaft von wildlebenden Tieren und Pflanzen. Durch gezielte
+Lenkung werden Veranstaltungen mit erheblichem Störungspotenzial (Art. 17 f. EG-WaG und
+Art. 8 des Fischereigesetzes [sGS 854.1; abgekürzt FG) von natur- und wildsensiblen Gebieten
+ferngehalten oder deren Auswirkungen mittels Auflagen und/oder Bedingungen auf ein tragbares
+Mass beschränkt. Die politischen Gemeinden sind die erste Anlaufstelle sowohl für meldepflich-
+tige Veranstaltungen wie auch für bewilligungspflichtige grosse Veranstaltungen und nehmen im
+Vollzug eine zentrale Rolle ein.
+
+
+2            Meldung von Veranstaltungen
+2.1          Meldung an die politische Gemeinde
+Melde- und bewilligungspflichtige Veranstaltungen gemäss Waldgesetzgebung sind der politi-
+schen Gemeinde schriftlich (auch per E-Mail möglich), vollständig und rechtzeitig zu melden. Die
+Meldung hat an diejenige politische Gemeinde zu erfolgen, auf deren Gebiet der infrastrukturelle
+Schwerpunkt der Veranstaltung (z.B. Start und Ziel) liegt (Art. 20 Abs. 1 Vo EG-WaG). Um als
+Veranstalterin bzw. Veranstalter Planungssicherheit zu erhalten, ist eine möglichst frühzeitige
+Meldung empfehlenswert. Damit steht genügend Zeit für das Erarbeiten einer einvernehmlichen
+Regelung oder die Suche eines Alternativstandortes zur Verfügung, falls der gemeldete Standort
+aus Sicht des Lebensraum- oder Bodenschutzes nicht geeignet sein sollte. Eine Meldung der
+Veranstaltung mindestens drei Monate vor der eigentlichen Durchführung sollte bei den meisten
+Veranstaltungen ausreichen. Insbesondere für neue oder grosse Veranstaltungen kann bereits
+früher eine (Vor-) Prüfung beantragt werden.
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                       2/16
+Die Meldung muss insbesondere folgende Angaben enthalten (Art. 20 Abs. 2 Vo EG-WaG):
+ Art der Veranstaltung;
+ genauer Durchführungsort der Veranstaltung (Situationsplan inkl. Schön- und Schlechtwetter-
+  parkplätze); die sensiblen Lebensräume und die Fruchtfolgeflächen sind in der öffentlichen und
+  kategorisierten «Veranstaltungen Hinweiskarte» ersichtlich und in der Planung zu beachten;
+ Zeit und Dauer der Veranstaltung;
+ die voraussichtliche Anzahl Teilnehmende (inkl. «passiv Teilnehmende» wie Besuchende so-
+  wie allfällige Hilfskräfte wie Helferinnen bzw. Helfer und Funktionärinnen bzw. Funktionäre);
+ erforderliche Infrastrukturen (allenfalls Detailpläne und Bodenschutzkonzept).
+Im Minimum sind ein Meldeformular und ein Situationsplan mit den wesentlichen Infrastruktur-
+standorten und -anlagen einzureichen (Eventbereich, Camping, Erschliessungswege und Geh-
+flächen, geplante Zufahrten für den Auf- und Abbau, usw.). Das Meldeformular für Veranstalte-
+rinnen bzw. Veranstalter ist auf der Homepage des Kantonsforstamtes abrufbar unter:
+https://www.sg.ch/umwelt-natur/wald/bewilligungen-beantragen/veranstaltungen-im-lebensraum.html.
+
+2.2          Veranstaltung auf dem Gebiet mehrerer politischer Gemeinden
+Betrifft die Veranstaltung das Hoheitsgebiet mehrerer politischer Gemeinden, sorgt die politische
+Gemeinde, auf deren Gebiet der infrastrukturelle Schwerpunkt der Veranstaltung liegt, für die
+erforderliche Koordination (Art. 20 Abs. 1 Vo EG-WaG).
+
+2.3          Weitere Bewilligungen und Einbezug Grundeigentümerinnen bzw. Grundeigentümer
+Die Veranstalterin bzw. der Veranstalter sorgt für die Einholung allfällig weiterer Bewilligungen
+(z.B. Verkehrspolizei). Es ist ebenfalls Sache der Veranstalterin bzw. des Veranstalters, die
+Grundeigentümerinnen bzw. Grundeigentümer über die geplante Veranstaltung in Kenntnis zu
+setzen und allenfalls deren Zustimmung einzuholen (vgl. dazu auch Art. 23 Abs. 3 Vo EG-WaG).
+Es wird als selbstverständlich erachtet, dass für stationäre Veranstaltungen die Zustimmung ein-
+geholt wird (z.B. für ein Zeltlager). Für einen Orientierungslauf in einem kleinparzellierten Wald
+mit Dutzenden von Waldeigentümerinnen bzw. Waldeigentümern wäre dies hingegen nicht ver-
+hältnismässig. Bei Bedarf kann das Grundbuchamt der politischen Gemeinde Auskunft zu den
+Eigentumsverhältnissen geben.
+Im Kanton St.Gallen sind die privatrechtlichen Zustimmungen der Grundeigentümerinnen bzw.
+Grundeigentümer keine Voraussetzung für die öffentlich-rechtliche Bewilligung nach der Waldge-
+setzgebung. Das Einholen der Zustimmung basierend auf der Waldgesetzgebung kann nicht ver-
+fügt werden. Die Einholung einer Zustimmung bei den Grundeigentümerinnen und Grundeigen-
+tümern sowie den Pächterinnen und Pächtern wird aber dringend empfohlen. Den politischen
+Gemeinden steht es offen, betroffene Grundeigentümerinnen und Grundeigentümer zu informie-
+ren. Zu empfehlen ist es dann, wenn eine Grundeigentümerin oder ein Grundeigentümer ein (be-
+kanntes) schutzwürdiges Interesse hat oder in besonderem Masse betroffen ist. In der Praxis hat
+es sich bewährt, eine Information über bevorstehende Veranstaltungen in den eigenen, lokalen
+Kommunikationskanälen zu veröffentlichen.
+
+
+
+3            Allgemeine Beurteilung von Veranstaltungen
+3.1          Beurteilung im Geoportal
+Den angemeldeten Nutzerinnen bzw. Nutzern des Geoportals steht für die Prüfung die Karte
+«Sensible Lebensräume» zur Verfügung (vorgängige Anmeldung erforderlich). Allfällige Bestim-
+mungen sind allerdings den entsprechenden (meist öffentlichen) Detailkarten zu entnehmen (z.B.
+Naturschutzinventare, Bund und Kanton Kt. SG - Geoportal; vgl. auch Merkblatt «Schutzgebiete
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                       3/16
+im Geoportal»). Die Karte enthält alle wichtigen Lebensräume gemäss der öffentlichen und kate-
+gorisierten «Veranstaltungen Hinweiskarte». Diese unverbindliche Karte zeigt, ob sich ein Gebiet
+für eine Veranstaltung eignen könnte. Sie basiert auf Inventaren, dem kantonalen Richtplan, kom-
+munalen Schutzverordnungen, Waldentwicklungsplänen und weiteren Grundlagen (vgl. Erläute-
+rungen der Karte im Geoportal). Die ökologisch wertvollen Gebiete sind aufgrund ihrer Bedeutung
+kategorisiert worden. Als zusätzliche Hinweise können Grundwasserschutzzonen, Fruchtfolgeflä-
+chen und Wildruhezonen ein- und ausgeblendet werden. In der Karte sind zudem Jugendlager-
+standorte aufgeführt, die in den letzten Jahren vom Kantonsforstamt (KFA) bewilligt wurden.
+
+3.2          Veranstaltungsart
+Jede Veranstaltung ist individuell zu beurteilen. Die flächige Nutzung durch einen Orientierungs-
+lauf führt beispielsweise zu einer grösseren Beunruhigung als ein Geländelauf, der auf öffentli-
+chen Strassen und Wegen stattfindet. Die unterschiedlichen Schwellenwerte für die Melde- bzw.
+Bewilligungspflicht für Veranstaltungen (Art. 19 und Art. 21 Vo EG-WaG) basieren auf dem Stö-
+rungspotenzial (z.B. generelle Meldepflicht für Veranstaltungen mit technischen Einrichtungen
+und Geräten nach Art. 19 Abs. 1 Bst. d Vo EG-WaG).
+ Eine Veranstaltung kann nach einem oder mehreren Buchstaben melde- und bewilligungs-
+  pflichtig sein: z.B. Meldepflicht (Art. 19 Abs. 1 Vo EG-WaG) einer mehrtägigen (Bst. f) sport-
+  lichen Veranstaltung (Bst. a) mit technischen Einrichtungen und Geräten (Bst. d).
+
+3.3          Teilnehmende
+Grundsätzlich steigt das Störungspotenzial mit zunehmender Teilnehmerzahl. Abhängig von der
+Veranstaltungsart und dem Durchführungsort können aber bereits wenige Teilnehmende den Le-
+bensraum beeinflussen. Dies kann z.B. bei einem Musikanlass mit Verstärkeranlagen der Fall
+sein. Unter «Teilnehmende» fallen nebst den aktiv an einer Veranstaltung teilnehmenden Perso-
+nen auch die Besuchenden sowie allfällige Hilfskräfte wie Helferinnen bzw. Helfer und Funktio-
+närinnen bzw. Funktionäre als passiv an einer Veranstaltung teilnehmende Personen.
+Mit «insgesamt» wird ausgesagt, dass im Gegensatz zu Art. 19 Abs. 1 Bst. f und Art. 21 Abs. 1
+Bst. h Vo EG-WaG (mehrtägige Veranstaltungen) auf die Gesamtzahl der Teilnehmenden wäh-
+rend der (allenfalls auch mehrtägigen) Veranstaltungsdauer abgestellt wird. Jede teilnehmende
+Person wird einmal gezählt, unabhängig von der Dauer ihrer Teilnahme. Beispiel:
+ Ein Blasmusikkonzert mit 50 Musikantinnen und Musikanten, 20 Helferinnen und Helfern so-
+   wie 150 Besucherinnen und Besuchern ist meldepflichtig nach Art. 19 Abs. 2 Vo EG-WaG
+   (insgesamt 220 Teilnehmende).
+
+3.4          Reiten und Radfahren
+Im Wald sind Reiten und Radfahren abseits von öffentlichen Strassen und Wegen verboten
+(Art. 15 Abs. 2 EG-WaG). Vorbehalten sind Einschränkungen, die sich aus der Umsetzung des
+Waldentwicklungsplans sowie von Reit- und Radwegkonzepten oder aus übergeordnetem Recht
+ergeben. Auf privaten Strassen und Wegen sind Radfahren und Reiten erlaubt, soweit der Wald-
+entwicklungsplan oder entsprechende Rad- und Reitwegkonzepte dies vorsehen. Solange diese
+Grundlagen fehlen, sind Radfahren und Reiten auf privaten Strassen und Wegen zulässig, wenn
+sie mehr als zwei Meter breit sind. Gemäss ständiger Praxis dürfen offizielle Wanderwege mit
+einem Bike befahren werden.
+
+3.5          Zeltlager
+Jugendlager im Wald oder am Waldrand sind sinnvoll und bringen den Kindern und Jugendlichen
+die Natur näher. Die Lager finden grösstenteils an Auffahrt, Pfingsten und zu Beginn der Som-
+merferien statt. Sie liegen damit in der sensiblen Jahreszeit vom 1. Mai bis 15. Juli (Brut-, Setz-
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                        4/16
+und Aufzuchtzeit von Wildtieren und Vögeln). In dieser Zeit ist es umso wichtiger, einen Standort
+zu wählen, bei dem keine erhebliche Störung der Tiere und keine erhebliche Schädigung von
+Pflanzen zu erwarten sind. In der Hinweiskarte «Veranstaltungen» sind Jugendlagerstandorte
+aufgeführt, die vom KFA bereits mindestens einmal bewilligt wurden. Die Rahmenbedingungen
+bzw. Standardauflagen des KFA befinden sich im Anhang 4.
+
+3.6          Biwakieren und Campieren 1
+Das Campieren und freie Zelten (inkl. Biwakieren) von Einzelpersonen und kleinen Gruppen in
+der freien Natur ist im Kanton St.Gallen an den meisten Orten erlaubt bzw. nicht verboten. Insbe-
+sondere für mehrtägiges Campieren sollte die zivilrechtliche Zustimmung der Grundeigentümerin
+bzw. des Grundeigentümers eingeholt werden. Das Betreten von Wald und Weide ist im ortsüb-
+lichem Umfang jedermann gestattet (Art. 699 des Schweizerischen Zivilgesetzbuchs [SR 210;
+abgekürzt ZGB]). Nicht erlaubt ist das freie Zelten und Campieren in eidgenössischen Jagdbann-
+gebieten, in Naturschutzgebieten und in weiteren Gebieten, die nach kommunaler Schutzverord-
+nung geschützt sind. Gemieden werden sollten zudem Übernachtungen an ökologisch sensiblen
+Standorten. Dazu gehören insbesondere die obere Waldgrenze (Lebensraum der Raufusshühner
+und Äsungsflächen der Wildtiere) oder Auen und Feuchtgebiete. Mehrtägiges Campieren ist ab
+50 Teilnehmenden je Tag meldepflichtig nach Art. 19 Abs. 1 Bst. f Vo EG-WaG.
+
+3.7          Motorfahrzeuge
+Wald und Waldstrassen dürfen nur zu forstlichen Zwecken mit Motorfahrzeugen befahren werden
+(Art. 15 Abs. 1 WaG). Veranstaltungen mit Motorfahrzeugen sind auf Waldstrassen und im übri-
+gen Wald verboten (Art. 13 Abs. 3 der Verordnung über den Wald [SR 921.01; abgekürzt WaV]).
+Zur Durchführung von Veranstaltungen kann das Befahren von Waldstrassen – als Waldstrassen
+gelten nach Art. 4 Vo EG-WaG Gemeindestrassen dritter Klasse und Privatstrassen im Wald –
+mit Motorfahrzeugen im Einzelfall bewilligt werden (Art. 17 Abs. 3 Vo EG-WaG). Zuständig ist bei
+bewilligungspflichtigen Veranstaltungen das KFA, sonst die politische Gemeinde.
+Findet eine Veranstaltung nur auf Kantons- oder Gemeindestrassen erster und/oder zweiter
+Klasse statt, ist das Polizeikommando des Sicherheits- und Justizdepartementes (SJD) zustän-
+dig. Es bewilligt im Rahmen des Bundesrechts Rennen mit Motorfahrzeugen (z.B. Berg- oder
+Motocrossrennen). Betrifft die Veranstaltung auch den Lebensraum, wird sowohl vom KFA wie
+auch von der KAPO je eine Bewilligung erlassen.
+
+3.8          Durchführungsort
+Es ist zu prüfen, ob die Veranstaltung wichtige Lebensräume und die darin vorkommenden Arten
+beeinträchtigen könnte. Zentral sind die kommunalen Schutzverordnungen, der kantonale Richt-
+plan, die Waldentwicklungspläne, Biotope gemäss den nationalen und kantonalen Inventaren,
+nach NHG 2 -geschützte Waldstandorte, Biodiversitätsförderflächen 3 sowie weitere Grundlagen
+gemäss dem Merkblatt «Schutzgebiete im Geoportal». Die Fach- und Lebensraumkenntnisse des
+Forstdienstes sowie der Wildhut sind diesbezüglich besonders wichtig.
+Hinweis: Meldepflichtige Veranstaltungen in Waldreservaten, Naturschutzgebieten von nationaler
+oder regionaler Bedeutung oder Kerngebieten nach kantonalem Richtplan oder kommunaler
+Schutzverordnung sind nach Art. 21 Abs. 1 Bst. d Vo EG-WaG direkt bewilligungspflichtig. Diese
+Gebiete werden in der «Veranstaltungen Hinweiskarte» künftig explizit dargestellt.
+
+
+
+1
+     Definition und weitere Informationen: Merkblatt Schweizer Alpen-Club SAC 2018: Campieren und Biwakieren in den
+     Schweizer Bergen mit Rücksicht auf Natur und Umwelt.
+2
+     Gemäss Art. 18 Abs. 1bis des Bundesgesetzes über den Natur- und Heimatschutz (SR 451, abgekürzt NHG)
+3
+     Gemäss der Direktzahlungsverordnung (SR 910.13; abgekürzt DZV).
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                                        5/16
+3.9          Verbote
+Verbote (z.B. Naturschutzgebiete) und Signalisationen gelten auch für Veranstaltungen, ausser
+sie werden im Rahmen einer Bewilligung von der zuständigen Behörde für die Veranstaltung
+explizit und ausnahmsweise aufgehoben.
+
+3.10         Gewässer
+Gewässer sowie der Gewässerraum sind wichtige ökologische Vernetzungsachsen. Für Veran-
+staltungen im oder am Wasser, die Lebensraum oder Lebensgemeinschaft beeinträchtigen kön-
+nen, werden die Bestimmungen der Waldgesetzgebung sachgemäss angewendet (vgl. Art. 8
+FG). Veranstaltungen in und am Gewässer sind ab 100 Personen bewilligungspflichtig durch das
+Amt für Natur, Jagd und Fischerei (ANJF) oder das Strassenverkehrs- und Schifffahrtsamt
+(Art. 21 der Fischereiverordnung [sGS 854.11; abgekürzt FV]). Falls die Veranstaltung gleichzei-
+tig gemäss Waldgesetzgebung meldepflichtig ist, zieht die politische Gemeinde zusätzlich den
+zuständigen Fischereiaufseher bei. Bei bewilligungspflichtigen Veranstaltungen nach der Wald-
+gesetzgebung, zieht das KFA das ANJF bei. Falls die Veranstaltung nur bewilligungspflichtig nach
+der Fischereigesetzgebung ist, sind die Unterlagen an das ANJF weiterzuleiten. Die Abteilung
+Fischerei des ANJF oder der zuständige kantonale Fischereiaufseher geben bei Bedarf Auskunft.
+
+3.11         Grundwasserschutzzonen/-areale
+Grundwasserschutzzonen S1-S3 sowie Grundwasserschutzareale dienen dem Schutz unseres
+Trinkwassers. Sie können als Filter in der Hinweiskarte «Veranstaltungen» eingeblendet werden.
+Veranstaltungen, die die Trinkwassernutzung gefährden können (z.B. Zeltlager mit Abwasseran-
+fall oder Grabarbeiten) dürfen nur ausserhalb der Zonen S1/S2 und mit entsprechenden Gewäs-
+serschutzauflagen durchgeführt werden. Motorsportanlässe sind in diesen Zonen/Arealen grund-
+sätzlich nicht bewilligungsfähig. Auskunft gibt die Abteilung Grundwasser des Amtes für Wasser
+und Energie (AWE).
+
+3.12         Sensible Objekte und Gebiete
+Es können weitere Objekte oder Gebiete bestehen, die nicht durch eine Veranstaltung beein-
+trächtigt werden dürfen (z.B. ein Adlerhorst, Jungwüchse und Dickungen). Dabei sind insbeson-
+dere die Bedürfnisse der Wildtiere und Vögel nach Ruhe zu berücksichtigen. Abgelegene, ruhige
+oder deckungsreiche Gebiete können wichtig für den Wildlebensraum sein, auch wenn sie nicht
+als Schutzgebiete ausgeschieden sind. Zu beachten sind zudem beispielsweise historische oder
+geologische Objekte sowie zivile oder militärische Anlagen.
+
+3.13         Bodenschutz
+Boden ist eine wertvolle, nicht erneuerbare Ressource. Bodenschäden sind irreparabel und kön-
+nen zu Vernässungen und Verschlechterung der Bodenqualität führen. Besondere Beachtung
+bedürfen Fruchtfolgeflächen, verdichtungsanfällige Böden sowie Biodiversitätsförderflächen. In-
+formationen dazu sind im Geoportal unter «Fruchtfolgeflächen» und «Bodeninformationen» ein-
+sehbar. Sowohl für den Auf- und Abbau der Infrastrukturen als auch während der Veranstaltung
+ist dem Schutz des Bodens Rechnung zu tragen. Dabei sind insbesondere die Witterung und die
+Art des vorliegenden Bodens ausschlaggebend. Grundsätzlich sollten Veranstaltungen auf der
+grünen Wiese nur bei trockenen Bodenverhältnissen stattfinden. Neben der Vermeidung von Ver-
+dichtungen müssen die Grasnarbe und der oberste Bodenhorizont davor geschützt werden, dass
+sich Morast bildet, weil dadurch sämtliche Struktur und das Porensystem im Boden zerstört wer-
+den. Es sind generell Massnahmen vorzusehen bzw. zu treffen, um Verdichtungen, Fahrspuren,
+Morast und Erosion zu verhindern (Bodenplatten, Roste, Schnitzel etc.).
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                     6/16
+Veranstaltung sollten möglichst witterungsunabhängig geplant werden. Die Platzierung der Infra-
+struktur und die Besucherwege sollen in erster Linie über befestigte Wege erfolgen (Zuschauer-
+bereiche, Festzelte, div. Wagen mit Büros oder WC's, Camperbereich). Wo mit Liefer- oder Last-
+wagen über Wies- oder Ackerland gefahren werden muss, sind Massnahmen umzusetzen. Stras-
+senfahrzeuge sollten den gewachsenen Boden so wenig wie möglich befahren.
+
+Parkplätze und Campingbereiche (Fahrzeuge) sind möglichst auf befestigten Flächen einzupla-
+nen. Flächiges Parkieren auf Wiesland ist nur bei durchgehend trockenen Bodenbedingungen
+zulässig. Deshalb sollten zusätzlich immer Schlechtwetterplätze (allenfalls mit Shuttlebus) einge-
+plant werden. Das Parkieren in einer einzelnen Reihe direkt ab der Strasse (sogenanntes «Fisch-
+gratsystem») kann für feuchtere Bedingungen eine Alternative sein. Schwere Fahrzeuge sowie
+solche mit Anhängern dürfen nur bei trockenen Bedingungen auf und über Kulturland fahren. Die
+Bodenfeuchte ist vor der Veranstaltung mit geeigneten Mitteln festzustellen. Hinweise dazu gibt
+es auch unter www.bodenfeuchte-ostschweiz.ch.
+
+Sämtliche Veränderungen des Geländes durch Auf- oder Abtrag von Boden benötigen ausser-
+halb der Bauzonen eine kantonale Bewilligung. Bei Bedarf werden durch die politische Gemeinde,
+das KFA oder das Amt für Umwelt (AFU) Einschränkungen bzw. Bodenschutzauflagen verfügt.
+Die Fachstelle Bodenschutz des AFU gibt Auskunft.
+
+3.14         Naturgefahren
+Veranstaltungen sind, wenn immer möglich, ausserhalb von Naturgefahrengebieten (u.a. Stein-
+schlag, Lawinen, Rutschungen oder Wildbäche) durchzuführen. Besonders relevant ist dies bei
+stationären Veranstaltungen mit langer Aufenthaltsdauer (z.B. Zeltlager).
+
+3.15         Durchführungszeit
+Wildtiere und Vögel reagieren während der Brut-, Setz- und Aufzuchtzeit von Wildtieren und Vö-
+geln (1. Mai bis 15. Juli) sowie im Winter sensibler auf Störungen als beispielsweise im Herbst.
+Insbesondere abseits von Strassen und Wegen. Auch Pflanzen können im Frühling und Sommer
+stärker geschädigt werden. Weiter weisen Veranstaltungen während der Dämmerung oder in der
+Nacht ein höheres Störungspotenzial auf. Insbesondere Licht- und Verstärkeranlagen können zu
+einer erheblichen Störung führen.
+
+3.16         Nutzungsintensität
+Die Grundnutzung eines Gebiets zu Erholungszwecken ist oftmals relevant für die Gesamtbeur-
+teilung. Mehrfachnutzungen oder überlagernde Nutzungen können zu einer grossen Gesamtbe-
+lastung des Lebensraumes führen. Unter Umständen lässt dies keine weiteren Aktivitäten mehr
+zu, oder aber es ist keine zusätzliche Störung mehr zu erwarten. Gebiete mit der Vorrangfunktion
+Erholung im Waldentwicklungsplan eignen sich in der Regel für weitere Nutzungen.
+
+3.17         Nicht meldepflichtige Veranstaltungen
+Die politischen Gemeinden und das KFA empfehlen, kleinere Veranstaltungen ebenfalls zu mel-
+den (z.B. per Telefon oder E-Mail). Damit können der Forstdienst und die Wildhut informiert sowie
+Anfragen aus der Bevölkerung beantwortet werden. Veranstaltungen, die nicht der Meldepflicht
+nach der Waldgesetzgebung unterstehen, haben dennoch den Lebensraumschutz zu beachten
+bzw. es könnten folgende Bestimmungen zur Anwendung kommen:
+ Kommunale Schutzverordnung: In Lebensraumkern- und Lebensraumschongebieten,
+   Wildruhezonen sowie Naturschutzgebieten bestehen teilweise generelle Bestimmungen.
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                       7/16
+ Eidgenössische Schutzgebiete: In eidgenössischen Jagdbanngebieten sind u.a. das Cam-
+  pieren und das freie Zelten (inkl. Biwakieren) verboten (Art. 5 Abs. 1 Bst. e der Verordnung
+  über die eidgenössischen Jagdbanngebiete [SR 922.31; abgekürzt VEJ]).
+ Nachteilige Nutzungen des Waldes: Nutzungen, die keine Rodung im Sinn von Art. 4 WaG
+  darstellen, jedoch die Funktionen oder die Bewirtschaftung des Waldes gefährden oder beein-
+  trächtigen, sind unzulässig (Art. 16 Abs. 1 WaG).
+ Beschränkung Lebensraumnutzung: Das ANJF stellt den Schutz von Lebensraum und Le-
+  bensgemeinschaft u.a. durch Beschränkung von Nutzungen des Lebensraumes sicher, wenn
+  diese Tiere erheblich stören oder Pflanzen erheblich schädigen (Art. 39 Abs. 1 Bst. c des
+  Jagdgesetzes [sGS 853.1; abgekürzt JG]).
+ Grundwasserschutzzonen und -areale: Grundwasserschutzzonen S1-S3 sowie Grundwas-
+  serschutzareale dienen dem Schutz des Trinkwassers. Veranstaltungen, die die Trinkwas-
+  sernutzung gefährden können, dürfen nur ausserhalb der Zonen S1/S2 und mit entsprechen-
+  den Gewässerschutzauflagen durchgeführt werden. Motorsportanlässe sind in diesen Zo-
+  nen/Arealen grundsätzlich nicht bewilligungsfähig.
+ Fruchtfolgeflächen: Auf Fruchtfolgeflächen dürfen keine Veränderungen des Geländes er-
+  folgen. Für Veranstaltungen sollten Alternativen gesucht werden. Für die Nutzung werden hö-
+  here Anforderungen gestellt, um den Erhalt der Bodenqualität sicherzustellen.
+ Abwasserentsorgung: Die korrekte Abwasserentsorgung ist zusammen mit der zuständigen
+  politischen Gemeinde sicherzustellen.
+
+
+4            Meldepflichtige Veranstaltungen
+4.1          Verfahren
+Die politische Gemeinde prüft die Vollständigkeit und ob die Veranstaltung melde- oder bewilli-
+gungspflichtig ist (vgl. auch Zuständigkeitsschema im Anhang 1). Bei Fragen und Unklarheiten
+gibt das KFA Auskunft. Die Auswirkungen meldepflichtiger Veranstaltungen werden unter Einbe-
+zug der Waldregion (Revierförster), der kantonalen Wildhut und der betroffenen politischen Ge-
+meinden geprüft. Zuständig ist immer diejenige politische Gemeinde, auf deren Territorium der
+infrastrukturelle Schwerpunkt einer Veranstaltung liegt. Rahmenbedingungen für Zeltlager, die oft
+in abgelegenen Gebieten und während der Brut-, Setz- und Aufzuchtzeit von Wildtieren und Vö-
+geln vom 1. Mai bis 15. Juli stattfinden, befinden sich im Anhang 4. Das Verfahren ist nach Art. 20
+Abs. 3 Vo EG-WaG innert Monatsfrist von der politischen Gemeinde mit der schriftlichen Mittei-
+lung abzuschliessen, dass:
+a) der Durchführung der Veranstaltung nichts entgegensteht;
+b) eine einvernehmliche Regelung über die wald- und lebensraumverträgliche Durchführung der
+    Veranstaltung ausgearbeitet wird;
+c) die Veranstaltung bewilligungspflichtig ist und die Eingabe an das KFA weitergeleitet wird.
+
+Für wiederkehrende Veranstaltungen im demselben Rahmen (Zeit, Ort und Teilnehmende) wäre
+in Absprache mit dem Revierförster und der Wildhut auch eine vereinfachte Meldung denkbar
+(z.B. Datum per E-Mail mitteilen ohne Meldeformular).
+
+4.2          Einvernehmliche Regelung
+Unter Umständen ergibt die Prüfung, dass die Veranstaltung nicht wie vorgesehen durchgeführt
+werden kann. In diesem Fall erarbeitet die politische Gemeinde zusammen mit den Veranstalte-
+rinnen bzw. Veranstaltern, der Waldregion und der Wildhut sowie allfällig weiteren Beteiligten
+eine einvernehmliche Regelung (Art. 20 Abs. 3 Bst. b Vo EG-WaG). Das heisst, dass eine An-
+passung der Veranstaltung vereinbart wird. Die Abmachungen sind schriftlich festzuhalten.
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                        8/16
+4.3          Einschränkungen für meldepflichtige Veranstaltungen verfügen
+Das Meldeverfahren beabsichtigt grundsätzlich, den Behörden etwas zur Kenntnis zu bringen.
+Kommt keine einvernehmliche Regelung zustande, kann die zuständige politische Gemeinde Ein-
+schränkungen verfügen. Seitens der politischen Gemeinden sind oftmals weitere Bewilligungen
+wie Patente nach dem Gastwirtschaftsgesetz (sGS 553.1; abgekürzt GWG) erforderlich; zudem
+haben sie die Schliessungszeiten, Lärmgrenzwerte usw. festzulegen. Der Kanton St.Gallen hat
+den Vollzug der Verordnung zum Bundesgesetz über den Schutz vor Gefährdungen durch nicht-
+ionisierende Strahlung und Schall (SR 814.711; abgekürzt V-NISSG) im Gesundheitsgesetz
+(sGS 311.1; abgekürzt GesG) an die politischen Gemeinden delegiert.
+Die politische Gemeinde verfügt Einschränkungen nach Art. 17 Abs. 2 zweiter Satz EG-WaG,
+wenn Lebensraum oder Lebensgemeinschaft beeinträchtigt scheinen und keine einvernehmliche
+Regelung über die wald- und lebensraumverträgliche Durchführung der Veranstaltung zwischen
+der Veranstalterin bzw. dem Veranstalter und der Behörde zustande kommt. Die massgebenden
+gesetzlichen Grundlagen und das Rechtsmittel sind Bestandteil der Verfügung (Art. 24 Abs. 1 des
+Gesetzes über die Verwaltungsrechtspflege [sGS 951.1; abgekürzt VRP).
+Die Verfügung ist auch der Waldregion (Regional- und Revierförster) sowie dem zuständigen
+kantonalen Wildhüter in Kopie (per E-Mail) zuzustellen (Art. 25 VRP). Falls sich im Rahmen des
+Meldeverfahrens weitere Personen oder Organisationen einbringen, die ein schutzwürdiges In-
+teresse darlegen können, ist ihnen die Verfügung ebenfalls in Kopie eingeschrieben zu eröffnen.
+
+4.4          Beurteilung meldepflichtiger Veranstaltungen und Hinweise
+4.4.1 Sportliche Veranstaltungen
+Alle sportlichen Veranstaltungen gemäss Definition des Bundesamtes für Sport (z.B. Wandern,
+Biken, Reiten, Bogensport, Orientierungsläufe, Schulsporttage, Schwingfeste usw.) werden
+gleichbehandelt (Art. 19 Abs. 1 Bst. a Vo EG-WaG)). Ausgenommen sind Zeltlager, die als ty-
+pisch mehrtägige Veranstaltungen zu beurteilen sind (Art. 19 Abs. 1 Bst. f Vo EG-WaG). Bei-
+spiele:
+ Ein zweitägiger Bikeevent mit 30 Bikenden im Mai ist nicht meldepflichtig (auch nicht nach
+    Art. 19 Abs. 1 Bst. f Vo EG-WaG).
+ Ein Geländelauf im August mit 70 Läuferinnen und Läufern, 20 Helferinnen und Helfern sowie
+    30 Besucherinnen und Besuchern ist meldepflichtig (Art. 19 Abs. 1 Bst. a Ziff. 2 Vo EG-WaG:
+    120 Teilnehmende).
+
+4.4.2 Hundeveranstaltungen
+Weil Hunde per se ein grosses Störungspotenzial (Jagdtrieb, Bellen, Streunen usw.) darstellen,
+ist die Schwelle der Meldepflicht für Hundeveranstaltungen (z.B. Hundemilitary, Schlittenhunde,
+private Hundesuchübungen usw.) tief (Art. 19 Abs. 1 Bst. b Vo EG-WaG: Hundeveranstaltungen
+mit insgesamt mehr als 10 Hunden). Die Hunde sind abseits von abgesicherten Bereichen und
+Übungsposten grundsätzlich an der Leine zu führen. Andere Veranstaltungen, an denen die Teil-
+nehmenden lediglich Hunde mit sich führen, sind von dieser Bestimmung nicht erfasst. Beispiel:
+ Eine sportliche Veranstaltung mit 40 Wandernden und 15 Hunden unterliegt weder der Mel-
+  depflicht nach Art. 19 Abs. 1 Bst. a noch nach Art. 19 Abs. 1 Bst. b Vo EG-WaG.
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                    9/16
+4.4.3        Technische Einrichtungen und Geräte
+Veranstaltungen mit technischen Einrichtungen und Geräten wie Licht- und Verstärkeranlagen
+stellen generell ein grosses Störungspotenzial dar. Sie gelten daher unabhängig der Teilnehmer-
+zahl als meldepflichtig (Art. 19 Abs. 1 Bst. d Vo EG-WaG). Nicht darunter fällt z.B. eine einfache
+Girlande in einem Festzelt. Es geht darum, die ökologisch wichtige Nachtdunkelheit und Ruhe,
+zu bewahren. Die zunehmende Lichtverschmutzung bzw. der Verlust von Dunkelheit dürfte mass-
+geblich mitverantwortlich sein für den besorgniserregenden Insektenschwund 4.
+
+4.4.4        Kriegs- und Kampfspiele
+Kriegs- und Kampfspiele (vorab Paintball und Airsoft) sind aufgrund des Störungspotenzials neu
+unabhängig von einer Teilnehmerzahl direkt der Bewilligungspflicht unterstellt (Art. 21 Abs. 1
+Bst. g Vo EG-WaG). Sie sind ebenfalls der politischen Gemeinde zu melden.
+
+4.4.5 Mehrtägige Veranstaltungen / Dauer
+Die Dauer jeder Veranstaltung hat relevante Auswirkungen auf den Wald und die weiteren Le-
+bensräume von Pflanzen und wildlebenden Tieren. Daher sind mehrtägige (d.h. wenigstens zwei
+Tage) dauernde Veranstaltungen ab 50 Personen je Tag meldepflichtig (Art. 19 Abs. 1 Bst. f Vo
+EG-WaG). Es gilt die Anzahl Teilnehmende je Tag und nicht der Durchschnitt über alle Tage.
+Dies dürfte oft z.B. für Zeltlager oder Schulprojektwochen zutreffen. Hinweis und Beispiele:
+ Eine Veranstaltung (z.B. Grillplausch im Wald), die beispielsweise am Samstagmittag um
+  12.00 Uhr beginnt und erst in der Nacht auf Sonntag um 02.00 Uhr endet, gilt als eintägige
+  und nicht als mehrtägige Veranstaltung. Sie wäre ab insgesamt 200 Teilnehmenden oder
+  wenn technische Einrichtungen und Geräte eingesetzt werden, meldepflichtig.
+ Ein Fest, das am Samstag um 15.00 Uhr beginnt und am Sonntagmittag mit einem Brunch
+  endet, entspricht hingegen einer mehrtägigen Veranstaltung.
+ «Mehrtägig» bedeutet, dass die Veranstaltung an aufeinanderfolgenden Tagen stattfindet.
+  Nicht darunter fallen z.B. wöchentliche Aktivitäten der Pfadi am Samstag, sofern sie nicht ein-
+  zeln die Meldeschwelle überschreiten.
+ Ein Zeltlager mit 40 Kindern und 20 Leitenden mit mindestens einer Übernachtung ist ganzjäh-
+  rig meldepflichtig nach Art. 19 Abs. 1 Bst. f Vo EG-WaG (mehr als 50 Teilnehmende je Tag).
+ Ein dreitägiges Fest ohne technische Einrichtungen und Geräte bzw. nur mit einfacher Be-
+  leuchtung im Festzelt mit 10 Helferinnen und Helfern je Tag, 80 Teilnehmenden am Freitag,
+  150 Teilnehmenden am Samstag und 70 Teilnehmenden am Sonntag ist meldepflichtig. Es ist
+  eine mehrtägige Veranstaltung mit mehr als 50 Teilnehmenden je Tag.
+ Ein zweitägiges Fest mit 80 Teilnehmenden am ersten und 40 Teilnehmenden am zweiten
+  Tag ist nicht meldepflichtig nach Art. 19 Abs. 1 Bst. f Vo EG-WaG (mehrtägig, aber an einem
+  Tag weniger als 50 Teilnehmende je Tag) und mit insgesamt 120 Teilnehmenden auch nicht
+  nach Art. 19 Abs. 2 Vo EG-WaG.
+
+
+
+
+4
+     Akademien der Wissenschaften Schweiz (2019): Faktenblatt Insektenschwund in der Schweiz und mögliche Folgen
+     für Gesellschaft und Wirtschaft.
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                                     10/16
+5            Bewilligungspflichtige Veranstaltungen
+5.1          Aufgaben der politischen Gemeinde bei bewilligungspflichtigen Veranstaltungen
+Die Unterlagen von bewilligungspflichtigen Veranstaltungen leitet die politische Gemeinde mit ei-
+ner Stellungnahme innert Monatsfrist an das KFA weiter; sie teilt dies den Veranstalterinnen bzw.
+Veranstaltern schriftlich mit (Art. 20 Abs. 3 Bst. c Vo EG-WaG). In der Stellungnahme sind allfäl-
+lige Einschränkungen aus der kommunalen Schutzverordnung zu berücksichtigen. Ein Formular
+für die Stellungnahme ist unter www.wald.sg.ch abrufbar.
+
+5.2          Verfahren bewilligungspflichtige Veranstaltungen
+Das KFA ist für die Erteilung der Bewilligung zuständig. Es holt vor seinem Entscheid die Stel-
+lungnahmen der betroffenen Stellen des Kantons und der politischen Gemeinden ein. Zudem
+werden die beschwerdeberechtigten Umweltorganisationen angehört. Es entscheidet spätestens
+innert drei Monaten nach Eingang der Meldung bei der politischen Gemeinde. Kann der Entscheid
+nicht innert dieser Frist erfolgen, teilt es den Verfahrensbeteiligten die voraussichtliche Behand-
+lungsfrist unter Angabe der Gründe mit (vgl. Art. 22 Vo EG-WaG). Wichtig für ein schlankes Ver-
+fahren ist, dass die Unterlagen vollständig eingereicht werden. Das KFA steht für Fragen und
+frühzeitige Vorprüfungen gerne zur Verfügung.
+
+5.3          Bewilligung
+Die Bewilligung wird erteilt, wenn die Veranstaltung zu keiner erheblichen Störung oder Gefähr-
+dung des Waldes oder der Lebensgemeinschaft von Tieren und Pflanzen führt. Für periodisch
+stattfindende Veranstaltungen kann unter dem Vorbehalt unveränderter Verhältnisse eine Pau-
+schalbewilligung erteilt werden. Vorbehalten bleibt die Zustimmung der Grundeigentümerinnen
+bzw. Grundeigentümer für Nutzungen, die über das ortsübliche Mass hinausgehen (vgl. Art. 23
+Vo EG-WaG).
+
+
+6            Anhänge
+Anhang 1:            Zuständigkeiten;
+Anhang 2:            weitere Informationen und Merkblätter;
+Anhang 3:            gesetzliche Grundlagen;
+Anhang 4:            Rahmenbedingungen für Zeltlager;
+Anhang 5:            Formulierungsvorschlag für Verfügungen.
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                        11/16
+Kanton St.Gallen
+Volkswirtschaftsdepartement
+
+Kantonsforstamt
+
+6.1          Anhang 1: Zuständigkeiten
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02   12/16
+Kanton St.Gallen
+Volkswirtschaftsdepartement
+
+Kantonsforstamt
+
+
+
+
+6.2          Anhang 2: Weitere Informationen und Merkblätter
+
+Auskunft:
+Kantonsforstamt St.Gallen (KFA), Davidstrasse 35, 9001 St.Gallen
+Tel.:         058 229 35 02
+E-Mail:       veranstaltungen.kfa@sg.ch
+Homepage: www.wald.sg.ch
+Veranstaltungen im Lebensraum | sg.ch
+https://www.sg.ch/umwelt-natur/wald/bewilligungen-beantragen/veranstaltungen-im-lebensraum.html
+
+
+Weitere Bewilligungsbehörden und Kontakte:
+ Kantonspolizei (KAPO), Verkehrstechnik:
+  Verkehr / Verkehrstechnik | sg.ch
+
+ Amt für Natur, Jagd und Fischerei (ANJF; inkl. Kontakte):
+  Amt für Natur, Jagd und Fischerei | sg.ch
+
+ Waldregionen (Regional- und Revierförster):
+  Kantonsforstamt | sg.ch
+
+ Amt für Umwelt (AFU), Abteilung Boden und Stoffkreislauf:
+  Massnahmen im Bodenschutz | sg.ch >Veranstaltungen
+
+ Amt für Wasser und Energie (AWE), Abteilung Grundwasser:
+  Gewässerschutz- und Grundwasserkarte | sg.ch
+
+ Amt für Verbraucherschutz und Veterinärwesen (AVSV):
+  Verbraucherschutz & Veterinärwesen | sg.ch
+
+ Strassenverkehrs- und Schifffahrtsamt (StVA):
+  Bewilligungen, Verfügungen und Verkehrsbeschränkungen | sg.ch
+
+
+Weitere Links
+ Veranstaltungen Hinweiskarte Kt SG - Geoportal
+  www.geoportal.ch: Veranstaltungen Hinweiskarte Kt SG
+
+ Unterwegs im Wildtierlebensraum | sg.ch
+
+ Saubere Veranstaltung (saubere-veranstaltung.ch)
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                              13/16
+6.3          Anhang 3: Gesetzliche Grundlagen (in Vollzug ab 1. Mai 2022)
+
+Unter den Begriff «Teilnehmende» fallen nebst den aktiv an einer Veranstaltung teilnehmenden
+Personen auch die Besuchenden sowie allfällige Hilfskräfte wie Helferinnen bzw. Helfer und
+Funktionärinnen bzw. Funktionäre als passiv an einer Veranstaltung teilnehmende Personen.
+
+Meldepflichtige Veranstaltungen
+
+  Art. 19 Vo EG-WaG
+  1 Meldepflichtige Veranstaltungen sind:
+
+    a) sportliche Veranstaltungen mit insgesamt mehr als:
+       1. 50 Teilnehmenden in der Zeit vom 1. Mai bis 15. Juli;
+       2. 100 Teilnehmenden in der übrigen Zeit.
+    b) Hundeveranstaltungen mit insgesamt mehr als 10 Hunden;
+    c) (aufgehoben)
+    d) Veranstaltungen mit technischen Einrichtungen und Geräten wie Licht- und Verstärkeranlagen;
+    e) (aufgehoben bzw. neu sogleich bewilligungspflichtig)
+    f) mehrtägige Veranstaltungen mit mehr als 50 Teilnehmenden je Tag.
+  2 Veranstaltungen mit insgesamt mehr als 200 Teilnehmenden sind in jedem Fall meldepflichtig.
+
+
+
+  Melde- bzw. sogleich bewilligungspflichtige Veranstaltungen:
+   Kriegs- und Kampfspiele (Art. 21 Abs. 1 Bst. g Vo EG-WaG);
+   Veranstaltungen im oder am Wasser mit mehr als 100 Teilnehmenden (Art. 21 Abs. 1 FV).
+
+
+Bewilligungspflichtige Veranstaltungen
+
+  Art. 21 Vo EG-WaG
+  1 Bewilligungspflichtige Veranstaltungen sind:
+
+    a) sportliche Veranstaltungen mit insgesamt mehr als;
+       1. 150 Teilnehmenden in der Zeit vom 1. Mai bis 15. Juli;
+       2. 300 Teilnehmenden in der übrigen Zeit.
+    b) Hundeveranstaltungen mit insgesamt mehr als 30 Hunden;
+    c) (aufgehoben)
+    d) meldepflichtige Veranstaltungen in Waldreservaten, Naturschutzgebieten von nationaler
+       oder regionaler Bedeutung oder Kerngebieten nach kantonalem Richtplan oder
+       kommunaler Schutzverordnung;
+    e) (aufgehoben)
+    f) Veranstaltungen mit technischen Einrichtungen und Geräten wie Licht- und Verstärkeranlagen
+       mit insgesamt mehr als 300 Teilnehmenden;
+    g) Kriegs- und Kampfspiele;
+    h) mehrtägige Veranstaltungen mit mehr als 150 Teilnehmenden je Tag.
+  2 Veranstaltungen mit insgesamt mehr als 600 Teilnehmenden sind in jedem Fall bewilligungspflichtig.
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                   14/16
+6.4          Anhang 4: Rahmenbedingungen für Zeltlager
+
+Auflagen Wald: allgemein
+1. Der Durchführungsort gilt als verbindlich und darf nur in Absprache mit der Bewilligungsbe-
+   hörde abgeändert werden.
+2. Für Wanderungen ist möglichst das offizielle Strassen- und Wegenetz zu nutzen und allfällige
+   Schutzauflagen sind zu beachten.
+3. Die Standorte der Bauten im Wald sind mit dem Revierförster und dem Wildhüter zu bestim-
+   men. Durch die Installation dürfen keine Schäden am Wald entstehen.
+4. Die Lagerleitung hat frühzeitig mit dem zuständigen Revierförster und dem Wildhüter Kontakt
+   aufzunehmen um Ruhe- sowie Spielzonen im Wald auszuscheiden.
+5. Beschallungsanlagen sind ausserhalb des Waldes zu betreiben und abends ab 19.00 Uhr
+   auszuschalten. Das Singen mit Hintergrundmusik ist auch nach 19.00 Uhr erlaubt.
+6. Lichtanlagen, Laser sowie Feuerwerke sind nicht erlaubt.
+7. Im Rahmen der Veranstaltung und zum Auf- und Abbau des Lagers wird das Befahren von
+   Waldstrassen mit Motorfahrzeugen soweit als notwendig bewilligt. Das Abstellen von Fahr-
+   zeugen im Wald ist untersagt. (Hinweis: Eine Fahrbewilligung muss explizit beantragt werden.
+   Auf Waldstrassen gilt das Fahrverbot ohne Signalisation.)
+8. Nach der Durchführung der Veranstaltung sind sämtliche Posten, Markierungen und Einrich-
+   tungen vollständig zu entfernen.
+9. Liegen gebliebene Abfälle sind einzusammeln und fachgerecht zu entsorgen.
+
+Auflagen Wald: standort- und lagerspezifisch
+1. Die Naturschutzgebiete sowie GAöL-Vertragsflächen dürfen nicht betreten oder anderweitig
+   beeinträchtigt werden. An kritischen Stellen sind sie wirksam abzusperren.
+2. Die artenreichen Waldgebiete mit der Vorrangfunktion oder der speziellen Funktion Natur-
+   schutz und Ufervegetationen sind zu schonen.
+3. Nachtaktivitäten im Wald sind in zwei Nächten je Woche in den vorgesehenen Spielzonen
+   gestattet.
+
+Auflagen Bodenschutz: standort- und lagerspezifisch (Amt für Umwelt)
+1. Der gewachsene Boden ist bestmöglich zu schonen und die Morastbildung ist mit geeigneten
+   Mitteln wie Schnitzeln oder Bodenplatten zu verhindern.
+2. Materialtransporte auf Landwirtschaftsland dürfen nur mit breitbereiften Fahrzeugen mit ge-
+   ringem Bodendruck (z.B. landwirtschaftliche Transporter) vorgenommen werden.
+3. Bauten (grössere Zelte) und Anlagen (WCs) sowie schwere Fahrzeuge wie Lieferwagen sind
+   möglichst nahe der befestigten Strassen und Wege zu platzieren. Die Zufahrten und (je nach
+   Bodenfeuchte) die Standplätze der Bauten sind mittels Bodenplatten vor Verdichtungen zu
+   schützen.
+4. Die Fahrzeuge der Helferinnen bzw. Helfer sind auf befestigten Plätzen oder entlang von
+   Strassen und Wegen im «Fischgratsystem» zu parkieren. Das flächige Parkieren auf Wies-
+   land ist nur bei trockenen Bodenbedingungen zulässig.
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                    15/16
+6.5          Anhang 5: Formulierungsvorschlag für Verfügungen
+
+Die nachfolgenden gesetzlichen Grundlagen, die Rechtsmittelbelehrung und der Hinweis auf die
+Strafbestimmungen sind in die Verfügung zu integrieren (Formulierungsvorschlag Kantonsforstamt):
+
+
+
+Gesetzliche Grundlagen
+Die Meldepflicht für eine Veranstaltung im Wald und weiteren Lebensräumen von Pflanzen
+und wildlebenden Tieren richtet sich nach Art. 14 des Bundesgesetzes über den Wald
+(SR 921.0; abgekürzt WaG), Art. 17 des Einführungsgesetzes zur eidgenössischen Waldge-
+setzgebung (sGS 651.1; abgekürzt EG-WaG) und Art. 19 f. der Verordnung zum Einführungs-
+gesetz zur eidgenössischen Waldgesetzgebung (sGS 651.11; abgekürzt Vo EG-WaG). Die
+Gebühren bemessen sich nach Art. 94 ff. des Gesetzes über die Verwaltungsrechtspflege
+(sGS 951.1; abgekürzt VRP), der Verordnung über Kosten und Entschädigungen im Verwal-
+tungsverfahren (sGS 821.1; abgekürzt VGV) und Nr. 10.01 des Gebührentarifs für die Kan-
+tons- und Gemeindeverwaltung (sGS 821.5; abgekürzt GebT).
+Betreffend Bodenschutz sind die gesetzlichen Grundlagen gemäss Art. 33 Abs. 2 des Umwelt-
+schutzgesetzes (SR 814.01; abgekürzt USG), Art. 2 Abs. 1 Bst. a und Art. 6 der Verordnung
+über die Belastungen des Bodens (SR 814.12; abgekürzt VBBo) und Art. 52 des Einführungs-
+gesetzes zur eidgenössischen Umweltschutzgesetzgebung (sGS 672.1; abgekürzt EG-USG)
+massgebend.
+
+Rechtsmittel
+Gegen diese Verfügung kann nach Art. 43bis ff. VRP innert 14 Tagen seit der Eröffnung schrift-
+lich und unter Angabe von Gründen Rekurs beim Volkswirtschaftsdepartement des Kantons
+St.Gallen, Davidstrasse 35, 9001 St.Gallen, erhoben werden. Die angefochtene Verfügung ist
+beizulegen.
+
+Hinweis
+Mit Busse bis Fr. 20'000.– wird gemäss Art. 39 des Einführungsgesetzes zur eidgenössischen
+Waldgesetzgebung (sGS 651.1; abgekürzt EG-WaG) bestraft, wer vorsätzlich oder fahrlässig
+im Wald verbotene Freizeitbetätigungen ausübt, ohne Bewilligung nachteilige Nutzungen vor-
+nimmt, Lebensräume von Pflanzen und wildlebenden Tieren in schwerwiegender Weise be-
+einträchtigt, die Meldepflicht für Veranstaltungen missachtet, Veranstaltungen ohne Bewilli-
+gung durchführt oder Bedingungen und Auflagen verletzt.
+
+
+
+
+Veranstaltungen_nach_Waldgesetzgebung_Merkblatt_KFA_2022-05-02                                   16/16
+

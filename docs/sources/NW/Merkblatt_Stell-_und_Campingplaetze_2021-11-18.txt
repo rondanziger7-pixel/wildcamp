@@ -1,0 +1,834 @@
+Merkblatt Stell- und Campingplätze
+       Kanton Nidwalden
+
+
+
+
+             18. November 2021
+            1. Auflage, Version 1.1
+                                                                                                         Merkblatt Stell- und Campingplätze
+                                                                                                                           Kanton Nidwalden
+
+
+
+Inhaltsverzeichnis
+1     Einleitung ......................................................................................................................................... 3
+    1.1      Ausgangslage ........................................................................................................................... 3
+    1.2      Ziele ......................................................................................................................................... 3
+    1.3      Finanzierung ............................................................................................................................ 3
+    1.4      Themen.................................................................................................................................... 3
+2     Typisierung ...................................................................................................................................... 4
+    2.1      Stellplatz auf bestehendem Parkplatz ..................................................................................... 5
+    2.2      Stell- oder Zeltplatz auf bestehendem Landwirtschaftsbetrieb (Agrotourismus) .................. 6
+    2.3      Stellplatz auf bestehenden Flächen innerhalb Bauzonen ....................................................... 7
+    2.4      Campingplatz (saisonal)........................................................................................................... 8
+    2.5      Campingplatz (ganzjährig) ....................................................................................................... 9
+    2.6      Weitere Kriterien ................................................................................................................... 10
+3     Grundlagen .................................................................................................................................... 11
+    3.1      Prozess Baubewilligungsverfahren ........................................................................................ 11
+    3.2      Voraussetzungen und Bewilligungsverfahren ....................................................................... 12
+    3.3      Naturgefahren ....................................................................................................................... 12
+    3.4      Lärmschutz ............................................................................................................................ 12
+    3.5      Gewässerschutz / Oberflächengewässer .............................................................................. 12
+    3.6      Grundwasserschutzzonen ..................................................................................................... 13
+    3.7      Belastete Standorte / Altlasten ............................................................................................. 13
+    3.8      Bodenschutz .......................................................................................................................... 13
+    3.9      Natur- und Landschaftsschutz ............................................................................................... 13
+    3.10     Wald ...................................................................................................................................... 14
+    3.11     Wildcampieren ...................................................................................................................... 14
+    3.12     Zweitwohnungsgesetz ........................................................................................................... 14
+    3.13     Anmeldung und Tourismusabgaben ..................................................................................... 14
+    3.14     Rechtliche Grundlagen .......................................................................................................... 15
+4     Services .......................................................................................................................................... 16
+5     Information.................................................................................................................................... 17
+    5.1      Kommunikation ..................................................................................................................... 17
+    5.2      Empfehlungen für Anbieter ................................................................................................... 18
+6     Impressum ..................................................................................................................................... 18
+
+
+Titelbild: Zeltferien «Into the Wäid», Mueterschwandenberg in Ennetmoos
+
+                                                                                                                                            Seite 2 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+1     Einleitung
+1.1    Ausgangslage
+Campingferien wurden in den letzten Jahren immer beliebter. Der Trend hält an. Im Jahr 2020 waren
+71'213 Wohnmobile zugelassen (bfs.admin.ch). Das sind 6'309 (+9.7%) mehr als im Vorjahr. Dieser
+Trend hat auch Auswirkungen auf den Kanton Nidwalden. Diverse Regionen haben den Trend aufge-
+griffen und Projekte gestartet, um das wachsende Bedürfnis nach Stellplätzen abzuholen und die Cam-
+per entsprechend zu bündeln. Beispiele: Uri Tourismus, Luzern-Land Tourismus. Neben klassischen
+Campingplätzen sind zahlreiche Formen an Stellplätzen entstanden.
+
+Da die rechtliche Ausgangslage je nach Angebot unterschiedlich sein kann, zeigt dieses Merkblatt nütz-
+liche Empfehlungen und Informationen für mögliche Anbieter. Es zeigt damit verbundenen Anforde-
+rungen und Verfahren auf.
+
+1.2    Ziele
+Durch offizielle Angebote soll dem Wildcampieren im Kanton Nidwalden vorgebeugt und dieses ver-
+mindert werden. Ein Verhaltenskodex für Camper soll dieses Vorhaben unterstützen. Darin enthalten
+sind Grundlagen zum respektvollen Miteinander und zum Schutz von Menschen, Tier und Natur. Mit
+diesem Merkblatt soll eine einheitliche Beurteilungspraxis für Stell- und Campingplätze im Kanton
+Nidwalden sichergestellt werden. Sie soll kommunalen Baubehörden und Projektträgerschaften hel-
+fen, die unterschiedlichen Arten von Stell- und Campingplätzen zu unterscheiden.
+
+Durch die Vermarktung bewilligter Angebote über einen greifbaren Partner soll sichergestellt werden,
+dass die Tourismusabgaben gesetzeskonform abgerechnet werden. Mit dem Merkblatt «Stell- und
+Campingplätze in Nidwalden» soll zudem die Wertschöpfung für Landwirtschaft (Hofläden), lokales
+Gewerbe, Bergbahnen (inkl. Kleinseilbahnen) und Gastronomie gestärkt werden.
+
+Der Verein Nidwalden Tourismus bietet den Anbietern an, offizielle Stell- und Campingplätze auf der
+Seite nidwalden.com/camping zu publizieren.
+
+1.3    Finanzierung
+Die Finanzierung und Investitionen von Stell- und Campingplätzen sind Sache des Anbieters (Bewilli-
+gungen, externe und interne Besucherlenkung, Platz, Ausstattung, Hofladen/Kiosk, Kommunikation,
+Beschriftung, Vermarktung, etc.).
+
+1.4    Themen
+Das vorliegende Merkblatt «Stell- und Campingplätze in Nidwalden» ist in folgende vier Themen ge-
+gliedert:
+
+
+
+
+      Typisierung            Grundlagen                  Services               Information
+
+
+
+
+                                                                                          Seite 3 / 18
+                                                                        Merkblatt Stell- und Campingplätze
+                                                                                          Kanton Nidwalden
+
+
+
+2    Typisierung
+Der Begriff Camping beschreibt eine Form des Tourismus, der sich in den letzten Jahren stetig weiter-
+entwickelt und diversifiziert hat. Camping umfasst eine breite Spanne von Aktivitäten, deren Zweck
+darauf abzielt, die Zeit in der freien Natur oder dafür vorgesehenen Einrichtungen zu verbringen. Dabei
+übernachten die Gäste in Zelten, Wohnwagen, Wohnmobilen oder anderen campingähnlichen Unter-
+künften. Die Bandbreite möglicher Ausprägungen vom Biwakieren in den Bergen bis zum vollständig
+ausgestatteten Campingplatz für Dauernutzer ist gross und kann hier nicht vollständig abgedeckt wer-
+den. Die nachfolgende Typisierung soll insbesondere dazu dienen, die unterschiedlichen bau- und pla-
+nungsrechtlichen Konsequenzen aufzuzeigen.
+
+Stellplatz
+Ein Stellplatz ist eine öffentlich zugängliche, befristete Abstellmöglichkeit für Wohn- und Reisemobile,
+auf dem man gegen ein Entgelt im Fahrzeug eine oder mehrere Nächte übernachten darf (z.B. auf
+Parkplätzen von Hotels oder Restaurants oder auf öffentlichen Parkplätzen). Es bestehen dabei vor Ort
+nur die notwendigsten Infrastrukturen, wie z.B. Strom- und Wasseranschluss, WC-Anlagen oder Ein-
+richtungen für die Abfallentsorgung. Diese werden in der Regel innerhalb bestehender Gebäude oder
+mit Fahrnisbauten abgedeckt.
+
+Zeltplatz
+Ein Zeltplatz ist eine öffentlich zugängliche, befristete Möglichkeit, gegen Entgelt in einem Zelt zu über-
+nachten. Dies kann ein Platz mit zur Verfügung gestellten Zelten sein oder einfach ein Platz, auf wel-
+chem das eigene Zelt platziert werden kann. Es bestehen dabei vor Ort die notwendigsten Infrastruk-
+turen, wie z.B. Strom- und Wasseranschluss, WC-Anlagen oder Einrichtungen für die Abfallentsorgung.
+Diese werden in der Regel innerhalb bestehender Gebäude oder mit Fahrnisbauten abgedeckt.
+
+Campingplatz
+Ein Campingplatz beinhaltet spezifische Infrastrukturen für die längere Beherbergung von Übernach-
+tungsgästen, wie z.B. Rezeption, Gastro- und Einkaufsmöglichkeit, Dusch- und Waschgelegenheit, Auf-
+enthaltsraum oder Spielplatz. Je nach Ausprägung ist dieser naturnah ausgerichtet und nur für Zelte
+zugänglich sowie ausschliesslich auf den Sommer ausgerichtet.
+
+Für das vorliegende Merkblatt unterscheiden wir fünf Typen von Stell- bzw. Campingplätzen:
+
+    1. Stellplatz auf bestehendem Parkplatz
+    2. Stellplatz oder Zeltplatz auf bestehendem Landwirtschaftsbetrieb (Agrotourismus)
+    3. Stellplatz auf bestehenden Flächen innerhalb Bauzonen
+    4. Campingplatz (saisonal)
+    5. Campingplatz (ganzjährig)
+
+
+
+
+                                                                                               Seite 4 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+2.1   Stellplatz auf bestehendem Parkplatz
+Stellplätze auf bestehenden Parkplätzen können saisonal oder ganzjährig genutzt werden. Dabei han-
+delt es sich um Abstellmöglichkeiten auf bestehenden, rechtmässig erstellten Parkplätzen. In der Regel
+wird diese Art von Stellplatz während der Sommermonate genutzt.
+
+ Infrastruktur       •   Sanitäre Anlagen in eigenen und/oder benachbarten Gebäuden bzw. Fahr-
+                         nisbauten
+                     •   Abfallentsorgung
+
+ Voraussetzungen     •   Rechtmässig bestehender Parkplatz
+                     •   Innerhalb oder ausserhalb der Bauzone
+
+ Hinweis             Bei bestehenden Parkplätzen ausserhalb der Bauzone, die vermarktet und be-
+                     wirtschaftet werden sollen, wird die Möglichkeit einer raumplanerischen Be-
+                     willigung regelmässig fehlen. Es sei denn, die Nutzung erfolgt im Zusammen-
+                     hang mit einem agrotouristischen Angebot eines landwirtschaftlichen Gewer-
+                     bes beim Platz. Denkbar sind hier nur einzelne Übernachtungen ohne Vermark-
+                     tung der Fläche und ohne Inwertsetzung. Dies nur, wenn der Eigentümer ein-
+                     verstanden ist und keine raumrelevanten Auswirkungen resultieren.
+
+ Bewilligungs-       •  Baubewilligungsverfahren für wiederkehrende Nutzung
+ verfahren           •  Ausserhalb Bauzone: Zustimmung der Gemeinde und der kant. Baudirek-
+                        tion
+                     • Innerhalb Bauzone: Zustimmung der Gemeinde
+ Unterlagen          • Meldung Vorhaben / Baugesuch
+                     • Angaben zur Grösse, Betrieb und Anzahl Stellplätze
+                     • Situationsplan mit Anordnung der Fahrzeuge, Erschliessung und Fahrnis-
+                        bauten
+                     • Konzept Abfallentsorgung und sanitäre Anlagen
+                     • Fotodokumentation
+ Möglichkeiten       • Grösse der Stellplätze: Abhängig von Parkplatzgrösse
+                     • Saisonal oder ganzjährig
+                     • Dauer: Kurzstopp / Feriengäste (keine Dauernutzer)
+                     • Bauten und Anlagen: Keine zusätzlichen Bauten und Anlagen oder Terrain-
+                        veränderungen
+ Kontakt             Baubehörde in der jeweiligen Gemeinde, nw.ch/gemeindenmain
+
+
+
+
+                                                                                          Seite 5 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+2.2   Stell- oder Zeltplatz auf bestehendem Landwirtschaftsbetrieb (Agrotourismus)
+Im Rahmen eines nichtlandwirtschaftlichen Nebenerwerbs (Agrotourismus), hat die Betriebsleitung ei-
+nes landwirtschaftlichen Betriebes die Möglichkeit, campingähnliche Übernachtungsmöglichkeiten an-
+zubieten. Die Stell- oder Zeltplätze sind in der Nähe des Betriebshauptgebäudes zu platzieren und als
+«Nichtlandwirtschaftlicher Nebenbetrieb» gemäss Artikel 24b RPG im Grundbuch anzumerken.
+
+ Infrastruktur       •   Sanitäre Anlagen (WC-Anlagen in genügender Anzahl) in bestehenden Ge-
+                         bäuden und/oder Fahrnisbauten
+                     •   Abfallentsorgung
+                     •   Geeignete Zufahrt und Erschliessung vorhanden (inkl. Bewilligung Gü-
+                         terstrassen)
+                     •   Geeigneter Stellplatz / Zeltplatz beim Betriebshauptgebäude
+                     •   Flächen von Stellplätzen können nicht als landwirtschaftliche Nutzfläche
+                         angerechnet werden (nicht mehr direktzahlungsberechtigt)
+ Voraussetzungen     •   Landwirtschaftliches Gewerbe (mind. 0.8 SAK) oder Sömmerungsbetrieb
+                     •   Führung durch Betriebsleitung
+                     •   Eintrag ins Grundbuch gemäss Artikel 24b RPG
+
+ Bewilligungs-       •  Baubewilligungsverfahren für wiederkehrende Nutzung.
+ verfahren           •  Testbetrieb mit einer befristeten Bewilligung für maximal 3 Monate (auf
+                        Grundlage eines Konzeptes / Meldepflicht) möglich bzw. empfohlen
+                     • Ausserhalb Bauzone: Zustimmung der Gemeinde und des kant. Amt für
+                        Raumentwicklung (Baudirektion)
+ Unterlagen          • Meldung Vorhaben / Baugesuch: Angaben zur Grösse, Betrieb, Anzahl
+                        Plätze, Angebotsmonate, die sanitären Anlagen, die Entsorgung der Ab-
+                        wässer und allfällige Verpflegungsangebote
+                     • Situationsplan mit Anordnung der Fahrzeuge / Zelte, bzw. Erschliessung
+                     • Konzept Abfallentsorgung und sanitäre Anlagen
+                     • Grundrisse bei baulichen Massnahmen
+                     • Fotodokumentation
+                     • Bei Flurgenossenschaften ist die Fahrberechtigung nachzuweisen
+ Möglichkeiten       • Grösse: max. 5 Stellplätze (max. 150 m²)
+                     • Saisonal oder ganzjährig
+                     • Dauer: Kurzstopp / Feriengäste (keine Dauernutzer)
+                     • Bauten und Anlagen: Sanitäre Anlagen und Aufenthaltsräume.
+ Kontakt             Amt für Raumentwicklung, nw.ch/raumentw
+
+ Beispielbild
+
+
+
+
+                     Camping Ebnet, Ennetmoos
+
+                                                                                          Seite 6 / 18
+                                                                   Merkblatt Stell- und Campingplätze
+                                                                                     Kanton Nidwalden
+
+
+
+2.3   Stellplatz auf bestehenden Flächen innerhalb Bauzonen
+Innerhalb der Bauzonen können je nach Art der Bauzone auch Flächen ausserhalb bestehender Park-
+plätze als saisonale oder ganzjährige Stellplätze genutzt werden. Die wesentliche Voraussetzung ist
+eine genügende Erschliessung und die Übereinstimmung mit den kommunalen Bau- und Zonenregle-
+menten (Zonenzweck). Dies wird durch die Gemeindebaubehörde im Rahmen des Baubewilligungsver-
+fahrens geprüft. Diese legt auch die erforderlichen Infrastrukturen in Bezug zur Grösse fest.
+
+ Infrastruktur       •   Sanitäre Anlagen in eigenen und/oder benachbarten Gebäuden bzw.
+                         Fahrnisbauten
+                     •   Abfallentsorgung
+
+ Voraussetzungen     •   Innerhalb der Bauzone
+                     •   Prüfung Zonenkonformität, Erschliessung und Infrastrukturbedarf durch
+                         Baubehörde
+
+ Bewilligungs-       •   Baubewilligungsverfahren für wiederkehrende Nutzung
+ verfahren           •   Innerhalb Bauzone: Zustimmung der Gemeinde
+
+ Unterlagen          •   Meldung Vorhaben / Baugesuch
+                     •   Angaben zur Grösse, Betrieb und Anzahl Stellplätze
+                     •   Situationsplan mit Anordnung der Fahrzeuge, Erschliessung und bauliche
+                         Massnahmen
+                     •   Konzept Abfallentsorgung und sanitäre Anlagen
+                     •   Fotodokumentation
+
+ Möglichkeiten       •   Grösse Stellplätze: abhängig von Platzverhältnissen
+                     •   Saisonal oder ganzjährig
+                     •   Dauer: Kurzstopp / Feriengäste (keine Dauernutzer) oder Kurzstopp / Feri-
+                         engäste (Dauernutzer)
+                     •   Bauten und Anlagen: zonenkonform und temporär möglich
+
+ Kontakt             Baubehörde in der jeweiligen Gemeinde, nw.ch/gemeindenmain
+
+
+
+
+                                                                                         Seite 7 / 18
+                                                                   Merkblatt Stell- und Campingplätze
+                                                                                     Kanton Nidwalden
+
+
+
+2.4   Campingplatz (saisonal)
+Saisonal genutzte Campingplätze wie z.B. in Seelisberg oder in Buochs sind Anlagen, auf welchen das
+Campieren während den Sommermonaten erlaubt ist. Dazu gehören auch eigene Infrastruktureinrich-
+tungen und spezifische Bauten und Anlagen (Rezeption, Sanitärgebäude, Aufenthaltsräume, Spiel-
+plätze, Gastronomie, etc.). Solche Campinganlagen benötigen zwingend eine spezielle Zone im Nut-
+zungsplan der Gemeinde (planungspflichtig). Dabei wird eine Zone für Sport- und Freizeitanlagen aus-
+geschieden. Art und Umfang von Bauten und Anlagen und der Campingnutzung werden im kommuna-
+len Bau- und Zonenreglement geregelt.
+
+ Infrastruktur       •  Sanitär-, Entsorgungs-, Rezeptions- und Aufenthaltsräume
+                     •  Abfall- und Abwasserentsorgung
+ Voraussetzungen     •  Entsprechende Bauzone im Nutzungsplan / Bau- und Zonenordnung
+                     •  Betriebsreglement
+ Bewilligungs-       •  2-stufiges Zonenplan- und Baubewilligungsverfahren
+ verfahren           •  Nutzungsplan- oder Sondernutzungsplanverfahren
+                     •  Baubewilligungsverfahren Zustimmung Gemeinde und kant. Baudirektion
+ Unterlagen          •  Einzonungs- und Umzonungsgesuch; Teilzonenplan / Sondernutzungsplan;
+                        Projektdossier mit Bericht nach Art. 47 Raumplanungsverordnung
+                     • Meldung Vorhaben / Baubewilligungsgesuch
+                     • Situationsplan mit Anordnung der Fahrzeuge, Erschliessung, Umgebungs-
+                        gestaltung und bauliche Massnahmen
+                     • Grundrisse, Schnitte, Ansichten, Materialisierung Hochbauten
+                     • Betriebskonzept
+                     • Fotodokumentation
+ Möglichkeiten       • Grösse Campingplatz: von Platzverhältnissen abhängig
+                     • Dauer: Kurzstopp, Feriengäste, Dauernutzer
+                     • Bauten und Anlagen: möglich, gemäss Bestimmungen Bau- und Zonenord-
+                        nung
+ Kontakt             Baubehörde in der jeweiligen Gemeinde, nw.ch/gemeindenmain
+
+ Beispielbild
+
+
+
+
+                     Tipi-Zelte, Nostalgiewagen-Mini, Pods, etc. auf dem TCS Camping
+                     Buochs-Vierwaldstättersee
+
+
+
+
+                                                                                         Seite 8 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+2.5   Campingplatz (ganzjährig)
+Ganzjährig genutzte Campingplätze sind Anlagen, welche das Abstellen eines Zeltes bzw. eines Wohn-
+mobiles oder eines Wohnwagens zu jeder Jahreszeit ermöglichen.
+
+ Infrastruktur       •   Sanitär-, Entsorgungs-, Rezeptions- und Aufenthaltsräume
+                     •   Abfall- und Abwasserentsorgung
+
+ Voraussetzungen     •   Entsprechende Bauzone im Nutzungsplan / Bau- und Zonenordnung
+                     •   Betriebsreglement
+                     •   Entscheid obliegt der Gemeinde
+                     •   Wohnmobile werden als Fahrnis klassifiziert und unterstehen daher, un-
+                         abhängig der Dauer ihres Verbleibs nicht dem Zweitwohnungsgesetz
+                         (ZWG; SR 702). Die Voraussetzung dafür ist, dass sich das Fahrzeug in ei-
+                         nem verkehrsfähigen Zustand befindet. Das Fahrzeug muss daher einge-
+                         löst sein und über ein Kontrollschild verfügen.
+                     •   Das Fahrzeug darf nicht auf einer Fundamentplatte abgestellt werden.
+
+ Bewilligungs-       •   2-stufiges Zonenplan- und Baubewilligungsverfahren
+ verfahren           •   Nutzungsplan- oder Sondernutzungsplanverfahren
+                     •   Baubewilligungsverfahren Zustimmung Gemeinde und kant. Baudirektion
+
+ Unterlagen          •   Einzonungs- und Umzonungsgesuch; Teilzonenplan / Sondernutzungsplan;
+                         Projektdossier mit Bericht nach Art. 47 Raumplanungsverordnung
+                     •   Meldung Vorhaben / Baugesuch
+                     •   Situationsplan mit Anordnung der Fahrzeuge, Erschliessung, Umgebungs-
+                         gestaltung und bauliche Massnahmen
+                     •   Grundrisse, Schnitte, Ansichten, Materialisierung Hochbauten
+                     •   Betriebskonzept
+                     •   Fotodokumentation
+
+ Möglichkeiten       •   Grösse Campingplatz: von Platzverhältnissen abhängig
+                     •   Dauer: Kurzstopp, Feriengäste, Dauernutzer
+                     •   Bauten und Anlagen: möglich, gemäss Bestimmungen Bau- und Zonenord-
+                         nung
+
+ Kontakt             Baubehörde in der jeweiligen Gemeinde, nw.ch/gemeindenmain
+
+
+
+
+                                                                                          Seite 9 / 18
+                                                                     Merkblatt Stell- und Campingplätze
+                                                                                       Kanton Nidwalden
+
+
+
+
+2.6   Weitere Kriterien
+Neben dem Typ des Stell- bzw. Campingplatzes sind für das Bewilligungsverfahren folgende weitere
+Kriterien relevant:
+
+Anzahl und Grösse
+Je nach Typ des Stellplatzes ist die Grösse bzw. die Anzahl der Fahrzeuge beschränkt. Im Wesentlichen
+hängt dies von den örtlichen Gegebenheiten ab. Es liegt daher an der kommunalen Baubehörde und
+der kant. Baudirektion, zu entscheiden, ob sie die Anzahl der Stellplätze, bezogen auf ein spezifisches
+Gesuch hin, beschränken will. Neben der Frage des verfügbaren Platzes ist bei der Festlegung der An-
+zahl an Fahrzeugen auch die Erschliessung ein massgebendes Kriterium. Es ist daher sicherzustellen,
+dass weder durch die Anordnung der Fahrzeuge noch durch die Erschliessung öffentliche oder private
+Interessen massgeblich beeinträchtigt werden.
+
+Dauer
+Bei der Dauer des Aufenthalts wird eine Unterscheidung gemacht zwischen dauerhaft gemieteten
+Stellplatzparzellen auf Campingplätzen, Feriengäste die einige Tage bis wenige Wochen vor Ort bleiben
+und dem Kurzstopp (< 5 Tage).
+Für Dauernutzer gelten auch andere Rahmenbedingungen in Bezug auf Einwohnerkontrolle, Steuerdo-
+mizil, usw. Aus raumplanerischer Sicht spielt neben den allgemeinen nutzungsplanerischen Anforde-
+rungen das Zweitwohnungsgesetz (ZWG; SR 702) eine wichtige Rolle. Wohnmobile gelten als Fahrnis,
+da die Absicht einer festen Verbindung mit dem Boden fehlt. Somit unterstehen sie nicht dem ZWG,
+solange sie sich im verkehrsfähigen Zustand befinden und nicht dauerhaft auf einer Fundamentplatte
+abgestellt werden.
+
+Bauten und Anlagen
+Neue Nutzungen lösen meistens auch einen Bedarf an neuen Bauten und Anlagen aus. Bei einer Nut-
+zung als Stellplatz steigt unweigerlich das Bedürfnis an WC Anlagen, Abfallentsorgungsanlagen usw.
+Für Bewilligungen innerhalb der Bauzone ist die Gemeindebaubehörde zuständig. Sie kann im Rahmen
+einer Stellplatznutzung sowohl feste als auch temporäre Einrichtungen bewilligen.
+Bei allen Standorten ausserhalb der Bauzone ist nebst der Baubewilligung der Gemeindebaubehörde
+zusätzlich die raumplanungsrechtliche Zustimmung der kantonale Baudirektion erforderlich.
+
+
+
+
+                                                                                          Seite 10 / 18
+                                                                      Merkblatt Stell- und Campingplätze
+                                                                                        Kanton Nidwalden
+
+
+
+3      Grundlagen
+Als Bewilligungsgrundlage dient das Gesetz über die Raumplanung und das öffentliche Baurecht des
+Kantons Nidwalden und des Bundes sowie das Tourismusfördergesetz. Je nach Standort sind weitere
+kantonale und eidgenössische Fachgesetzgebungen relevant. Die dauerhafte bzw. regelmässige Nut-
+zung eines Platzes für Zelte oder Fahrzeuge im Sinne eines Stellplatzes ist immer baubewilligungspflich-
+tig, weil damit relevante Auswirkungen auf Raum, Umwelt und Erschliessung verbunden sind. Je nach
+Umfang und Intensität der Nutzung, sowie weiterer Infrastrukturen ergeben sich noch zusätzliche Ver-
+fahrensschritte. Ausserhalb der Bauzone ist zudem immer die Zustimmung der Baudirektion erforder-
+lich.
+
+3.1     Prozess Baubewilligungsverfahren
+In der Schweiz ist das Baubewilligungsverfahren kantonal geregelt. Baugesuche werden von den be-
+troffenen Gemeinden anhand kommunaler Gesetze beurteilt. Der Prozess lässt sich in folgende
+Schritte gliedern:
+
+                                Kontaktaufnahme mit der Baubehörde in der jeweiligen Gemeinde
+        Beratung                nw.ch/gemeindenmain
+                                Frage zum Verfahren: ausserhalb oder innerhalb der Bauzone?
+
+
+        Formelle                Nach dem Einreichen des Baugesuchs bei der Gemeinde wird ge-
+                         1.
+        Prüfung                 prüft, ob alle Unterlagen vorliegen.
+
+                                Das eigentliche Baubewilligungsverfahren wird mit der Aussteckung
+       Publikation              des Bauvorhabens und der amtlichen Publikation im Amtsblatt ein-
+                         2.
+           und                  geleitet. Nun startet die Frist für Einwendungen von berechtigten
+       Aussteckung              Personen und Organisationen (z.B. Nachbarn, NGO's).
+
+                                Bei der Prüfung des Gesuchs werden planungsrechtliche, bautechni-
+                                sche und umweltrechtliche Aspekte, sowie eingegangene Einwen-
+       Beurteilung       3.     dungen beurteilt. Die Dauer des Verfahrens hängt von der Nutzung,
+       des Gesuchs              Grösse und Komplexität des Projekts und allfälliger Einwendungen
+                                ab.
+
+                                Die Baubewilligung wird erteilt, wenn das Baugesuch den kommuna-
+       Erteilung der            len Bauvorschriften und der übergeordneten Gesetzgebung (z.B.
+                         4.
+      Baubewilligung            Umweltschutzgesetz, Raumplanungsgesetz) entspricht. Dabei kann
+                                es spezielle Auflagen (z.B. Gewässerschutz) geben.
+
+                                Der Gesuchsteller und Einwendende können gegen die Auflagen
+       Beschwerde-              oder gegen die Baubewilligung Beschwerde einreichen. Auch Perso-
+                         5.
+           frist                nen, welche eine Einwendung eingereicht haben, sind beschwerde-
+                                berechtigt.
+
+
+      rechtskräftige            Wenn die Einwendungen beigelegt sind, ist die Baubewilligung
+      Baubewilligung            rechtskräftig.
+
+
+
+
+                                                                                           Seite 11 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+3.2   Voraussetzungen und Bewilligungsverfahren
+Je nach Standort bestehen weitere öffentlich-rechtliche Grundlagen, die berücksichtigt werden müs-
+sen. Spätestens im Baubewilligungsverfahren werden diese durch die zuständigen kantonalen und
+kommunalen Ämter geprüft. Bevor ein Baugesuch eingereicht wird, empfehlen wir in jedem Fall mit
+einer Baugesuchs-Vorabklärung bei der zuständigen Baubewilligungsbehörde zu prüfen, ob ein Bauge-
+such bewilligungsfähig ist. Alle Vorhaben müssen zudem der einschlägigen Gesetzgebung des Bundes,
+des Kantons und der Gemeinde entsprechen. In den Bewilligungsverfahren sind daher je nach Standort
+folgende Vorschriften zu beachten:
+
+Baugesuchformulare können online unter nw.ch heruntergeladen werden (Suchbegriff «Baugesuchfor-
+mulare»).
+
+3.3   Naturgefahren
+Gefahrenzonen umfassen Gebiete, die aufgrund von Naturgefahren nicht oder nur unter sichernden
+Massnahmen bebaut werden dürfen. Grundstücke werden aufgrund ihrer Gefährdung durch Naturge-
+fahren Gefahrenzonen zugeordnet; die Gefährdung ergibt sich aus der Kombination der Dynamik des
+Prozesses sowie der Intensität und Häufigkeit der Ereignisse.
+
+Bauvorhaben in den Gefahrenzonen benötigen einen fachtechnisch korrekt und stufengerecht erstell-
+ten Nachweis Naturgefahren. Die Anforderungen und deren Schutzziele sind in der kantonalen Pla-
+nungs- und Bauverordnung (PBV 611.11) definiert.
+
+Eine Anleitung findet man auf der Seite naturgefahrennachweis.ch.
+
+3.4   Lärmschutz
+Unterkunftseinrichtungen wie Zelte, Wohnwagen, Wohnmobile usw. auf Campingplätzen und Stell-
+plätzen sind keine Gebäude im Sinne der Lärmschutzverordnung (LSV; SR 814.41) und sind somit nicht
+durch die Zuweisung einer Empfindlichkeitsstufe (ES) gegenüber Lärmquellen geschützt. Trotzdem soll
+nach Möglichkeit darauf geachtet werden, dass Stellplätze nur dort vorgesehen werden, wo keine
+schädlichen oder lästigen Lärmimmissionen zu erwarten sind.
+
+3.5   Gewässerschutz / Oberflächengewässer
+Der Gewässerraum ist gemäss Gewässerschutzgesetz der notwendige Raum eines Gewässers, mit dem
+die minimale Funktion zum Schutz vor Hochwasser, des Lebensraumes Gewässer und der Gewäs-
+sernutzung sichergestellt wird. Im Gewässerraum ist daher eine Campingnutzung resp. Stellplatz nicht
+zulässig. Lediglich rechtmässig erstellte und bestimmungsgemäss nutzbare Bauten und Anlagen sind
+in ihrem Bestand geschützt.
+
+Dasselbe gilt für die Abflusswegzone gemäss Art. 69 b PBG. Bei Gewässern, an denen weder ein Ge-
+wässerraum noch ein Abflussweg festgelegt ist, beträgt der von abflussverändernden Bauten freizu-
+haltende Abstand 7 m vom Gewässerrand.
+
+Abwässer aus WC-Anlagen, Duschen, Lavabos etc. sind grundsätzlich der öffentlichen Kanalisation zu-
+zuführen. Eine landwirtschaftliche Verwendung von verschmutzten Abwässern kann bei agrotouristi-
+schen Angeboten unter bestimmten Voraussetzungen durch das Amt für Landwirtschaft bewilligt wer-
+den.
+
+
+
+
+                                                                                         Seite 12 / 18
+                                                                     Merkblatt Stell- und Campingplätze
+                                                                                       Kanton Nidwalden
+
+
+
+3.6   Grundwasserschutzzonen
+Grundwasserschutzzonen dienen dazu, Trinkwassergewinnungsanlagen und das Grundwasser unmit-
+telbar vor seiner Nutzung als Trinkwasser vor Beeinträchtigungen zu schützen. Dies gemäss Gewässer-
+schutz-Gesetzgebung, um alle im öffentlichen Interesse liegenden Trinkwasserfassungen auszuschei-
+den. Innerhalb von Grundwasserschutzzonen (siehe geo.admin.ch: Layer «Grundwasserschutzzonen»)
+sind Campingnutzungen, Stellplätze grundsätzlich nur unter spezifischen Anforderungen möglich oder
+sogar untersagt und benötigen in jedem Fall einer Gewässerschutzbewilligung des Amts für Umwelt.
+
+3.6.1 Abwasser / Entwässerung
+Für die Erstellung und Änderung von Bauten und Anlagen, die ausserhalb der Bauzonen liegen oder
+bei denen Gewerbeabwasser gemäss Anhang 3.2 GSchV oder anderes nicht kommunales, verschmutz-
+tes Abwasser gemäss Anhang 3.3 GSchV anfällt, ist geschützt auf Art. 71 Abs. 2 GewG eine gewässer-
+schutzrechtliche Bewilligung erforderlich. Bei Stellplätzen müssen ortsfeste Einrichtungen (Entlee-
+rungsschacht) vorhanden sein, um das Abwasser aus den Campingfahrzeugen vor der Wegfahrt zu ent-
+sorgen. In der Regel ist dafür gestützt auf 19 Abs. 2 GewV bei Stell- und Campingplätzen das Amt für
+Umwelt zuständig.
+
+3.7   Belastete Standorte / Altlasten
+Innerhalb von belasteten Standorten gemäss Altlasten-Verordnung (siehe geo.admin.ch: Layer «Katas-
+ter der belasteten Standorte») können Schadstoffbelastungen vorhanden sein, die für Campingnut-
+zungen (Bereiche, in denen sich Personen inkl. Kleinkinder regelmässig aufhalten können) eine Gefähr-
+dung darstellen. Entsprechende Vorhaben bedürfen daher einer Prüfung und Zustimmung des «Amt
+für Umwelt». Gegebenenfalls sind hierfür zusätzliche Bodenproben und eine Gefährdungsabschätzung
+des Schutzguts Boden und/oder eine Bodensanierung notwendig.
+
+3.8   Bodenschutz
+Die Erschliessung und Parkierungsflächen sind nach Möglichkeit auf befestigter Fläche anzuordnen und
+klar zu kennzeichnen (Leitsystem). Die Grünflächen sind nach Abschluss der Campingsaison zu beur-
+teilen und bei Bedarf wieder instand zu stellen, d.h. sämtliche Fremdstoffe müssen entfernt, verdich-
+teter Boden aufgelockert und offene Flächen begrünt werden. Diese Wiederinstandstellung ist ver-
+bindlich zu regeln.
+
+Dem gewachsenen Boden ist insbesondere in der Vorsorge genügend Rechnung zu tragen. (z.B. Befah-
+ren nur bei abgetrockneten Verhältnissen), damit keine Sanierungsmassnahmen notwendig werden.
+In der Landwirtschaftszone darf der bestehende Bodenaufbau nicht mittels Terrainveränderungen
+(z.B. Schotterrasen) verändert werden.
+
+3.9   Natur- und Landschaftsschutz
+Grundsätzlich gilt es bei allen Typen resp. Stell- und Campingplätzen die Interessen von Natur und
+Landschaft zu berücksichtigen. Ein Natur- resp. Landschaftsschutzgebiet resp. -zonen schützt einzelne
+Lebensräume oder gefährdete Tier- und Pflanzenarten. In solchen Gebieten hat der Schutz der Natur
+Vorrang vor menschlichen Nutzungen. Dabei sind jeweils die objektspezifischen Schutzziele der allen-
+falls betroffenen Schutzobjekte (Landschaftsschutzgebiet, Naturschutzgebiet, Naturobjekt, Lebens-
+raum von geschützten Tier- und Pflanzenarten, Ufergebiet, etc.) zu beachten.
+
+In geschützten Mooren und Trockenstandorten gilt nach 5 Abs. 1 Ziffer 5, 6 und 7 der Biotopschutzver-
+ordnung, dass das Zelten und Campieren und das Entfachen von Feuern sowie das Ablagern verboten
+sind. Nach 5 Absatz 2 sind Hunde an der Leine zu führen. Die Schutzgebiete sind zu finden auf der Seite
+gis-daten.ch.
+
+
+
+                                                                                          Seite 13 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+3.10 Wald
+Campinganlagen und Stellplätze sind grundsätzlich ausserhalb von Waldarealen zu platzieren. Das Er-
+richten von Stellplätzen ist auf sämtlichen Plätzen, welche über Waldstrassen erschlossen werden,
+nicht möglich. Gemäss Artikel 15 des Bundesgesetzes über den Wald (WaG; SR 921.0) dürfen Wald-
+strassen nur für forstliche- und landwirtschaftliche Zwecke befahren werden. Das Befahren von Wald-
+strassen zu rein touristischen Zwecken ist nicht erlaubt. Das dauerhafte Parkieren im Waldareal ist in
+jedem Fall ausgeschlossen.
+
+3.11 Wildcampieren
+Ist das Wildcampieren in Nidwalden erlaubt? Grundsätzlich Nein. Für ein Ja ist die Zustimmung des
+Grundeigentümers nötig. Es gibt ein paar Ausnahmen: Einzelne Übernachtungen (nicht in Gruppen) im
+Gebirge, oberhalb der Waldgrenze. Bei mehreren Übernachtungen muss das Zelt tagsüber wieder ab-
+gebaut werden. Auf Privatgrundstücken mit Erlaubnis des Grundstückbesitzers ist die Übernachtung
+ebenfalls erlaubt. Auch Not-Biwakieren ist erlaubt. In Naturschutzgebieten, eidg. Jagdbanngebieten,
+Wildruhezonen und bei allgemeinem Betretungsverbot gilt ein generelles Verbot fürs Wildcampieren.
+
+3.12 Zweitwohnungsgesetz
+Gemäss Artikel 2 Absatz 1 Bst. E ZWG unterstehen Fahrnisse nicht dem Anwendungsbereich der Zweit-
+wohnungsgesetzgebung. Wohnmobile werden als Fahrnisse klassifiziert, solange sie sich im verkehrs-
+fähigen Zustand befinden und sie über keine feste Verbindung zum Boden verfügen, daher nicht auf
+einer Fundamentplatte abgestellt werden. Rechtmässig erstellte Unterkunftseinrichtungen wie z.B. ein
+dauerhaft abgestellter Wohnanhänger die am 11. März 2012 bereits bestanden, können grundsätzlich
+unabhängig ihrer Grösse und der Intensität der Nutzung, als altrechtlich im Sinne von Art. 15 ZWG
+betrachtet werden.
+
+3.13 Anmeldung und Tourismusabgaben
+Jeder Anbieter, welcher Stellplätze oder Campingplätze gegen Entgelt anbietet, ist angehalten, den
+betreffenden Platz bei der Standortgemeinde anzumelden. Gemäss dem Tourismusfördergesetz (TFG)
+des Kantons Nidwalden (Art. 22.3) sind Beherbergungsbetriebe abgabepflichtig. Campingplätze bezah-
+len aktuell jährlich CHF 60.00 pro Standplatz (Art. 22.1 TFG).
+
+3.13.1 Meldepflicht
+Wer gewerbsmässig Gäste beherbergt, sowie die Inhaber von Campingplätzen und Ferienwohnungen,
+haben von jedem Gast bei dessen Ankunft einen amtlichen Meldeschein ausfüllen zu lassen. Es sind
+nur Meldescheine des Kantons Nidwalden zugelassen. Diese sind bei der Kantonspolizei Nidwalden zu
+beziehen (z.Zt. 1 Block zu CHF 8.00). Die Meldescheine sind wöchentlich der Kantonspolizei Nidwalden
+zuzustellen. Kontakt: Nidwaldner Kantonspolizei: +41 41 618 44 66, kantonspolizei@nw.ch
+
+
+
+
+                                                                                         Seite 14 / 18
+                                                              Merkblatt Stell- und Campingplätze
+                                                                                Kanton Nidwalden
+
+
+
+3.14 Rechtliche Grundlagen
+Bund:
+• Bundesgesetz über den Schutz der Gewässer (Gewässerschutzgesetz, GSchG; SR 814.20) und Ge-
+   wässerschutzverordnung (GSchV; SR 814.201).
+• Bundesgesetz über den Natur- und Heimatschutz (NHG; SR 451).
+• Bundesgesetz über die Raumplanung (Raumplanungsgesetz, RPG; SR 700) und Raumplanungsver-
+   ordnung (RPV; SR 700.1).
+• Bundesgesetz über Zweitwohnungen (Zweitwohnungsgesetz, ZWG; SR 702)
+• Lärmschutz-Verordnung (LSV; SR 814.41), nw.ch/umwelt/322
+• Raumplanungsverordnung (RPV; SR 700.1)
+• Umweltschutzgesetz (USG; SR 814.01)
+• Zweitwohnungsgesetz (ZWG; SR 702) / Zweitwohnungsverordnung (ZWV; SR 702.1)
+• Verordnung Schutz vor nichtionisierender Strahlung (NISV; SR 814.710)
+• Bundesgesetz über den Wald (WaG; SR 921.0)
+• Verordnung über die eidgenössischen Jagdbanngebiete (VEJ; SR 922.31)
+• Verordnung über die Wildruhegebiete (NG 841.15)
+
+Kanton:
+• Baugesetz (BauG 611.01) Planungs- und Baugesetz (PBG 611.1), mit den Verordnungen (BauV und
+   PBV).
+• Amt für Raumentwicklung Nidwalden (ARE), Kantonaler Richtplan Nidwalden: nw.ch/raument-
+   wdienste/2871
+• Reglement über die Koordination im Verwaltungsverfahren (Verwaltungsrechtspflegegesetz; NG
+   265.1)
+• Kataster der öffentlich-rechtlichen Eigentumsbeschränkungen Nidwalden (ÖREB-Kataster):
+   nw.ch/raumentwdienste/4423 / Geoinformationen NW & OW: gis-daten.ch
+• Tourismusfördergesetz Nidwalden (TFG): nw/wfdienste/2959
+
+
+
+
+                                                                                   Seite 15 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+4   Services
+Die Dienstleistungen sind nach Art der Gäste zu definieren. Zusätzliche Angebote wie z.B. gastronomi-
+sche Angebote und/oder Verkauf von Produkten können mit den nötigen Bewilligungen angeboten
+werden. Die Vielfalt des Angebotes widerspiegelt sich auch in der Preisgestaltung.
+
+In der Praxis haben sich folgende Hauptgruppen von Stellplätzen entwickelt:
+
+                                                       Standard   Komfort     Komfort Plus
+ Signalisation / Beschriftung vor Ort*                    x          x             x
+ WC-Anlagen (vor Ort oder in der Nähe)                    x          x             x
+ Entsorgung (Abfall)**                                    x          x             x
+ Kassetten- und Grauwasserentsorgung                      x          x             x
+ Frischwasseranschluss                                               x             x
+ Sitzplatz, Klappstuhl geeignet                                      x             x
+ Sanitäre Anlagen mit Dusche und Warmwasser                                        x
+ Stromanschluss (220V) für alle Plätze                                             x
+ Feuer- und Kochstellen (Feuerholz)                       (x)       (x)           (x)
+ Waschmöglichkeiten                                       (x)       (x)           (x)
+ Spielplatz                                               (x)       (x)           (x)
+ Bademöglichkeiten, z.B. inkl. Badeeintritt für Pool      (x)       (x)           (x)
+ Kulinarische Möglichkeiten z.B. Hofladen, Beizli,        (x)       (x)           (x)
+ Frühstück, Abendessen und/oder Grill
+
+x = zwingend, (x) = optional
+
+*Mehrsprachigkeit berücksichtigen (sanitäre Anlagen, Abfallentsorgung, Infostelle, Reception, Hin-
+weisschilder, Hausregeln)
+**Abfallentsorgungskonzept gemäss den örtlichen Gegebenheiten. Verhinderung von übermässigen
+Emissionen wie Lärm, Rauch (Luft), Licht, Abfälle (gesetzeskonforme Abwasserentsorgung)
+
+Ein attraktiver Stellplatz zeichnet sich durch folgende Kriterien aus:
+• Prospektmaterial von Nidwalden Tourismus (nidwalden.com/partner)
+• Die An- und Abreisezeiten können flexibel gewählt werden
+• Erweiterte Entsorgungsmöglichkeiten
+• Gut befahrbare und beschilderte Zufahrtsstrasse
+• Nähe zu Sehenswürdigkeiten, Naturwesen (Gewässer, Berge, Wald), Einkaufsmöglichkeiten,
+    Gastronomie, touristische Attraktionen
+• Anbindung an den öffentlichen Verkehr
+• Anschluss an Rad-, Wasser- und/oder Wanderwegnetze
+
+
+
+
+                                                                                         Seite 16 / 18
+                                                                    Merkblatt Stell- und Campingplätze
+                                                                                      Kanton Nidwalden
+
+
+
+5     Information
+5.1    Kommunikation
+Die Kommunikation und Vermarktung ist Sache des Anbieters. Die Kommunikation des Standortes und
+des entsprechenden Angebotes wird idealerweise über eine Plattform und Vermarktungskanäle si-
+chergestellt. Weiter ist zu empfehlen, sämtliche Kommunikation online und auf Smartphones auszu-
+richten. Mittels QR-Codes und über diverse Google-Kanäle (z.B. GoogleBusiness, GoogleMaps,
+GoogleAdvisor, etc.) ist das Angebot bequem und einfach zu finden.
+
+Basiseintrag auf dem Online-Gästeportal nidwalden.com
+Für Partner mit offiziellen Angeboten erstellt Nidwalden Tourismus auf Wunsch kostenlos einen Ba-
+siseintrag auf nidwalden.com/camping. Eine Voraussetzung ist die Entrichtung von Tourismusabgaben.
+Informationen zu Projekten von Nidwalden Tourismus findet man auf nidwalden.com/partner.
+
+Übersicht über aktuelle Camping-Plattformen (Nicht abschliessend)
+ Plattform              Kurzbeschrieb                       Homepage
+                        Campingplattform.                   gocamping.ch
+ Go Camping
+                        Regionen: Uri, Sörenberg
+                        Naturplätze und Hütten mit Cam-
+                        pern. Kommission von 15%, Regi-
+                                                            nomady.ch
+ Nomady                 onen: UNESCO Biosphäre Entle-
+                        buch, Wolfenschiessen, Einsie-
+                        deln
+                                                            zelter.ch
+ Zelter                 Zelterlebnisse in der Natur
+                        Parkplätze für spontane Über-
+                                                            parknsleep.app
+ Parkn’Sleep            nachtungen, keine Reservation
+                        möglich. Kommission von 15%.
+ Wohnmobilland          Stellplatzverzeichnis, offizielle   wohnmobilland-schweiz.ch
+ Schweiz                Stellplätze
+                        Ähnliche Plattform wie
+ Stellplatz Info                                            stellplatz.info
+                        GoCamping
+                        Ähnlich wie Nomady für natur-
+ Vanlifelocation                                            vanlifelocation.com
+                        nahe Campingplätze
+                        Onlineportal rund um Ihren Ur-
+                                                            freeontour.com
+ FREEONTOUR             laub mit Wohnwagen oder Wohn-
+                        mobil. Kostenfrei.
+                        C2C-Plattform (Privatperson zu
+                        Privatperson). Herausforderung:
+ Park4night             Nutzer können illegale Camping      park4night.com
+                        propagieren (bspw. in Wald,
+                        Schutzzonen, etc.)
+ Camper Kontakt         Wohnmobilstellplätze                campercontact.com/de/schweiz
+
+
+
+
+                                                                                         Seite 17 / 18
+                                                                     Merkblatt Stell- und Campingplätze
+                                                                                       Kanton Nidwalden
+
+
+
+5.2     Empfehlungen für Anbieter
+Diese Empfehlungen für Anbieter sollen ihr Verhalten präventiv unterstützen. Darin enthalten sind
+Grundlagen zum respektvollen Miteinander und zum Schutz und Umgang von Menschen, Tier und Na-
+tur.
+
+•     Wir rechnen Tourismusabgaben gesetzeskonform ab
+•     Wir sind Gastgeber und generieren mit unseren Angeboten eine Wertschöpfung für die Region
+      und die Landwirtschaft
+•     Wir informieren unsere Nachbarn über mögliche Gästeaufkommen
+•     Wir halten den Platz und die Ausstattung sauber (Schnitthöhe vom Gras, Holzreserve bei Feuer-
+      stellen, etc.)
+•     Wir lenken die Besucher über eine einheitliche Beschilderung vor Ort (Signalisation, Hausregeln)
+•     Wir lenken und informieren die Besucher über die digitalen Medien
+•     Nach Möglichkeit bieten wir eigene Produkte oder Produkte aus der Region im Direktverkauf an
+•     Wir empfehlen zusätzliche touristische Angebote in der Region, nidwalden.com
+•     Ein Merkblatt «Verhaltenskodex für Gäste» soll das Verhalten präventiv unterstützen. Darin ent-
+      halten sind Grundlagen zum respektvollen Miteinander und zum Schutz und Umgang von Men-
+      schen, Tier und Natur, Beispiel: Verhaltensregeln für Wohnmobillisten.
+
+
+
+
+6     Impressum
+
+
+Herausgeberin                       In Zusammenarbeit mit:
+
+Nidwalden Tourismus (NWT)           Amt für Raumentwicklung           Amt für Umwelt
+Bahnhofplatz 2                      Buochserstrasse 1                 Stansstaderstrasse 59
+6370 Stans                          Postfach 1241                     Postfach 1251
+                                    6371 Stans                        6371 Stans
+
+nidwalden.com                       nw.ch/raumentw                    nw.ch/amtumwelt
+
+
+
+
+                                                                                          Seite 18 / 18
+

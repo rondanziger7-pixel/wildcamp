@@ -1,3 +1,4 @@
+import { existsSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { assess } from '../src/assess';
 import { CANTONS, findCanton, validateRule, type Canton, type CantonRule } from '../src/cantons';
@@ -21,6 +22,13 @@ describe('canton list', () => {
   it('every rule that is set passes validation', () => {
     for (const c of CANTONS) {
       if (c.rule) expect(validateRule(c, c.rule), c.name).toEqual([]);
+    }
+  });
+  it('every rule has its source text saved under docs/sources/<code>/', () => {
+    for (const c of CANTONS) {
+      if (!c.rule) continue;
+      const dir = `docs/sources/${c.code}`;
+      expect(existsSync(dir) && readdirSync(dir).length > 0, `${c.name}: no saved source in ${dir}`).toBe(true);
     }
   });
   it('finds by code', () => {

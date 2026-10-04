@@ -13,7 +13,7 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 
    If the forest map fails to load, it falls back to an elevation-only estimate and says so.
 
-3. **Canton** (swissBOUNDARIES3D) shown for every spot. Cantonal rules live in `src/cantons.ts` and can change a verdict, but **no rules are set yet**: they need a source you have actually read. Until then the app says "cantonal rules are not verified" and the verdict is unchanged. See `docs/CANTON_RESEARCH.md` for leads and how to add a rule; tests reject rules without an official cantonal or federal source and a check date.
+3. **Canton** (swissBOUNDARIES3D) shown for every spot, with its camping rule where one has been read from the primary text. Currently verified: OW, NW, TI, SG; the others show "cantonal rules are not verified". A `banned` rule forces "Not allowed" and `restricted` caps at "Caution". Rules live in `src/cantons.ts`; tests require an official cantonal/federal source, a check date and the saved source text under `docs/sources/`. See `docs/CANTON_RESEARCH.md`.
 
 Verdicts are `Not allowed`, `Caution`, `Likely OK` or `Unknown`. The app never says "legal".
 
@@ -31,7 +31,7 @@ Forest map accuracy (checked against the source polygons): 294/300 points inside
 Also verified: the API sends `access-control-allow-origin: *`, and the built app runs in headless Chromium (forest map download/decompression, lookup, and rendering).
 
 ## To do
-- [ ] **Verify and add canton rules** (mechanism is built; the content is not). Needs someone to read the primary law, because the research tool could not fetch any pages. See `docs/CANTON_RESEARCH.md`.
+- [ ] **Verify the remaining canton rules** (22 of 26 still unverified; VS, BE, VD, GR and the rest). See `docs/CANTON_RESEARCH.md`.
 - [ ] Municipal rules and the municipality name for each spot.
 - [ ] Add GPS "my location" and offline caching (PWA).
 - [ ] Use quiet-zone protection season to show "restricted only 21.12.–30.04." instead of a flat no.
