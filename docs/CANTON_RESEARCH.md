@@ -29,6 +29,39 @@ Absence from the texts below is not proof that no rule exists elsewhere (municip
 - **SZ**: Law 543.110 (1959) covers public campsite permits only. Camping in federal hunting reserves is banned federally (VEJ).
 - **ZH**: the Regierungsrat decree on tenting and camping (LS 702.112, 1964) was repealed on 2003-10-01. Zürich's nature-protection areas ban camping (reported, not read).
 
+## Cities and larger towns (read 2026-10-04)
+Municipal police regulations read in the municipality's own official law collection (several are LexWork `tlex.ch` instances linked from the city site); texts and per-city READMEs under `docs/sources/municipal/<bfs>_<name>/`. Quotes were checked against the saved texts by `tests/cities.test.ts`.
+
+| BFS | City | Recorded | Rule read |
+|---|---|---|---|
+| 5113 | Locarno | banned | Ordinanza sul campeggio Art. 2: no camping on municipal public ground (gardens, parks, streets, squares, car parks, forests, floodplains) and on private areas open to the public; CHF 50 to 5,000 |
+| 261 | Zürich | restricted | APV Art. 15: tents, caravans and the like on public ground outside designated places need a permit |
+| 230 | Winterthur | restricted | APV Art. 36: permit on public ground; private land only with the owner's permission |
+| 3203 | St. Gallen | restricted | Polizeireglement Art. 11: banned on public ground outside designated sites; private land only where order is disturbed |
+| 4001 | Aarau | restricted | PolVO § 10 (+ Schachen ordinance): permit on public ground; fixed fine CHF 100 |
+| 371 | Biel/Bienne | restricted | OPolR Art. 28: tents and vehicles banned in public space outside designated areas; sleeping outdoors without a tent expressly allowed |
+| 2601 | Solothurn | restricted | Polizeiordnung § 17: only on designated sites |
+| 2939 | Schaffhausen | restricted | POV Art. 47: tents and caravans on public ground only on campsites; fine up to CHF 1,000 |
+| 355 | Köniz | restricted | OPR Art. 33: tents on public ground only on designated places (plus three park ordinances); up to CHF 300 |
+| 3901 | Chur | restricted | PG Art. 27: only at designated places, fixed fine CHF 100; Waldgesetz Art. 15: forest as a rule banned |
+| 942 | Thun | restricted | OPR Art. 27: tents and tarps for sleeping banned on public ground; one night without a tent in parks outside the old town and in campers on public car parks allowed |
+| 5586 | Lausanne | restricted | RGP Art. 36: banned on public roads, their surroundings and in forests; private land with consent up to four days; parks: Art. 9 of the green-space rules bans camping and bivouacs |
+| 2196 | Fribourg | restricted | RGP Art. 19 para. 2 let. f: camping tent on public ground needs a permit 20 days ahead; CHF 20 to 1,000 |
+| 6458 | Neuchâtel | restricted | Règlement de police Art. 26: only at places designated by the council. **Doubt:** the city's current index no longer lists this 2000 regulation (amended to 2019) |
+| 6266 | Sion | restricted | Règlement de police Art. 38: banned outside authorised places on the whole communal territory; a new regulation is pending |
+
+Read, **no general camping rule, so not recorded**:
+- **Basel (2701)**: no municipal police regulation; cantonal laws (SG 253.100, 724.100, 724.110, 724.115) have no camping article, only the general permit for use of public space beyond common use.
+- **Luzern (1061)**: no police regulation; the regulation of public ground (SRL 1.1.1.1.1) lists "Zelte" among uses needing a permit (Art. 14) without saying camping tents are meant.
+- **Bellinzona (5002)**: 87 published municipal documents checked; only a camper-area ordinance, no camping rule.
+- **Geneva (6621)**: "any form of camping" is banned only at the Plage des Eaux-Vives (LC 21 316.4 Art. 10) and the Bains du Jet d'eau (LC 21 316.5 Art. 25); the parks regulation (LC 21 331) has no camping article. The cantonal RSTP was not located.
+- **Lugano (5192)**: camping or overnighting banned in urban parks, public gardens, play fields (Ordinanza 2.5.1 Art. 13) and Parco San Grato, fine up to CHF 10,000; no rule for other public land.
+- **Zug (1711)**: unpermitted camping banned only in the city's public facilities (squares, parks, lawns, public lakeshore facilities: Reglement 7.7.1-1 § 5), not city-wide.
+These narrower rules are not recorded because a municipality-wide cap would claim more than the text says. Unverified: whether the cantonal police or nature laws of these cantons add rules (not read for Zürich, Winterthur, Luzern, St. Gallen).
+
+## Settlements in general (federal law)
+Saved in `docs/sources/CH/` with a summary in `README_settlements.md`: Art. 699 ZGB (access to forest and pasture only), Art. 641 ZGB (owner may repel), Art. 186 StGB (trespass on a fenced yard or garden, on complaint), Art. 15 RPG (building zones). The app applies them through the national building-zone map: inside a zone the verdict is capped at "Be careful"; within about 150 m a note is shown.
+
 ## Not found or not researched
 - A web-search summary that attributed Vaud's camping law to Valais was wrong and was not used.
 - **GE, BS, AG, AR, BL, GL, SH, SO, TG, ZG**: no cantonal camping rule found or not read. Geneva is reported to ban camping in forest except designated places with authorisation (not read). Reports that Aargau allows one night are unverified (one article calls the claim questionable). Glarus reportedly relies on protected-area bans and dialogue (media).

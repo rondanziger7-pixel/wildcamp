@@ -402,6 +402,218 @@ export const MUNICIPAL_RULES: MunicipalEntry[] = [
       checkedOn: '2026-10-04',
     },
   },
+  {
+    bfs: 261,
+    name: 'Zuerich',
+    officialHost: 'stadt-zuerich.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Allgemeine Polizeiverordnung (AS 551.110, in force 1.4.2026), Art. 15: camping in tents, caravans and the like on public ground outside designated or equipped places needs a permit from the Sicherheitsdepartement; breaches are fined (Art. 26, no amount stated). Public ground only: private land and sleeping outdoors without a tent are not addressed.',
+      sources: [
+        { title: 'Allgemeine Polizeiverordnung der Stadt Zürich (APV), AS 551.110, Art. 15 and 26', url: 'https://www.stadt-zuerich.ch/de/politik-und-verwaltung/politik-und-recht/amtliche-sammlung/5/551/110.html' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 230,
+    name: 'Winterthur',
+    officialHost: 'tlex.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Allgemeine Polizeiverordnung (SRS 5.1-1, state 1.6.2014), Art. 36: camping in tents, caravans, motorhomes and the like on public ground outside designated campsites needs a permit; on private land tenting and camping is allowed only with the owner\'s permission (Art. 36 para. 2). Fined under Art. 52 (maximum set by cantonal law). Sleeping outdoors without a tent is not addressed.',
+      sources: [
+        { title: 'Allgemeine Polizeiverordnung der Stadt Winterthur, SRS 5.1-1, Art. 36 and 52 (the city\'s official law collection)', url: 'https://winterthur.tlex.ch/app/de/texts_of_law/5.1-1' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3203,
+    name: 'St.Gallen',
+    officialHost: 'tlex.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeireglement (RS 412.11, state 1.10.2025), Art. 11: on public ground camping outside the sites designated by the authorities is prohibited, with no permit route in the text; on private land it can be banned where public safety, quiet and order are disturbed. Fined under Art. 15 (no amount stated). Sleeping outdoors without a tent is not addressed.',
+      sources: [
+        { title: 'Polizeireglement der Stadt St.Gallen, RS 412.11, Art. 11 and 15 (the city\'s official law collection)', url: 'https://st.gallen.tlex.ch/app/de/texts_of_law/412.11' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 4001,
+    name: 'Aarau',
+    officialHost: 'tlex.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeiverordnung (SRS 5.1-1, state 1.1.2023), § 10: setting up caravans, motorhomes or tents for camping on public ground without a permit is punished; fine up to CHF 2,000 (§ 26), fixed fine CHF 100. The Schachen area has its own camping ban (SRS 6.7-26, § 4). Public ground only: private land and sleeping without a tent are not addressed.',
+      sources: [
+        { title: 'Polizeiverordnung der Stadt Aarau, SRS 5.1-1, § 10 and 26 (the city\'s official law collection)', url: 'https://aarau.tlex.ch/app/de/texts_of_law/5.1-1' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 371,
+    name: 'Biel-Bienne',
+    officialHost: 'tlex.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Ortspolizeireglement (SGR 5.5-1, state 1.1.2023), Art. 28: overnighting in tents, vehicles and similar objects in public space outside the designated areas is prohibited. Sleeping outdoors without a tent is expressly allowed on public ground and on private land while public order is not disturbed (Art. 28 paras. 2 and 4). Fined under Art. 33 (maximum set by cantonal law).',
+      sources: [
+        { title: 'Ortspolizeireglement der Stadt Biel, SGR 5.5-1, Art. 28 and 33 (the city\'s official law collection)', url: 'https://biel-bienne.tlex.ch/app/de/texts_of_law/5.5-1' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 2601,
+    name: 'Solothurn',
+    officialHost: 'stadt-solothurn.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeiordnung (SRS 5.1-1, state 1.9.2024), § 17: camping and pitching tents or caravans on public ground is allowed only on the sites designated and permitted by the Stadtpräsidium. Fined under § 26 (no amount stated). Private land and sleeping outdoors without a tent are not addressed.',
+      sources: [
+        { title: 'Polizeiordnung der Stadt Solothurn, SRS 5.1-1, § 17 and 26', url: 'https://reglemente.stadt-solothurn.ch/app/de/texts_of_law/5.1-1' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 2939,
+    name: 'Schaffhausen',
+    officialHost: 'stadt-schaffhausen.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeiverordnung (RSS 400.1, in force 1.1.2009), Art. 47: pitching caravans and tents on public ground is allowed only on the campsites set up for it; the city police can grant exceptions. Fine up to CHF 1,000 (Art. 59). Private land and sleeping without a tent are not addressed.',
+      sources: [
+        { title: 'Polizeiverordnung der Stadt Schaffhausen, RSS 400.1, Art. 47 and 59', url: 'https://www.stadt-schaffhausen.ch/_rte/information/1547624' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 355,
+    name: 'Koeniz',
+    officialHost: 'koeniz.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Ortspolizeireglement (SGR 553.1, amended to 2012), Art. 33: staying in tents on public ground is allowed only on officially designated places; caravans and other vehicles may stay if public order is not disturbed. The Liebefeld park, Schlosspark and Eichholz lawn have their own overnight bans or permit rules. Fine up to CHF 300 (Art. 64). Sleeping without a tent and private land are not addressed.',
+      sources: [
+        { title: 'Ortspolizeireglement der Gemeinde Köniz, SGR 553.1, Art. 33 and 64', url: 'https://www.koeniz.ch/public/upload/assets/12117/553.1_ortspolizeireglement.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3901,
+    name: 'Chur',
+    officialHost: 'chur.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeigesetz (RB 411, in force 1.10.2026), Art. 27: on public ground camping is allowed only at places designated by the authorities; fixed fine CHF 100, up to CHF 10,000 (Art. 43). The city\'s Waldgesetz (RB 561), Art. 15, says camping in the forest is as a rule prohibited. Private land and sleeping without a tent are not addressed.',
+      sources: [
+        { title: 'Polizeigesetz der Stadt Chur, RB 411, Art. 27 and 43', url: 'https://www.chur.ch/_doc/7263589' },
+        { title: 'Waldgesetz der Stadt Chur, RB 561, Art. 15', url: 'https://www.chur.ch/_doc/397714' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 942,
+    name: 'Thun',
+    officialHost: 'thun.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Ortspolizeireglement (RSL 552.01, in force 1.5.2023), Art. 27: tents, tarps and emergency roofs for sleeping are banned on all public ground (para. 3). Overnighting without a tent in public parks outside the old town, and in campers on public car parks unless signposted, is allowed for one night (paras. 1 and 2). Fined under Art. 50 up to the cantonal maximum. Private land is not addressed.',
+      sources: [
+        { title: 'Ortspolizeireglement der Stadt Thun, RSL 552.01, Art. 27 and 50', url: 'https://www.thun.ch/_rte/information/2093512' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 5113,
+    name: 'Locarno',
+    officialHost: 'locarno.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Ordinanza municipale sul campeggio (in force 1.1.2010), Art. 2: camping on municipal public ground (gardens, parks, streets, squares, car parks, forests, floodplains) and on private areas open to the public is prohibited; camping with mobile installations is allowed only on authorised sites (Art. 1), with a 24-hour emergency stop for motorhomes (Art. 3). Fines CHF 50 to 5,000 (Art. 4). Bivouacking without a tent and fully closed private land are not addressed.',
+      sources: [
+        { title: 'Ordinanza municipale sul campeggio della Città di Locarno (100.5), Art. 1 to 4', url: 'https://www.locarno.ch/files/documenti/100-5%20OM%20campeggio.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 5586,
+    name: 'Lausanne',
+    officialHost: 'lausanne.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Règlement général de police (RS 500.1), Art. 36: camping is forbidden on public roads and their surroundings and in forests; on other land camping with the owner\'s consent is allowed up to four days outside a designated place, longer needs the Direction\'s permit. The green-space rules (RS 501.1), Art. 9, forbid camping and bivouacs in all public parks. Fined under the contraventions law (no amount stated). The published text is the state of 1.11.2017. Sleeping outdoors without a tent and overnight stays in vehicles are not addressed.',
+      sources: [
+        { title: 'Règlement général de police de Lausanne, RS 500.1, Art. 36', url: 'https://www.lausanne.ch/apps/actualites/index_recueil.php' },
+        { title: 'Dispositions réglementaires sur les espaces verts, RS 501.1, Art. 9', url: 'https://www.lausanne.ch/reglements' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 2196,
+    name: 'Fribourg',
+    officialHost: 'ville-fribourg.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Règlement général de police (RS 300.1, in force 1.1.2025), Art. 19 para. 2 let. f: installing a camping tent on public ground, or parking a caravan or motorhome there for more than 24 hours, is increased use of public ground and needs a permit applied for at least 20 days ahead (Art. 9). Fine CHF 20 to 1,000 (Art. 54). There is no outright ban text; bivouacking, private land and shorter stays in vehicles are not addressed.',
+      sources: [
+        { title: 'Règlement général de police de la Ville de Fribourg, RS 300.1, Art. 9, 19 and 54', url: 'https://www.ville-fribourg.ch/reglements-tarifs/300-1' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 6458,
+    name: 'Neuchatel',
+    officialHost: 'neuchatelville.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Règlement de police (RS 12.2, version amended to 2019), Art. 26: camping is allowed only at the places designated by the Conseil communal, on the whole municipal territory; mobile homes may stay one night only (Art. 24). Fine up to CHF 5,000 (Art. 85). Private land is covered only where public order is affected. Caution: the city\'s current index no longer lists this regulation, so whether it is still the version in force could not be confirmed.',
+      sources: [
+        { title: 'Règlement de police de la Ville de Neuchâtel, RS 12.2, Art. 3, 24, 26 and 85', url: 'https://www.neuchatelville.ch/fileadmin/sites/ne_ville/fichiers/votre_commune/reglementation/12_2_R_police.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 6266,
+    name: 'Sion',
+    officialHost: 'sion.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Règlement communal de police (RS 5.1, homologated 1997), Art. 38: camping, caravaning and similar are prohibited outside the places authorised by the commune, on the whole communal territory (Art. 1); fine CHF 100 to 5,000 or up to 10 days of detention (Art. 47). Private land is covered only to the extent public order requires. A new police regulation is pending.',
+      sources: [
+        { title: 'Règlement communal de police de la Ville de Sion, RS 5.1, Art. 1, 38 and 47', url: 'https://www.sion.ch/_rte/publikation/106222' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
 ];
 
 export function findMunicipalRule(bfs: number | undefined): MunicipalEntry | undefined {
