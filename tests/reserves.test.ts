@@ -5,6 +5,7 @@ import { decodeReserveSet, parseReserveSet, reserveZoneHits, reservesAt, type Re
 import { wgs84ToLv95 } from '../src/coords';
 import fixture from './fixtures/be-reserve-points.json';
 import tiFixture from './fixtures/ti-reserve-points.json';
+import vsFixture from './fixtures/vs-reserve-points.json';
 
 const square = (x: number, y: number, s: number) => [x, y, x + s, y, x + s, y + s, x, y + s];
 const synthetic = parseReserveSet({
@@ -130,5 +131,41 @@ describe('real Ticino protection areas (public/reserves-ti.json.gz)', () => {
   });
   it('does not flag Lugano city centre or Gornergrat', () => {
     expect(reservesAt(set, ...(Object.values(wgs84ToLv95(46.0037, 8.9511)) as [number, number]))).toEqual([]);
+  });
+});
+
+describe('real Valais protected sites (public/reserves-vs.json.gz)', () => {
+  let set: ReserveSet;
+  beforeAll(async () => {
+    const b = readFileSync('public/reserves-vs.json.gz');
+    set = await decodeReserveSet(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength));
+  });
+  it('has the 100 sites, each linked to its decision on lex.vs.ch', () => {
+    expect(set.canton).toBe('VS');
+    expect(set.reserves).toHaveLength(100);
+    for (const r of set.reserves) {
+      expect(r.decree).toMatch(/^https:\/\/lex\.vs\.ch\/app\/fr\/texts_of_law\/45\d\.\d+$/);
+      expect(r.scan).not.toBe('notext');
+    }
+  });
+  it('classifies known decisions: bans, entry bans, and the Sand permission', () => {
+    const by = (prefix: string) => set.reserves.find((r) => r.name.startsWith(prefix))!;
+    expect([by('Aletschwald').scan, by('Aletschwald').level]).toEqual(['banned', 'restricted']);
+    expect([by('Pfynwald').scan, by('Pfynwald').level]).toEqual(['banned', 'restricted']);
+    expect([by('Marais de Champex').scan, by('Marais de Champex').level]).toEqual(['entry', 'restricted']);
+    expect(by('Sand').level).toBe('caution'); // the commune may authorise camping temporarily: not a ban
+    expect(by('Lac Noir').level).toBe('caution'); // long prohibition list without camping
+  });
+  it('contains points taken from inside the source polygons', () => {
+    const hits = vsFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / vsFixture.length).toBeGreaterThan(0.93);
+  });
+  it('flags a point inside the Aletschwald site as not allowed, and not Zermatt village', () => {
+    const al = set.reserves.find((r) => r.name.startsWith('Aletschwald'))!;
+    const [x, y] = [al.rings[0]![0]!, al.rings[0]![1]!];
+    const cx = (al.bbox[0] + al.bbox[2]) / 2, cy = (al.bbox[1] + al.bbox[3]) / 2;
+    const p = [0.05, 0.1, 0.2, 0.3, 0.5].map((t) => [x + (cx - x) * t, y + (cy - y) * t] as const).find(([px, py]) => reservesAt(set, px, py).some((q) => q.id === al.id))!;
+    expect(assess({ zones: reserveZoneHits(set, p[0], p[1]), treeline: 'above' }).verdict).toBe('no');
+    expect(reservesAt(set, ...(Object.values(wgs84ToLv95(46.0207, 7.7491)) as [number, number]))).toEqual([]);
   });
 });

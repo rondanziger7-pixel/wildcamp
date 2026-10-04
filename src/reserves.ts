@@ -77,6 +77,10 @@ export function reservesAt(set: ReserveSet, e: number, n: number): Reserve[] {
 }
 
 function layerFor(canton: string, r: Reserve) {
+  if (canton === 'VS') {
+    if (r.level !== 'restricted') return RESERVE_ZONES.vsOther;
+    return r.scan === 'entry' ? RESERVE_ZONES.vsDecisionEntry : RESERVE_ZONES.vsDecisionBan;
+  }
   if (canton === 'TI') return r.level === 'restricted' ? RESERVE_ZONES.tiDecreeBan : RESERVE_ZONES.tiOther;
   if (r.level !== 'restricted') return RESERVE_ZONES.beOther;
   return r.scan === 'entry' ? RESERVE_ZONES.beDecreeEntry : RESERVE_ZONES.beDecreeBan;

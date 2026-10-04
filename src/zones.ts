@@ -121,6 +121,24 @@ export const RESERVE_ZONES = {
     severity: 'caution',
     note: 'Protected nature reserve. The readable text of its protection decree has no camping or tenting clause (it may be an unreadable scan), so check the decree.',
   },
+  vsDecisionBan: {
+    id: 'vs-decision-ban',
+    label: 'Valais protected site',
+    severity: 'restricted',
+    note: 'The canton\'s protection decision prohibits camping or tenting.',
+  },
+  vsDecisionEntry: {
+    id: 'vs-decision-entry',
+    label: 'Valais protected site',
+    severity: 'restricted',
+    note: 'The canton\'s protection decision prohibits entering the site (or leaving the marked paths), so camping is effectively prohibited.',
+  },
+  vsOther: {
+    id: 'vs-decision-other',
+    label: 'Valais protected site',
+    severity: 'caution',
+    note: 'Site under a cantonal protection decision. The decision does not prohibit camping by name, so check it.',
+  },
   tiDecreeBan: {
     id: 'ti-decree-ban',
     label: 'Ticino nature protection area',

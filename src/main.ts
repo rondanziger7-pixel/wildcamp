@@ -42,7 +42,7 @@ loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
   .catch((err) => console.warn('forest map failed to load', err));
 
 const reserveSets: ReserveSet[] = [];
-for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz']) {
+for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz', 'reserves-vs.json.gz']) {
   loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
     .then((r) => reserveSets.push(r))
     .catch((err) => console.warn(`${file} failed to load`, err));
