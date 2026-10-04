@@ -1,0 +1,864 @@
+Gesetz über die öffentliche Ordnung, Sicherheit und Ruhe
+in der Gemeinde Pontresina (Polizeigesetz)
+
+Beschlossen an der Gemeindeversammlung vom 3. April 2023
+Teilrevision beschlossen durch die Urnenabstimmung vom 28. September 2025
+
+
+
+
+                                                                            1
+            Inhaltsverzeichnis
+I.          Allgemeine Bestimmungen............................................................................. 4
+Art. 1      Gleichstellung der Geschlechter ......................................................................... 4
+Art. 2      Zweck ................................................................................................................. 4
+II.         Polizeiorgane und Grundsätze des polizeilichen Handelns .......................... 4
+Art. 3      Polizeibehörde.................................................................................................... 4
+Art. 4      Organisation, Gemeindepolizei........................................................................... 4
+Art. 5      Anordnungen nach SVG ...................................................................................... 4
+Art. 6      Rechtmässigkeit und Verhältnismässigkeit ........................................................ 4
+Art. 7      Ausweispficht der Polizei ................................................................................... 5
+Art. 8      Identitätsnachweis, Anhalten bei Auskunftsverweigerung ................................ 5
+Art. 9      Unmittelbarer Zwang, Destabilisierungsgeräte, Schusswaffen........................... 5
+Art. 10 Polizeiliche Generalklausel ................................................................................. 5
+III.        Schutz von Personen sowie der öffentlichen Ordnung und Sicherheit ....... 5
+Art. 11 Suchtmittelfreie Zone ......................................................................................... 5
+Art. 12 Sicherung von Bauten, Bodenöffnungen, Einfriedungen .................................... 5
+Art. 13 Schutz-, Abschrankungs- und Signalisationsvorrichtungen ................................ 5
+Art. 14 Schneeräumung ................................................................................................. 6
+Art. 15 Zurückschneiden von Ästen und Sträuchern....................................................... 6
+Art. 16 Überwachung des öffentlichen Grundes............................................................. 6
+Art. 17 Tiere im Allgemeinen ......................................................................................... 6
+Art. 18 Hunde ................................................................................................................. 6
+Art. 19 Reitverbot........................................................................................................... 7
+IV.         Ladenöffnungszeiten ....................................................................................... 7
+Art. 20 Allgemeine Landenöffnungszeiten ..................................................................... 7
+Art. 21 Verkaufsverbot nach Ladenschluss ..................................................................... 7
+V.          Schutz von öffentlichen Sachen und Privateigentum,
+            Gesteigerter Gemeingebrauch und Sondernutzung...................................... 7
+Art. 22 Schutz öffentlicher Sachen, Verschmutzungen ................................................... 7
+Art. 23 Bewilligungspflichtige Nutzung des öffentlichen Grundes ................................. 8
+Art. 24 Gebührenpflicht bei gesteigertem Gemeingebrauch.......................................... 8
+Art. 25 Sondernutzung ................................................................................................... 8
+Art. 26 Campingverbot ................................................................................................... 8
+Art. 27 Flurordnung ........................................................................................................ 8
+Art. 28 Wintersportzone …...……………………………………………………………………….……………9
+VI.         Umweltbestimmungen (Lärm und andere Imissionen)................................ 9
+Art. 29 Immissionsschutz: Grundsatz ............................................................................. 9
+Art. 30 Licht .................................................................................................................... 9
+
+
+2
+Art. 31 Öffentliche Ruhe: Grundsatz ............................................................................... 9
+Art. 32 Ruhezeiten für lärmende Arbeiten ................................................................... 10
+Art. 33 Ruhezeiten für stark lärmende Arbeiten .......................................................... 10
+Art. 34 Arbeitsmaschinen ............................................................................................. 11
+Art. 35 Ausnahmen ...................................................................................................... 11
+Art. 36 Elektronische Geräte und musikalische Instrumente ........................................ 11
+Art. 37 Gaststätten ....................................................................................................... 11
+Art. 38 Schiessen, Schiesslärm ..................................................................................... 11
+Art. 39 Feuer ................................................................................................................ 12
+Art. 40 Feuerwerk ........................................................................................................ 12
+Art. 41 Geruchsemissionen, Düngen, Dünger- und Kompostierungsanlagen ............... 12
+Art. 42 Motorschlitten .................................................................................................. 12
+Art. 43 Besondere Vorschriften .................................................................................... 12
+VII.        Bewilligungen und Gebühren ....................................................................... 13
+Art. 44 Bewilligungen................................................................................................... 13
+Art. 45 Gebühren .......................................................................................................... 13
+VIII.       Strafbestimmungen und Rechtsmittel ......................................................... 13
+Art. 46 Busse bei Wiederhandlungen ........................................................................... 13
+Art. 47 Ordentliches Verwaltungsstrafverfahren .......................................................... 14
+Art. 48 Ordnungsbussenverfahren................................................................................ 14
+Art. 49 Inhalt der Entscheide ........................................................................................ 14
+Art. 50 Rechtsmittel ..................................................................................................... 14
+IX.         Schlussbestimmungen ................................................................................... 15
+Art. 51 Vollzug .............................................................................................................. 15
+Art. 52 Aufhebung bisherigen Rechts ........................................................................... 15
+Art. 53 Inkrafttreten ..................................................................................................... 15
+
+
+
+
+                                                                                                                               3
+                     Gestützt auf Artikel 34 der Gemeindeverfassung erlässt die Gemeindeversammlung das
+                     folgende Gesetz.
+
+
+
+                     I. Allgemeine Bestimmungen
+
+                     Art. 1
+Gleichstellung der   Personen-, Funktions- und Berufsbezeichnungen in diesem Gesetz beziehen sich auf alle
+Geschlechter         Geschlechter, soweit sich aus dem Sinn des Gesetzes nichts anderes ergibt.
+
+                     Art. 2
+Zweck                Dieses Gesetz bezweckt in Ergänzung zur eidgenössischen und kantonalen Gesetzge-
+                     bung den Schutz der öffentlichen Ordnung, Sicherheit und Ruhe auf dem Gebiet der Ge-
+                     meinde Pontresina.
+
+
+                     II. Polizeiorgane und Grundsätze des polizeilichen Handelns
+
+                     Art. 3
+Polizeibehörde       Der Gemeindevorstand ist oberste Polizeibehörde. Der Gemeindevorstand ist zum Erlass
+                     der im vorliegenden Gesetz vorgesehenen Verfügungen und Bewilligungen zuständig,
+                     sofern das Gesetz keine andere Zuständigkeit festlegt.
+
+                     Art. 4
+Organisation,        1
+                      Der Gemeindevorstand kann die eigene Gemeindepolizei oder andere Gemeindeange-
+Gemeindepolizei      stellte mit einzelnen Vollzugsaufgaben betreuen.
+                     2
+                      Der Gemeindevorstand kann geeignete öffentliche oder private Institutionen mit ein-
+                     zelnen Vollzugsaufgaben betrauen und er kann die gemeindepolizeilichen Aufgaben ge-
+                     samthaft oder teilweise an eine andere Gemeinde oder an den Kanton übertragen, so
+                     dass die Aufgaben durch die Gemeindepolizei dieser Gemeinde oder die Kantonspolizei
+                     ausgeführt werden.
+                     3
+                      Der Gemeindevorstand kann die Organisation der eigenen Gemeindepolizei sowie die
+                     Rechte und Pflichten der Polizeiangehörigen in einem Dienstreglement regeln.
+                     4
+                      Bei der Auslagerung der gemeindepolizeilichen Aufgaben schliesst der Gemeindevor-
+                     stand Leistungsvereinbarungen ab, wobei die übertragenen Aufgaben in einem Aufga-
+                     benkatalog definiert werden.
+
+                     Art. 5
+Anordnungen nach     Der Gemeindevorstand ist im Rahmen der übergeordneten Gesetzgebung zuständig für
+SVG                  die Regelung des örtlichen Verkehrs inklusive Erlass von Ausnahmeregelungen gemäss
+                     Art. 7 Abs. 1 EGzSVG1.
+
+                     Art. 6
+Rechtmässigkeit      1
+                      Die Polizeiorgane sind bei der Erfüllung ihrer Aufgaben an Verfassung und Gesetz ge-
+und Verhältnis-      bunden.
+mässigkeit           2
+                      Stehen zur Erreichung eines polizeilichen Zwecks mehrere geeignete Massnahmen zur
+                     Verfügung, muss diejenige gewährt werden, welche die Einzelnen und die Allgemeinheit
+                     voraussichtlich am wenigsten beeinträchtigt.
+
+
+
+
+                     1
+                         Einführungsgesetz zum Bundesgesetz über den Strassenverkehr (EGzSVG, BR 870.100)
+
+                     4
+Art. 7
+Uniformierte Polizeibeamte legitimieren sich auf Verlangen mit dem Dienstausweis, so-      Ausweispflicht der
+fern es die Umstände zulassen. Polizeiorgane in Zivil weisen sich bei jeder Amtshandlung   Polizei
+aus, sofern es die Umstände zulassen.
+
+Art. 8
+1
+ Jedermann ist verpflichtet, den Polizeiorganen bei begründetem Anlass auf Verlangen       Identitätsnachweis,
+die Personalien anzugeben, Ausweise vorzulegen oder auf andere Weise seine Identität       Anhalten
+feststellen zu lassen.                                                                     bei Auskunfts-
+                                                                                           verweigerung
+2
+ Wer dieser Aufforderung nicht nachkommt, kann dazu angehalten werden dem Polizei-
+beamten zwecks Feststellung der Identität auf den Polizeiposten zu folgen.
+
+Art. 9
+1
+ Betreffend die Anwendung von unmittelbarem Zwang gilt das diesbezügliche kantonale        Unmittelbarer
+Recht sinngemäss.2                                                                         Zwang, Destabili-
+                                                                                           sierungsgeräte,
+2
+ Betreffend den Einsatz von Destabilisierungsgeräten gelten die Voraussetzungen des
+                                                                                           Schusswaffen
+kantonalen Rechts zum Schusswaffengebrauch sinngemäss.3
+3
+ Betreffend den Einsatz von Schusswaffen gilt das diesbezügliche kantonale Recht sinn-
+gemäss.4
+
+Art. 10
+Der Gemeindevorstand oder die Gemeindepolizei treffen im Einzelfall unaufschiebbare        Polizeiliche
+Massnahmen, wenn eine ernste, unmittelbare und nicht anders abwendbare Gefahr für          Generalklausel
+die öffentliche Sicherheit und Ordnung besteht.
+
+
+III.   Schutz von Personen sowie der öffentlichen Ordnung und
+       Sicherheit
+
+Art. 11
+Der Gemeindevorstand kann den Konsum von Alkohol oder anderen Suchtmitteln in öf-          Suchtmittelfreie
+fentlichen Anlagen und Gebäuden, insbesondere auf Schulhaus- und Kindergartenarea-         Zone
+len, auf Kinderspielplätzen und Freizeitanlagen, verbieten. Das Mitführen von angebro-
+chenen Trinkbehältnissen gilt als Konsum. Diese Zonen sind entsprechend zu kennzeich-
+nen.
+
+Art. 12
+1
+ Eigentümer, Mieter sowie Bewohner von Gebäuden und einzelnen Räumen haben dafür           Sicherung von
+zu sorgen, dass sich keine Teile von Gebäuden und Einzäunungen oder Gegenstände            Bauten, Boden-
+lösen und auf öffentlich zugängliche Plätze, Strassen, Wege und Anlagen fallen können.     öffnungen,
+                                                                                           Einfriedungen
+2
+ Gräben, Schächte, Sammler, Jauchengruben und andere Bodenöffnungen sind auf si-
+chere Weise zu decken bzw. so abzuschranken und zu signalisieren, dass keine Unfall-
+gefahr besteht.
+
+Art. 13
+Das Verändern von Schutz-, Abschrankungs- und Signalisationsvorrichtungen aller Art        Schutz-, Abschran-
+sowie insbesondere das mutwillige Abdecken von Bodenöffnungen, Sammlern, Gruben            kungs- und Signali-
+usw. ist verboten.                                                                         sationsvorrichtun-
+                                                                                           gen
+
+2
+  Art. 23 Polizeigesetz des Kantons Graubünden (PolG, BR 613.000)
+3
+  Art. 25 PolG
+4
+  Art. 25 PolG
+                                                                                      5
+                  Art. 14
+Schneeräumung     1
+                   Werden Schnee oder Eis von den privaten Hausdächern, Terrassen oder Grundstücken
+                  auf öffentlichen Boden gebracht, so ist der Sicherheit der Verkehrsbenützer Sorge zu
+                  tragen. Die öffentlichen Verkehrswege und -flächen sind unverzüglich wieder freizule-
+                  gen.
+                  2
+                   Verursacht eine Verletzung dieser Regelung bei der Gemeinde zusätzliche Aufwendun-
+                  gen, so können diese dem Grundeigentümer in Rechnung gestellt werden.
+                  3
+                   Die sich durch den öffentlichen Winterdienst ergebenden Ablagerungen von Schnee
+                  seitlich der Gemeindestrassen sind von den Strassenanstösserinnen und Strassenanstös-
+                  sern entschädigungslos zu dulden.
+                  4
+                   Wird durch den öffentlichen Winterdienst an privaten Grundstücken nachweislich ein
+                  Schaden verursacht, kann die Gemeinde den Schaden selbst beseitigen oder eine ange-
+                  messene Entschädigung ausrichten.
+
+                  Art. 15
+Zurückschneiden   Äste und Sträucher, die in das Strassen- oder Trottoirprofil ragen, sind auf eine Höhe von
+von Ästen und     4.5 bzw. 3.0 m (Strassen/Trottoir) und einen Profilabstand von 0.30 m zurückzuschnei-
+Sträuchern        den.
+
+                  Art. 16
+Überwachung des   1
+                   Die Bildüberwachung des öffentlichen und öffentlich zugänglichen Raumes richtet sich
+öffentlichen      nach den Bestimmungen der kantonalen Datenschutzgesetzgebung, insbesondere Art.
+Grundes           3a und 3b des kantonalen Datenschutzgesetzes (KDSG).
+                  2
+                   Der Gemeindevorstand kann bei Bedarf eine entsprechende Allgemeinverfügung nach
+                  Art. 3b Abs. 2 KDSG erlassen.
+                  3
+                   Die Veröffentlichung einer Allgemeinverfügung nach Art. 3b Abs. 4 KDSG hat im kom-
+                  munalen Amtsblatt zu erfolgen. Gleichzeitig ist die Allgemeinverfügung auf der Ge-
+                  meinde zur Einsichtnahme aufzulegen. Die Frist zur Einreichung einer Stellungnahme be-
+                  trägt 30 Tage.
+
+                  Art. 17
+Tiere im          Tiere sind artgerecht und so zu halten, dass weder Menschen, Tiere oder Sachen gefähr-
+Allgemeinen       det werden, zu Schaden kommen oder durch Lärm, Gerüche oder in anderer Weise über-
+                  mässig belästigt werden.
+
+                  Art. 18
+Hunde             1
+                   Hundehalter sind dafür verantwortlich, dass ihr Hund mit einem Chip gekennzeichnet
+                  und in der Datenbank AMICUS registriert ist. Die Registration erfolgt in der Regel durch
+                  den Züchter bzw. den Tierarzt.
+                  2
+                   Jeder Hund im Alter von über 3 Monaten, der auf Gebiet der Gemeinde Pontresina ge-
+                  halten wird, muss beim Einwohneramt gemeldet werden5:
+                  - innert 30 Tagen nach Zuzug des Hundehalters nach Pontresina
+                  - innert 30 Tagen nach Anschaffung des Hundes
+                  3
+                   Adress- und Halteränderungen sind innert 30 Tagen an das Einwohneramt der Ge-
+                  meinde zu melden.
+                  4
+                   Im Siedlungsgebiet von Pontresina sind Hunde grundsätzlich an der Leine zu führen.
+                  5
+                   Auf dem Gemeindegebiet von Pontresina, namentlich auf Strassen und Wegen sowie in
+                  wegnahem Gelände, gilt eine Kotaufnahmepflicht.
+
+
+
+
+                  5
+                      Art. 64 Veterinärgesetz (VetG, BR 914.000)
+
+                  6
+6
+ Der Gemeindevorstand ist berechtigt, gestützt auf die Tierschutzgesetzgebung, dem
+Amt für Lebensmittelsicherheit und Tiergesundheit Graubünden Meldungen über Vor-
+fälle, bei denen ein Hund Menschen oder Tiere erheblich verletzt hat oder Anzeichen
+eines übermässigen Aggressionsverhaltens zeigt, zu erstatten.
+7
+ Die Gemeinde Pontresina erhebt eine jährliche Hundesteuer nach Massgabe des Steu-
+ergesetzes der Gemeinde Pontresina.6
+
+Art. 19
+Soweit zur Vermeidung von Nutzungskonflikten für bestimmte Wege Reitverbote sinn-                      Reitverbot
+voll sind und diese Verbote ausnahmsweise nicht in den Anwendungsbereich des SVG
+fallen, ist der Gemeindevorstand berechtigt, derartige Verbote gestützt auf die vorlie-
+gende Bestimmung zu erlassen.
+
+
+IV.      Ladenöffnungszeiten
+
+Art. 20
+1
+ Alle Arten von Verkaufsstellen, ausgenommen Verkaufsstände und Geschäfte an öffent-                   Allgemeine Laden-
+lichen Anlässen aller Art oder an von der Gemeinde bewilligten Anlässen, Gastgewerbe-                  öffnungszeiten
+betriebe, Tankstellen, Kioske, Bäckereien, Konditoreien und Apotheken, dürfen regel-
+mässig wie folgt offen gehalten werden:
+a) An Werktagen zwischen 06:00 bis 20:00 Uhr
+b) An Sonn- und Feiertagen (ohne hohe Feiertage) im Sinne von Art. 2 des kantonalen
+     Ruhetagsgesetzes zwischen 07:00 bis 18:00 Uhr
+2
+ An hohen Feiertagen7 haben die Geschäfte geschlossen zu bleiben.
+3
+ Der Gemeindevorstand kann auf begründetes Gesuch hin Ausnahmen von den allge-
+meinen Ladenöffnungszeiten nach den Abs. 1 und 2 erteilen. Dabei hat der Gemeinde-
+vorstand eine umfassende Interessenabwägung durchzuführen zwischen allen betroffe-
+nen öffentlichen und privaten Interessen. Die Ausnahmebewilligung kann mit Auflagen
+oder mit Nebenbestimmungen verknüpft werden.
+
+Art. 21
+1
+ In der Zeit, während welcher die Verkaufsgeschäfte geschlossen sein müssen, ist die                   Verkaufsverbot
+Bedienung von Kunden untersagt. Die zur Ladenschlusszeit in den Geschäften anwesen-                    nach Ladenschluss
+den Personen dürfen noch bedient werden.
+2
+ Blumengeschäfte dürfen in dringenden Fällen, vor allem bei Todesfällen, ausnahms-
+weise auch ausserhalb der Öffnungszeiten Kunden bedienen.
+V. Schutz von öffentlichen Sachen und Privateigentum, Gestei-
+   gerter Gemeingebrauch und Sondernutzung
+
+Art. 22
+1
+ Es ist verboten, öffentliche Sachen zu beschädigen, zu verunreinigen8, sie unbefugter-                Schutz öffentlicher
+weise sowie entgegen ihrer Zweckbestimmung zu benützen9 oder zu verändern.                             Sachen,
+                                                                                                       Verschmutzungen
+
+
+
+6
+  Art. 12 - 15 Steuergesetz der Gemeinde Pontresina vom 23. Juli 2007, teilrevidiert am 13. De-
+zember 2010 und am 27. Oktober 2016
+7
+  Art. 2 Abs. 2 kantonales Ruhetagsgesetz (Karfreitag, Ostersonntag, Pfingstsonntag, Eidgenössi-
+scher Bettag und Weihnachtstag)
+8
+  Art. 36h kant. PolG: Verunreinigung öffentlicher Sachen oder fremden Privateigentums
+9
+  Art. 4 EGzSVG: Entfernung von verkehrsbehindernden oder rechtswidrig abgestellten Fahrzeu-
+gen
+                                                                                                   7
+                     2
+                      Verboten sind auf öffentlichem Grund sowie auf privatem Grund Dritter namentlich
+                     - das Wegwerfen von Abfällen sowie
+                     - im Siedlungsbereich das Verrichten der Notdurft.
+                     3
+                      Jede trotzdem verursachte Verunreinigung an öffentlichen Sachen ist umgehend zu be-
+                     seitigen. Verursacht eine Verletzung dieser Vorschrift bei der Gemeinde Aufwand, so
+                     kann dieser dem Verursacher in Rechnung gestellt werden.
+
+                     Art. 23
+Bewilligungs-        1
+                      Jede über den Gemeingebrauch hinausgehende Nutzung des öffentlichen Grundes, des
+pflichtige Nutzung   öffentlichen Gewässers, sowie von öffentlichen Sachen bedarf einer Bewilligung.
+des öffentlichen
+                     Dies gilt insbesondere für:
+Grundes
+                     - die Durchführung von Kundgebungen, Umzügen und Festanlässen;
+                     - das Aufstellen von mobilen Ständen und Informationseinrichtungen;
+                     - das Aufstellen von Werbeeinrichtungen und das Anbringen von Werbeplakaten;
+                     - das Anbieten von Waren und Dienstleistungen;
+                     - das Aufführen von Strassenmusik, Strassenkunst oder Gesang;
+                     - die Benützung zwecks Bauplatzinstallationen, Materialdeponien und dergleichen;
+                     - die kommerzielle Nutzung des Gewässers.
+                     2
+                      Zuständig für die Erteilung der Bewilligung ist das Gemeindepräsidium nach Anhörung
+                     der Gemeindekanzlei bzw. des Bausekretariats.
+                     3
+                      Die örtliche Zuständigkeit für die kommerzielle Nutzung des Gewässers ergibt sich aus
+                     dem Standort, von welchem das Gewässer genutzt wird.
+                     4
+                      Die Bewilligung kann aufgrund entgegenstehender öffentlicher und privater Interessen
+                     verweigert oder mit Nebenbestimmungen (Auflagen, Bedingungen etc.) verknüpft wer-
+                     den.
+
+                     Art. 24
+Gebührenpflicht      1
+                      Der gesteigerte Gemeingebrauch ist – sofern nicht rein politische Zwecke verfolgt wer-
+bei gesteigertem     den – in der Regel gebührenpflichtig.
+Gemeingebrauch       2
+                      Die Gebühr beträgt bis CHF 200.00 und bei Beanspruchung grösserer Flächen bis CHF
+                     1'000.00 pro Tag. Verursacht der gesteigerte Gemeingebrauch bei der Gemeinde ausser-
+                     ordentliche Aufwendungen, kann dieser Aufwand zusätzlich in Rechnung gestellt wer-
+                     den.
+                     3
+                      Die Gebühr wird im Einzelfall verfügt. Der Gemeindevorstand kann im vorerwähnten
+                     Rahmen übliche Sachverhalte in einem Gebührenreglement regeln.
+                     4
+                      Zwecks Förderung von im öffentlichen Interesse liegenden touristischen Veranstaltun-
+                     gen kann ganz oder teilweise auf die Erhebung von Gebühren verzichtet werden.
+                     Art. 25
+Sondernutzung        Eine über den gesteigerten Gemeingebrauch hinausgehende Sondernutzung an öffentli-
+                     chem Grund oder an öffentlichen Gewässern bedarf einer Konzession des Gemeindevor-
+                     standes.
+                     Art. 26
+Campingverbot        Auf dem Gebiet der Gemeinde Pontresina ist das Campieren, d.h. das Aufstellen von
+                     Zelten, Wohnwagen und Wohnmobilen zur Übernachtung, nur an den von den Behörden
+                     bezeichneten Stellen erlaubt. Ansonsten ist das Campieren ohne Bewilligung des Ge-
+                     meindevorstandes untersagt.
+
+                     Art. 27
+Flurordnung          1
+                      Die Gemeinde verfügt jedes Jahr den Wiesenruf.
+                     2
+                      Die Wiesenreinigung ist noch während acht Tagen gestattet, wobei Kulturschäden nach
+                     Möglichkeit zu verhindern sind.
+
+                     8
+3
+ Während der Zeit vom 1. Juni bis 1. Oktober ist das Betreten und Befahren von Kulturland
+und von offenen fremden Grundstücken verboten. Vorbehalten bleibt die zulässige vo-
+rübergehende Beanspruchung fremden Bodens nach den Bestimmungen des Zivilrechts
+und des öffentlichen Rechts oder mit ausdrücklicher Zustimmung des betroffenen Grund-
+eigentümers.
+4
+ Zuwiderhandelnde haben nebst einer Busse auch Schadenersatz zu leisten und die Wie-
+derherstellungskosten zu übernehmen.
+
+Art. 28
+1
+ Das allgemeine Zutrittsrecht ist in Art. 90 BauG geregelt. Der Gemeindevorstand ist je-        Wintersportzone
+doch befugt zum Schutze von Jungwald, von anderen Kulturen und von Wildeinständen
+bestimmte (örtlich oder zeitlich) umgrenzte Verbote für die Benützung von Teilen der
+Wintersportzone oder für die Herrichtung von Pisten oder Loipen zu erlassen.
+2
+ Die Reinigung des durch den Wintersport beanspruchten Geländes erfolgt durch die Ge-
+meinde vor dem Wiesenruf. Schäden an Kulturen sind soweit als möglich zu beheben.
+Die Grundeigentümer haben die Vornahme der Reinigungsarbeiten und Behebung der
+Schäden auf ihrem Boden zu dulden.
+3
+ Schäden an Grundstücken, die nicht behoben werden können, oder Ertragsausfälle, die
+durch die Ausübung des Wintersportes an Grundstücken innerhalb der Wintersportzone
+entstehen, werden von der Gemeinde entschädigt. Der Anspruch auf Entschädigung ver-
+jährt nach Ablauf eines Jahres seit Kenntnis des Schadens. Die Festsetzung der Entschä-
+digung richtet sich nach anerkannten Normen und Grundsätzen und erfolgt durch den
+Gemeindevorstand.
+
+
+VI.     Umweltbestimmungen (Lärm und andere Imissionen)
+
+Art. 29
+Der Schutz der Menschen, Tiere und Pflanzen, ihrer Lebensgemeinschaften und Lebens-             Immissionsschutz:
+räume vor schädlichen oder lästigen Einwirkungen richtet sich nach den Vorschriften des         Grundsatz
+eidgenössischen und kantonalen Rechts, insbesondere nach der Umweltschutzgesetzge-
+bung und dem Nachbarrecht.
+
+Art. 30
+1
+  Die Geschäftsleitung kann störende Lichtimmissionen beschränken oder verbieten.               Licht
+2
+ Das Beleuchten und Anstrahlen von Gebäuden, Fassaden, Parkanlagen, Bergen, Wäl-
+dern, Gärten, Strassen, Plätzen und Ähnlichem zu künstlerischen, kommerziellen und
+gestalterischen Zwecken untersteht in jedem Fall der Bewilligungspflicht.
+3
+ Im Zusammenhang mit der Erteilung einer Bewilligung wägt die Geschäftsleitung die
+öffentlichen und die privaten Interessen unter Berücksichtigung des übergeordneten
+Rechts ab.
+4
+ Das Bewilligungsverfahren für Beleuchtungen kann mit einem allfälligen Baubewilli-
+gungsverfahren vereinigt werden. In diesem Fall richtet sich die Zuständigkeit für die
+Erteilung der Bewilligung nach dem Baugesetz der Gemeinde Pontresina.
+
+Art. 31
+1
+ Soweit die eidgenössische Lärmschutzgesetzgebung10 Raum für kommunale Regelun-                 Öffentliche Ruhe:
+gen lässt beziehungsweise den kommunalen Behörden einen Beurteilungsspielraum                   Grundsatz
+einräumt, gilt der folgende Grundsatz.
+
+
+
+10
+  Art. 11 ff. Bundesgesetz über den Umweltschutz (USG, SR 814.01), Lärmschutzverordnung (LSV,
+SR 814.41)
+                                                                                           9
+                    2
+                     Mutwillige Störungen der öffentlichen Ruhe bei Tag oder bei Nacht sind verboten. Wer
+                    die Ruhe durch Lärm stört, macht sich strafbar.
+                    3
+                     Davon ausgenommen sind Arbeiten im Zusammenhang mit der Schneeräumung, der
+                    Beschneiung, der Pisten- und Loipenpräparation, der Heuernte, Anlieferungen durch
+                    Post, Detailhandel etc. Wobei auch bei diesen Arbeiten der Lärm auf das Nötigste zu
+                    beschränken ist.
+
+                    Art. 32
+Ruhezeiten für      Im Bereich der Wohngebiete sind lärmende Bau-, Garten- und Hausarbeiten ausserhalb
+lärmende Arbeiten   geschlossener Gebäude während folgender Zeiten zu unterlassen:
+                           a) An Sonn- und Feiertagen11 sowie am Ostersamstag;
+                           b) 1. April bis 15. Juni
+                              Ist Ostern früher als der 1. April, gelten nachfolgende Ruhezeiten bereits ab
+                              Osterdienstag:
+                                werktags
+                                nachts von        19:00 – 07:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr,
+                                samstags
+                                nachts von        17:00 – 07:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr
+                           c)   16. Juni bis 25. Oktober
+                                werktags
+                                nachts von        19:00 – 08:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr,
+                                samstags
+                                nachts von        17:00 – 08:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr
+                           d) 26. Oktober bis 15. Dezember
+                                werktags
+                                nachts von        19:00 – 07:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr,
+                                samstags
+                                nachts von        17:00 – 07:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr
+                           e) 16. Dezember bis 31. März
+                                werktags
+                                nachts von        18:00 – 08:00 Uhr und
+                                mittags von       12:00 – 13:00 Uhr,
+                                und samstags.
+
+
+                    Art. 33
+Ruhezeiten für      Im Bereich der Wohngebiete dürfen in der Zeit vom ersten Montag im Juli bis zum letzten
+stark lärmende      Freitag im August und vom 16. Dezember bis 31. März keine stark lärmenden Arbeiten
+Arbeiten            wie Ramm- und Sprengarbeiten, Baugrubenaushübe, Gebäudeabbrüche, Helikopter-
+                    transportflüge und dgl. vorgenommen werden.
+
+
+
+
+                    11
+                         Art. 2 Gesetz über die öffentlichen Ruhetage (Ruhetagsgesetz, BR 520.100)
+
+                    10
+Art. 34
+Beim Einsatz von Arbeitsmaschinen darf die Schallpegelgrenze von 85 dB (A) nicht über-    Arbeitsmaschinen
+schritten werden. Arbeitsmaschinen mit grösserem Schallpegel sind mit Schallschluck-
+vorrichtungen so abzuschirmen, dass sie obigen Grenzwert einhalten.
+
+Art. 35
+1
+ Auf Gesuch hin können Ausnahmen von obigen Einschränkungen zu bestimmten Zeiten          Ausnahmen
+bewilligt werden, wenn die Ausführung lärmiger oder stark lärmender Arbeiten während
+der Ruhezeit oder der Einsatz von den zulässigen Lärmpegel überschreitenden Maschi-
+nen unumgänglich sind.
+2
+ Bei deren zeitlicher Festlegung ist in besonderem Masse auf die Bedürfnisse des Tou-
+rismus zu achten. Darüber hinaus ist eine umfassende Interessenabwägung durchzufüh-
+ren zwischen allen betroffenen öffentlichen und privaten Interessen. Die Ausnahmebe-
+willigung kann mit Auflagen oder mit Nebenbestimmungen verknüpft werden.
+3
+ Zuständig für die Erteilung der Bewilligung ist das Gemeindepräsidium nach Anhörung
+der Gemeindekanzlei bzw. des Bausekretariats.
+4
+ Das Gemeindepräsidium entscheidet über Art und Ausmass von allfälligen Informatio-
+nen der Öffentlichkeit über bewilligte Ausnahmen.
+
+Art. 36
+1
+ Elektronische Geräte wie Radio- und Fernsehgeräte, Lautsprecher sowie Musikinstru-       Elektronische
+mente dürfen nur so laut eingesetzt werden, dass sie Drittpersonen nicht stören.          Geräte und
+                                                                                          musikalische
+2
+ Die Darbietung von Musik mit Lautsprechern oder mechanischen und elektronischen
+                                                                                          Instrumente
+Musikinstrumenten im Freien nach 20:00 Uhr bedarf einer Bewilligung des Gemeinde-
+präsidiums.
+
+Art. 37
+1
+ Gaststätten wie Restaurants, Bars, Dancings sowie Konzertsäle, Versammlungsräume         Gaststätten
+und dergleichen sind baulich und organisatorisch so einzurichten und so zu betreiben,
+dass während der Ruhezeiten gemäss Art. 32 kein übermässiger Lärm nach aussen
+dringt.
+2
+ Gastgebende haben ihr Möglichstes zu unternehmen, dass von ihrem Lokal kein über-
+mässiger Lärm nach aussen dringt und dass ihre Gäste ausserhalb des Lokals keinen
+Lärm machen. Wenn Drittpersonen von durch offene Fenster und Türen dringenden Lärm
+gestört werden, sind diese durch den Verursacher zu schliessen.
+3
+ Bei wiederholten Übertretungen kann der Gemeindevorstand die Polizeistunde bei den
+Gaststätten auf 24:00 Uhr festsetzen.
+
+Art. 38
+1
+ Der Gebrauch von Schusswaffen ist nur in Schiessanlagen gestattet. Vorbehalten bleiben   Schiessen, Schiess-
+besondere Regelungen für öffentliche Schiessanlagen, jagdpolizeiliche Vorschriften so-    lärm
+wie Ausnahmebewilligungen des Gemeindevorstandes in Einzelfällen.
+2
+ Luft- und Gasdruckwaffen, Armbrust sowie Sportpfeilbogen dürfen ausserhalb von
+Schiessanlagen nur verwendet werden, wenn eine Gefährdung oder Belästigung von
+Personen und Tieren ausgeschlossen ist.
+3
+ Die Schiesszeiten im Schützenstand sind dem Gemeindevorstand zur Genehmigung zu
+unterbreiten. Das Schiessen an Sonn- und Feiertagen ist verboten. Die Gemeinde kann
+Ausnahmen gestatten.
+
+
+
+
+                                                                                    11
+                    Art. 39
+Feuer12
+                    Wenn es die Verhältnisse erfordern, kann der Gemeindevorstand das Feuern im Freien
+                    sowie das (bewilligungsfreie) Abbrennen von Feuerwerk im Rahmen einer Allgemein-
+                    verfügung vorübergehend generell beschränken oder verbieten.
+
+                    Art. 40
+Feuerwerk 13        1
+                     Jegliches Abbrennen von pyrotechnischen Gegenständen (Feuerwerkskörper) und Stei-
+                    genlassen von Himmelslaternen ist verboten.
+                    2
+                     Soweit keine speziellen Lärmeffekte produziert werden, bleiben vom Feuerwerksverbot
+                    vorbehältlich der Bestimmungen des kommunalen und übergeordneten Rechts ausge-
+                    nommen: Tischfeuerwerk, Wunderkerzen, bengalische Feuer, römische Lichter, Vulkane,
+                    Fackeln, Feuershows sowie Höhenfeuer, Laser- und andere Lichtshows.
+                    3
+                     Für Anlässe von besonderer Bedeutung kann die Geschäftsleitung auf entsprechende
+                    Gesuche hin Ausnahmebewilligungen vom Feuerwerksverbot nach Abs. 1 erteilen. Für
+                    die Erteilung der Ausnahmebewilligungen werden von den Gesuchstellenden abhängig
+                    von der Grösse und Dauer der Feuerwerke Abgaben zwischen CHF 1'000.00 und CHF
+                    3'000.00 erhoben. Von der Abgabe sind jeweils die Hälfte der Beträge an die Stiftung
+                    myclimate zu überweisen.
+                    4
+                     Die Geschäftsleitung kann die Ausnahmebewilligungen mit weiteren Auflagen verse-
+                    hen, insbesondere was die Einhaltung der Ruhezeiten und die Kostenübernahme durch
+                    die Gesuchstellenden zur Beseitigung von Verschmutzungen oder Schäden nach dem
+                    Abbrennen von Feuerwerk anbelangt.
+
+                    Art. 41
+Geruchsemissionen   1
+                     Das Freisetzen von schädlichen oder lästigen gasförmigen Stoffen wie Ausdünstungen,
+Dünger- und         Gerüche, Abgase und dergleichen ist verboten, wenn dadurch die Nachbarn in unzumut-
+Kompostierungs-     barer Weise beeinträchtigt werden.
+anlagen             2
+                     Dünger- und Kompostieranlagen sind so zu errichten und zu betreiben, dass sie weder
+                    in geruchlicher noch in ästhetischer Hinsicht Anstoss erregen.
+                    3
+                     Die Vorschriften gemäss Abs. 1 und Abs. 2 gelten nicht für Landwirtschaftsbetriebe. Für
+                    diese Betriebe gelangt das übergeordnete Recht (Bundesrecht und kantonales Recht) zur
+                    Anwendung.
+
+                    Art. 42
+Motorschlitten      1
+                     Ausserhalb von Strassen, welche im Winter mit Motorrädern befahren werden dürfen,
+                    ist die Benützung von Motorschlitten und dergleichen (z.B. Raupenfahrzeuge, Quads)
+                    verboten14.
+                    2
+                     Der Gemeindevorstand kann in begründeten Fällen Ausnahmen bewilligen.
+
+                    Art. 43
+Besondere           Der Gemeindevorstand kann zum Schutz von besonders schonungsbedürftigen Örtlich-
+Vorschriften        keiten wie Schulen, Kirchen, Friedhöfen oder Heimen Vorschriften erlassen, die von den
+                    allgemeinen Bestimmungen dieses Gesetzes abweichen.
+
+
+
+
+                    12
+                       Art. 6 Gesetz über den vorbeugenden Brandschutz und die Feuerwehr im Kanton Graubünden
+                    (Brandschutzgesetz, BR 840.100)
+                    13
+                       Art. 36c lit. b kant. PolG und Art. 6 und 7 Gesetz über den vorbeugenden Brandschutz und die
+                    Feuerwehr im Kanton Graubünden (Brandschutzgesetz, BR 840.100)
+                    14
+                       Art. 1 und 2 kant. Regelung der Benützung von Motorschlitten (BR 870.300)
+
+                    12
+VII.    Bewilligungen und Gebühren
+
+Art. 44
+1
+ Sofern gemäss diesem Gesetz eine Bewilligung des Gemeindepräsidiums erforderlich           Bewilligungen
+ist, muss in der Regel zwei Wochen vorher ein entsprechendes Gesuch gestellt werden.
+2
+ In den anderen Fällen, in welchen die Bewilligungserteilung in der Kompetenz des Ge-
+meindevorstandes liegt, muss in der Regel vier Wochen vorher ein entsprechendes Ge-
+such gestellt werden.
+3
+ Eine Bewilligung wird erteilt, sofern die erforderlichen persönlichen und sachlichen Vo-
+raussetzungen erfüllt sind und keine überwiegenden öffentlichen und privaten Interes-
+sen entgegenstehen.
+4
+ Entfällt nachträglich eine der Voraussetzungen für die Bewilligungserteilung oder wer-
+den an die Bewilligung geknüpfte Bedingungen und Auflagen nicht eingehalten, kann
+die Bewilligung sofort und entschädigungslos wieder entzogen werden.
+
+Art. 45
+1
+ Für sämtliche Bewilligungen und polizeiliche Massnahmen gemäss diesem Gesetz wer-          Gebühren
+den Bearbeitungsgebühren von CHF 100.00 bis CHF 500.00 erhoben.
+2
+ Für die vorübergehende oder dauernde Benützung des öffentlichen Grundes wird eine
+Benützungsgebühr erhoben, welche der benützten Fläche sowie der Dauer der Nutzung
+Rechnung trägt. Die Benützungsgebühr beträgt mindestens CHF 100.00.
+3
+ Zur Festlegung der Benützungsgebühr für die vorübergehende oder dauernde Benüt-
+zung des öffentlichen Grundes durch Bauinstallationen oder feste Bauten gelangt Art. 10
+der Gebührenordnung zum Baugesetz zur Anwendung.
+4
+ Der Gemeindevorstand kann eine Gebührenverordnung erlassen.
+5
+ Bei Verfügungen, welche einen ausserordentlichen Zeitaufwand verursachen, wird die
+Behandlungsgebühr nach Aufwand bemessen.
+6
+ Die vorgängigen Gebührenvorschriften gelten nicht bei der Festsetzung einer allfälligen
+Konzessionsgebühr. Erteilt der Gemeindevorstand eine Sondernutzungskonzession, ist er
+bei der Bemessung der Gebühr frei.
+7
+ Auslagen für Leistungen Dritter wie Fachgutachten oder Beratung durch verwaltungs-
+externe Fachleute sowie notwendige Barauslagen können zusätzlich in Rechnung ge-
+stellt werden.
+8
+ Der Gemeindevorstand kann die Gebühren bei wohltätigen Aktionen oder aus anderen
+wichtigen Gründen ganz oder teilweise erlassen.
+
+
+VIII. Strafbestimmungen und Rechtsmittel
+
+Art. 46
+1
+ Wer vorsätzlich oder fahrlässig die Bestimmungen dieses Gesetzes oder gestützt darauf      Busse bei Wider-
+erlassene Verordnungen und Verfügungen verletzt oder Anordnungen missachtet, wird           handlungen
+mit Busse von CHF 50.00 bis CHF 10'000.00 bestraft.
+2
+ In leichten Fällen kann eine Verwarnung ausgesprochen oder von einer Bestrafung ab-
+gesehen werden.
+3
+ Handelt der Täter aus Gewinnsucht, ist die Behörde an das Höchstmass der Busse nicht
+gebunden.
+4
+ Vorbehalten bleiben Tatbestände, welche bereits durch das eidgenössische oder kanto-
+nale Recht mit Strafe bedroht sind.
+5
+ Wurde die Übertretung zum Vorteil einer juristischen Person, einer Kollektiv- oder Kom-
+manditgesellschaft begangen, sind diejenigen Personen strafbar, die für sie gehandelt
+haben oder hätten handeln sollen.
+                                                                                      13
+                  Art. 47
+Ordentliches      1
+                   Zuständig für die in die Kompetenz der Gemeinde fallenden ordentlichen Verwaltungs-
+Verwaltungs-      strafverfahren ist der Gemeindevorstand.
+strafverfahren    2
+                   Die für das kantonale Strafrecht geltenden allgemeinen Bestimmungen sind sinnge-
+                  mäss anwendbar.15
+                  3
+                   Das Verfahren zur Verfolgung und Beurteilung von Straftaten nach kommunalem Recht
+                  richtet sich nach dem Verwaltungsrechtspflegegesetz, soweit sie nicht von Jugendlichen
+                  im Sinn des Jugendstrafgesetzes verübt worden sind oder besondere Verfahrensvor-
+                  schriften bestehen; das Verfahren gegen Jugendliche richtet sich nach der Jugendstraf-
+                  prozessordnung.16
+                  4
+                   Von Personen ohne Wohnsitz in der Schweiz kann bei Übertretungen dieses Gesetzes
+                  und anderer kommunaler Erlasse sowie bei von der Gemeinde geahndeten Übertretun-
+                  gen von kantonalen Gesetzen auch ausserhalb des Ordnungsbussenverfahrens (Art. 32)
+                  ein Bussendepositum im mutmasslichen Umfang von Busse und Verfahrenskosten si-
+                  chergestellt werden.
+
+                  Art. 48
+Ordnungsbussen-   1
+                   Übertretungen dieses Gesetzes sowie des übrigen kommunalen Rechts können im Ord-
+verfahren         nungsbussenverfahren geahndet werden.17
+                  2
+                   Der Gemeindevorstand erstellt eine Liste der Übertretungen, welche im Ordnungsbus-
+                  senverfahren geahndet werden können, bestimmt den Bussenbetrag und bezeichnet die
+                  zur Erhebung ermächtigten Polizei- und/oder Verwaltungsbehörden.
+                  3
+                   Verstösse gegen Art. 36c (Gefährdung durch Feuerwerk), 36g (Unanständiges Beneh-
+                  men, Ruhestörung), 36h (Verunreinigung fremden Eigentums) und 36j (Betteln) des kan-
+                  tonalen Polizeigesetzes ahnden die vom Gemeindevorstand bezeichneten Polizei-
+                  und/oder Verwaltungsbehörden ebenfalls im Ordnungsbussenverfahren.
+                  4
+                   Für das kommunale Ordnungsbussenverfahren gelten die Bestimmungen des kantona-
+                  len Ordnungsbussenverfahrens sinngemäss.18
+
+                  Art. 49
+Inhalt der        Sämtliche Entscheide und Verfügungen der Polizeiorgane und des Gemeindevorstandes
+Entscheide        müssen die genaue Bezeichnung der strafbaren Handlung und der anwendbaren Straf-
+                  bestimmungen sowie eine Rechtsmittelbelehrung enthalten.
+
+                  Art. 50
+Rechtsmittel      1
+                   Gegen sämtliche Verfügungen und Entscheide, die gestützt auf dieses Gesetz oder ge-
+                  stützt auf Ausführungsbestimmungen zu diesem Gesetz erlassen wurden, kann innert 20
+                  Tagen nach Mitteilung beim Gemeindevorstand Einsprache erhoben werden. Die Einspra-
+                  che hat einen Antrag, den Sachverhalt mit den Beweismitteln sowie eine Begründung
+                  zu enthalten.
+                  2
+                   Dieses interne Rechtsmittel besteht nicht, wenn die Verfügung oder der Entscheid vom
+                  Gemeindevorstand erlassen wurde. Gegen Verfügungen des Gemeindevorstandes kann
+                  innert 30 Tagen beim Verwaltungsgericht Beschwerde geführt werden.
+
+
+
+
+                  15
+                     Art. 8 Gemeindegesetz des Kantons Graubünden (GG, BR 175.050); Art. 2 Einführungsgesetz
+                  zur Schweizerischen Strafprozessordnung (EGzStPO, BR 350.100)
+                  16
+                     Art. 4 EGzStPO
+                  17
+                     Art. 4 EGzStPO
+                  18
+                     Art. 4 EGzStPO, Art. 45 – 49 EGzStPO
+
+                  14
+IX.     Schlussbestimmungen
+
+Art. 51
+1
+ Der Gemeindevorstand ist für den Vollzug dieses Gesetzes verantwortlich. Er kann bei         Vollzug
+Bedarf Ausführungsbestimmungen erlassen.
+2
+ Die Polizeiorgane sorgen für die Durchsetzung dieses Gesetzes und die Vollstreckung
+der getroffenen Anordnungen. Sie sind berechtigt, die erforderlichen Kontrollen unange-
+meldet durchzuführen und die zur Aufrechterhaltung bzw. Wiederherstellung des recht-
+mässigen Zustandes notwendigen Anordnungen unverzüglich zu treffen.
+
+Art. 52
+1
+ Die Verordnung über das Halten von Hunden in der Gemeinde Pontresina vom 6. April            Aufhebung
+2017 wird aufgehoben.                                                                         bisherigen Rechts
+2
+ Die Flurordnung der Gemeinde Pontresina vom 6. Februar 1964 wird aufgehoben.
+3
+ Das Lärmschutzgesetz der Gemeinde Pontresina vom 12. September 2011 wird aufge-
+hoben.
+4
+ Das Verbot betreffend die Benützung von Motorschlitten vom 7. Dezember 1967 wird
+aufgehoben.
+5
+ Das Gemeinde-Gesetz zur Sicherung der Ausübung des Skisportes vom 24. Juli 1979
+wird aufgehoben.
+
+Art. 53
+1
+  Dieses Gesetz tritt mit Annahme durch die Gemeindeversammlung vom 3. April 2023             Inkrafttreten
+per 1. Mai 2023 in Kraft. Alle damit im Widerspruch stehenden Vorschriften und Verord-
+nungen werden auf diesen Zeitpunkt aufgehoben.
+2
+  Die Teilrevision der Art. 30 Abs. 1, 3 und 4 und Art. 40 Abs. 3 und 4 tritt durch Annahme
+durch die Urnenabstimmung vom 28. September 2025 in Kraft.
+
+
+
+
+Pontresina, 28. September 2025
+
+
+Gemeinde Pontresina
+
+
+
+Nora Saratz Cazin                               Jeannette Guadagnini
+Gemeindepräsidentin                             Gemeindeschreiberin
+
+
+
+
+                                                                                        15
+
