@@ -16,6 +16,8 @@ import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
 import { fetchGround, type GroundInfo } from './comfort/ground';
 import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './finder';
+import { RESERVE_FILES, FOREST_FILE, TREELINE_FILE } from './localdata';
+import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
 import { combined, renderFinder, type FinderRow } from './finderview';
 import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
@@ -68,13 +70,13 @@ const loading: Promise<unknown>[] = [];
 const DATA_WAIT_MS = 6000;
 let forestMask: ForestMask | undefined;
 loading.push(
-  loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
+  loadForestMask(`${import.meta.env.BASE_URL}${FOREST_FILE}`)
     .then((m) => (forestMask = m))
     .catch((err) => console.warn('forest map failed to load', err)),
 );
 
 const reserveSets: ReserveSet[] = [];
-for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz', 'reserves-vs.json.gz', 'reserves-ge.json.gz', 'reserves-gl.json.gz', 'reserves-fr.json.gz', 'reserves-lu.json.gz', 'reserves-so.json.gz', 'bans-court.json.gz']) {
+for (const file of RESERVE_FILES) {
   loading.push(
     loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
       .then((r) => reserveSets.push(r))
@@ -84,7 +86,7 @@ for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz', 'reserves-vs.j
 
 let treelineSurface: TreelineSurface | undefined;
 loading.push(
-  loadTreelineSurface(`${import.meta.env.BASE_URL}treeline-surface.bin.gz`)
+  loadTreelineSurface(`${import.meta.env.BASE_URL}${TREELINE_FILE}`)
     .then((t) => (treelineSurface = t))
     .catch((err) => console.warn('treeline surface failed to load', err)),
 );
@@ -552,6 +554,51 @@ const LocateControl = L.Control.extend({
   },
 });
 new LocateControl({ position: 'topright' }).addTo(map);
+
+// Offline: a service worker keeps the app, its data and viewed map tiles; a button saves the visible area on purpose.
+if (import.meta.env.PROD) registerOffline(import.meta.env.BASE_URL);
+const banner = document.getElementById('offline-banner')!;
+const syncOnline = () => (banner.hidden = navigator.onLine);
+window.addEventListener('online', syncOnline);
+window.addEventListener('offline', syncOnline);
+syncOnline();
+
+let saving: AbortController | undefined;
+async function saveArea() {
+  if (saving) {
+    saving.abort();
+    return;
+  }
+  if (!('caches' in window)) return say('This browser cannot store maps for offline use.');
+  if (!navigator.onLine) return say('You are offline: connect to save a map area.');
+  const b = map.getBounds();
+  const plan = planTiles({ south: b.getSouth(), west: b.getWest(), north: b.getNorth(), east: b.getEast() }, Math.round(map.getZoom()));
+  if (!plan.tiles.length) return say(`This view is too large to save (more than ${MAX_TILES} tiles). Zoom in and try again.`);
+  const ctl = (saving = new AbortController());
+  say(`Saving ${plan.tiles.length} map tiles (about ${megabytes(plan.tiles.length)} MB, zoom ${plan.from} to ${plan.to}). Tap the button again to stop.`);
+  void navigator.storage?.persist?.();
+  try {
+    await saveShell(import.meta.env.BASE_URL);
+    const r = await saveTiles(plan.tiles.map((t) => tileUrl(t.z, t.x, t.y)), (p) => say(`Saving map: ${p.done} of ${p.total} tiles…`), ctl.signal);
+    say(ctl.signal.aborted ? `Stopped: ${r.done - r.failed} tiles saved.` : r.failed ? `Saved ${r.total - r.failed} of ${r.total} tiles; ${r.failed} failed. Try again with a better connection.` : `Saved ${r.total} tiles (zoom ${plan.from} to ${plan.to}) and the app data. The map and local checks now work offline here; zone, water and weather lookups still need a connection.`);
+  } finally {
+    saving = undefined;
+  }
+}
+
+const SaveControl = L.Control.extend({
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'map-locate') as HTMLButtonElement;
+    btn.type = 'button';
+    btn.title = 'Save this map area for offline use';
+    btn.setAttribute('aria-label', 'Save this map area for offline use');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 18v2h14v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', () => void saveArea());
+    return btn;
+  },
+});
+new SaveControl({ position: 'topright' }).addTo(map);
 
 // Handle for browser tests in the dev server only.
 if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map; focusOn: typeof focusOn } }).__wildcamp = { map, focusOn };
