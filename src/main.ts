@@ -10,6 +10,7 @@ import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import { reportUrl } from './report';
+import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
 import { fetchJuraReserves } from './jura';
 import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
@@ -151,7 +152,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
   const deadline = window.setTimeout(() => abort.abort(), budget);
 
   const got: { terrain?: TerrainMetrics; far?: Profiles; near?: Profiles; around?: Partial<Surroundings>; water?: WaterInfo; shelters?: ShelterResult; ground?: GroundInfo; avalanche?: AvalancheInfo; hourly?: Hourly } = {};
-  const done = { near: false, far: false, around: false, water: false, shelter: false, ground: false, avalanche: false, forecast: false };
+  const done = { near: false, far: false, around: false, water: false, shelter: false, ground: false, avalanche: false, rules: false, forecast: false };
   const failed = { water: false, avalanche: false, forecast: false };
   let selected = 0;
 
@@ -211,6 +212,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     track('shelter', withTimeout(fetchShelters(lat, lng, abort.signal), PART_MS), (v) => { got.shelters = v; ui.setShelter(v); }, () => ui.setShelter(undefined, true)),
     track('ground', withTimeout(fetchGround(lat, lng, abort.signal), PART_MS), (v) => (got.ground = v)),
     track('avalanche', withTimeout(fetchBulletin(abort.signal), PART_MS).then((fc) => bulletinAt(fc, lat, lng, new Date())), (v) => { got.avalanche = v; ui.setAvalanche(v); }, () => { failed.avalanche = true; ui.setAvalanche(undefined, true); }),
+    track('rules', withTimeout(fetchRestrictions(lat, lng, abort.signal), PART_MS), (v) => ui.setRules(v), () => ui.setRules({ failed: ['fire', 'drones'] })),
     track('forecast', withTimeout(fetchForecast(lat, lng, elevation, abort.signal), PART_MS), (v) => (got.hourly = v), () => (failed.forecast = true)),
   ];
   await Promise.allSettled(parts);

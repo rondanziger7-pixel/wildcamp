@@ -5,6 +5,7 @@ import { compassName, describeCode, type Night } from './comfort/weather';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
 import type { SpotSnapshot } from './saved';
+import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
 import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 
@@ -83,6 +84,8 @@ export interface ResultUi {
   setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
   /** The avalanche chip; shown only while a bulletin covers the spot (or could not be fetched). */
   setAvalanche(a: AvalancheInfo | undefined, failed?: boolean): void;
+  /** Fire and drone rules, shown under the legality details; they do not change the camping verdict. */
+  setRules(r: Restrictions | undefined): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
@@ -146,6 +149,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   legalPanel.append(el('p', 'panel-lead', b.sub), ...checklist(a.items, 'details'));
   const seasons = renderSeasons(a.zones);
   if (seasons) legalPanel.append(seasons);
+  const rulesHost = el('section', 'rules');
+  legalPanel.append(rulesHost);
   const sleepPanel = el('section', 'panel sleep');
   sleepPanel.hidden = true;
   const weatherPanel = el('section', 'panel weather');
@@ -281,6 +286,14 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         shelterChip.textContent = `🏠 No hut within 5 km${alp ? ` · ${alp.name} ${km(alp.meters)}` : ''}`;
         shelterChip.classList.add('far');
       }
+    },
+    setRules(r) {
+      const items = r ? restrictionItems(r) : [];
+      rulesHost.replaceChildren(
+        ...(items.length
+          ? [el('h3', 'rules-title', 'Fire and drones'), el('p', 'where', 'Live official data. These rules do not change the camping verdict above.'), ...checklist(items, 'fire and drone details')]
+          : []),
+      );
     },
     setAvalanche(av, failed) {
       avalancheChip.className = 'chip avalanche';

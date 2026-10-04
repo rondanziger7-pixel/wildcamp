@@ -204,3 +204,5 @@ button { font: inherit; cursor: pointer; }
 .season-cell.part { background: linear-gradient(90deg, var(--bad) 50%, var(--line) 50%); color: var(--fg); }
 .season-cell.now { outline: 2px solid var(--fg); outline-offset: 1px; }
 .season-note { margin: 4px 0 0; font-size: .8rem; color: var(--muted); }
+.rules { margin-top: 14px; }
+.rules-title { font-size: .95rem; margin: 0 0 2px; }
