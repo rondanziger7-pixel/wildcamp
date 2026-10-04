@@ -160,3 +160,16 @@ button { font: inherit; cursor: pointer; }
 
 .wx-factors-title { font-size: .95rem; margin: 14px 0 4px; }
 @media (max-width: 719px) { .score-card { padding: 8px 9px; } .score-card .sc-value { font-size: 1.5rem; } .score-card .sc-label { font-size: .8rem; } }
+
+.finder-title { margin: 4px 0 2px; font-size: 1.1rem; }
+.finder-list { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 8px; }
+.finder-row button { width: 100%; text-align: left; border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 12px; padding: 10px 12px; cursor: pointer; }
+.finder-head { display: flex; align-items: center; gap: 8px; }
+.finder-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--green); color: #fff; font-size: .8rem; font-weight: 700; flex: none; }
+.finder-scores { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip-score { border-radius: 999px; padding: 2px 10px; font-size: .8rem; font-weight: 600; border: 1px solid var(--line); }
+.chip-score.good { background: #d9f2e0; color: #14532d; } .chip-score.warn { background: var(--warn-bg); } .chip-score.bad { background: var(--bad-bg); color: var(--bad); }
+@media (prefers-color-scheme: dark) { .chip-score.good { background: #12361f; color: #b7e8c4; } }
+.finder-note { margin: 6px 0 0; font-size: .85rem; color: var(--muted); line-height: 1.35; }
+.finder-btn { width: 100%; margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--green); background: transparent; color: var(--fg); font-weight: 600; cursor: pointer; }
+.finder-pin { background: var(--green); color: #fff; border: 2px solid #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; box-shadow: 0 1px 4px #0006; }

@@ -15,6 +15,9 @@ import { searchPlaces, type Place } from './search';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
 import { fetchGround, type GroundInfo } from './comfort/ground';
+import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './finder';
+import { combined, renderFinder, type FinderRow } from './finderview';
+import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
@@ -91,6 +94,13 @@ const dataReady = Promise.all(loading).then(() => (dataLoaded = true));
 const sheet = document.getElementById('sheet')!;
 document.getElementById('sheet-close')!.onclick = () => sheet.classList.add('closed');
 const result = document.getElementById('result')!;
+const introFind = el('button', 'finder-btn', '🔍 Find the best spots around the map centre');
+introFind.type = 'button';
+introFind.onclick = () => {
+  const c = map.getCenter();
+  void findBest(c.lat, c.lng);
+};
+document.getElementById('intro')!.append(introFind);
 
 function showLoading() {
   sheet.dataset.state = 'loading';
@@ -208,8 +218,41 @@ function focusOn(e: number, n: number, label: string) {
   map.flyToBounds(bounds, { ...pad, maxZoom: 16, duration: 0.8 });
 }
 
-async function checkSpot(lat: number, lng: number) {
+/** Legality assessment of a spot: the zone, canton, municipality and reserve lookups plus the local data. */
+async function assessSpot(lat: number, lng: number, knownElevation?: number) {
+  const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
+  const LOOKUP_MS = 7000;
+  const dataWait = Promise.race([dataReady, new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
+  const [elev, zones, canton, muni, jura] = await Promise.allSettled([
+    knownElevation !== undefined ? Promise.resolve(knownElevation) : withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
+    withTimeout(fetchZoneHits(lat, lng), LOOKUP_MS),
+    withTimeout(fetchCanton(lat, lng), LOOKUP_MS),
+    withTimeout(fetchMunicipality(lat, lng), LOOKUP_MS),
+    inJura ? withTimeout(fetchJuraReserves(lat, lng), LOOKUP_MS) : Promise.resolve([]),
+  ]);
+  await dataWait;
+  const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
+  const { e, n } = wgs84ToLv95(lat, lng);
+  const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
+  const assessment = assess({
+    zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...(jura.status === 'fulfilled' ? jura.value : [])],
+    zoneLookupFailed: zones.status === 'rejected',
+    treeline,
+    treelineNote,
+    canton: canton.status === 'fulfilled' ? canton.value : undefined,
+    municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
+    municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
+    outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
+  });
+  return { assessment, elevation };
+}
+
+async function checkSpot(lat: number, lng: number, fromFinder = false) {
   const id = ++checkId;
+  if (!fromFinder) {
+    ++finderId;
+    finderPins.clearLayers();
+  }
   sheet.classList.remove('closed');
   const tappedAt = Date.now();
   marker?.remove();
@@ -224,31 +267,9 @@ async function checkSpot(lat: number, lng: number) {
     return;
   }
   showLoading();
-  const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
-  const LOOKUP_MS = 7000;
-  const dataWait = Promise.race([dataReady, new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
-  const [elev, zones, canton, muni, jura] = await Promise.allSettled([
-    withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
-    withTimeout(fetchZoneHits(lat, lng), LOOKUP_MS),
-    withTimeout(fetchCanton(lat, lng), LOOKUP_MS),
-    withTimeout(fetchMunicipality(lat, lng), LOOKUP_MS),
-    inJura ? withTimeout(fetchJuraReserves(lat, lng), LOOKUP_MS) : Promise.resolve([]),
-  ]);
-  await dataWait;
+  const assessed = await assessSpot(lat, lng);
   if (id !== checkId) return; // a newer tap superseded this one
-  const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
-  const { e, n } = wgs84ToLv95(lat, lng);
-  const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
-  const assessment = assess({
-      zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...(jura.status === 'fulfilled' ? jura.value : [])],
-      zoneLookupFailed: zones.status === 'rejected',
-      treeline,
-      treelineNote,
-      canton: canton.status === 'fulfilled' ? canton.value : undefined,
-      municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
-      municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
-      outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
-  });
+  const { assessment, elevation } = assessed;
   if (assessment.outside) {
     sheet.dataset.state = 'result';
     renderOutside(result);
@@ -256,8 +277,125 @@ async function checkSpot(lat: number, lng: number) {
   }
   sheet.dataset.state = 'result';
   const ui = renderResult(result, assessment, elevation, focusOn);
+  if (fromFinder && finderBack) {
+    const back = el('button', 'linkish', '← Back to best spots');
+    back.type = 'button';
+    back.onclick = finderBack;
+    result.prepend(back);
+  }
+  const find = el('button', 'finder-btn', '🔍 Find the best spots near here');
+  find.type = 'button';
+  find.onclick = () => void findBest(lat, lng);
+  result.append(find);
   sheet.scrollTop = 0;
   void loadDetails(ui, lat, lng, elevation, id, tappedAt);
+}
+
+
+// Best spots nearby
+const finderPins = L.layerGroup().addTo(map);
+let finderId = 0;
+let finderBack: (() => void) | undefined;
+const FINDER_CANDIDATES = 12;
+const FINDER_SHOWN = 5;
+const FINDER_POOL = 4;
+
+function finderNote(c: { coverLabel?: string; elevation: number }, water: WaterInfo | undefined, waterDone: boolean): string {
+  const parts: string[] = [];
+  if (c.coverLabel) parts.push(c.coverLabel);
+  if (waterDone) {
+    if (!water || water.failed.includes('water')) parts.push('water not checked');
+    else if (water.kind === 'none') parts.push('no water within 800 m');
+    else parts.push(`${water.kind === 'lake' ? 'lake' : 'stream'}${water.name ? ` ${water.name}` : ''} ${Math.round(water.meters / 10) * 10} m away${water.glacierM !== undefined ? ' (glacier water)' : ''}${water.upstreamPlants.length ? ' (sewage upstream)' : ''}`);
+  }
+  return `${parts.join(' · ') || 'ground not classified'}.`;
+}
+
+async function findBest(lat: number, lng: number) {
+  const id = ++finderId;
+  ++checkId; // stops a running spot check from painting over the list
+  marker?.remove();
+  marker = L.marker([lat, lng]).addTo(map);
+  focusMarker?.remove();
+  finderPins.clearLayers();
+  sheet.classList.remove('closed');
+  sheet.dataset.state = 'result';
+  result.hidden = false;
+  const gone = () => id !== finderId;
+  const mount = () => renderFinder(result, 'Best spots nearby', (c) => void checkSpot(c.lat, c.lon, true));
+  let ui = mount();
+  finderBack = undefined;
+  ui.update([], 'Reading the terrain and ground around here…', false);
+  if (!isInSwitzerland(lat, lng)) return ui.update([], 'This app only covers Switzerland.', true);
+  const { e, n } = wgs84ToLv95(lat, lng);
+  const abort = new AbortController();
+  const stop = window.setTimeout(() => abort.abort(), 40000);
+  try {
+    const grid = await withTimeout(fetchElevationGrid(e, n, abort.signal), 12000);
+    if (gone()) return;
+    const covers = await withTimeout(fetchCoverGrid({ e, n }, abort.signal), 10000).catch(() => new Map());
+    if (gone()) return;
+    const cands = rankCells(grid, { e, n }, covers, FINDER_CANDIDATES);
+    if (!cands.length) return ui.update([], 'No suitable flat ground found within about 700 m (steep, glacier, water or built-up). Try another place.', true);
+
+    const rows: FinderRow[] = cands.map((c) => ({ candidate: c, sleep: sleepScore(c.comfort), note: finderNote(c, undefined, false), waterDone: false }));
+    let hidden = 0;
+    const shown = () => {
+      const open = rows.filter((r) => r.legal?.verdict !== 'no');
+      hidden = rows.length - open.length;
+      return open.sort((a, b) => combined(b) - combined(a));
+    };
+    const draw = (done: boolean) => {
+      if (gone()) return;
+      const list = done ? shown().slice(0, FINDER_SHOWN) : shown();
+      const checked = rows.filter((r) => r.legal && r.waterDone).length;
+      ui.update(list, done ? `${list.length} spot${list.length === 1 ? '' : 's'} within about 700 m${hidden ? `; ${hidden} more skipped because camping is not allowed there` : ''}.` : `Checking legality and water: ${checked} of ${rows.length} done…`, done);
+      finderPins.clearLayers();
+      list.forEach((r, i) =>
+        L.marker([r.candidate.lat, r.candidate.lon], { icon: L.divIcon({ className: '', html: `<div class="finder-pin">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) })
+          .on('click', () => void checkSpot(r.candidate.lat, r.candidate.lon, true))
+          .addTo(finderPins),
+      );
+    };
+    draw(false);
+    finderBack = () => {
+      if (gone()) return;
+      sheet.classList.remove('closed');
+      ui = mount();
+      draw(true);
+    };
+    const bounds = L.latLngBounds(cands.map((c) => [c.lat, c.lon] as [number, number])).extend([lat, lng]);
+    const wide = window.matchMedia('(min-width: 720px)').matches;
+    map.flyToBounds(bounds, wide ? { paddingTopLeft: L.point(430, 70), paddingBottomRight: L.point(60, 40), maxZoom: 15 } : { paddingTopLeft: L.point(40, 70), paddingBottomRight: L.point(40, Math.min(sheet.offsetHeight, window.innerHeight * 0.62) + 20), maxZoom: 15 });
+
+    let next = 0;
+    const worker = async () => {
+      while (!gone() && next < rows.length) {
+        const r = rows[next++]!;
+        const c = r.candidate;
+        const [a, w] = await Promise.allSettled([withTimeout(assessSpot(c.lat, c.lon, c.elevation), 12000), withTimeout(fetchWater(c.lat, c.lon, abort.signal), 8000)]);
+        if (gone()) return;
+        const water = w.status === 'fulfilled' ? w.value : undefined;
+        r.waterDone = true;
+        if (water && !water.failed.includes('water')) {
+          c.comfort = withWater(c, water);
+          r.sleep = sleepScore(c.comfort);
+        }
+        r.note = finderNote(c, water, true);
+        if (a.status === 'fulfilled') {
+          const L0 = legalityScore(a.value.assessment);
+          r.legal = { ...L0, verdict: a.value.assessment.verdict, label: a.value.assessment.verdict };
+        } else r.legal = { tone: 'warn', value: 40, verdict: 'unknown', label: 'unknown' };
+        draw(false);
+      }
+    };
+    await Promise.all(Array.from({ length: FINDER_POOL }, worker));
+    draw(true);
+  } catch {
+    if (!gone()) ui.update([], 'The terrain could not be loaded. Check your connection and try again.', true);
+  } finally {
+    window.clearTimeout(stop);
+  }
 }
 
 map.on('click', (ev: L.LeafletMouseEvent) => {
