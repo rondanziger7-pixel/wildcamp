@@ -57,6 +57,8 @@ L.control.zoom({ position: 'topright' }).addTo(map);
 // Tile loading is kept light: no tiles are requested mid-zoom, failed tiles are asked for again (see tilelayer.ts),
 // and the overlays below start only at the zooms where they say something and use 512 px tiles (a quarter of the requests).
 const LIGHT = { updateWhenZooming: false } as const;
+// Overlays are flat colours: an 8-bit PNG is about 45 % smaller than the default and looks the same.
+const OVERLAY_FORMAT = 'image/png; mode=8bit';
 const baseLayer = new RetryTileLayer(
   'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg',
   { maxZoom: 18, attribution: '© swisstopo', ...LIGHT },
@@ -66,7 +68,7 @@ const zoneOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
     layers: ZONE_LAYERS.filter((l) => l.severity !== 'info')
       .map((l) => l.overlayId ?? l.id)
       .join(','),
-    format: 'image/png',
+    format: OVERLAY_FORMAT,
     transparent: true,
     opacity: 0.45,
     attribution: '© BAFU',
@@ -74,12 +76,11 @@ const zoneOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
     minZoom: 9,
     ...LIGHT,
   });
-zoneOverlay.addTo(map);
 
 // Signposted hiking trails (swissTLM3D): yellow hiking, red mountain, blue alpine trails.
 const trailOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
   layers: 'ch.swisstopo.swisstlm3d-wanderwege',
-  format: 'image/png',
+  format: OVERLAY_FORMAT,
   transparent: true,
   opacity: 0.9,
   attribution: '© swisstopo (trails)',
@@ -87,12 +88,11 @@ const trailOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
   minZoom: 11,
   ...LIGHT,
 });
-trailOverlay.addTo(map);
 
 // Slopes of 30 degrees or more (swisstopo): where avalanches release. Off by default, toggled in the layers panel.
 const slopeOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
   layers: 'ch.swisstopo-karto.hangneigung',
-  format: 'image/png',
+  format: OVERLAY_FORMAT,
   transparent: true,
   opacity: 0.6,
   attribution: '© swisstopo (slope)',
@@ -112,17 +112,19 @@ let dataLoaded = false;
 let dataPromise: Promise<unknown> | undefined;
 
 /** Start fetching the local data once; later calls return the same promise. */
-function ensureData(): Promise<unknown> {
+function ensureData(urgent = true): Promise<unknown> {
+  // a background fetch yields to the map tiles; one a check is waiting for does not
+  const init: RequestInit = urgent ? {} : ({ priority: 'low' } as RequestInit);
   dataPromise ??= Promise.all([
-    loadForestMask(`${import.meta.env.BASE_URL}${FOREST_FILE}`)
+    loadForestMask(`${import.meta.env.BASE_URL}${FOREST_FILE}`, init)
       .then((m) => (forestMask = m))
       .catch((err) => console.warn('forest map failed to load', err)),
     ...RESERVE_FILES.map((file) =>
-      loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
+      loadReserveSet(`${import.meta.env.BASE_URL}${file}`, init)
         .then((r) => reserveSets.push(r))
         .catch((err) => console.warn(`${file} failed to load`, err)),
     ),
-    loadTreelineSurface(`${import.meta.env.BASE_URL}${TREELINE_FILE}`)
+    loadTreelineSurface(`${import.meta.env.BASE_URL}${TREELINE_FILE}`, init)
       .then((t) => (treelineSurface = t))
       .catch((err) => console.warn('treeline surface failed to load', err)),
   ]).then(() => (dataLoaded = true));
@@ -772,14 +774,29 @@ const SavedControl = L.Control.extend({
 });
 new SavedControl({ position: 'topright' }).addTo(map);
 
+// Stage the loading so the base map is never held up: the overlays (the heaviest requests) are added once the base tiles of
+// the first view are in, or after 2.5 s at most, and then the local data follows at low priority.
+{
+  let overlaysAdded = false;
+  const addOverlays = () => {
+    if (overlaysAdded) return;
+    overlaysAdded = true;
+    // the layers panel may have been used in the meantime: respect the checkboxes
+    if ((document.getElementById('toggle-zones') as HTMLInputElement).checked) zoneOverlay.addTo(map);
+    if ((document.getElementById('toggle-trails') as HTMLInputElement).checked) trailOverlay.addTo(map);
+  };
+  baseLayer.once('load', addOverlays);
+  setTimeout(addOverlays, 2500);
+}
+
 // Fetch the local data once the map has drawn (or after 4 s at most), and at once for a deep link.
 {
   const later = () => {
-    const run = () => void ensureData();
+    const run = () => void ensureData(false);
     if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (f: () => void, o: { timeout: number }) => void }).requestIdleCallback(run, { timeout: 2000 });
     else setTimeout(run, 1500);
   };
-  if (hashView) void ensureData();
+  if (hashView) void ensureData(); // a deep link is checked at once, so the data is needed at once
   else {
     let started = false;
     const go = () => !started && ((started = true), later());

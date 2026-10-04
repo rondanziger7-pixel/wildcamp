@@ -53,8 +53,8 @@ export async function decodeReserveSet(buf: ArrayBuffer): Promise<ReserveSet> {
   return parseReserveSet(JSON.parse(new TextDecoder().decode(bytes)));
 }
 
-export async function loadReserveSet(url: string): Promise<ReserveSet> {
-  const res = await fetch(url);
+export async function loadReserveSet(url: string, init?: RequestInit): Promise<ReserveSet> {
+  const res = await fetch(url, init);
   if (!res.ok) throw new Error(`reserves ${res.status}`);
   return decodeReserveSet(await res.arrayBuffer());
 }

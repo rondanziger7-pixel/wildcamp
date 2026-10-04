@@ -33,8 +33,8 @@ export async function decodeTreelineSurface(buf: ArrayBuffer): Promise<TreelineS
   return parseTreelineSurface(await gunzipIfNeeded(buf));
 }
 
-export async function loadTreelineSurface(url: string): Promise<TreelineSurface> {
-  const res = await fetch(url);
+export async function loadTreelineSurface(url: string, init?: RequestInit): Promise<TreelineSurface> {
+  const res = await fetch(url, init);
   if (!res.ok) throw new Error(`treeline surface ${res.status}`);
   return decodeTreelineSurface(await res.arrayBuffer());
 }

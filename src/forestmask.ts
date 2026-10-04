@@ -41,8 +41,8 @@ export async function decodeForestMask(buf: ArrayBuffer): Promise<ForestMask> {
   return parseForestMask(await gunzipIfNeeded(buf));
 }
 
-export async function loadForestMask(url: string): Promise<ForestMask> {
-  const res = await fetch(url);
+export async function loadForestMask(url: string, init?: RequestInit): Promise<ForestMask> {
+  const res = await fetch(url, init);
   if (!res.ok) throw new Error(`forest mask ${res.status}`);
   return decodeForestMask(await res.arrayBuffer());
 }

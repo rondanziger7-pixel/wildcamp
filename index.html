@@ -6,8 +6,35 @@
     <meta name="theme-color" content="#1f4d36" />
     <meta name="description" content="Check whether a spot in Switzerland is likely legal for wild camping: treeline, protected zones, cantonal rules." />
     <title>Wildcamp CH</title>
+    <script>
+      // Start fetching the first view's base-map tiles now, before the app's JavaScript has loaded and parsed, so they
+      // are already in flight (or cached) when the map asks for them. Same tile maths as the map; a miss costs nothing.
+      (function () {
+        try {
+          var h = location.hash.slice(1).split(',').map(Number);
+          var ok = h.length >= 2 && isFinite(h[0]) && isFinite(h[1]);
+          var lat = ok ? h[0] : 46.8, lon = ok ? h[1] : 8.2, z = ok ? Math.round(h[2]) || 14 : 8;
+          var n = Math.pow(2, z), lr = (lat * Math.PI) / 180;
+          var px = ((lon + 180) / 360) * n * 256;
+          var py = ((1 - Math.log(Math.tan(lr) + 1 / Math.cos(lr)) / Math.PI) / 2) * n * 256;
+          var w = innerWidth, hgt = innerHeight, count = 0;
+          for (var x = Math.floor((px - w / 2) / 256); x <= Math.floor((px + w / 2) / 256); x++) {
+            for (var y = Math.floor((py - hgt / 2) / 256); y <= Math.floor((py + hgt / 2) / 256); y++) {
+              if (count++ >= 30 || x < 0 || y < 0 || x >= n || y >= n) continue;
+              var l = document.createElement('link');
+              l.rel = 'preload';
+              l.as = 'image';
+              l.href = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/' + z + '/' + x + '/' + y + '.jpeg';
+              document.head.appendChild(l);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <!-- map images are plain <img> requests, which use a different connection than CORS requests: preconnect both ways -->
+    <link rel="preconnect" href="https://wmts.geo.admin.ch" />
     <link rel="preconnect" href="https://wmts.geo.admin.ch" crossorigin />
-    <link rel="preconnect" href="https://wms.geo.admin.ch" crossorigin />
+    <link rel="preconnect" href="https://wms.geo.admin.ch" />
     <link rel="dns-prefetch" href="https://api3.geo.admin.ch" />
   </head>
   <body>
