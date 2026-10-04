@@ -72,7 +72,7 @@ def main() -> None:
         docs = json.loads(f["properties"].get("dokumente") or "[]")
         binding[i] = [x["dokumente"] for x in docs if x.get("rechtsvorschrift") and x.get("rechtsstatus") == "inKraft" and str(x.get("dokumente", "")).lower().endswith(".pdf")]
     urls = sorted({u for v in binding.values() for u in v})
-    with cf.ThreadPoolExecutor(4) as ex:
+    with cf.ThreadPoolExecutor(int(os.environ.get("JOBS", "4"))) as ex:
         texts = dict(zip(urls, ex.map(lambda u: pdf_text(u, cache), urls)))
     reserves, rows = [], []
     for i, f in enumerate(feats):
