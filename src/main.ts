@@ -187,10 +187,9 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
 
 let marker: L.Marker | undefined;
 let checkId = 0;
-let spotAt: L.LatLng | undefined;
 let focusMarker: L.CircleMarker | undefined;
 
-/** Fly to a hut or water spot and mark it, keeping the tapped spot in view above/beside the sheet. */
+/** Fly to a hut or water spot and mark it, centred in the part of the map the sheet leaves free. */
 function focusOn(e: number, n: number, label: string) {
   const { lat, lon } = lv95ToWgs84(e, n);
   const target = L.latLng(lat, lon);
@@ -202,7 +201,7 @@ function focusOn(e: number, n: number, label: string) {
   const closed = sheet.classList.contains('closed');
   const wide = window.matchMedia('(min-width: 720px)').matches;
   const pad = closed ? { padding: L.point(40, 70) } : wide ? { paddingTopLeft: L.point(430, 70), paddingBottomRight: L.point(60, 40) } : { paddingTopLeft: L.point(40, 70), paddingBottomRight: L.point(40, Math.min(sheet.offsetHeight, window.innerHeight * 0.62) + 20) };
-  const bounds = L.latLngBounds([target, spotAt ?? target]);
+  const bounds = L.latLngBounds([target, target]);
   map.flyToBounds(bounds, { ...pad, maxZoom: 16, duration: 0.8 });
 }
 
@@ -213,7 +212,6 @@ async function checkSpot(lat: number, lng: number) {
   marker?.remove();
   focusMarker?.remove();
   focusMarker = undefined;
-  spotAt = L.latLng(lat, lng);
   marker = L.marker([lat, lng]).addTo(map);
   history.replaceState(null, '', `#${lat.toFixed(5)},${lng.toFixed(5)},${map.getZoom()}`);
   if (!isInSwitzerland(lat, lng)) {
