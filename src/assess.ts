@@ -9,6 +9,8 @@ export interface ZoneHit {
   name?: string;
   /** Extra specifics from the source data, e.g. season or canton. */
   detail?: string;
+  /** The zone's protection season as the source gives it ("dd.mm.-dd.mm."), if it has one. */
+  season?: string;
 }
 
 /** One line of the result checklist shown to the user. */

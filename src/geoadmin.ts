@@ -58,7 +58,7 @@ const fmtDate = (d: Date) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear
  * Entry bans and path-only rules count as restricted while in force; recommended zones, "other" rules and winter-sport
  * rules only as caution; a season that is not running today also lowers it to caution.
  */
-function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { layer: ZoneLayer; detail: string } {
+function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { layer: ZoneLayer; detail: string; season?: string } {
   const rule = str(a.best_de);
   const season = str(a.schutzzeit);
   const statutory = str(a.schutzs_de) === 'rechtsverbindlich';
@@ -66,7 +66,7 @@ function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { la
   const winterSportsOnly = !!rule && /Wintersport/i.test(rule) && !/Zutritt|Wegegebot/i.test(rule);
   const running = inSeason(season, today);
   const bits = [rule, season && `(${season})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
-  if (statutory && entryRule && running) return { layer, detail: bits };
+  if (statutory && entryRule && running) return { layer, detail: bits, season };
   let why: string;
   if (!statutory) why = 'This zone is only recommended, not binding.';
   else if (winterSportsOnly) why = 'The rule covers winter sports only.';
@@ -75,6 +75,7 @@ function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { la
   return {
     layer: { ...layer, severity: 'caution', note: `Wildlife quiet zone. ${why}` },
     detail: bits,
+    season,
   };
 }
 
@@ -87,7 +88,7 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }, today: Date 
     if (!layer) continue;
     if (r.layerBodId === 'ch.bafu.wrz-wildruhezonen_portal') {
       const h = wrzHit(a, layer, today);
-      hits.push({ layer: h.layer, name: str(a.label) ?? str(a.name), detail: h.detail });
+      hits.push({ layer: h.layer, name: str(a.label) ?? str(a.name), detail: h.detail, season: h.season });
       continue;
     }
     let detail: string | undefined;

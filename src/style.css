@@ -194,3 +194,13 @@ button { font: inherit; cursor: pointer; }
 .report-link { display: block; margin-top: 10px; font-size: .85rem; }
 .spot-pin { background: none; border: 0; filter: drop-shadow(0 2px 2px #0007); }
 .spot-pin svg { display: block; }
+
+.seasons { margin-top: 14px; }
+.seasons h3 { font-size: .95rem; margin: 0 0 6px; }
+.season-title { margin: 8px 0 4px; font-size: .85rem; font-weight: 600; }
+.season-strip { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; }
+.season-cell { text-align: center; font-size: .7rem; padding: 4px 0; border-radius: 4px; background: var(--line); color: var(--muted); }
+.season-cell.on { background: var(--bad); color: #fff; }
+.season-cell.part { background: linear-gradient(90deg, var(--bad) 50%, var(--line) 50%); color: var(--fg); }
+.season-cell.now { outline: 2px solid var(--fg); outline-offset: 1px; }
+.season-note { margin: 4px 0 0; font-size: .8rem; color: var(--muted); }

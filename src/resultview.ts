@@ -5,6 +5,7 @@ import { compassName, describeCode, type Night } from './comfort/weather';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
 import type { SpotSnapshot } from './saved';
+import { renderSeasons } from './seasonview';
 import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
@@ -143,6 +144,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
   legalPanel.append(el('p', 'panel-lead', b.sub), ...checklist(a.items, 'details'));
+  const seasons = renderSeasons(a.zones);
+  if (seasons) legalPanel.append(seasons);
   const sleepPanel = el('section', 'panel sleep');
   sleepPanel.hidden = true;
   const weatherPanel = el('section', 'panel weather');
