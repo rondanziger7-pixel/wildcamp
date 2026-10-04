@@ -107,15 +107,17 @@ export function assess(input: {
       reasons.push(`${canton.name}: cantonal rules are not verified in this app. Check with the canton or municipality.`);
       items.push({ tone: 'info', title: `${canton.name} rules`, text: 'Cantonal rules are not verified in this app. Check with the canton or municipality.' });
     } else {
-      reasons.push(`${canton.name}: ${rule.summary} (source: ${rule.sources.map((x) => x.url).join(', ')}, checked ${rule.checkedOn})`);
+      const stance = treeline === 'above' && rule.aboveTreeline ? rule.aboveTreeline : rule.stance;
+      const note = stance !== rule.stance ? ' Above the treeline is treated as "in the mountains", which the law does not define.' : '';
+      reasons.push(`${canton.name}: ${rule.summary}${note} (source: ${rule.sources.map((x) => x.url).join(', ')}, checked ${rule.checkedOn})`);
       items.push({
-        tone: rule.stance === 'banned' ? 'bad' : rule.stance === 'restricted' ? 'warn' : 'info',
+        tone: stance === 'banned' ? 'bad' : stance === 'restricted' ? 'warn' : 'info',
         title: `${canton.name} rules`,
-        text: `${rule.summary} (checked ${rule.checkedOn})`,
+        text: `${rule.summary}${note} (checked ${rule.checkedOn})`,
         sources: rule.sources.map((x) => x.url),
       });
-      if (rule.stance === 'banned') verdict = 'no';
-      else if (rule.stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
+      if (stance === 'banned') verdict = 'no';
+      else if (stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
     }
   }
   if (treelineNote && !zones.some((z) => rank[z.layer.severity] >= rank.restricted)) {
@@ -140,8 +142,8 @@ export function assess(input: {
     }
   }
   if (verdict === 'likely_ok' || verdict === 'caution') {
-    reasons.push('Cantonal and municipal rules, and private land, are not checked.');
-    items.push({ tone: 'info', title: 'Not checked', text: 'Cantonal and municipal rules, and private land, are not checked.' });
+    reasons.push('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).');
+    items.push({ tone: 'info', title: 'Not checked', text: 'Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).' });
   }
   return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality };
 }

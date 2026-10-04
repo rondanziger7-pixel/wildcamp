@@ -22,11 +22,15 @@ import urllib.parse
 import urllib.request
 
 from shapely.geometry import shape
+from shapely.ops import transform
 
 sys.path.insert(0, os.path.dirname(__file__))
 from build_be_reserves import classify_text, ocr_pdf  # noqa: E402
 
 WFS = "https://geo.so.ch/api/wfs"
+# Matches I read in context and rejected: 1.02 Aareufer Mutten only mentions an existing campsite ("Campingareal"),
+# it contains no camping prohibition.
+FALSE_POSITIVES = {"1.02"}
 UA = {"User-Agent": "wildcamp-research/0.1"}
 
 
@@ -55,6 +59,15 @@ def pdf_text(url: str, cache: str) -> str:
     return t
 
 
+def to_lv95(lon: float, lat: float, *_) -> tuple[float, float]:
+    """swisstopo's approximate WGS84 -> LV95 formulas (about 1 m). The WFS returns lon/lat whatever SRSNAME says."""
+    p = (lat * 3600 - 169028.66) / 10000
+    l = (lon * 3600 - 26782.5) / 10000
+    e = 2600072.37 + 211455.93 * l - 10938.51 * l * p - 0.36 * l * p * p - 44.54 * l**3
+    n = 1200147.07 + 308807.95 * p + 3745.25 * l * l + 76.63 * p * p - 194.56 * l * l * p + 119.79 * p**3
+    return e, n
+
+
 def ints(coords) -> list[int]:
     return [int(round(v)) for p in coords for v in p[:2]]
 
@@ -64,7 +77,7 @@ def main() -> None:
     out = sys.argv[2] if len(sys.argv) > 2 else "public/reserves-so.json.gz"
     evidence = sys.argv[3] if len(sys.argv) > 3 else "docs/sources/SO/reserves_document_scan.csv"
     os.makedirs(cache, exist_ok=True)
-    q = urllib.parse.urlencode({"SERVICE": "WFS", "VERSION": "1.1.0", "REQUEST": "GetFeature", "TYPENAME": "ch.so.arp.naturreservate.reservate", "OUTPUTFORMAT": "application/json", "SRSNAME": "EPSG:2056"})
+    q = urllib.parse.urlencode({"SERVICE": "WFS", "VERSION": "1.1.0", "REQUEST": "GetFeature", "TYPENAME": "ch.so.arp.naturreservate.reservate", "OUTPUTFORMAT": "application/json", "SRSNAME": "EPSG:2056"})  # ignored by this server: coordinates come back as lon/lat
     with urllib.request.urlopen(urllib.request.Request(f"{WFS}?{q}", headers=UA), timeout=180) as r:
         feats = json.load(r)["features"]
     binding: dict[int, list[str]] = {}
@@ -79,7 +92,9 @@ def main() -> None:
         p = f["properties"]
         t = "\n".join(texts[u] for u in binding[i])
         cls, excerpt = classify_text(t) if len(re.sub(r"\s+", "", t)) > 300 else ("notext", "")
-        geom = shape(f["geometry"])
+        if str(p["nummer"]) in FALSE_POSITIVES and cls == "banned":
+            cls, excerpt = "silent", ""
+        geom = transform(to_lv95, shape(f["geometry"]))
         polys = list(geom.geoms) if geom.geom_type == "MultiPolygon" else [geom]
         rings = []
         for poly in polys:

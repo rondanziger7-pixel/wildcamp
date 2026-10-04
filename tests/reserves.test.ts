@@ -10,6 +10,7 @@ import geFixture from './fixtures/ge-reserve-points.json';
 import glFixture from './fixtures/gl-reserve-points.json';
 import luFixture from './fixtures/lu-reserve-points.json';
 import frFixture from './fixtures/fr-reserve-points.json';
+import soFixture from './fixtures/so-reserve-points.json';
 
 const square = (x: number, y: number, s: number) => [x, y, x + s, y, x + s, y + s, x, y + s];
 const synthetic = parseReserveSet({
@@ -205,7 +206,7 @@ describe('cantons built from their own data (Geneva, Glarus)', () => {
     expect(zone.detail ?? '').not.toMatch(/Decree/);
     expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('caution');
   });
-  // Fixture points for LU/FR are interior points of the stored polygons (not re-fetched from the source).
+  // Fixture points for SO come from the source WFS; LU/FR are interior points of the stored polygons (not re-fetched from the source).
   it('Lucerne: ordinances that ban camping make the area restricted, the rest only caution', async () => {
     const set = await load('public/reserves-lu.json.gz');
     expect(set.canton).toBe('LU');
@@ -227,5 +228,18 @@ describe('cantons built from their own data (Geneva, Glarus)', () => {
     const zone = reserveZoneHits(set, p.e, p.n)[0]!;
     expect(zone.layer.note).toMatch(/not checked/);
     expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('caution');
+  });
+  it('Solothurn: reserves whose binding documents ban camping are restricted, the rest caution', async () => {
+    const set = await load('public/reserves-so.json.gz');
+    expect(set.canton).toBe('SO');
+    expect(set.reserves.length).toBe(101);
+    expect(set.reserves.filter((r) => r.level === 'restricted').length).toBe(11);
+    // 1.02 Aareufer Mutten only mentions an existing campsite and must not be a ban.
+    expect(set.reserves.find((r) => r.name.startsWith('Aareufer Mutten'))?.level).toBe('caution');
+    const hits = soFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / soFixture.length).toBeGreaterThan(0.9);
+    const p = soFixture.find((q) => set.reserves.find((r) => r.id === q.id)?.level === 'restricted')!;
+    const zone = reserveZoneHits(set, p.e, p.n).find((h) => h.layer.severity === 'restricted')!;
+    expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('no');
   });
 });

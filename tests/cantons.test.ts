@@ -141,3 +141,21 @@ describe('municipal rules', () => {
     expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: rule }).verdict).toBe('no');
   });
 });
+
+describe('Ticino mountain exception', () => {
+  const ti = findCanton('TI')!;
+  it('is restricted below the treeline but tolerated above it (Art. 2 para. 2 of the camping law)', () => {
+    expect(ti.rule?.aboveTreeline).toBe('tolerated');
+    expect(assess({ zones: [], treeline: 'above', canton: ti }).verdict).toBe('likely_ok');
+    expect(assess({ zones: [], treeline: 'below', canton: ti }).verdict).toBe('caution');
+    expect(assess({ zones: [], treeline: 'forest', canton: ti }).verdict).toBe('caution');
+  });
+  it('says that "in the mountains" is not defined', () => {
+    const a = assess({ zones: [], treeline: 'above', canton: ti });
+    expect(a.items.find((i) => i.title === 'Ticino rules')?.text).toMatch(/does not define/);
+  });
+  it('a Ticino reserve ban still wins above the treeline', () => {
+    const zone = { layer: { id: 'x', label: 'Ticino protected area', severity: 'restricted' as const, note: 'ban' } };
+    expect(assess({ zones: [zone], treeline: 'above', canton: ti }).verdict).toBe('no');
+  });
+});

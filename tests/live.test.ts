@@ -21,6 +21,10 @@ describe.skipIf(!live)('live geo.admin.ch', () => {
     expect(birds.map((z) => z.layer.id)).toContain('ch.bafu.bundesinventare-vogelreservate');
     expect(assess({ zones: birds, treeline: 'above' }).verdict).not.toBe('likely_ok');
   });
+  it('shows the army shooting zone and BLN at the Rhone glacier forefield', async () => {
+    const zones = await fetchZoneHits(46.5995, 8.3995);
+    expect(zones.map((z) => z.layer.id)).toEqual(expect.arrayContaining(['ch.vbs.schiessanzeigen', 'ch.bafu.bundesinventare-bln']));
+  });
   it('finds the canton', async () => {
     expect((await fetchCanton(46.02, 7.75))?.code).toBe('VS'); // Zermatt
     expect((await fetchCanton(46.8, 9.84))?.code).toBe('GR'); // Davos

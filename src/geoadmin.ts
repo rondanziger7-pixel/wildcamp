@@ -1,5 +1,5 @@
 import { wgs84ToLv95 } from './coords';
-import { ZONE_LAYERS } from './zones';
+import { ZONE_LAYERS, type ZoneLayer } from './zones';
 import type { ZoneHit } from './assess';
 import { findCanton, type Canton } from './cantons';
 
@@ -40,22 +40,83 @@ interface IdentifyResult {
 
 const str = (v: unknown) => (typeof v === 'string' && v !== '' ? v : undefined);
 
+/** True if `today` falls in a "dd.mm. - dd.mm." season (may wrap the new year). Unparseable seasons count as in force. */
+export function inSeason(schutzzeit: string | undefined, today: Date): boolean {
+  const m = schutzzeit?.match(/(\d{1,2})\.(\d{1,2})\.?\s*[-–]\s*(\d{1,2})\.(\d{1,2})\.?/);
+  if (!m) return true;
+  const key = (mo: number, d: number) => mo * 100 + d;
+  const from = key(+m[2]!, +m[1]!);
+  const to = key(+m[4]!, +m[3]!);
+  const now = key(today.getMonth() + 1, today.getDate());
+  return from <= to ? now >= from && now <= to : now >= from || now <= to;
+}
+
+const fmtDate = (d: Date) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+
+/**
+ * A wildlife quiet zone's own data decides its severity. BAFU: in statutory zones only the marked paths may be used.
+ * Entry bans and path-only rules count as restricted while in force; recommended zones, "other" rules and winter-sport
+ * rules only as caution; a season that is not running today also lowers it to caution.
+ */
+function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { layer: ZoneLayer; detail: string } {
+  const rule = str(a.best_de);
+  const season = str(a.schutzzeit);
+  const statutory = str(a.schutzs_de) === 'rechtsverbindlich';
+  const entryRule = !!rule && /Zutritt|Betretungsverbot|Wegegebot|Betreten oder befahren nur/i.test(rule);
+  const winterSportsOnly = !!rule && /Wintersport/i.test(rule) && !/Zutritt|Wegegebot/i.test(rule);
+  const running = inSeason(season, today);
+  const bits = [rule, season && `(${season})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
+  if (statutory && entryRule && running) return { layer, detail: bits };
+  let why: string;
+  if (!statutory) why = 'This zone is only recommended, not binding.';
+  else if (winterSportsOnly) why = 'The rule covers winter sports only.';
+  else if (!entryRule) why = 'The zone\'s rule is not a plain entry or path rule; read it.';
+  else why = `The restriction applies ${season} and is not running today (${fmtDate(today)}), but check the zone's rule.`;
+  return {
+    layer: { ...layer, severity: 'caution', note: `Wildlife quiet zone. ${why}` },
+    detail: bits,
+  };
+}
+
 /** Turn an identify response into zone hits, dropping features a layer's filter rejects. */
-export function parseZoneHits(body: { results?: IdentifyResult[] }): ZoneHit[] {
+export function parseZoneHits(body: { results?: IdentifyResult[] }, today: Date = new Date()): ZoneHit[] {
   const hits: ZoneHit[] = [];
   for (const r of body.results ?? []) {
     const a = r.attributes ?? {};
     const layer = ZONE_LAYERS.find((l) => l.id === r.layerBodId && (l.accept?.(a) ?? true));
     if (!layer) continue;
-    let detail: string | undefined;
     if (r.layerBodId === 'ch.bafu.wrz-wildruhezonen_portal') {
-      detail = [str(a.best_de), str(a.schutzzeit) && `(${str(a.schutzzeit)})`, str(a.kanton) && `[${str(a.kanton)}]`]
-        .filter(Boolean)
-        .join(' ');
+      const h = wrzHit(a, layer, today);
+      hits.push({ layer: h.layer, name: str(a.label) ?? str(a.name), detail: h.detail });
+      continue;
+    }
+    let detail: string | undefined;
+    if (r.layerBodId.startsWith('ch.bafu.bundesinventare-auen')) detail = str(a.auen_type_de) && `Type: ${str(a.auen_type_de)}.`;
+    if (r.layerBodId === 'ch.vbs.schiessanzeigen') {
+      const sh = shootingDetail(a, today);
+      hits.push({
+        layer: sh.active ? { ...layer, severity: 'caution', note: 'Shooting is scheduled here today. Do not stay in the danger area; read the firing notice.' } : layer,
+        name: str(a.label) ?? str(a.name),
+        detail: sh.detail,
+      });
+      continue;
     }
     hits.push({ layer, name: str(a.label) ?? str(a.name), detail });
   }
   return hits;
+}
+
+/** Today's firing times from an army shooting-notice feature, with the notice link. */
+function shootingDetail(a: Record<string, unknown>, today: Date): { detail: string; active: boolean } {
+  const dates = Array.isArray(a.belegungsdatum) ? (a.belegungsdatum as string[]) : [];
+  const i = dates.indexOf(`${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`);
+  const off = Array.isArray(a.kein_schiessen) ? (a.kein_schiessen as boolean[])[i] : undefined;
+  const from = Array.isArray(a.zeit_von) ? (a.zeit_von as string[])[i] : undefined;
+  const to = Array.isArray(a.zeit_bis) ? (a.zeit_bis as string[])[i] : undefined;
+  const link = str(a.url_en) ?? str(a.url_de);
+  const fmt = (t?: string) => (t && t.length === 4 ? `${t.slice(0, 2)}:${t.slice(2)}` : t);
+  const state = i < 0 ? 'No firing is listed for today.' : off ? 'No shooting is listed for today.' : `Shooting is listed for today${from ? ` (${fmt(from)} to ${fmt(to)})` : ''}.`;
+  return { detail: `${state}${link ? ` Notice: ${link}` : ''}`, active: i >= 0 && off === false };
 }
 
 /** Canton at a point from swissBOUNDARIES3D, or undefined if the point is outside every canton. */

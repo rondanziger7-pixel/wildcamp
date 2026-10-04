@@ -12,6 +12,8 @@ export interface Source {
  */
 export interface CantonRule {
   stance: CantonStance;
+  /** Stance that applies instead when the spot is above the treeline, for rules with a mountain exception. */
+  aboveTreeline?: CantonStance;
   summary: string;
   sources: Source[];
   /** ISO date (YYYY-MM-DD) the source was last read. */
@@ -110,6 +112,7 @@ export const CANTONS: Canton[] = [
     name: 'Ticino',
     rule: {
       stance: 'restricted',
+      aboveTreeline: 'tolerated',
       summary:
         'Camping (any temporary stop and overnight stay outside your home using tents, caravans or motorhomes) is only possible in authorised campsite areas (Art. 2 para. 1, Art. 3). ' +
         'The exception is tenting for a bivouac in the mountains (Art. 2 para. 2); the law does not define "in the mountains". ' +
