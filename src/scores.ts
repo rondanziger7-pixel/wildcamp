@@ -39,3 +39,14 @@ export function sleepScore(c: Comfort | undefined): Score {
   if (c.weatherStop) value = Math.min(value, 25);
   return { value, tone: c.rating === 'great' || c.rating === 'good' ? 'good' : c.rating === 'fair' ? 'warn' : 'bad' };
 }
+
+/**
+ * The forecast's effect on the night as a number: 50 means neutral, 12.5 points per factor point
+ * (clear and calm about 63, a soaking storm 0); a storm caps it at 10.
+ */
+export function weatherScore(c: Comfort | undefined, forecastKnown: boolean): Score {
+  if (!c || !forecastKnown) return { tone: 'none' };
+  let value = clamp(50 + 12.5 * c.weatherScore);
+  if (c.weatherStop) value = Math.min(value, 10);
+  return { value, tone: c.weatherStop || c.weatherScore <= -3 ? 'bad' : c.weatherScore < 0 ? 'warn' : 'good' };
+}

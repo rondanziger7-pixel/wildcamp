@@ -30,7 +30,9 @@ describe('ground cover', () => {
     const score = (k: keyof typeof fx) => comfortFor({ ground: parseGround(fx[k], 20) }).score;
     expect(score('grass')).toBeGreaterThan(score('rock'));
     expect(score('rock')).toBeGreaterThan(score('glacier'));
-    expect(score('loose')).toBe(score('rock'));
+    expect(score('loose')).toBeGreaterThan(score('rock'));
+    // the spread between grass and rock is a full 5 factor points, 31 on the 0 to 100 sleep score
+    expect(score('grass') - score('rock')).toBe(5);
     const grass = comfortFor({ ground: parseGround(fx.grass, 20) });
     expect(grass.factors.map((x) => x.title)).toContain('Grassy ground');
     expect(grass.missing).not.toContain('ground cover (rock or grass)');

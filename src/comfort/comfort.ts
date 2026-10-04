@@ -22,7 +22,12 @@ export interface Comfort {
   score: number;
   /** One line naming the strongest points for and against. */
   summary: string;
+  /** Every factor, spot and weather together. */
   factors: Item[];
+  /** The part of `factors` that comes from the forecast for the chosen night. */
+  weatherFactors: Item[];
+  /** The part of `factors` that belongs to the spot itself. */
+  spotFactors: Item[];
   /** Which checks could not be made, shown so a missing check is not read as a good one. */
   missing: string[];
 }
@@ -225,15 +230,15 @@ export function comfortFor(input: ComfortInput): Comfort {
   if (g) {
     const near = g.meters > 50 ? ` The class comes from the survey point about ${m(g.meters)} away, so the ground right at the spot may differ.` : '';
     const src = ` Land-cover statistics (${g.year}), read from aerial photos on a 100 m grid: a lawn or boulder field smaller than that is not seen.${near}`;
-    if (g.cover === 'grass') f.push({ tone: 'ok', score: 1, title: 'Grassy ground', text: `Grass and herb vegetation: soft to sleep on and pegs hold. Mornings are damp with dew, and on alps cows may graze or walk through.${src}` });
+    if (g.cover === 'grass') f.push({ tone: 'ok', score: 2, title: 'Grassy ground', text: `Grass and herb vegetation: soft to sleep on and pegs hold. Mornings are damp with dew, and on alps cows may graze or walk through.${src}` });
     else if (g.cover === 'shrub') f.push({ tone: 'info', score: 0, title: 'Shrubs and brush', text: `${g.label}: uneven ground with bushes and tussocks. Look for a clear grassy patch.${src}` });
-    else if (g.cover === 'loose') f.push({ tone: 'warn', score: -1, title: 'Stony ground', text: `${g.label}: loose stones, scree or gravel. Hard to sleep on, pegs do not hold (weigh them down with rocks) and stones roll when it is steep. Clear a patch and use a good mat.${src}` });
-    else if (g.cover === 'rock') f.push({ tone: 'warn', score: -1, title: 'Rocky ground', text: `${g.label}: bare rock. Pegs will not go in and it is hard and cold to sleep on; you need a freestanding tent and a thick mat, or a grassy patch nearby.${src}` });
-    else if (g.cover === 'glacier') f.push({ tone: 'bad', score: -2, title: 'On snow or ice', text: `${g.label}: ice and firn. Cold from below, crevasses are possible and the surface moves. Not a place to pitch a tent.${src}` });
-    else if (g.cover === 'wet') f.push({ tone: 'warn', score: -1, title: 'Wet ground', text: `${g.label}: wetland, soft and damp, and easily damaged. Camp on drier ground.${src}` });
+    else if (g.cover === 'loose') f.push({ tone: 'warn', score: -2, title: 'Stony ground', text: `${g.label}: loose stones, scree or gravel. Hard to sleep on, pegs do not hold (weigh them down with rocks) and stones roll when it is steep. Clear a patch and use a good mat.${src}` });
+    else if (g.cover === 'rock') f.push({ tone: 'bad', score: -3, title: 'Rocky ground', text: `${g.label}: bare rock. Pegs will not go in and it is hard and cold to sleep on; you need a freestanding tent and a thick mat, or a grassy patch nearby.${src}` });
+    else if (g.cover === 'glacier') f.push({ tone: 'bad', score: -4, title: 'On snow or ice', text: `${g.label}: ice and firn. Cold from below, crevasses are possible and the surface moves. Not a place to pitch a tent.${src}` });
+    else if (g.cover === 'wet') f.push({ tone: 'warn', score: -2, title: 'Wet ground', text: `${g.label}: wetland, soft and damp, and easily damaged. Camp on drier ground.${src}` });
     else if (g.cover === 'forest') f.push({ tone: 'info', score: 0, title: 'Forest ground', text: `${g.label}: needles and roots, usually soft but with roots and dead branches to check for.${src}` });
     else if (g.cover === 'built') f.push({ tone: 'info', score: 0, title: 'Built-up or paved ground', text: `${g.label}: settled or paved land, not a pitch.${src}` });
-    else if (g.cover === 'water') f.push({ tone: 'warn', score: -1, title: 'Open water', text: `${g.label}: the nearest survey point is water.${src}` });
+    else if (g.cover === 'water') f.push({ tone: 'warn', score: -2, title: 'Open water', text: `${g.label}: the nearest survey point is water.${src}` });
   } else missing.push('ground cover (rock or grass)');
 
   // sun
@@ -258,6 +263,8 @@ export function comfortFor(input: ComfortInput): Comfort {
     score,
     summary,
     factors: f.map(({ score: _s, wx: _w, ...item }) => item),
+    weatherFactors: f.filter((x) => x.wx).map(({ score: _s, wx: _w, ...item }) => item),
+    spotFactors: f.filter((x) => !x.wx).map(({ score: _s, wx: _w, ...item }) => item),
     missing,
   };
 }

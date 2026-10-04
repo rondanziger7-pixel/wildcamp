@@ -3,7 +3,7 @@ import type { Comfort } from './comfort/comfort';
 import { compassName, describeCode, type Night } from './comfort/weather';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
-import { legalityScore, sleepScore, type Score } from './scores';
+import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
 const VISIBLE = 4;
@@ -113,12 +113,14 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
 
   const legal = scoreCard('legal', 'Legality');
   const sleep = scoreCard('sleep', 'Sleep');
+  const weather = scoreCard('weather', 'Weather');
   const L = legalityScore(a);
   const b = BANNER[a.verdict];
   legal.set(L, `${b.icon} ${b.label}`);
   sleep.set({ tone: 'none' }, 'Checking…');
+  weather.set({ tone: 'none' }, 'Checking…');
   const scores = el('div', 'scores');
-  scores.append(legal.b, sleep.b);
+  scores.append(legal.b, sleep.b, weather.b);
 
   const waterChip = chip('water');
   const shelterChip = chip('shelter');
@@ -136,12 +138,16 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   sleepPanel.hidden = true;
   const weatherPanel = el('section', 'panel weather');
   weatherPanel.hidden = true;
+  const weatherHost = el('div');
+  const weatherFactors = el('div');
+  weatherPanel.append(weatherHost, weatherFactors);
 
   const opener: [HTMLElement, HTMLElement][] = [
     [legal.b, legalPanel],
     [sleep.b, sleepPanel],
     [waterChip, sleepPanel],
     [shelterChip, sleepPanel],
+    [weather.b, weatherPanel],
     [weatherChip, weatherPanel],
   ];
   const panels = [legalPanel, sleepPanel, weatherPanel];
@@ -181,7 +187,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   root.replaceChildren(where, scores, chips, legalPanel, sleepPanel, weatherPanel, share);
 
   return {
-    weatherHost: weatherPanel,
+    weatherHost,
     setSleepLoading() {
       sleep.set({ tone: 'none' }, 'Checking…');
       sleepPanel.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
@@ -189,6 +195,9 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     setSleep(c, nightLabel, loading = []) {
       const s = sleepScore(c);
       sleep.set(s, loading.length ? `${RATING_SHORT[c.rating]} …` : RATING_SHORT[c.rating]);
+      const w = weatherScore(c, !c.missing.includes('overnight forecast'));
+      if (w.value !== undefined) weather.set(w, c.weatherStop ? 'Dangerous' : c.weatherScore >= 1 ? 'Good' : c.weatherScore >= 0 ? 'Fine' : c.weatherScore > -3 ? 'Poor' : 'Bad');
+      weatherFactors.replaceChildren(...(c.weatherFactors.length ? [el('h3', 'wx-factors-title', `What the forecast means for ${nightLabel}`), ...checklist(c.weatherFactors, 'weather details', focus)] : []));
       const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
       const head = el('div', `comfort-head ${c.rating}`);
       const t = el('div');
@@ -197,7 +206,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const parts: Node[] = [];
       if (loading.length) parts.push(el('p', 'panel-lead', `Still checking: ${loading.join(', ')}. The score updates when they arrive.`));
       if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', 'Camping is not allowed here, so this only shows what the spot would be like.'));
-      parts.push(head, ...checklist(c.factors, 'comfort details', focus));
+      parts.push(head, ...checklist(c.spotFactors, 'comfort details', focus));
       if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
       parts.push(el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees and snow are not modelled, ground cover is read from 100 m survey points, and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
       sleepPanel.replaceChildren(...parts);
@@ -253,6 +262,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       weatherChip.className = 'chip weather';
       if (failed || !night) {
         weatherChip.textContent = '🌦️ Weather: unavailable';
+        weather.set({ tone: 'none' }, 'Unavailable');
+        weatherFactors.replaceChildren();
         return;
       }
       const sky = night.worstCode !== undefined ? describeCode(night.worstCode).emoji : '🌙';

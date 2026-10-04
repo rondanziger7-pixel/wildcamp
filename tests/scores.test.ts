@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { assess } from '../src/assess';
 import { comfortFor } from '../src/comfort/comfort';
-import { legalityScore, sleepScore } from '../src/scores';
+import { legalityScore, sleepScore, weatherScore } from '../src/scores';
 import { ZONE_LAYERS } from '../src/zones';
 
 const layer = (severity: 'prohibited' | 'restricted' | 'caution' | 'info') => ({ id: 'x', label: 'Zone', severity, note: 'n' });
@@ -71,5 +71,20 @@ describe('sleep score', () => {
     expect(sleepScore({ ...c, rating: 'great' }).tone).toBe('good');
     expect(sleepScore({ ...c, rating: 'fair' }).tone).toBe('warn');
     expect(sleepScore({ ...c, rating: 'poor' }).tone).toBe('bad');
+  });
+});
+
+describe('weather score', () => {
+  const c = comfortFor({});
+  it('has no score without a forecast', () => {
+    expect(weatherScore(undefined, true)).toEqual({ tone: 'none' });
+    expect(weatherScore(c, false)).toEqual({ tone: 'none' });
+  });
+  it('is 50 when neutral, 12.5 per point, and a storm caps it at 10', () => {
+    expect(weatherScore(c, true)).toEqual({ value: 50, tone: 'good' });
+    expect(weatherScore({ ...c, weatherScore: 1 }, true).value).toBe(63);
+    expect(weatherScore({ ...c, weatherScore: -2 }, true)).toEqual({ value: 25, tone: 'warn' });
+    expect(weatherScore({ ...c, weatherScore: -3 }, true).tone).toBe('bad');
+    expect(weatherScore({ ...c, weatherScore: 3, weatherStop: true }, true)).toEqual({ value: 10, tone: 'bad' });
   });
 });

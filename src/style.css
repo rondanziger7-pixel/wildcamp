@@ -34,8 +34,8 @@ button { font: inherit; cursor: pointer; }
 #sheet { position: absolute; z-index: 1000; left: 0; right: 0; bottom: 0; background: var(--bg); border-radius: 18px 18px 0 0; box-shadow: 0 -2px 16px #0004; padding: 8px 16px calc(12px + env(safe-area-inset-bottom)); max-height: 62vh; overflow-y: auto; overscroll-behavior: contain; }
 @media (min-width: 720px) { #sheet { left: 12px; right: auto; bottom: 12px; width: 400px; border-radius: 16px; max-height: calc(100vh - 24px); } }
 #sheet.closed { display: none; }
-#sheet-close { position: sticky; top: 0; float: right; z-index: 1; width: 32px; height: 32px; margin: -4px -8px 0 0; border: 0; border-radius: 50%; background: var(--line); color: var(--fg); font-size: 1rem; line-height: 1; cursor: pointer; }
-#grab { width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: 0 auto 8px; }
+#sheet-close { position: absolute; top: 4px; right: 8px; z-index: 5; width: 28px; height: 28px; border: 0; border-radius: 50%; background: var(--line); color: var(--fg); font-size: .9rem; line-height: 1; cursor: pointer; }
+#grab { width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: 0 auto 22px; }
 #intro h1 { font-size: 1.15rem; margin: 4px 0 6px; }
 #intro p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.4; }
 #sheet[data-state="result"] #intro, #sheet[data-state="loading"] #intro { display: none; }
@@ -77,7 +77,7 @@ button { font: inherit; cursor: pointer; }
 .comfort-head.poor { background: var(--bad-bg); color: var(--bad); }
 .check.warn { border-left-color: #e08e0b; }
 
-.weather { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.panel.weather { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
 .wx-title { margin: 0 0 8px; font-size: 1.05rem; }
 .wx-picker { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
 .wx-picker button { flex: none; border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 999px; padding: 6px 14px; font-size: .85rem; }
@@ -111,7 +111,7 @@ button { font: inherit; cursor: pointer; }
 .comfort-split { font-weight: 600; }
 
 /* score cards, chips and detail panels */
-.scores { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+.scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 6px; }
 .score-card { text-align: left; display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 14px; padding: 10px 12px; }
 .score-card[aria-expanded="true"] { outline: 2px solid var(--green); outline-offset: -1px; }
 .score-card .sc-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
@@ -157,3 +157,6 @@ button { font: inherit; cursor: pointer; }
 .chip.shelter { }
 .chip .tag.go { background: transparent; border: 1px solid currentColor; color: var(--muted); }
 .check .linkish { margin-top: 4px; }
+
+.wx-factors-title { font-size: .95rem; margin: 14px 0 4px; }
+@media (max-width: 719px) { .score-card { padding: 8px 9px; } .score-card .sc-value { font-size: 1.5rem; } .score-card .sc-label { font-size: .8rem; } }
