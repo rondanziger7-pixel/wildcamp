@@ -258,7 +258,7 @@ describe('comfort rating', () => {
   });
   it('lists the checks that could not be made instead of treating them as good', () => {
     const c = comfortFor({});
-    expect(c.missing).toEqual(['terrain (slope, wind shelter, hazards)', 'overnight forecast', 'crowds (trails, huts, transport)', 'water', 'huts nearby']);
+    expect(c.missing).toEqual(['terrain (slope, wind shelter, hazards)', 'overnight forecast', 'crowds (trails, huts, transport)', 'water', 'huts nearby', 'ground cover (rock or grass)']);
     expect(c.factors).toEqual([]);
   });
   it('a hollow warns about cold air, and morning sun is reported', () => {

@@ -5,6 +5,7 @@ import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
 import type { ShelterResult } from './shelters';
+import type { GroundInfo } from './ground';
 
 export type ComfortRating = 'great' | 'good' | 'fair' | 'poor';
 
@@ -32,6 +33,8 @@ export interface ComfortInput {
   surroundings?: Partial<Surroundings>;
   /** Nearest water, glacier and treatment-plant flags. */
   water?: WaterInfo;
+  /** Ground cover (grass, rock, scree …) from the land-cover statistics. */
+  ground?: GroundInfo;
   /** Huts, bivouac boxes, inns and alps nearby. */
   shelters?: ShelterResult;
   sun?: SunTimes;
@@ -216,6 +219,22 @@ export function comfortFor(input: ComfortInput): Comfort {
     if (inn && (!hut || inn.meters < hut.meters)) f.push({ tone: 'info', score: 0, at: { ...inn.at, label: inn.name }, title: 'Mountain inn nearby', text: `${inn.name} is about ${km(inn.meters)} away. Inns and restaurants are usually open only in season.` });
     if (alp) f.push({ tone: 'info', score: 0, at: { ...alp.at, label: alp.name }, title: 'Alp nearby', text: `${alp.name} lies about ${km(alp.meters)} away. Alp buildings are usually private and locked outside the summer season, so they are not a dependable emergency shelter, but in season someone there can help. Livestock may be around.` });
   } else missing.push('huts nearby');
+
+  // ground cover: what the tent sits on
+  const g = input.ground;
+  if (g) {
+    const near = g.meters > 50 ? ` The class comes from the survey point about ${m(g.meters)} away, so the ground right at the spot may differ.` : '';
+    const src = ` Land-cover statistics (${g.year}), read from aerial photos on a 100 m grid: a lawn or boulder field smaller than that is not seen.${near}`;
+    if (g.cover === 'grass') f.push({ tone: 'ok', score: 1, title: 'Grassy ground', text: `Grass and herb vegetation: soft to sleep on and pegs hold. Mornings are damp with dew, and on alps cows may graze or walk through.${src}` });
+    else if (g.cover === 'shrub') f.push({ tone: 'info', score: 0, title: 'Shrubs and brush', text: `${g.label}: uneven ground with bushes and tussocks. Look for a clear grassy patch.${src}` });
+    else if (g.cover === 'loose') f.push({ tone: 'warn', score: -1, title: 'Stony ground', text: `${g.label}: loose stones, scree or gravel. Hard to sleep on, pegs do not hold (weigh them down with rocks) and stones roll when it is steep. Clear a patch and use a good mat.${src}` });
+    else if (g.cover === 'rock') f.push({ tone: 'warn', score: -1, title: 'Rocky ground', text: `${g.label}: bare rock. Pegs will not go in and it is hard and cold to sleep on; you need a freestanding tent and a thick mat, or a grassy patch nearby.${src}` });
+    else if (g.cover === 'glacier') f.push({ tone: 'bad', score: -2, title: 'On snow or ice', text: `${g.label}: ice and firn. Cold from below, crevasses are possible and the surface moves. Not a place to pitch a tent.${src}` });
+    else if (g.cover === 'wet') f.push({ tone: 'warn', score: -1, title: 'Wet ground', text: `${g.label}: wetland, soft and damp, and easily damaged. Camp on drier ground.${src}` });
+    else if (g.cover === 'forest') f.push({ tone: 'info', score: 0, title: 'Forest ground', text: `${g.label}: needles and roots, usually soft but with roots and dead branches to check for.${src}` });
+    else if (g.cover === 'built') f.push({ tone: 'info', score: 0, title: 'Built-up or paved ground', text: `${g.label}: settled or paved land, not a pitch.${src}` });
+    else if (g.cover === 'water') f.push({ tone: 'warn', score: -1, title: 'Open water', text: `${g.label}: the nearest survey point is water.${src}` });
+  } else missing.push('ground cover (rock or grass)');
 
   // sun
   if (sun?.sunrise && sun.sunOnSpot) {

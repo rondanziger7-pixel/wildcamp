@@ -1,0 +1,534 @@
+{
+ "grass": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "61001700-1990",
+    "id": "61001700-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1981,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "61001700-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "61001700-2004",
+    "id": "61001700-2004",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2004,
+     "fj": 2004,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "61001700-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "61001700-2013",
+    "id": "61001700-2013",
+    "attributes": {
+     "survey": "2013/18",
+     "year": 2013,
+     "fj": 2013,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "61001700-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "61001700-2023",
+    "id": "61001700-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2013,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "61001700-2023"
+    }
+   }
+  ]
+ },
+ "rock": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62271507-1990",
+    "id": "62271507-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1980,
+     "lc09r_27": 51,
+     "desc_lc09r_27_de": "Anstehender Fels",
+     "desc_lc09r_27_fr": "Rochers saillants",
+     "desc_lc09r_27_it": "Rocce in posto",
+     "desc_lc09r_27_rm": "Anstehender Fels",
+     "desc_lc09r_27_en": "Solid rock",
+     "label": "62271507-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62271507-2004",
+    "id": "62271507-2004",
+    "attributes": {
+     "survey": "1992/97",
+     "year": 2004,
+     "fj": 1993,
+     "lc09r_27": 51,
+     "desc_lc09r_27_de": "Anstehender Fels",
+     "desc_lc09r_27_fr": "Rochers saillants",
+     "desc_lc09r_27_it": "Rocce in posto",
+     "desc_lc09r_27_rm": "Anstehender Fels",
+     "desc_lc09r_27_en": "Solid rock",
+     "label": "62271507-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62271507-2013",
+    "id": "62271507-2013",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2013,
+     "fj": 2005,
+     "lc09r_27": 51,
+     "desc_lc09r_27_de": "Anstehender Fels",
+     "desc_lc09r_27_fr": "Rochers saillants",
+     "desc_lc09r_27_it": "Rocce in posto",
+     "desc_lc09r_27_rm": "Anstehender Fels",
+     "desc_lc09r_27_en": "Solid rock",
+     "label": "62271507-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62271507-2023",
+    "id": "62271507-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2014,
+     "lc09r_27": 51,
+     "desc_lc09r_27_de": "Anstehender Fels",
+     "desc_lc09r_27_fr": "Rochers saillants",
+     "desc_lc09r_27_it": "Rocce in posto",
+     "desc_lc09r_27_rm": "Anstehender Fels",
+     "desc_lc09r_27_en": "Solid rock",
+     "label": "62271507-2023"
+    }
+   }
+  ]
+ },
+ "loose": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62301485-1990",
+    "id": "62301485-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1980,
+     "lc09r_27": 52,
+     "desc_lc09r_27_de": "Lockergestein",
+     "desc_lc09r_27_fr": "Pierres meubles",
+     "desc_lc09r_27_it": "Rocce incoerenti",
+     "desc_lc09r_27_rm": "Lockergestein",
+     "desc_lc09r_27_en": "Granular soil",
+     "label": "62301485-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62301485-2004",
+    "id": "62301485-2004",
+    "attributes": {
+     "survey": "1992/97",
+     "year": 2004,
+     "fj": 1994,
+     "lc09r_27": 52,
+     "desc_lc09r_27_de": "Lockergestein",
+     "desc_lc09r_27_fr": "Pierres meubles",
+     "desc_lc09r_27_it": "Rocce incoerenti",
+     "desc_lc09r_27_rm": "Lockergestein",
+     "desc_lc09r_27_en": "Granular soil",
+     "label": "62301485-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62301485-2013",
+    "id": "62301485-2013",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2013,
+     "fj": 2005,
+     "lc09r_27": 52,
+     "desc_lc09r_27_de": "Lockergestein",
+     "desc_lc09r_27_fr": "Pierres meubles",
+     "desc_lc09r_27_it": "Rocce incoerenti",
+     "desc_lc09r_27_rm": "Lockergestein",
+     "desc_lc09r_27_en": "Granular soil",
+     "label": "62301485-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "62301485-2023",
+    "id": "62301485-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2014,
+     "lc09r_27": 52,
+     "desc_lc09r_27_de": "Lockergestein",
+     "desc_lc09r_27_fr": "Pierres meubles",
+     "desc_lc09r_27_it": "Rocce incoerenti",
+     "desc_lc09r_27_rm": "Lockergestein",
+     "desc_lc09r_27_en": "Granular soil",
+     "label": "62301485-2023"
+    }
+   }
+  ]
+ },
+ "glacier": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "65001480-1990",
+    "id": "65001480-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1980,
+     "lc09r_27": 62,
+     "desc_lc09r_27_de": "Gletscher, Firn",
+     "desc_lc09r_27_fr": "Glaciers, n\u00e9v\u00e9s",
+     "desc_lc09r_27_it": "Ghiacciai, nevai",
+     "desc_lc09r_27_rm": "Gletscher, Firn",
+     "desc_lc09r_27_en": "Glacier, perpetual snow",
+     "label": "65001480-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "65001480-2004",
+    "id": "65001480-2004",
+    "attributes": {
+     "survey": "1992/97",
+     "year": 2004,
+     "fj": 1994,
+     "lc09r_27": 62,
+     "desc_lc09r_27_de": "Gletscher, Firn",
+     "desc_lc09r_27_fr": "Glaciers, n\u00e9v\u00e9s",
+     "desc_lc09r_27_it": "Ghiacciai, nevai",
+     "desc_lc09r_27_rm": "Gletscher, Firn",
+     "desc_lc09r_27_en": "Glacier, perpetual snow",
+     "label": "65001480-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "65001480-2013",
+    "id": "65001480-2013",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2013,
+     "fj": 2005,
+     "lc09r_27": 62,
+     "desc_lc09r_27_de": "Gletscher, Firn",
+     "desc_lc09r_27_fr": "Glaciers, n\u00e9v\u00e9s",
+     "desc_lc09r_27_it": "Ghiacciai, nevai",
+     "desc_lc09r_27_rm": "Gletscher, Firn",
+     "desc_lc09r_27_en": "Glacier, perpetual snow",
+     "label": "65001480-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "65001480-2023",
+    "id": "65001480-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2014,
+     "lc09r_27": 62,
+     "desc_lc09r_27_de": "Gletscher, Firn",
+     "desc_lc09r_27_fr": "Glaciers, n\u00e9v\u00e9s",
+     "desc_lc09r_27_it": "Ghiacciai, nevai",
+     "desc_lc09r_27_rm": "Gletscher, Firn",
+     "desc_lc09r_27_en": "Glacier, perpetual snow",
+     "label": "65001480-2023"
+    }
+   }
+  ]
+ },
+ "brush": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "68131615-1990",
+    "id": "68131615-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1980,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "68131615-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "68131615-2004",
+    "id": "68131615-2004",
+    "attributes": {
+     "survey": "1992/97",
+     "year": 2004,
+     "fj": 1993,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "68131615-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "68131615-2013",
+    "id": "68131615-2013",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2013,
+     "fj": 2007,
+     "lc09r_27": 21,
+     "desc_lc09r_27_de": "Gras-, Krautvegetation",
+     "desc_lc09r_27_fr": "V\u00e9g\u00e9tation herbac\u00e9e",
+     "desc_lc09r_27_it": "Vegetazione erbacea",
+     "desc_lc09r_27_rm": "Gras-, Krautvegetation",
+     "desc_lc09r_27_en": "Grass and herb vegetation",
+     "label": "68131615-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "68131615-2023",
+    "id": "68131615-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2016,
+     "lc09r_27": 32,
+     "desc_lc09r_27_de": "Verbuschte Fl\u00e4chen",
+     "desc_lc09r_27_fr": "Surfaces embroussaill\u00e9es",
+     "desc_lc09r_27_it": "Superfici cespugliose",
+     "desc_lc09r_27_rm": "Verbuschte Fl\u00e4chen",
+     "desc_lc09r_27_en": "Brush meadows",
+     "label": "68131615-2023"
+    }
+   }
+  ]
+ },
+ "shrub": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "79261585-1990",
+    "id": "79261585-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1985,
+     "lc09r_27": 31,
+     "desc_lc09r_27_de": "Geb\u00fcsch",
+     "desc_lc09r_27_fr": "Buissons",
+     "desc_lc09r_27_it": "Cespugli",
+     "desc_lc09r_27_rm": "Geb\u00fcsch",
+     "desc_lc09r_27_en": "Shrubs",
+     "label": "79261585-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "79261585-2004",
+    "id": "79261585-2004",
+    "attributes": {
+     "survey": "1992/97",
+     "year": 2004,
+     "fj": 1997,
+     "lc09r_27": 31,
+     "desc_lc09r_27_de": "Geb\u00fcsch",
+     "desc_lc09r_27_fr": "Buissons",
+     "desc_lc09r_27_it": "Cespugli",
+     "desc_lc09r_27_rm": "Geb\u00fcsch",
+     "desc_lc09r_27_en": "Shrubs",
+     "label": "79261585-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "79261585-2013",
+    "id": "79261585-2013",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2013,
+     "fj": 2009,
+     "lc09r_27": 31,
+     "desc_lc09r_27_de": "Geb\u00fcsch",
+     "desc_lc09r_27_fr": "Buissons",
+     "desc_lc09r_27_it": "Cespugli",
+     "desc_lc09r_27_rm": "Geb\u00fcsch",
+     "desc_lc09r_27_en": "Shrubs",
+     "label": "79261585-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "79261585-2023",
+    "id": "79261585-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2019,
+     "lc09r_27": 31,
+     "desc_lc09r_27_de": "Geb\u00fcsch",
+     "desc_lc09r_27_fr": "Buissons",
+     "desc_lc09r_27_it": "Cespugli",
+     "desc_lc09r_27_rm": "Geb\u00fcsch",
+     "desc_lc09r_27_en": "Shrubs",
+     "label": "79261585-2023"
+    }
+   }
+  ]
+ },
+ "building": {
+  "results": [
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "60002000-1990",
+    "id": "60002000-1990",
+    "attributes": {
+     "survey": "1979/85",
+     "year": 1990,
+     "fj": 1981,
+     "lc09r_27": 12,
+     "desc_lc09r_27_de": "Geb\u00e4ude",
+     "desc_lc09r_27_fr": "B\u00e2timents",
+     "desc_lc09r_27_it": "Edifici",
+     "desc_lc09r_27_rm": "Geb\u00e4ude",
+     "desc_lc09r_27_en": "Buildings",
+     "label": "60002000-1990"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "60002000-2004",
+    "id": "60002000-2004",
+    "attributes": {
+     "survey": "2004/09",
+     "year": 2004,
+     "fj": 2004,
+     "lc09r_27": 11,
+     "desc_lc09r_27_de": "Befestigte Fl\u00e4chen",
+     "desc_lc09r_27_fr": "Surfaces compact\u00e9es",
+     "desc_lc09r_27_it": "Superficie a rivestimento duro",
+     "desc_lc09r_27_rm": "Befestigte Fl\u00e4chen",
+     "desc_lc09r_27_en": "Consolidated surfaces",
+     "label": "60002000-2004"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "60002000-2013",
+    "id": "60002000-2013",
+    "attributes": {
+     "survey": "2013/18",
+     "year": 2013,
+     "fj": 2013,
+     "lc09r_27": 11,
+     "desc_lc09r_27_de": "Befestigte Fl\u00e4chen",
+     "desc_lc09r_27_fr": "Surfaces compact\u00e9es",
+     "desc_lc09r_27_it": "Superficie a rivestimento duro",
+     "desc_lc09r_27_rm": "Befestigte Fl\u00e4chen",
+     "desc_lc09r_27_en": "Consolidated surfaces",
+     "label": "60002000-2013"
+    }
+   },
+   {
+    "layerBodId": "ch.bfs.arealstatistik-bodenbedeckung",
+    "layerName": "Land use statistics cover",
+    "featureId": "60002000-2023",
+    "id": "60002000-2023",
+    "attributes": {
+     "survey": "2013-18",
+     "year": 2023,
+     "fj": 2013,
+     "lc09r_27": 11,
+     "desc_lc09r_27_de": "Befestigte Fl\u00e4chen",
+     "desc_lc09r_27_fr": "Surfaces compact\u00e9es",
+     "desc_lc09r_27_it": "Superficie a rivestimento duro",
+     "desc_lc09r_27_rm": "Befestigte Fl\u00e4chen",
+     "desc_lc09r_27_en": "Consolidated surfaces",
+     "label": "60002000-2023"
+    }
+   }
+  ]
+ }
+}

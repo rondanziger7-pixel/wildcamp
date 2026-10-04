@@ -75,6 +75,8 @@ describe('shelters around real spots', () => {
     expect(s.every((x) => x.meters <= 5000)).toBe(true);
   });
   it('drops shelters beyond 5 km and ones whose position is missing', () => {
+    const pt = placeShelters([{ name: 'Point hut', kind: 'hut' }], [{ type: 'Point', coordinates: [300, 400] }], 0, 0);
+    expect(pt[0]).toMatchObject({ meters: 500, at: { e: 300, n: 400 } });
     const far = placeShelters([{ name: 'Far hut', kind: 'hut' }, { name: 'Lost hut', kind: 'hut' }], [{ type: 'Point', coordinates: [6000, 0] }, undefined], 0, 0);
     expect(far).toEqual([]);
   });

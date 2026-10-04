@@ -40,7 +40,9 @@ describe('nearest water from real hydrography responses', () => {
     const line = { type: 'LineString', coordinates: [[0, 0], [10, 0]] };
     expect(closestPoint(line, 4, 3)).toEqual([4, 0]);
     expect(closestPoint(line, 20, 3)).toEqual([10, 0]);
-    expect(closestPoint({ type: 'Point', coordinates: [1, 1] }, 5, 5)).toEqual([5, 5]);
+    // a point geometry (most huts) is the target itself, never the caller's own position
+    expect(closestPoint({ type: 'Point', coordinates: [1, 1] }, 5, 5)).toEqual([1, 1]);
+    expect(closestPoint({ type: 'MultiPoint', coordinates: [[100, 0], [3, 4]] }, 0, 0)).toEqual([3, 4]);
   });
 });
 

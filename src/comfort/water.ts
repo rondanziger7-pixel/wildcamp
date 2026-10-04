@@ -56,8 +56,13 @@ export function nearestWater(body: { results?: Feature[] }, e: number, n: number
   return best;
 }
 
-/** The point on a geometry's lines (or ring edges) closest to (e, n). */
+/** The point on a geometry (a point, its lines or ring edges) closest to (e, n). */
 export function closestPoint(g: { type: string; coordinates: unknown }, e: number, n: number): Pos {
+  if (g.type === 'Point') return g.coordinates as Pos;
+  if (g.type === 'MultiPoint') {
+    const pts = g.coordinates as Pos[];
+    return pts.reduce((a, b) => (Math.hypot(e - b[0]!, n - b[1]!) < Math.hypot(e - a[0]!, n - a[1]!) ? b : a), pts[0] ?? [e, n]);
+  }
   const lines: Pos[][] =
     g.type === 'LineString' ? [g.coordinates as Pos[]] : g.type === 'MultiLineString' ? (g.coordinates as Pos[][]) : g.type === 'Polygon' ? (g.coordinates as Pos[][]) : g.type === 'MultiPolygon' ? (g.coordinates as Pos[][][]).flat() : [];
   let best: Pos = [e, n];

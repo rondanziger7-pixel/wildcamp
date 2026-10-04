@@ -14,6 +14,7 @@ import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { searchPlaces, type Place } from './search';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
+import { fetchGround, type GroundInfo } from './comfort/ground';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
@@ -123,8 +124,8 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
   const budget = Math.max(3000, tappedAt + CHECK_BUDGET_MS - Date.now());
   const deadline = window.setTimeout(() => abort.abort(), budget);
 
-  const got: { terrain?: TerrainMetrics; far?: Profiles; near?: Profiles; around?: Partial<Surroundings>; water?: WaterInfo; shelters?: ShelterResult; hourly?: Hourly } = {};
-  const done = { near: false, far: false, around: false, water: false, shelter: false, forecast: false };
+  const got: { terrain?: TerrainMetrics; far?: Profiles; near?: Profiles; around?: Partial<Surroundings>; water?: WaterInfo; shelters?: ShelterResult; ground?: GroundInfo; hourly?: Hourly } = {};
+  const done = { near: false, far: false, around: false, water: false, shelter: false, ground: false, forecast: false };
   const failed = { water: false, forecast: false };
   let selected = 0;
 
@@ -136,17 +137,18 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     const terrain = got.near ? analyseTerrain(got.near, got.far) : undefined;
     const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
     // the far profile only refines the sun times, so the score does not wait for it
-    const waiting = [!done.near && 'terrain', !done.around && 'trails and roads', !done.water && 'water', !done.shelter && 'huts', !done.forecast && 'forecast'].filter(Boolean) as string[];
+    const waiting = [!done.near && 'terrain', !done.around && 'trails and roads', !done.water && 'water', !done.shelter && 'huts', !done.ground && 'ground cover', !done.forecast && 'forecast'].filter(Boolean) as string[];
     const comfort = comfortFor({
       terrain,
       night,
       surroundings: got.around,
       water: got.water,
       shelters: got.shelters,
+      ground: got.ground,
       sun: sunTimes(new Date(`${w.to.slice(0, 10)}T12:00:00Z`), lat, lng, horizon),
       inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
     });
-    if (waiting.length < 5 || done.near) ui.setSleep(comfort, nightName, waiting);
+    if (waiting.length < 6 || done.near) ui.setSleep(comfort, nightName, waiting);
     ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, done.forecast && !got.hourly);
     if (!done.forecast) return;
     if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', 'Weather'), el('p', 'where', 'The forecast could not be loaded.'));
@@ -179,6 +181,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     track('around', withTimeout(fetchSurroundings(lat, lng, abort.signal), PART_MS), (v) => (got.around = v)),
     track('water', withTimeout(fetchWater(lat, lng, abort.signal), PART_MS), (v) => { got.water = v; ui.setWater(v); }, () => { failed.water = true; ui.setWater(undefined, true); }),
     track('shelter', withTimeout(fetchShelters(lat, lng, abort.signal), PART_MS), (v) => { got.shelters = v; ui.setShelter(v); }, () => ui.setShelter(undefined, true)),
+    track('ground', withTimeout(fetchGround(lat, lng, abort.signal), PART_MS), (v) => (got.ground = v)),
     track('forecast', withTimeout(fetchForecast(lat, lng, elevation, abort.signal), PART_MS), (v) => (got.hourly = v), () => (failed.forecast = true)),
   ];
   await Promise.allSettled(parts);
