@@ -1,6 +1,6 @@
 import { wgs84ToLv95 } from './coords';
 import { ZONE_LAYERS } from './zones';
-import { estimateTreeline, type TreelineStatus, type ZoneHit } from './assess';
+import type { ZoneHit } from './assess';
 
 const API = 'https://api3.geo.admin.ch/rest/services';
 
@@ -55,12 +55,4 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }): ZoneHit[] {
     hits.push({ layer, name: str(a.label), detail });
   }
   return hits;
-}
-
-/**
- * TODO: replace with a real forest / vegetation-zone lookup once a layer is
- * verified against the live catalogue. Elevation-only for now.
- */
-export async function fetchTreeline(elevation: number | undefined): Promise<TreelineStatus> {
-  return estimateTreeline(elevation);
 }

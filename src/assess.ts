@@ -15,6 +15,8 @@ export interface Assessment {
   reasons: string[];
   zones: ZoneHit[];
   treeline: TreelineStatus;
+  /** How the treeline status was determined, shown to the user. */
+  treelineNote?: string;
 }
 
 /**
@@ -35,8 +37,9 @@ export function assess(input: {
   treeline: TreelineStatus;
   /** Set when a zone lookup failed, so "no hits" can't be trusted. */
   zoneLookupFailed?: boolean;
+  treelineNote?: string;
 }): Assessment {
-  const { zones, treeline } = input;
+  const { zones, treeline, treelineNote } = input;
   const reasons: string[] = [];
   const worst = zones.reduce<number>((m, z) => Math.max(m, rank[z.layer.severity]), -1);
 
@@ -68,8 +71,9 @@ export function assess(input: {
     reasons.push('Above the treeline and outside the federal protected zones checked.');
   }
 
+  if (treelineNote && !zones.some((z) => rank[z.layer.severity] > 0)) reasons.push(treelineNote);
   if (verdict === 'likely_ok' || verdict === 'caution') {
     reasons.push('Cantonal and municipal rules, and private land, are not checked.');
   }
-  return { verdict, reasons, zones, treeline };
+  return { verdict, reasons, zones, treeline, treelineNote };
 }

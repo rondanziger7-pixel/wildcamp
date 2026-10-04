@@ -3,10 +3,16 @@ import 'leaflet/dist/leaflet.css';
 import './style.css';
 import { isInSwitzerland } from './coords';
 import { assess, type Assessment } from './assess';
-import { fetchElevation, fetchTreeline, fetchZoneHits } from './geoadmin';
+import { wgs84ToLv95 } from './coords';
+import { loadForestMask, type ForestMask } from './forestmask';
+import { fetchElevation, fetchZoneHits } from './geoadmin';
+import { classifyTreeline } from './treeline';
 import { ZONE_LAYERS } from './zones';
 
-const map = L.map('map').setView([46.8, 8.2], 8);
+// Optional deep link: #lat,lon,zoom
+const [hLat, hLon, hZoom] = location.hash.slice(1).split(',').map(Number);
+const hashView = Number.isFinite(hLat) && Number.isFinite(hLon);
+const map = L.map('map').setView(hashView ? [hLat!, hLon!] : [46.8, 8.2], hashView ? hZoom || 14 : 8);
 
 L.tileLayer(
   'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg',
@@ -24,6 +30,12 @@ L.tileLayer
     attribution: '© BAFU',
   })
   .addTo(map);
+
+// Forest map (3.7 MB) loads in the background; clicks before it arrives fall back to elevation only.
+let forestMask: ForestMask | undefined;
+loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
+  .then((m) => (forestMask = m))
+  .catch((err) => console.warn('forest map failed to load', err));
 
 let marker: L.Marker | undefined;
 const result = document.getElementById('result')!;
@@ -64,12 +76,14 @@ map.on('click', async (ev: L.LeafletMouseEvent) => {
   result.textContent = 'Checking…';
   const [elev, zones] = await Promise.allSettled([fetchElevation(lat, lng), fetchZoneHits(lat, lng)]);
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
-  const treeline = await fetchTreeline(elevation);
+  const { e, n } = wgs84ToLv95(lat, lng);
+  const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, e, n, elevation);
   render(
     assess({
       zones: zones.status === 'fulfilled' ? zones.value : [],
       zoneLookupFailed: zones.status === 'rejected',
       treeline,
+      treelineNote,
     }),
     elevation,
   );
