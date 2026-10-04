@@ -1,4 +1,4 @@
-export type Severity = 'prohibited' | 'restricted' | 'info';
+export type Severity = 'prohibited' | 'restricted' | 'caution' | 'info';
 
 export interface ZoneLayer {
   /** geo.admin.ch layerBodId (verified queryable via the identify endpoint). */
@@ -15,7 +15,9 @@ export interface ZoneLayer {
 /**
  * Federal inventories that matter for wild camping.
  * prohibited = camping banned by federal law; restricted = usually banned or
- * heavily limited (details cantonal); info = worth knowing, no blanket ban.
+ * heavily limited (details cantonal); caution = protected area where rules vary
+ * and camping is often not allowed, so check before going; info = worth knowing,
+ * no blanket ban.
  */
 export const ZONE_LAYERS: ZoneLayer[] = [
   {
@@ -32,7 +34,7 @@ export const ZONE_LAYERS: ZoneLayer[] = [
     id: 'ch.bafu.bundesinventare-jagdbanngebiete',
     label: 'Federal wildlife reserve (Jagdbanngebiet)',
     severity: 'restricted',
-    note: 'Wildlife protection area; camping is usually restricted by the canton.',
+    note: 'Free tenting and camping is prohibited (VEJ Art. 5 para. 1 let. e); only official campsites are allowed, and cantons can grant exceptions.',
   },
   {
     id: 'ch.bafu.wrz-wildruhezonen_portal',
@@ -69,6 +71,21 @@ export const ZONE_LAYERS: ZoneLayer[] = [
     label: 'Amphibian breeding site',
     severity: 'restricted',
     note: 'Protected habitat; avoid.',
+  },
+  {
+    id: 'ch.bafu.bundesinventare-vogelreservate',
+    label: 'Federal waterbird and migratory bird reserve',
+    severity: 'caution',
+    note:
+      'The federal ordinance (WZVV) sets reserve-specific rules in each reserve\'s object sheet and has no general camping clause. ' +
+      'Cantons such as NW, SG and JU state camping is not allowed in nature reserves. Check before going.',
+  },
+  {
+    id: 'ch.pronatura.naturschutzgebiete',
+    label: 'Pro Natura nature reserve',
+    severity: 'caution',
+    note:
+      'Protected nature reserve. Cantons such as NW, SG and JU state camping is not allowed in nature reserves; check the reserve\'s own rules.',
   },
   {
     id: 'ch.bafu.bundesinventare-moorlandschaften',

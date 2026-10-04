@@ -25,8 +25,11 @@ Absence from the texts below is not proof that no rule exists elsewhere (municip
 - **VD**: Vaud's camping law (RSV 935.61, 1978) exists and has not been read. A web-search summary that attributed it to Valais was wrong and was not used.
 - **ZH, GE, BS, AG, AI, AR, BL, GL, LU, NE, SH, SO, SZ, TG, ZG**: not researched or nothing found. Reports that Aargau allows one night are unverified (one article calls the claim questionable). Glarus reportedly relies on protected-area bans and dialogue (media).
 
+## Federal texts read (saved in docs/sources/CH/)
+- **VEJ (SR 922.31), Art. 5 para. 1 let. e**: "Das freie Zelten und Campieren ist verboten. Vorbehalten bleibt die Benutzung offizieller Zeltplätze. Die Kantone können Ausnahmen bewilligen." Confirms federal hunting reserves are a legal ban (cantons can grant exceptions).
+- **WZVV (SR 922.32)**: has **no** general camping or tenting clause. Reserve-specific provisions sit in the federal inventory's object sheets. A web-search summary claimed otherwise; the ordinance text does not support it. Federal bird reserves therefore only trigger "Caution".
+
 ## Federal and cross-cutting points seen in official texts
-- Federal ordinance on hunting reserves (SR 922.31) Art. 5 para. 1 let. e bans camping and free tenting, including bivouacking, in federal hunting reserves. This is cited in the SG leaflet; the ordinance itself was not read.
 - Free entry to forest and pasture in customary measure: ZGB Art. 699. Uses disadvantageous to the forest are not allowed: WaG Art. 16 (cited in the SG leaflet).
 - SG's guidance says to avoid the upper forest line as sensitive habitat, so "above the treeline is fine" is not universal advice.
 

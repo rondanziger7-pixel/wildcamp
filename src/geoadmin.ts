@@ -53,7 +53,7 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }): ZoneHit[] {
         .filter(Boolean)
         .join(' ');
     }
-    hits.push({ layer, name: str(a.label), detail });
+    hits.push({ layer, name: str(a.label) ?? str(a.name), detail });
   }
   return hits;
 }

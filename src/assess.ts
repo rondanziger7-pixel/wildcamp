@@ -32,7 +32,7 @@ export function estimateTreeline(elevationM: number | undefined): TreelineStatus
   return 'unknown';
 }
 
-const rank: Record<Severity, number> = { prohibited: 2, restricted: 1, info: 0 };
+const rank: Record<Severity, number> = { prohibited: 3, restricted: 2, caution: 1, info: 0 };
 
 export function assess(input: {
   zones: ZoneHit[];
@@ -53,13 +53,13 @@ export function assess(input: {
   }
 
   let verdict: Verdict;
-  if (worst === rank.prohibited) {
-    verdict = 'no';
-  } else if (worst === rank.restricted) {
+  if (worst >= rank.restricted) {
     verdict = 'no';
   } else if (input.zoneLookupFailed) {
     verdict = 'unknown';
     reasons.push('Protected-zone data could not be loaded, so this spot is unchecked.');
+  } else if (worst === rank.caution) {
+    verdict = 'caution';
   } else if (treeline === 'forest' || treeline === 'below') {
     verdict = 'caution';
     reasons.push(
@@ -85,7 +85,7 @@ export function assess(input: {
       else if (rule.stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
     }
   }
-  if (treelineNote && !zones.some((z) => rank[z.layer.severity] > 0)) reasons.push(treelineNote);
+  if (treelineNote && !zones.some((z) => rank[z.layer.severity] >= rank.restricted)) reasons.push(treelineNote);
   if (verdict === 'likely_ok' || verdict === 'caution') {
     reasons.push('Cantonal and municipal rules, and private land, are not checked.');
   }

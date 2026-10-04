@@ -3,7 +3,7 @@
 Tap a spot on the map and see whether wild camping there is likely allowed in Switzerland.
 
 ## What it checks
-1. **Federal protected zones** (national park, wildlife reserves and quiet zones, floodplains, bogs, fens, dry meadows, amphibian sites) via the geo.admin.ch `identify` API. See `src/zones.ts`.
+1. **Protected zones** (national park, federal hunting reserves, wildlife quiet zones, floodplains, bogs, fens, dry meadows, amphibian sites; plus federal waterbird reserves and Pro Natura reserves, which only trigger a "Caution") via the geo.admin.ch `identify` API. See `src/zones.ts`.
 2. **Forest / treeline**: a forest map built from swissTLM3D forest polygons (`public/forest-mask.bin.gz`, 25 m grid, 3.7 MB, loaded by the browser at startup) combined with elevation. See `src/treeline.ts`:
    - in forest (closed, open, or shrub forest) → `forest`
    - otherwise compare elevation with the **local upper forest limit** (`public/treeline-surface.bin.gz`, 1 km grid, 29 KB): ≥ limit + 100 m → `above`; < limit − 100 m → `below`; within ±100 m → `unknown`
@@ -32,7 +32,7 @@ Also verified: the API sends `access-control-allow-origin: *`, and the built app
 
 ## To do
 - [ ] **Remaining canton rules**: 22 of 26 have no recorded rule. For GR, VS, BE, FR, JU and UR the cantonal texts were read and contain no general rule for a hiker's tent (municipal police rules decide); VD and the rest are unresearched. See `docs/CANTON_RESEARCH.md`.
-- [ ] **Cantonal nature reserves** are not in the protected-zone layers (only federal inventories). Jura, Bern and others ban camping in cantonal reserves, so a spot inside one can still read "Likely OK".
+- [ ] **Cantonal nature reserves** are still not covered. Checked and ruled out as national sources: swissTLM3D `TLM_SCHUTZGEBIET` (national park only), swissTLMRegio protected areas (coarse parks), geo.admin.ch layers (federal inventories, Pro Natura, bird reserves only). Cantons publish their own reserve geodata (e.g. Bern, Jura), so this needs per-canton integration. Jura, Bern and others ban camping in their reserves, so a spot inside one can still read "Likely OK".
 - [ ] Municipal rules and the municipality name for each spot.
 - [ ] Add GPS "my location" and offline caching (PWA).
 - [ ] Use quiet-zone protection season to show "restricted only 21.12.–30.04." instead of a flat no.

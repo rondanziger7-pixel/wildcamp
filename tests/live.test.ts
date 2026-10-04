@@ -14,6 +14,13 @@ describe.skipIf(!live)('live geo.admin.ch', () => {
   it('all zone layers are queryable together', async () => {
     await expect(fetchZoneHits(46.8, 8.2)).resolves.toBeInstanceOf(Array);
   });
+  it('flags a Pro Natura reserve and a federal bird reserve', async () => {
+    const pn = await fetchZoneHits(47.14051, 7.02602); // Combe Grède
+    expect(pn.map((z) => z.layer.id)).toContain('ch.pronatura.naturschutzgebiete');
+    const birds = await fetchZoneHits(46.90998, 6.92462); // Chevroux–Portalban
+    expect(birds.map((z) => z.layer.id)).toContain('ch.bafu.bundesinventare-vogelreservate');
+    expect(assess({ zones: birds, treeline: 'above' }).verdict).not.toBe('likely_ok');
+  });
   it('finds the canton', async () => {
     expect((await fetchCanton(46.02, 7.75))?.code).toBe('VS'); // Zermatt
     expect((await fetchCanton(46.8, 9.84))?.code).toBe('GR'); // Davos

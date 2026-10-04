@@ -9,6 +9,16 @@ describe('assess', () => {
   it('blocks national park', () => {
     expect(assess({ zones: [{ layer: layer('prohibited') }], treeline: 'above' }).verdict).toBe('no');
   });
+  it('caution zones cap the verdict at caution even above the treeline', () => {
+    const a = assess({ zones: [{ layer: layer('caution') }], treeline: 'above' });
+    expect(a.verdict).toBe('caution');
+    expect(a.reasons.join(' ')).toMatch(/Check before going|check the reserve/i);
+  });
+  it('caution zones do not override a ban, and show the treeline note', () => {
+    expect(assess({ zones: [{ layer: layer('caution') }, { layer: layer('restricted') }], treeline: 'above' }).verdict).toBe('no');
+    const a = assess({ zones: [{ layer: layer('caution') }], treeline: 'above', treelineNote: 'NOTE-X' });
+    expect(a.reasons).toContain('NOTE-X');
+  });
   it('blocks restricted zones even above treeline', () => {
     expect(assess({ zones: [{ layer: layer('restricted') }], treeline: 'above' }).verdict).toBe('no');
   });

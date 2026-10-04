@@ -21,7 +21,21 @@ const WRZ = {
   },
 };
 
+const PRONATURA = {
+  layerBodId: 'ch.pronatura.naturschutzgebiete',
+  attributes: { nummer: 15011, name: 'Combe Grède', label: 'Combe Grède' },
+};
+const BIRDS = {
+  layerBodId: 'ch.bafu.bundesinventare-vogelreservate',
+  attributes: { name: "Chevroux jusqu'à Portalban (FR, VD)", objnummer: 5, teilgebiet: 'IV' }, // no label
+};
+
 describe('parseZoneHits', () => {
+  it('reads Pro Natura reserves and falls back to name for bird reserves', () => {
+    const hits = parseZoneHits({ results: [PRONATURA, BIRDS] });
+    expect(hits.map((h) => h.name)).toEqual(['Combe Grède', "Chevroux jusqu'à Portalban (FR, VD)"]);
+    expect(assess({ zones: hits, treeline: 'above' }).verdict).toBe('caution');
+  });
   it('flags the Swiss National Park as prohibited', () => {
     const hits = parseZoneHits({ results: [SNP] });
     expect(hits).toHaveLength(1);
