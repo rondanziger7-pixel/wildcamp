@@ -8,6 +8,8 @@ Last updated 2026-10-04. The source texts are saved in `docs/sources/<canton cod
 | OW | restricted | Gesetz über das Campieren (GDB 971.4), in force 2015-03-01 | Tents/caravans/motorhomes outside approved campsites banned (Art. 6); a single night without permit allowed if no public or private interests are impaired (Art. 8); fines (Art. 11) |
 | NW | restricted | Cantonal leaflet, 2021-11-18, §3.11 (guidance, not statute); Biotope ordinance NG 332.11 | In principle not allowed without landowner consent; single nights above the forest line (not groups) as exception; general ban in nature reserves, federal hunting reserves, wildlife quiet zones; tents banned off-path in protected bogs and dry sites |
 | TI | restricted | Legge sui campeggi, 2004-01-26 (state 2024-01-01) | Camping only in authorised campsites (Art. 2); exception: bivouac tenting in the mountains; "mountains" undefined; fines CHF 50 to 10,000 (Art. 27) |
+| VD | restricted | Loi sur les campings et caravanings résidentiels (LCCR, RSV 935.61), Art. 27 and 44 | Occasional camping outside authorised places only with the landowner's (or farmer's/tenant's) consent; over 4 days needs the commune's authorisation; communal rules reserved; fines up to CHF 10,000. **Caveat:** the text is the official BLV export dated 2021-10-05 obtained through a mirror, because the official portal could not be scripted; amendments since then were not checked |
+| AI | tolerated | Standeskommission statement, 2025-06-18 | The canton says there is currently *no legal basis* regulating bivouacking and plans to create a general ban (landowner permission, alpine-farm agreement). A policy direction, not yet law |
 | SG | tolerated | Kantonsforstamt leaflet, 2022-05-02, §3.6 (guidance) | Individuals and small groups mostly allowed; not in federal hunting reserves, nature reserves, municipal protection areas; avoid the upper forest line, floodplains, wetlands |
 
 `restricted` caps the verdict at "Caution"; `tolerated` adds the note only. Leaflets are cantonal *guidance*, which the summaries say.
@@ -21,9 +23,15 @@ Absence from the texts below is not proof that no rule exists elsewhere (municip
 - **FR**: Forest law (RSF 921.1/921.11) and nature law (RSF 721.0.1) contain no camping provisions. Official web pages recommend camping "only where expressly authorised" in forests and biotopes and ban "staying" (with or without a tent) in wildlife quiet zones. These are recommendations and a restatement of the quiet-zone layer, so no rule is recorded.
 - **JU**: official statements (2023 communiqué, Doubs reserve page) say overnighting outside official campsites is prohibited in all nature reserves, and the fines ordinance (OLiLAO 324.111, item 1.6) sets a CHF 100 fine for camping in the Doubs reserve. No general cantonal ban or permission was found. The media claim that Jura is "generally allowed" is unverified.
 
+## Also read, no general rule for a hiker's tent
+- **NE**: Arrêté 727.3 (1963) requires department authorisation to install a camping tent or caravan, but only on land owned by the State (fine up to CHF 500 on State public domain). Ownership of the land at a spot is unknown, so no rule is recorded. A reported ban in the Creux du Van reserve was not read.
+- **LU**: PBG § 174 covers regular camping and campsites (building permit above 30 days) and says nothing about a single overnight stay.
+- **SZ**: Law 543.110 (1959) covers public campsite permits only. Camping in federal hunting reserves is banned federally (VEJ).
+- **ZH**: the Regierungsrat decree on tenting and camping (LS 702.112, 1964) was repealed on 2003-10-01. Zürich's nature-protection areas ban camping (reported, not read).
+
 ## Not found or not researched
-- **VD**: Vaud's camping law (RSV 935.61, 1978) exists and has not been read. A web-search summary that attributed it to Valais was wrong and was not used.
-- **ZH, GE, BS, AG, AI, AR, BL, GL, LU, NE, SH, SO, SZ, TG, ZG**: not researched or nothing found. Reports that Aargau allows one night are unverified (one article calls the claim questionable). Glarus reportedly relies on protected-area bans and dialogue (media).
+- A web-search summary that attributed Vaud's camping law to Valais was wrong and was not used.
+- **GE, BS, AG, AR, BL, GL, SH, SO, TG, ZG**: nothing relevant found or not read. Geneva is reported to ban camping in forest except designated places with authorisation (not read). Reports that Aargau allows one night are unverified (one article calls the claim questionable). Glarus reportedly relies on protected-area bans and dialogue (media).
 
 ## Federal texts read (saved in docs/sources/CH/)
 - **VEJ (SR 922.31), Art. 5 para. 1 let. e**: "Das freie Zelten und Campieren ist verboten. Vorbehalten bleibt die Benutzung offizieller Zeltplätze. Die Kantone können Ausnahmen bewilligen." Confirms federal hunting reserves are a legal ban (cantons can grant exceptions).

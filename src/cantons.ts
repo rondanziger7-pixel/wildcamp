@@ -28,7 +28,19 @@ export interface Canton {
 /** All 26 cantons. A rule is only set once its source has been read; text is saved under docs/sources/. See docs/CANTON_RESEARCH.md. */
 export const CANTONS: Canton[] = [
   { code: 'AG', name: 'Aargau' },
-  { code: 'AI', name: 'Appenzell Innerrhoden' },
+  {
+    code: 'AI',
+    name: 'Appenzell Innerrhoden',
+    rule: {
+      stance: 'tolerated',
+      summary:
+        'Official statement of 2025-06-18: there is currently no legal basis regulating bivouacking. ' +
+        'The cantonal government prefers, and plans to create, a general ban on wild bivouacking, to be allowed only under conditions with the landowner\'s explicit permission (and agreement with the herdsman on alpine farms). ' +
+        'Rules may have changed since; check for a new law.',
+      sources: [{ title: 'Standeskommission Appenzell I.Rh., Kanton stellt Weichen im Campingtourismus, 18.06.2025', url: 'https://www.ai.ch/politik/standeskommission/mitteilungen/aktuelles/kanton-appenzell-i-rh-stellt-weichen-im-campingtourismus' }],
+      checkedOn: '2026-10-04',
+    },
+  },
   { code: 'AR', name: 'Appenzell Ausserrhoden' },
   { code: 'BE', name: 'Bern' },
   { code: 'BL', name: 'Basel-Landschaft' },
@@ -107,7 +119,20 @@ export const CANTONS: Canton[] = [
     },
   },
   { code: 'UR', name: 'Uri' },
-  { code: 'VD', name: 'Vaud' },
+  {
+    code: 'VD',
+    name: 'Vaud',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Occasional camping outside authorised campsites is only permitted with the consent of the landowner (or farmer or tenant); ' +
+        'for more than 4 days the commune\'s authorisation is also needed, and communal rules on the subject remain reserved (LCCR Art. 27). ' +
+        'Breaches can be fined up to CHF 10,000 (Art. 44). ' +
+        'Text read from the official BLV export dated 2021-10-05 (via a mirror); amendments since then were not checked.',
+      sources: [{ title: 'RSV 935.61 Loi sur les campings et caravanings résidentiels (LCCR)', url: 'https://prestations.vd.ch/pub/blv-publication/actes/consolide/935.61' }],
+      checkedOn: '2026-10-04',
+    },
+  },
   { code: 'VS', name: 'Valais' },
   { code: 'ZG', name: 'Zug' },
   { code: 'ZH', name: 'Zurich' },

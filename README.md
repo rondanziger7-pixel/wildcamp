@@ -13,7 +13,7 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 
    If the forest map fails to load, it falls back to an elevation-only estimate and says so.
 
-3. **Canton** (swissBOUNDARIES3D) shown for every spot, with its camping rule where one has been read from the primary text. Currently verified: OW, NW, TI, SG; the others show "cantonal rules are not verified". A `banned` rule forces "Not allowed" and `restricted` caps at "Caution". Rules live in `src/cantons.ts`; tests require an official cantonal/federal source, a check date and the saved source text under `docs/sources/`. See `docs/CANTON_RESEARCH.md`.
+3. **Canton** (swissBOUNDARIES3D) shown for every spot, with its camping rule where one has been read from the primary text. Currently recorded: OW, NW, TI, VD, SG, AI; the others show "cantonal rules are not verified". A `banned` rule forces "Not allowed" and `restricted` caps at "Caution". Rules live in `src/cantons.ts`; tests require an official cantonal/federal source, a check date and the saved source text under `docs/sources/`. See `docs/CANTON_RESEARCH.md`.
 
 Verdicts are `Not allowed`, `Caution`, `Likely OK` or `Unknown`. The app never says "legal".
 
@@ -31,7 +31,7 @@ Forest map accuracy (checked against the source polygons): 294/300 points inside
 Also verified: the API sends `access-control-allow-origin: *`, and the built app runs in headless Chromium (forest map download/decompression, lookup, and rendering).
 
 ## To do
-- [ ] **Remaining canton rules**: 22 of 26 have no recorded rule. For GR, VS, BE, FR, JU and UR the cantonal texts were read and contain no general rule for a hiker's tent (municipal police rules decide); VD and the rest are unresearched. See `docs/CANTON_RESEARCH.md`.
+- [ ] **Remaining canton rules**: 20 of 26 have no recorded rule. For GR, VS, BE, FR, JU, UR, NE, LU, SZ and ZH the cantonal texts were read and contain no general rule for a hiker's tent (municipal rules decide); GE, BS, AG, AR, BL, GL, SH, SO, TG and ZG are unresolved. See `docs/CANTON_RESEARCH.md`.
 - [ ] **Cantonal nature reserves** are still not covered. Checked and ruled out as national sources: swissTLM3D `TLM_SCHUTZGEBIET` (national park only), swissTLMRegio protected areas (coarse parks), geo.admin.ch layers (federal inventories, Pro Natura, bird reserves only). Cantons publish their own reserve geodata (e.g. Bern, Jura), so this needs per-canton integration. Jura, Bern and others ban camping in their reserves, so a spot inside one can still read "Likely OK".
 - [ ] Municipal rules and the municipality name for each spot.
 - [ ] Add GPS "my location" and offline caching (PWA).
