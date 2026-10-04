@@ -1,5 +1,6 @@
 import type { Assessment } from './assess';
 import type { Comfort } from './comfort/comfort';
+import { LEVEL_NAME, type AvalancheInfo } from './comfort/avalanche';
 import { compassName, describeCode, type Night } from './comfort/weather';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
@@ -79,6 +80,8 @@ export interface ResultUi {
   setWater(w: WaterInfo | undefined, failed?: boolean): void;
   setShelter(r: ShelterResult | undefined, failed?: boolean): void;
   setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
+  /** The avalanche chip; shown only while a bulletin covers the spot (or could not be fetched). */
+  setAvalanche(a: AvalancheInfo | undefined, failed?: boolean): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
@@ -129,11 +132,13 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const waterChip = chip('water');
   const shelterChip = chip('shelter');
   const weatherChip = chip('weather');
+  const avalancheChip = chip('avalanche');
+  avalancheChip.hidden = true;
   shelterChip.textContent = '🏠 Checking for huts…';
   waterChip.textContent = '💧 Checking water…';
   weatherChip.textContent = '🌦️ Loading forecast…';
   const chips = el('div', 'chips');
-  chips.append(waterChip, shelterChip, weatherChip);
+  chips.append(waterChip, shelterChip, weatherChip, avalancheChip);
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
@@ -153,6 +158,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     [shelterChip, sleepPanel],
     [weather.b, weatherPanel],
     [weatherChip, weatherPanel],
+    [avalancheChip, weatherPanel],
   ];
   const panels = [legalPanel, sleepPanel, weatherPanel];
   for (const [button, panel] of opener) {
@@ -273,6 +279,21 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         shelterChip.classList.add('far');
       }
     },
+    setAvalanche(av, failed) {
+      avalancheChip.className = 'chip avalanche';
+      avalancheChip.hidden = false;
+      if (failed) {
+        avalancheChip.textContent = '❄️ Avalanche bulletin: could not check';
+        return;
+      }
+      if (av?.status !== 'ok' || av.level === undefined) {
+        avalancheChip.hidden = true;
+        return;
+      }
+      avalancheChip.textContent = `❄️ Avalanche danger: ${LEVEL_NAME[av.level]} (${av.level}${av.subdivision === 'plus' ? '+' : av.subdivision === 'minus' ? '-' : ''})`;
+      if (av.level >= 4) avalancheChip.classList.add('bad');
+      else if (av.level === 3) avalancheChip.classList.add('warn');
+    },
     snapshot() {
       return {
         verdict: a.verdict,
@@ -293,7 +314,6 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       if (failed || !night) {
         weatherChip.textContent = '🌦️ Weather: unavailable';
         weather.set({ tone: 'none' }, 'Unavailable');
-        weatherFactors.replaceChildren();
         return;
       }
       const sky = night.worstCode !== undefined ? describeCode(night.worstCode).emoji : '🌙';

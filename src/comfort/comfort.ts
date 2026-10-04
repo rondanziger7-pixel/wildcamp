@@ -6,6 +6,7 @@ import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
 import type { ShelterResult } from './shelters';
 import type { GroundInfo } from './ground';
+import { LEVEL_NAME, bandText, type AvalancheInfo } from './avalanche';
 
 export type ComfortRating = 'great' | 'good' | 'fair' | 'poor';
 
@@ -40,6 +41,10 @@ export interface ComfortInput {
   water?: WaterInfo;
   /** Ground cover (grass, rock, scree …) from the land-cover statistics. */
   ground?: GroundInfo;
+  /** The avalanche bulletin's reading for the spot. */
+  avalanche?: AvalancheInfo;
+  /** The bulletin could not be fetched (so its absence is not read as "no danger"). */
+  avalancheFailed?: boolean;
   /** Huts, bivouac boxes, inns and alps nearby. */
   shelters?: ShelterResult;
   sun?: SunTimes;
@@ -224,6 +229,31 @@ export function comfortFor(input: ComfortInput): Comfort {
     if (inn && (!hut || inn.meters < hut.meters)) f.push({ tone: 'info', score: 0, at: { ...inn.at, label: inn.name }, title: 'Mountain inn nearby', text: `${inn.name} is about ${km(inn.meters)} away. Inns and restaurants are usually open only in season.` });
     if (alp) f.push({ tone: 'info', score: 0, at: { ...alp.at, label: alp.name }, title: 'Alp nearby', text: `${alp.name} lies about ${km(alp.meters)} away. Alp buildings are usually private and locked outside the summer season, so they are not a dependable emergency shelter, but in season someone there can help. Livestock may be around.` });
   } else missing.push('huts nearby');
+
+  // snow on the ground and the avalanche bulletin: conditions of the season, counted with the weather
+  if (night?.snowDepthM !== undefined && night.snowDepthM >= 0.05) {
+    const cm = Math.round(night.snowDepthM * 100);
+    f.push({ wx: true, tone: 'warn', score: cm >= 30 ? -2 : -1, title: `Snow on the ground: about ${cm} cm`, text: `The forecast model has about ${cm} cm of snow at this elevation. Pitching on snow is cold and slow, it hides the ground and its hazards, and pegs do not hold. This is a model value for the spot's elevation, not a measurement: slopes and wind-blown ridges differ a lot.` });
+  }
+  const av = input.avalanche;
+  if (av?.status === 'ok' && av.level !== undefined) {
+    const steep = !!t && (t.steepAboveM !== undefined || t.slopeDeg >= 25);
+    const later = night && av.validUntilLocal && night.from > av.validUntilLocal;
+    const name = `${LEVEL_NAME[av.level]} (${av.level}${av.subdivision === 'plus' ? '+' : av.subdivision === 'minus' ? '-' : ''})`;
+    const probs = (av.problems ?? []).map((p) => `${p.type}${p.aspects.length ? ` on ${p.aspects.join(', ')} slopes` : ''} ${bandText(p.above, p.below)}`);
+    const where = av.region ? ` for ${av.region}` : '';
+    const detail = `${probs.length ? ` Problems: ${probs.join('; ')}.` : ''} Valid until ${av.validUntilLocal?.replace('T', ' ')}. The level is for the most dangerous slopes of the region; flat ground away from steep slopes is much safer, but a slope of 30 degrees or more above or near the tent, and runout zones below one, are not.`;
+    if (later) f.push({ wx: true, tone: 'info', score: 0, title: `Avalanche bulletin ends before this night`, text: `The current bulletin${where} ends ${av.validUntilLocal?.replace('T', ' ')}, before this night begins. Read the new bulletin on the day (slf.ch).` });
+    else if (av.level >= 4) f.push({ wx: true, tone: 'bad', score: steep ? -4 : -2, title: `Avalanche danger ${name}`, text: `High avalanche danger${where}.${steep ? ' Steep terrain is close to this spot.' : ''}${detail} Stay out of avalanche terrain altogether.` });
+    else if (av.level === 3) f.push({ wx: true, tone: 'warn', score: steep ? -2 : -1, title: `Avalanche danger ${name}`, text: `Considerable avalanche danger${where}.${steep ? ' Steep terrain is close to this spot.' : ''}${detail}` });
+    else f.push({ wx: true, tone: 'info', score: 0, title: `Avalanche danger ${name}`, text: `${av.level === 2 ? 'Moderate' : 'Low'} avalanche danger${where}.${detail}` });
+  } else if (av?.status === 'none' && (t?.elevation ?? 0) >= 1800) {
+    f.push({ wx: true, tone: 'info', score: 0, title: 'No avalanche bulletin', text: 'The SLF publishes its avalanche bulletin only in the winter season. None is current now, so avalanche danger is not rated; if there is snow on steep slopes, judge it yourself.' });
+  } else if (av?.status === 'outside') {
+    f.push({ wx: true, tone: 'info', score: 0, title: 'Not covered by the avalanche bulletin', text: 'The SLF bulletin has no warning region at this spot.' });
+  }
+
+  if (input.avalancheFailed) missing.push('avalanche bulletin');
 
   // ground cover: what the tent sits on
   const g = input.ground;

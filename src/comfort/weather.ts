@@ -13,10 +13,12 @@ export interface Hourly {
   snowfall?: (number | null)[];
   freezing_level_height?: (number | null)[];
   dew_point_2m?: (number | null)[];
+  /** Modelled snow depth at the spot's elevation, metres. */
+  snow_depth?: (number | null)[];
 }
 
 const CORE = ['temperature_2m', 'wind_speed_10m', 'wind_gusts_10m', 'wind_direction_10m', 'precipitation'];
-const EXTRA = ['precipitation_probability', 'weather_code', 'cloud_cover', 'snowfall', 'freezing_level_height', 'dew_point_2m'];
+const EXTRA = ['precipitation_probability', 'weather_code', 'cloud_cover', 'snowfall', 'freezing_level_height', 'dew_point_2m', 'snow_depth'];
 export const FORECAST_DAYS = 5;
 
 function forecastUrl(lat: number, lon: number, hourly: string[], elevation?: number) {
@@ -126,6 +128,8 @@ export interface Night {
   freezingLevelM?: number;
   /** Smallest gap between temperature and dew point, degrees (small means fog or heavy condensation). */
   minDewSpreadC?: number;
+  /** Greatest modelled snow depth in the window, metres (a model value, not a measurement). */
+  snowDepthM?: number;
 }
 
 function hoursIn(h: Hourly, window: { from: string; to: string }): number[] {
@@ -171,6 +175,7 @@ export function summariseNight(h: Hourly, window: { from: string; to: string }):
     windFromDeg,
     precipMm: nums(h.precipitation, idx).reduce((a, b) => a + b, 0),
     maxPrecipProb: probs.length ? Math.max(...probs) : undefined,
+    snowDepthM: h.snow_depth ? Math.max(0, ...nums(h.snow_depth, idx)) : undefined,
     snowCm: h.snowfall ? snow.reduce((a, b) => a + b, 0) : undefined,
     thunder: codes.some((c) => c >= 95),
     worstCode: codes.length ? codes.reduce((a, b) => (severity(b) > severity(a) ? b : a)) : undefined,
