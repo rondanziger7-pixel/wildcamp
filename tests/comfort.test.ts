@@ -203,6 +203,18 @@ describe('distances and parsing on real fixtures', () => {
   });
 });
 
+describe('map targets on factors', () => {
+  const quiet = { trailM: Infinity, huts: [], stops: [], settlementM: Infinity, parkingM: Infinity };
+  it('water and hut factors carry a position and label', () => {
+    const water: WaterInfo = { kind: 'lake', name: 'Oeschinensee', meters: 90, upstreamPlants: [], failed: [], at: { e: 2602000, n: 1150000 } };
+    const c = comfortFor({ surroundings: quiet, water, shelters: { shelters: [{ name: 'Cabane X SAC', kind: 'hut', meters: 600, club: true, at: { e: 2600000, n: 1100000 } }], incomplete: false } });
+    const w = c.factors.find((f) => f.title.startsWith('Water'));
+    expect(w?.at).toMatchObject({ e: 2602000, n: 1150000 });
+    expect(w?.at?.label).toContain('Oeschinensee');
+    expect(c.factors.find((f) => f.title.includes('hut'))?.at).toMatchObject({ e: 2600000, n: 1100000, label: 'Cabane X SAC' });
+  });
+});
+
 describe('comfort rating', () => {
   const terrain = (over: Partial<TerrainMetrics> = {}): TerrainMetrics => ({
     elevation: 2400, slopeDeg: 3, horizon: [12, 12, 12, 12, 12, 12, 12, 12], meanHorizon: 12, tpi: 0, steepAboveM: undefined, dropNearM: undefined, ...over,

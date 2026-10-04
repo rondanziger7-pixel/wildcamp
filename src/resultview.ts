@@ -25,12 +25,21 @@ export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, 
   return e;
 }
 
-function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: string; sources?: string[] }[], more: string) {
+export type Focus = (e: number, n: number, label: string) => void;
+
+function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: string; sources?: string[]; at?: { e: number; n: number; label: string } }[], more: string, focus?: Focus) {
   const list = el('ul', 'checks');
   const sorted = [...items].sort((x, y) => TONE_ORDER[x.tone] - TONE_ORDER[y.tone]);
   sorted.forEach((it, i) => {
     const li = el('li', `check ${it.tone}${i >= VISIBLE ? ' more' : ''}`);
     li.append(el('h3', undefined, it.title), el('p', undefined, it.text));
+    const at = it.at;
+    if (at && focus) {
+      const go = el('button', 'linkish', '📍 Show on map');
+      go.type = 'button';
+      go.onclick = () => focus(at.e, at.n, at.label);
+      li.append(go);
+    }
     if (it.sources?.length) {
       const s = el('div', 'srcs');
       s.append('Source: ');
@@ -97,7 +106,9 @@ function chip(kind: string) {
 }
 
 /** Draws the result: two score cards (legality, sleep) that open into details, plus water and weather chips. */
-export function renderResult(root: HTMLElement, a: Assessment, elevation: number | undefined): ResultUi {
+export function renderResult(root: HTMLElement, a: Assessment, elevation: number | undefined, focus?: Focus): ResultUi {
+  let waterAt: { e: number; n: number; label: string } | undefined;
+  let hutAt: { e: number; n: number; label: string } | undefined;
   const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · '));
 
   const legal = scoreCard('legal', 'Legality');
@@ -144,6 +155,18 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     };
   }
 
+  // Water and hut chips jump to the place on the map when it is known.
+  const jump = (btn: HTMLElement, target: () => { e: number; n: number; label: string } | undefined) => {
+    const open = btn.onclick;
+    btn.onclick = (ev) => {
+      const t = target();
+      if (t && focus) focus(t.e, t.n, t.label);
+      else open?.call(btn, ev);
+    };
+  };
+  jump(waterChip, () => waterAt);
+  jump(shelterChip, () => hutAt);
+
   const share = el('button', 'linkish', 'Copy link');
   share.type = 'button';
   share.onclick = async () => {
@@ -174,7 +197,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const parts: Node[] = [];
       if (loading.length) parts.push(el('p', 'panel-lead', `Still checking: ${loading.join(', ')}. The score updates when they arrive.`));
       if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', 'Camping is not allowed here, so this only shows what the spot would be like.'));
-      parts.push(head, ...checklist(c.factors, 'comfort details'));
+      parts.push(head, ...checklist(c.factors, 'comfort details', focus));
       if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
       parts.push(el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees, rock and snow are not modelled and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
       sleepPanel.replaceChildren(...parts);
@@ -189,9 +212,11 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         waterChip.textContent = '💧 Water: could not check';
         return;
       }
+      waterAt = w.kind !== 'none' && w.at ? { ...w.at, label: w.name ? `${w.kind === 'lake' ? 'Lake' : 'Stream'} ${w.name}` : w.kind === 'lake' ? 'Nearest lake' : 'Nearest stream' } : undefined;
       const kind = w.kind === 'lake' ? 'Lake' : w.kind === 'stream' ? 'Stream' : '';
       const base = w.kind === 'none' ? '💧 No water within 800 m' : `💧 ${kind}${w.name ? ` ${w.name}` : ''} · ${Math.round(w.meters / 10) * 10 || 5} m`;
       waterChip.replaceChildren(base);
+      if (waterAt) waterChip.append(el('span', 'tag go', '📍 map'));
       if (w.kind !== 'none') {
         if (w.upstreamPlants.length) {
           waterChip.classList.add('dirty');
@@ -213,7 +238,9 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const hut = r.shelters.find((x) => x.kind === 'hut' || x.kind === 'biwak');
       const km = (m: number) => (m < 950 ? `${Math.round(m / 50) * 50} m` : `${(m / 1000).toFixed(1)} km`);
       if (hut) {
+        hutAt = { ...hut.at, label: hut.name };
         shelterChip.textContent = `🏠 ${hut.kind === 'biwak' ? 'Bivouac shelter' : hut.club ? 'Club hut' : 'Hut'}: ${hut.name} · ${km(hut.meters)}`;
+        shelterChip.append(el('span', 'tag go', '📍 map'));
         if (hut.meters > 1500) shelterChip.classList.add('far');
       } else if (r.incomplete) shelterChip.textContent = '🏠 Huts: could not check fully';
       else {

@@ -153,3 +153,5 @@ button { font: inherit; cursor: pointer; }
 .leaflet-top.leaflet-right { margin-top: calc(max(10px, env(safe-area-inset-top)) + 54px); }
 
 .chip.shelter { }
+.chip .tag.go { background: transparent; border: 1px solid currentColor; color: var(--muted); }
+.check .linkish { margin-top: 4px; }

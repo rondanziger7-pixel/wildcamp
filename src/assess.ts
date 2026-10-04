@@ -18,6 +18,8 @@ export interface Item {
   text: string;
   /** Official source links, if the item rests on a recorded rule. */
   sources?: string[];
+  /** A place the item is about (LV95), so the interface can show it on the map. */
+  at?: { e: number; n: number; label: string };
 }
 
 export interface Assessment {

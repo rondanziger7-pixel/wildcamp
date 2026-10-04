@@ -71,3 +71,15 @@ describe('outside Switzerland', () => {
     expect(a.items[0]?.title).toBe('Outside Switzerland');
   });
 });
+
+describe('lv95ToWgs84', () => {
+  it('round-trips with wgs84ToLv95 to within a metre', async () => {
+    const { lv95ToWgs84 } = await import('../src/coords');
+    for (const [lat, lon] of [[46.95108, 7.43864], [46.0, 8.9], [46.5, 10.2]] as [number, number][]) {
+      const { e, n } = wgs84ToLv95(lat, lon);
+      const back = lv95ToWgs84(e, n);
+      expect(Math.abs(back.lat - lat)).toBeLessThan(2e-5);
+      expect(Math.abs(back.lon - lon)).toBeLessThan(2e-5);
+    }
+  });
+});

@@ -175,12 +175,13 @@ export function comfortFor(input: ComfortInput): Comfort {
     const what = w.kind === 'lake' ? 'lake' : 'stream';
     const label = w.name ? `${what} ${w.name}` : what;
     const treat = ' Treat or filter all surface water before drinking: livestock and wildlife can contaminate it.';
+    const wAt = w.at ? { ...w.at, label: w.name ? `${what} ${w.name}` : `Nearest ${what}` } : undefined;
     if (w.failed.includes('water')) missing.push('water');
     else if (w.kind === 'none') f.push({ tone: 'warn', score: -1, title: 'No water found nearby', text: `No stream or lake within 800 m in the hydrography map. Carry all the water you need, and check for springs.` });
-    else if (w.meters <= 20) f.push({ tone: 'warn', score: 1, title: 'Water right beside the spot', text: `A ${label} is about ${m(w.meters)} away. Handy, but noisy, damp and prone to flooding in heavy rain; camp a bit higher if you can.${treat}` });
-    else if (w.meters <= 150) f.push({ tone: 'ok', score: 2, title: 'Water close by', text: `A ${label} about ${m(w.meters)} away.${treat}` });
-    else if (w.meters <= 400) f.push({ tone: 'ok', score: 1, title: 'Water within 400 m', text: `A ${label} about ${m(w.meters)} away.${treat}` });
-    else f.push({ tone: 'info', score: 0, title: 'Water 400 to 800 m away', text: `A ${label} about ${m(w.meters)} away: a walk to fetch water.${treat}` });
+    else if (w.meters <= 20) f.push({ tone: 'warn', score: 1, at: wAt, title: 'Water right beside the spot', text: `A ${label} is about ${m(w.meters)} away. Handy, but noisy, damp and prone to flooding in heavy rain; camp a bit higher if you can.${treat}` });
+    else if (w.meters <= 150) f.push({ tone: 'ok', score: 2, at: wAt, title: 'Water close by', text: `A ${label} about ${m(w.meters)} away.${treat}` });
+    else if (w.meters <= 400) f.push({ tone: 'ok', score: 1, at: wAt, title: 'Water within 400 m', text: `A ${label} about ${m(w.meters)} away.${treat}` });
+    else f.push({ tone: 'info', score: 0, at: wAt, title: 'Water 400 to 800 m away', text: `A ${label} about ${m(w.meters)} away: a walk to fetch water.${treat}` });
 
     if (w.kind !== 'none') {
       if (w.glacierM !== undefined && w.glacierM <= 1000)
@@ -208,12 +209,12 @@ export function comfortFor(input: ComfortInput): Comfort {
     const alp = sh.find((x) => x.kind === 'alp' && x.meters <= 3000);
     const check = ' Distances are in a straight line, not walking times. Many huts are staffed only in summer; a winter room or bivouac box may be the only part open, so check before you rely on it.';
     const label = (x: { name: string; kind: string; club?: boolean }) => (x.kind === 'biwak' ? `Bivouac shelter ${x.name}` : x.club ? `${x.name} (club hut)` : x.name);
-    if (hut && hut.meters <= 1500) f.push({ tone: 'ok', score: 1, title: hut.kind === 'biwak' ? 'Bivouac shelter nearby' : 'Mountain hut nearby', text: `${label(hut)} is about ${km(hut.meters)} away.${check}` });
-    else if (hut) f.push({ tone: 'info', score: 0, title: 'Mountain hut within 5 km', text: `${label(hut)} is about ${km(hut.meters)} away.${check}` });
+    if (hut && hut.meters <= 1500) f.push({ tone: 'ok', score: 1, at: { ...hut.at, label: hut.name }, title: hut.kind === 'biwak' ? 'Bivouac shelter nearby' : 'Mountain hut nearby', text: `${label(hut)} is about ${km(hut.meters)} away.${check}` });
+    else if (hut) f.push({ tone: 'info', score: 0, at: { ...hut.at, label: hut.name }, title: 'Mountain hut within 5 km', text: `${label(hut)} is about ${km(hut.meters)} away.${check}` });
     else if (!input.shelters.incomplete) f.push({ tone: 'info', score: 0, title: 'No hut within 5 km', text: 'No mountain hut or bivouac shelter is mapped within 5 km. Plan to be self-sufficient: in bad weather or after an injury shelter may be far away.' });
     else missing.push('huts nearby');
-    if (inn && (!hut || inn.meters < hut.meters)) f.push({ tone: 'info', score: 0, title: 'Mountain inn nearby', text: `${inn.name} is about ${km(inn.meters)} away. Inns and restaurants are usually open only in season.` });
-    if (alp) f.push({ tone: 'info', score: 0, title: 'Alp nearby', text: `${alp.name} lies about ${km(alp.meters)} away. Alp buildings are usually private and locked outside the summer season, so they are not a dependable emergency shelter, but in season someone there can help. Livestock may be around.` });
+    if (inn && (!hut || inn.meters < hut.meters)) f.push({ tone: 'info', score: 0, at: { ...inn.at, label: inn.name }, title: 'Mountain inn nearby', text: `${inn.name} is about ${km(inn.meters)} away. Inns and restaurants are usually open only in season.` });
+    if (alp) f.push({ tone: 'info', score: 0, at: { ...alp.at, label: alp.name }, title: 'Alp nearby', text: `${alp.name} lies about ${km(alp.meters)} away. Alp buildings are usually private and locked outside the summer season, so they are not a dependable emergency shelter, but in season someone there can help. Livestock may be around.` });
   } else missing.push('huts nearby');
 
   // sun

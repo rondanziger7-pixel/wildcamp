@@ -84,18 +84,18 @@ describe('what shelters do to the comfort result', () => {
   const res = (shelters: ShelterResult['shelters'], incomplete = false): ShelterResult => ({ shelters, incomplete });
   const titles = (r?: ShelterResult) => comfortFor({ shelters: r }).factors.map((f) => f.title);
   it('a hut within 1.5 km scores +1, a farther one 0, and says distances are straight lines', () => {
-    const near = comfortFor({ shelters: res([{ name: 'Capanna Barone', kind: 'hut', meters: 190 }]) });
+    const near = comfortFor({ shelters: res([{ name: 'Capanna Barone', kind: 'hut', meters: 190, at: { e: 0, n: 0 } }]) });
     expect(near.score).toBe(1);
     expect(near.factors[0]).toMatchObject({ title: 'Mountain hut nearby', tone: 'ok' });
     expect(near.factors[0]!.text).toMatch(/straight line/);
     expect(near.factors[0]!.text).toMatch(/staffed only in summer/);
-    const far = comfortFor({ shelters: res([{ name: 'Fründenhütte SAC', kind: 'hut', meters: 2433, club: true }]) });
+    const far = comfortFor({ shelters: res([{ name: 'Fründenhütte SAC', kind: 'hut', meters: 2433, club: true, at: { e: 0, n: 0 } }]) });
     expect(far.score).toBe(0);
     expect(far.factors[0]!.title).toBe('Mountain hut within 5 km');
     expect(far.factors[0]!.text).toMatch(/club hut/);
   });
   it('a bivouac shelter is named as such', () => {
-    expect(titles(res([{ name: 'Rothorn', kind: 'biwak', meters: 900 }]))).toContain('Bivouac shelter nearby');
+    expect(titles(res([{ name: 'Rothorn', kind: 'biwak', meters: 900, at: { e: 0, n: 0 } }]))).toContain('Bivouac shelter nearby');
   });
   it('no hut within 5 km is stated, but only when the lookup was complete', () => {
     expect(titles(res([]))).toContain('No hut within 5 km');
@@ -104,17 +104,17 @@ describe('what shelters do to the comfort result', () => {
     expect(comfortFor({}).missing).toContain('huts nearby');
   });
   it('inns and alps are information only and are described honestly', () => {
-    const c = comfortFor({ shelters: res([{ name: 'Berghaus X', kind: 'inn', meters: 700 }, { name: 'Alp Y', kind: 'alp', meters: 1200 }]) });
+    const c = comfortFor({ shelters: res([{ name: 'Berghaus X', kind: 'inn', meters: 700, at: { e: 0, n: 0 } }, { name: 'Alp Y', kind: 'alp', meters: 1200, at: { e: 0, n: 0 } }]) });
     expect(c.factors.find((f) => f.title === 'Mountain inn nearby')!.text).toMatch(/open only in season/);
     expect(c.factors.find((f) => f.title === 'Alp nearby')!.text).toMatch(/private and locked outside the summer season/);
     expect(c.score).toBe(0);
   });
   it('an alp farther than 3 km is not mentioned', () => {
-    expect(titles(res([{ name: 'Alp Y', kind: 'alp', meters: 3500 }]))).not.toContain('Alp nearby');
+    expect(titles(res([{ name: 'Alp Y', kind: 'alp', meters: 3500, at: { e: 0, n: 0 } }]))).not.toContain('Alp nearby');
   });
   it('storm warnings name the nearest hut', () => {
     const c = comfortFor({
-      shelters: res([{ name: 'Capanna Barone', kind: 'hut', meters: 800 }]),
+      shelters: res([{ name: 'Capanna Barone', kind: 'hut', meters: 800, at: { e: 0, n: 0 } }]),
       night: { from: 'a', to: 'b', minTempC: 5, maxGustKmh: 95, meanWindKmh: 50, windFromDeg: 270, precipMm: 0, thunder: true },
     });
     for (const t of ['Thunderstorm forecast', 'Storm-force gusts']) expect(c.factors.find((f) => f.title === t)!.text).toMatch(/Capanna Barone, is about 800 m away/);

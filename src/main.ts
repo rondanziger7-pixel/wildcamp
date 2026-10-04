@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import './style.css';
 import { isInSwitzerland } from './coords';
 import { assess, type Assessment } from './assess';
-import { wgs84ToLv95 } from './coords';
+import { lv95ToWgs84, wgs84ToLv95 } from './coords';
 import { loadForestMask, type ForestMask } from './forestmask';
 import { fetchCanton, fetchElevation, fetchMunicipality, fetchZoneHits } from './geoadmin';
 import { classifyTreeline } from './treeline';
@@ -186,11 +186,31 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
 
 let marker: L.Marker | undefined;
 let checkId = 0;
+let spotAt: L.LatLng | undefined;
+let focusMarker: L.CircleMarker | undefined;
+
+/** Fly to a hut or water spot and mark it, keeping the tapped spot in view above/beside the sheet. */
+function focusOn(e: number, n: number, label: string) {
+  const { lat, lon } = lv95ToWgs84(e, n);
+  const target = L.latLng(lat, lon);
+  focusMarker?.remove();
+  focusMarker = L.circleMarker(target, { radius: 9, color: '#fff', weight: 3, fillColor: '#e8710a', fillOpacity: 1 })
+    .addTo(map)
+    .bindTooltip(label, { permanent: true, direction: 'top', offset: [0, -8] })
+    .openTooltip();
+  const wide = window.matchMedia('(min-width: 720px)').matches;
+  const pad = wide ? { paddingTopLeft: L.point(430, 70), paddingBottomRight: L.point(60, 40) } : { paddingTopLeft: L.point(40, 70), paddingBottomRight: L.point(40, Math.min(sheet.offsetHeight, window.innerHeight * 0.62) + 20) };
+  const bounds = L.latLngBounds([target, spotAt ?? target]);
+  map.flyToBounds(bounds, { ...pad, maxZoom: 16, duration: 0.8 });
+}
 
 async function checkSpot(lat: number, lng: number) {
   const id = ++checkId;
   const tappedAt = Date.now();
   marker?.remove();
+  focusMarker?.remove();
+  focusMarker = undefined;
+  spotAt = L.latLng(lat, lng);
   marker = L.marker([lat, lng]).addTo(map);
   history.replaceState(null, '', `#${lat.toFixed(5)},${lng.toFixed(5)},${map.getZoom()}`);
   if (!isInSwitzerland(lat, lng)) {
@@ -231,7 +251,7 @@ async function checkSpot(lat: number, lng: number) {
     return;
   }
   sheet.dataset.state = 'result';
-  const ui = renderResult(result, assessment, elevation);
+  const ui = renderResult(result, assessment, elevation, focusOn);
   sheet.scrollTop = 0;
   void loadDetails(ui, lat, lng, elevation, id, tappedAt);
 }
@@ -391,4 +411,4 @@ const LocateControl = L.Control.extend({
 new LocateControl({ position: 'topright' }).addTo(map);
 
 // Handle for browser tests in the dev server only.
-if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map } }).__wildcamp = { map };
+if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map; focusOn: typeof focusOn } }).__wildcamp = { map, focusOn };

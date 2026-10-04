@@ -1,5 +1,6 @@
 import { wgs84ToLv95 } from '../coords';
 import { distanceTo } from './surroundings';
+import { closestPoint } from './water';
 
 const API = 'https://api3.geo.admin.ch/rest/services/api/MapServer';
 const LAYER = 'ch.swisstopo.swissnames3d';
@@ -15,6 +16,8 @@ export interface Shelter {
   meters: number;
   /** A club hut (SAC, CAS, CAI, CAF) by its name. */
   club?: boolean;
+  /** Its position (LV95), the point of its outline closest to the spot. */
+  at: { e: number; n: number };
 }
 
 /** A club hut (SAC, CAS, CAI, CAF) by its name. */
@@ -64,7 +67,10 @@ export function placeShelters(candidates: { name: string; kind: ShelterKind }[],
   const out: Shelter[] = [];
   candidates.forEach((c, i) => {
     const meters = distanceTo(geometries[i], e, n);
-    if (Number.isFinite(meters) && meters <= SHELTER_RADIUS_M) out.push({ name: c.name, kind: c.kind, meters, club: c.kind === 'hut' && isClubHut(c.name) ? true : undefined });
+    if (Number.isFinite(meters) && meters <= SHELTER_RADIUS_M) {
+      const [x, y] = closestPoint(geometries[i]!, e, n) as [number, number];
+      out.push({ name: c.name, kind: c.kind, meters, club: c.kind === 'hut' && isClubHut(c.name) ? true : undefined, at: { e: x, n: y } });
+    }
   });
   return out.sort((a, b) => a.meters - b.meters);
 }

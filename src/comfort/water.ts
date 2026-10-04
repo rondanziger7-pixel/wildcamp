@@ -29,6 +29,8 @@ export interface WaterInfo {
   name?: string;
   /** Distance from the spot to the water in metres (Infinity when none found). */
   meters: number;
+  /** The point of the water closest to the spot (LV95). */
+  at?: { e: number; n: number };
   /** Glacier ice near the water: its distance, or undefined when none within 3 km. */
   glacierM?: number;
   /** Treatment plants on the same watercourse that lie higher than the water, so their discharge flows past it. */
@@ -139,8 +141,8 @@ export async function fetchWater(lat: number, lon: number, signal?: AbortSignal)
     return info;
   }
   if (!found) return info;
-  Object.assign(info, { kind: found.kind, name: found.name, meters: found.meters });
   const [we, wn] = found.point as [number, number];
+  Object.assign(info, { kind: found.kind, name: found.name, meters: found.meters, at: { e: we, n: wn } });
   const gl = 'ch.swisstopo.geologie-gletscherausdehnung';
 
   // glacier checks and the treatment-plant check do not depend on each other, so they run together
