@@ -8,7 +8,8 @@ import { loadForestMask, type ForestMask } from './forestmask';
 import { fetchCanton, fetchElevation, fetchMunicipality, fetchZoneHits } from './geoadmin';
 import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
-import { findMunicipalRule } from './municipalities';
+import { findMunicipalRule, findUnverifiedNote } from './municipalities';
+import { reportUrl } from './report';
 import { fetchJuraReserves } from './jura';
 import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { searchPlaces, type Place } from './search';
@@ -259,6 +260,7 @@ async function assessSpot(lat: number, lng: number, knownElevation?: number) {
     canton: canton.status === 'fulfilled' ? canton.value : undefined,
     municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
     municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
+    municipalNote: muni.status === 'fulfilled' ? findUnverifiedNote(muni.value?.bfs) : undefined,
     outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
   });
   return { assessment, elevation };
@@ -328,10 +330,14 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
     syncSavedCount();
   };
   result.append(save);
+  const report = el('a', 'linkish report-link', 'Report a missing or wrong rule');
+  report.href = reportUrl({ lat, lng, municipality: assessment.municipality, canton: assessment.canton?.name, verdict: assessment.verdict, link: location.href });
+  report.target = '_blank';
+  report.rel = 'noopener';
   const find = el('button', 'finder-btn', '🔍 Find the best spots near here');
   find.type = 'button';
   find.onclick = () => void findBest(lat, lng);
-  result.append(find);
+  result.append(find, report);
   sheet.scrollTop = 0;
   void loadDetails(ui, lat, lng, elevation, id, tappedAt);
 }

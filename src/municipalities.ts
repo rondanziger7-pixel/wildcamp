@@ -411,3 +411,36 @@ export function findMunicipalRule(bfs: number | undefined): MunicipalEntry | und
 export function validateMunicipalEntry(m: MunicipalEntry): string[] {
   return validateRuleAt([m.officialHost], m.name, m.rule);
 }
+
+/**
+ * A reported rule that has NOT been verified against the municipality's own regulation (its text could not be read).
+ * It is shown as a warning and caps the verdict at "Be careful"; it never produces "Not allowed", which stays
+ * reserved for rules read at the source (see MUNICIPAL_RULES).
+ */
+export interface UnverifiedNote {
+  bfs: number;
+  name: string;
+  text: string;
+  /** Where it was reported: press or guide pages, not the regulation. */
+  sources: { title: string; url: string }[];
+  checkedOn: string;
+}
+
+export const UNVERIFIED_NOTES: UnverifiedNote[] = [
+  {
+    bfs: 6300,
+    name: 'Zermatt',
+    text:
+      'Press and hiking-guide reports say the municipal Polizeireglement (2022), Art. 43, bans camping on public land throughout the municipality, including at mountain lakes such as Riffelsee and Stellisee, with a fine of CHF 200 per tent. ' +
+      'Camping means staying in tents, caravans or similar installations, and merely pitching a tent counts. The regulation text itself could not be read (its server blocks automated access), so this is not verified: treat it as probably banned and check with the municipality.',
+    sources: [
+      { title: 'SRF: Zermatt erhält umstrittenes Polizeireglement (press report)', url: 'https://www.srf.ch/news/bern-freiburg-wallis-zermatt-erhaelt-umstrittenes-polizeireglement' },
+      { title: 'Hikebeast: Wildcampen am Riffelsee (guide, secondary)', url: 'https://hikebeast.ch/de/journal/wildcampen-riffelsee/' },
+    ],
+    checkedOn: '2026-10-04',
+  },
+];
+
+export function findUnverifiedNote(bfs: number | undefined): UnverifiedNote | undefined {
+  return UNVERIFIED_NOTES.find((n) => n.bfs === bfs);
+}

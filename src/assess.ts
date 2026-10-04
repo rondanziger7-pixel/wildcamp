@@ -62,6 +62,8 @@ export function assess(input: {
   municipality?: string;
   /** A verified municipal rule for that municipality, if one is recorded. */
   municipalRule?: CantonRule;
+  /** A reported but unverified municipal rule: shown as a warning, never as a ban. */
+  municipalNote?: { text: string; sources: { url: string }[]; checkedOn: string };
   /** Set when the canton lookup worked but found no canton: the spot is outside Switzerland. */
   outsideSwitzerland?: boolean;
 }): Assessment {
@@ -69,7 +71,7 @@ export function assess(input: {
     const text = 'This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.';
     return { verdict: 'unknown', reasons: [text], items: [{ tone: 'warn', title: 'Outside Switzerland', text }], zones: [], treeline: input.treeline, outside: true };
   }
-  const { zones, treeline, treelineNote, canton, municipality, municipalRule } = input;
+  const { zones, treeline, treelineNote, canton, municipality, municipalRule, municipalNote } = input;
   const reasons: string[] = [];
   const items: Item[] = [];
   const worst = zones.reduce<number>((m, z) => Math.max(m, rank[z.layer.severity]), -1);
@@ -145,6 +147,10 @@ export function assess(input: {
       });
       if (municipalRule.stance === 'banned') verdict = 'no';
       else if (municipalRule.stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
+    } else if (municipalNote) {
+      reasons.push(`${municipality} (municipality, unverified): ${municipalNote.text}`);
+      items.push({ tone: 'warn', title: `${municipality}: reported camping ban, not verified`, text: `${municipalNote.text} (checked ${municipalNote.checkedOn})`, sources: municipalNote.sources.map((x) => x.url) });
+      if (verdict === 'likely_ok') verdict = 'caution';
     } else {
       const t = `Municipal police regulations can add rules and are not checked here; look for the municipality's Polizeireglement / règlement de police.`;
       reasons.push(`Municipality: ${municipality}. ${t}`);
