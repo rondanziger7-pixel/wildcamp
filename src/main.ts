@@ -21,14 +21,11 @@ import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
 import { bulletinAt, fetchBulletin, type AvalancheInfo } from './comfort/avalanche';
 import { fetchGround, type GroundInfo } from './comfort/ground';
-import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './finder';
 import { RESERVE_FILES, FOREST_FILE, TREELINE_FILE } from './localdata';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
 import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, type SavedSpot } from './saved';
-import { planNights } from './planner';
-import { renderPlan } from './planview';
 import { renderSaved } from './savedview';
-import { combined, renderFinder, type FinderRow } from './finderview';
+import type { FinderRow } from './finderview';
 import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
@@ -56,9 +53,12 @@ const map = L.map('map', { zoomControl: false }).setView(hashView ? [hLat!, hLon
 
 L.control.zoom({ position: 'topright' }).addTo(map);
 
-L.tileLayer(
+// Tile loading is kept light: tiles load when a pan or zoom settles, one ring of off-screen tiles is kept,
+// and the overlays below start only at the zooms where they say something and use 512 px tiles (a quarter of the requests).
+const LIGHT = { updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 } as const;
+const baseLayer = L.tileLayer(
   'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg',
-  { maxZoom: 18, attribution: '© swisstopo' },
+  { maxZoom: 18, attribution: '© swisstopo', ...LIGHT },
 ).addTo(map);
 
 const zoneOverlay = L.tileLayer
@@ -70,6 +70,9 @@ const zoneOverlay = L.tileLayer
     transparent: true,
     opacity: 0.45,
     attribution: '© BAFU',
+    tileSize: 512,
+    minZoom: 9,
+    ...LIGHT,
   });
 zoneOverlay.addTo(map);
 
@@ -80,6 +83,9 @@ const trailOverlay = L.tileLayer.wms('https://wms.geo.admin.ch/', {
   transparent: true,
   opacity: 0.9,
   attribution: '© swisstopo (trails)',
+  tileSize: 512,
+  minZoom: 11,
+  ...LIGHT,
 });
 trailOverlay.addTo(map);
 
@@ -90,36 +96,38 @@ const slopeOverlay = L.tileLayer.wms('https://wms.geo.admin.ch/', {
   transparent: true,
   opacity: 0.6,
   attribution: '© swisstopo (slope)',
+  tileSize: 512,
+  minZoom: 11,
+  ...LIGHT,
 });
 
-// Local data (forest map 3.7 MB, reserves, treeline surface) loads in the background. A check waits for it (up to
-// DATA_WAIT_MS), so a deep link or an early tap is not judged without the forest map or the reserve polygons.
-const loading: Promise<unknown>[] = [];
+// Local data (forest map 3.7 MB, reserves, treeline surface) is fetched after the map has drawn its first view, so it does
+// not compete with the map tiles, or at once when a check needs it. A check waits for it (up to DATA_WAIT_MS), so a deep
+// link or an early tap is not judged without the forest map or the reserve polygons.
 const DATA_WAIT_MS = 6000;
 let forestMask: ForestMask | undefined;
-loading.push(
-  loadForestMask(`${import.meta.env.BASE_URL}${FOREST_FILE}`)
-    .then((m) => (forestMask = m))
-    .catch((err) => console.warn('forest map failed to load', err)),
-);
-
 const reserveSets: ReserveSet[] = [];
-for (const file of RESERVE_FILES) {
-  loading.push(
-    loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
-      .then((r) => reserveSets.push(r))
-      .catch((err) => console.warn(`${file} failed to load`, err)),
-  );
-}
-
 let treelineSurface: TreelineSurface | undefined;
-loading.push(
-  loadTreelineSurface(`${import.meta.env.BASE_URL}${TREELINE_FILE}`)
-    .then((t) => (treelineSurface = t))
-    .catch((err) => console.warn('treeline surface failed to load', err)),
-);
 let dataLoaded = false;
-const dataReady = Promise.all(loading).then(() => (dataLoaded = true));
+let dataPromise: Promise<unknown> | undefined;
+
+/** Start fetching the local data once; later calls return the same promise. */
+function ensureData(): Promise<unknown> {
+  dataPromise ??= Promise.all([
+    loadForestMask(`${import.meta.env.BASE_URL}${FOREST_FILE}`)
+      .then((m) => (forestMask = m))
+      .catch((err) => console.warn('forest map failed to load', err)),
+    ...RESERVE_FILES.map((file) =>
+      loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
+        .then((r) => reserveSets.push(r))
+        .catch((err) => console.warn(`${file} failed to load`, err)),
+    ),
+    loadTreelineSurface(`${import.meta.env.BASE_URL}${TREELINE_FILE}`)
+      .then((t) => (treelineSurface = t))
+      .catch((err) => console.warn('treeline surface failed to load', err)),
+  ]).then(() => (dataLoaded = true));
+  return dataPromise;
+}
 
 const sheet = document.getElementById('sheet')!;
 document.getElementById('sheet-close')!.onclick = () => sheet.classList.add('closed');
@@ -264,7 +272,7 @@ function focusOn(e: number, n: number, label: string) {
 async function assessSpot(lat: number, lng: number, knownElevation?: number) {
   const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
   const LOOKUP_MS = 7000;
-  const dataWait = Promise.race([dataReady, new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
+  const dataWait = Promise.race([ensureData(), new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
   const [elev, zones, canton, muni, jura] = await Promise.allSettled([
     knownElevation !== undefined ? Promise.resolve(knownElevation) : withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
     withTimeout(fetchZoneHits(lat, lng), LOOKUP_MS),
@@ -428,6 +436,7 @@ async function showPlan(picked: SavedSpot[]) {
   const windows = nightWindows(zurichNow(new Date()));
   result.replaceChildren(el('p', 'where', tr('Loading the forecast for each spot…')));
   const forecasts = await Promise.allSettled(picked.map((sp) => withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000)));
+  const [{ planNights }, { renderPlan }] = await Promise.all([import('./planner'), import('./planview')]); // loaded when first used
   const plan = planNights(picked, windows, forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined)));
   renderPlan(result, plan, forecasts.slice(0, plan.rows.length).filter((f) => f.status === 'rejected').length, showSaved);
 }
@@ -464,6 +473,9 @@ async function findBest(lat: number, lng: number) {
   sheet.dataset.state = 'result';
   result.hidden = false;
   const gone = () => id !== finderId;
+  // the finder code is loaded the first time it is used
+  const [{ fetchCoverGrid, fetchElevationGrid, rankCells, withWater }, { combined, renderFinder }] = await Promise.all([import('./finder'), import('./finderview')]);
+  if (gone()) return;
   const mount = () => renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true));
   let ui = mount();
   finderBack = undefined;
@@ -759,6 +771,22 @@ const SavedControl = L.Control.extend({
   },
 });
 new SavedControl({ position: 'topright' }).addTo(map);
+
+// Fetch the local data once the map has drawn (or after 4 s at most), and at once for a deep link.
+{
+  const later = () => {
+    const run = () => void ensureData();
+    if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (f: () => void, o: { timeout: number }) => void }).requestIdleCallback(run, { timeout: 2000 });
+    else setTimeout(run, 1500);
+  };
+  if (hashView) void ensureData();
+  else {
+    let started = false;
+    const go = () => !started && ((started = true), later());
+    baseLayer.once('load', () => setTimeout(go, 800)); // the first view's tiles are in
+    setTimeout(go, 4000);
+  }
+}
 
 // Handle for browser tests in the dev server only.
 if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map; focusOn: typeof focusOn } }).__wildcamp = { map, focusOn };

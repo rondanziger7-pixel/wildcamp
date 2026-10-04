@@ -63,7 +63,8 @@ describe('service worker routing', () => {
     expect(kind('https://wms.geo.admin.ch/?layers=a')).toBe('tile');
     expect(kind('https://api3.geo.admin.ch/rest/services/api/MapServer/identify?x=1')).toBe('api');
     expect(kind('https://app.test/wildcamp/assets/index-abc.js')).toBe('shell');
-    expect(kind('https://app.test/wildcamp/forest-mask.bin.gz')).toBe('shell');
+    expect(kind('https://app.test/wildcamp/forest-mask.bin.gz')).toBe('data');
+    expect(kind('https://app.test/wildcamp/reserves-be.json.gz')).toBe('data');
   });
   it('never caches the forecast, search or any POST', () => {
     expect(kind('https://api.open-meteo.com/v1/forecast?x=1')).toBe('network');

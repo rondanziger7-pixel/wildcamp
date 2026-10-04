@@ -3,6 +3,7 @@ import { LOCAL_DATA_FILES } from './localdata';
 export const TILE_URL = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg';
 export const TILE_CACHE = 'wc-tiles-v1';
 export const SHELL_CACHE = 'wc-shell-v1';
+export const DATA_CACHE = 'wc-data-v1';
 /** Most tiles one download may fetch: about 30 KB each, so roughly 15 MB. */
 export const MAX_TILES = 500;
 
@@ -91,12 +92,14 @@ export async function saveTiles(urls: string[], onProgress: (p: SaveProgress) =>
 /** Cache the app's own files and the bundled data, so a later visit works without a connection. */
 export async function saveShell(base: string): Promise<void> {
   const cache = await caches.open(SHELL_CACHE);
-  const urls = [
-    location.href.split('#')[0]!,
-    ...shellUrls(performance.getEntriesByType('resource') as PerformanceResourceTiming[], location.origin),
-    ...LOCAL_DATA_FILES.map((f) => new URL(f, new URL(base, location.href)).href),
-  ];
-  await Promise.allSettled([...new Set(urls)].map((u) => cache.add(u)));
+  const dataCache = await caches.open(DATA_CACHE);
+  const urls = [location.href.split('#')[0]!, ...shellUrls(performance.getEntriesByType('resource') as PerformanceResourceTiming[], location.origin)].filter((u) => !/\.gz$/.test(u));
+  const files = LOCAL_DATA_FILES.map((f) => new URL(f, new URL(base, location.href)).href);
+  await Promise.allSettled([
+    ...[...new Set(urls)].map((u) => cache.add(u)),
+    // data files already in the cache are not downloaded again
+    ...files.map(async (u) => ((await dataCache.match(u)) ? undefined : dataCache.add(u))),
+  ]);
 }
 
 /** Register the service worker (production builds only) and cache the shell once it is active. */
