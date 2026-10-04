@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import tile from './fixtures/cover-tile.json';
-import { CANDIDATE_RADIUS_M, MIN_SEPARATION_M, STEP, bearingTo, compass8, gridFromProfile, makeGrid, parseCoverTile, profilesAt, rankCells, serpentine, withWater, zAt, type Grid } from '../src/finder';
+import { fetchElevationGrid, CANDIDATE_RADIUS_M, MIN_SEPARATION_M, STEP, bearingTo, compass8, gridFromProfile, makeGrid, parseCoverTile, profilesAt, rankCells, serpentine, withWater, zAt, type Grid } from '../src/finder';
 import type { Cover } from '../src/comfort/ground';
 
 const CE = 2622000;
@@ -44,6 +44,42 @@ describe('grid', () => {
     expect(p.ew[10]).toBeCloseTo(0, 6);
     expect(p.ew[11]! - p.ew[10]!).toBeCloseTo(10, 6);
     expect(p.ns[11]! - p.ns[10]!).toBeCloseTo(0, 6);
+  });
+});
+
+describe('elevation request', () => {
+  it('posts a string body with the exact form content type (the service answers 415 to ";charset=UTF-8")', async () => {
+    let seen: { url: string; init: RequestInit } | undefined;
+    const g = makeGrid(CE, CN);
+    const body = JSON.stringify(serpentine(g).map(() => ({ alts: { COMB: 1500 } })));
+    const real = globalThis.fetch;
+    globalThis.fetch = (async (url: string, init: RequestInit) => {
+      seen = { url, init };
+      return new Response(body, { status: 200 });
+    }) as typeof fetch;
+    try {
+      const grid = await fetchElevationGrid(CE, CN);
+      expect(grid.size).toBe(23);
+    } finally {
+      globalThis.fetch = real;
+    }
+    expect(seen!.url).toBe('https://api3.geo.admin.ch/rest/services/profile.json');
+    expect(seen!.init.method).toBe('POST');
+    expect(seen!.init.headers).toEqual({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    expect(typeof seen!.init.body).toBe('string');
+    const form = new URLSearchParams(seen!.init.body as string);
+    expect(form.get('nbPoints')).toBe('529');
+    expect(form.get('distinct_points')).toBe('true');
+    expect(JSON.parse(form.get('geom')!).coordinates).toHaveLength(529);
+  });
+  it('reports the HTTP status when the service refuses', async () => {
+    const real = globalThis.fetch;
+    globalThis.fetch = (async () => new Response('no', { status: 415 })) as typeof fetch;
+    try {
+      await expect(fetchElevationGrid(CE, CN)).rejects.toThrow('profile 415');
+    } finally {
+      globalThis.fetch = real;
+    }
   });
 });
 

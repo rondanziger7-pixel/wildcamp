@@ -478,8 +478,10 @@ async function findBest(lat: number, lng: number) {
     };
     await Promise.all(Array.from({ length: FINDER_POOL }, worker));
     draw(true);
-  } catch {
-    if (!gone()) ui.update([], 'The terrain could not be loaded. Check your connection and try again.', true);
+  } catch (err) {
+    console.warn('best spots failed', err);
+    const why = err instanceof Error ? err.message : String(err);
+    if (!gone()) ui.update([], `The terrain could not be loaded (${why}). Check your connection and try again.`, true);
   } finally {
     window.clearTimeout(stop);
   }

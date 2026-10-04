@@ -69,8 +69,14 @@ export async function fetchElevationGrid(e: number, n: number, signal?: AbortSig
     nbPoints: String(base.size * base.size),
     distinct_points: 'true',
   });
-  // POST: the path is far too long for a query string
-  const res = await fetch('https://api3.geo.admin.ch/rest/services/profile.json', { method: 'POST', body, signal });
+  // POST: the path is far too long for a query string. The body is sent as a string with this exact content type:
+  // a URLSearchParams body makes browsers add ";charset=UTF-8", which the service rejects with 415.
+  const res = await fetch('https://api3.geo.admin.ch/rest/services/profile.json', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+    signal,
+  });
   if (!res.ok) throw new Error(`profile ${res.status}`);
   return gridFromProfile(base, parseProfile(await res.json()));
 }
