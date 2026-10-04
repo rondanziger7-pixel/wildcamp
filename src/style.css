@@ -206,3 +206,6 @@ button { font: inherit; cursor: pointer; }
 .season-note { margin: 4px 0 0; font-size: .8rem; color: var(--muted); }
 .rules { margin-top: 14px; }
 .rules-title { font-size: .95rem; margin: 0 0 2px; }
+.plan-list { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 8px; }
+.plan-row { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.plan-row.weakest { border-color: var(--bad); }

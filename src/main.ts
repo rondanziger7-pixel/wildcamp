@@ -24,6 +24,8 @@ import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './find
 import { RESERVE_FILES, FOREST_FILE, TREELINE_FILE } from './localdata';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
 import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, type SavedSpot } from './saved';
+import { planNights } from './planner';
+import { renderPlan } from './planview';
 import { renderSaved } from './savedview';
 import { combined, renderFinder, type FinderRow } from './finderview';
 import { legalityScore, sleepScore } from './scores';
@@ -412,7 +414,15 @@ function showSaved() {
       syncSavedCount();
       showSaved();
     },
+    onPlan: (picked) => void showPlan(picked),
   });
+}
+async function showPlan(picked: SavedSpot[]) {
+  const windows = nightWindows(zurichNow(new Date()));
+  result.replaceChildren(el('p', 'where', 'Loading the forecast for each spot…'));
+  const forecasts = await Promise.allSettled(picked.map((sp) => withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000)));
+  const plan = planNights(picked, windows, forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined)));
+  renderPlan(result, plan, forecasts.slice(0, plan.rows.length).filter((f) => f.status === 'rejected').length, showSaved);
 }
 savedBtn.onclick = showSaved;
 document.getElementById('intro')!.append(savedBtn);

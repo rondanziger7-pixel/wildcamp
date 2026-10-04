@@ -5,6 +5,8 @@ import { el } from './resultview';
 export interface SavedHandlers {
   onOpen(s: SavedSpot): void;
   onRemove(id: string): void;
+  /** Plan a trip: the ticked spots, in the order they were ticked, one per night. */
+  onPlan(spots: SavedSpot[]): void;
 }
 
 const MAX_COMPARE = 4;
@@ -16,15 +18,20 @@ export function renderSaved(root: HTMLElement, spots: SavedSpot[], h: SavedHandl
     root.replaceChildren(title, el('p', 'where', 'Nothing saved yet. Check a spot and press "Save this spot".'));
     return;
   }
-  const picked = new Set<string>();
+  const picked = new Set<string>(); // insertion order = tick order
   const list = el('ul', 'saved-list');
   const out = el('div', 'saved-compare');
   const cmp = el('button', 'finder-btn', 'Compare ticked spots');
   cmp.type = 'button';
   cmp.disabled = true;
+  const plan = el('button', 'finder-btn', 'Plan nights with ticked spots');
+  plan.type = 'button';
+  plan.disabled = true;
   const sync = () => {
     cmp.disabled = picked.size < 2;
     cmp.textContent = picked.size < 2 ? 'Tick 2 to 4 spots to compare' : `Compare ${picked.size} spots`;
+    plan.disabled = picked.size < 1;
+    plan.textContent = picked.size < 1 ? 'Tick spots to plan nights (in tick order)' : `Plan ${picked.size} night${picked.size === 1 ? '' : 's'} in the order ticked`;
   };
   sync();
   for (const s of spots) {
@@ -70,8 +77,9 @@ export function renderSaved(root: HTMLElement, spots: SavedSpot[], h: SavedHandl
     out.replaceChildren(wrap, el('p', 'disclaimer', 'Scores are as they were when you saved each spot (weather for the night shown). Open a spot to check it again. The best score in a row is highlighted.'));
     out.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   };
+  plan.onclick = () => h.onPlan([...picked].map((id) => spots.find((s) => s.id === id)!).filter(Boolean));
   const exp = el('button', 'linkish', 'Export all as GPX (for a navigation app)');
   exp.type = 'button';
   exp.onclick = () => downloadText('wildcamp-spots.gpx', spotsToGpx(spots));
-  root.replaceChildren(title, list, cmp, out, exp);
+  root.replaceChildren(title, list, cmp, plan, out, exp);
 }
