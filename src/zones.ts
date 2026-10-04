@@ -121,6 +121,18 @@ export const RESERVE_ZONES = {
     severity: 'caution',
     note: 'Protected nature reserve. The readable text of its protection decree has no camping or tenting clause (it may be an unreadable scan), so check the decree.',
   },
+  tiDecreeBan: {
+    id: 'ti-decree-ban',
+    label: 'Ticino nature protection area',
+    severity: 'restricted',
+    note: 'The protection decree prohibits camping (the camping law only exempts bivouac tenting in the mountains elsewhere).',
+  },
+  tiOther: {
+    id: 'ti-decree-other',
+    label: 'Ticino nature protection area',
+    severity: 'caution',
+    note: 'Area under a Ticino protection decree. The decree text has no camping prohibition, so check it.',
+  },
   ju: {
     id: 'ju-reserve',
     label: 'Jura nature reserve',

@@ -41,10 +41,12 @@ loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
   .then((m) => (forestMask = m))
   .catch((err) => console.warn('forest map failed to load', err));
 
-let reserveSet: ReserveSet | undefined;
-loadReserveSet(`${import.meta.env.BASE_URL}reserves-be.json.gz`)
-  .then((r) => (reserveSet = r))
-  .catch((err) => console.warn('Bern reserves failed to load', err));
+const reserveSets: ReserveSet[] = [];
+for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz']) {
+  loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
+    .then((r) => reserveSets.push(r))
+    .catch((err) => console.warn(`${file} failed to load`, err));
+}
 
 let treelineSurface: TreelineSurface | undefined;
 loadTreelineSurface(`${import.meta.env.BASE_URL}treeline-surface.bin.gz`)
@@ -101,7 +103,7 @@ map.on('click', async (ev: L.LeafletMouseEvent) => {
   const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
   render(
     assess({
-      zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...(reserveSet ? reserveZoneHits(reserveSet, e, n) : []), ...(jura.status === 'fulfilled' ? jura.value : [])],
+      zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...(jura.status === 'fulfilled' ? jura.value : [])],
       zoneLookupFailed: zones.status === 'rejected',
       treeline,
       treelineNote,

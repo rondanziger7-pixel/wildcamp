@@ -2,7 +2,9 @@ import { readFileSync } from 'node:fs';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { assess } from '../src/assess';
 import { decodeReserveSet, parseReserveSet, reserveZoneHits, reservesAt, type ReserveSet } from '../src/reserves';
+import { wgs84ToLv95 } from '../src/coords';
 import fixture from './fixtures/be-reserve-points.json';
+import tiFixture from './fixtures/ti-reserve-points.json';
 
 const square = (x: number, y: number, s: number) => [x, y, x + s, y, x + s, y + s, x, y + s];
 const synthetic = parseReserveSet({
@@ -86,5 +88,47 @@ describe('real Bern reserves (public/reserves-be.json.gz)', () => {
     const r = set.reserves.find((x) => x.id === 86)!;
     expect(r.name).toMatch(/Engstlensee/);
     expect(r.level).toBe('restricted');
+  });
+});
+
+describe('real Ticino protection areas (public/reserves-ti.json.gz)', () => {
+  let set: ReserveSet;
+  beforeAll(async () => {
+    const b = readFileSync('public/reserves-ti.json.gz');
+    set = await decodeReserveSet(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength));
+  });
+  it('has the 351 in-force polygons, each linked to a decree PDF on ti.ch', () => {
+    expect(set.canton).toBe('TI');
+    expect(set.reserves).toHaveLength(351);
+    for (const r of set.reserves) {
+      expect(r.decree).toMatch(/^https:\/\/www4\.ti\.ch\/.+\.pdf$/);
+      expect(r.scan).not.toBe('notext');
+    }
+  });
+  it('splits decrees into camping bans and silent ones', () => {
+    const banned = set.reserves.filter((r) => r.level === 'restricted').length;
+    expect(banned).toBeGreaterThan(250);
+    expect(set.reserves.length - banned).toBeGreaterThan(40);
+  });
+  it('contains points taken from inside the source polygons', () => {
+    const hits = tiFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / tiFixture.length).toBeGreaterThan(0.93);
+  });
+  it('Bolle di Magadino bans camping per its ordinance, with the zone C exception', () => {
+    const { e, n } = wgs84ToLv95(46.156, 8.862);
+    const hits = reserveZoneHits(set, e, n);
+    expect(hits.length).toBeGreaterThan(0);
+    const ban = hits.find((h) => h.layer.severity === 'restricted')!;
+    expect(ban.layer.label).toMatch(/Ticino/);
+    expect(ban.name).toMatch(/Bolle di Magadino/);
+    expect(ban.detail).not.toMatch(/zone C/); // this point is in the absolute protection zone A
+    expect(assess({ zones: hits, treeline: 'above' }).verdict).toBe('no');
+    // the zone C exception is carried only by zone C polygons
+    const zoneC = set.reserves.filter((r) => /Bolle di Magadino/.test(r.name) && /\(C:/.test(r.name));
+    expect(zoneC.length).toBeGreaterThan(0);
+    expect(zoneC.every((r) => /zone C/.test(r.exception ?? ''))).toBe(true);
+  });
+  it('does not flag Lugano city centre or Gornergrat', () => {
+    expect(reservesAt(set, ...(Object.values(wgs84ToLv95(46.0037, 8.9511)) as [number, number]))).toEqual([]);
   });
 });

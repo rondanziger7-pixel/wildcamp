@@ -102,7 +102,8 @@ def normalise(t: str) -> str:
     return flat
 
 
-def classify(txt_path: str, pdf_path: str) -> str:
+def classify(txt_path: str, pdf_path: str) -> tuple[str, str]:
+    """Returns (class, quoted excerpt of the first prohibition found)."""
     try:
         t = open(txt_path, encoding="utf-8", errors="replace").read()
     except FileNotFoundError:
@@ -113,7 +114,7 @@ def classify(txt_path: str, pdf_path: str) -> str:
             ocr_pdf(pdf_path, ocr_txt)
         t = open(ocr_txt, encoding="utf-8", errors="replace").read() if os.path.exists(ocr_txt) else ""
         if len(re.sub(r"\s+", "", t)) < 300:
-            return "notext"
+            return "notext", ""
     flat = normalise(t)
     despaced = re.sub(r"(?<=\b\w) (?=\w\b)", "", flat)  # OCR spaced letters like "Z e l t e n"
     for src in (flat, despaced):
@@ -122,8 +123,9 @@ def classify(txt_path: str, pdf_path: str) -> str:
             near = src[max(0, m.start() - 100) : m.end() + 100]
             # a camping term inside a prohibition list is a ban; one with only permissive wording nearby is not
             if PROHIBIT.search(context) or not PERMISSIVE.search(near):
-                return "banned"
-    return "entry" if ENTRY.search(flat) else "silent"
+                return "banned", src[max(0, m.start() - 110) : m.end() + 90]
+    e = ENTRY.search(flat)
+    return ("entry", flat[max(0, e.start()) : e.end() + 60]) if e else ("silent", "")
 
 
 def ring_to_ints(ring: list[list[float]]) -> list[int]:
@@ -145,7 +147,7 @@ def main() -> None:
     for f in feats:
         a = f["attributes"]
         nr, name, url = a["NSG_NR"], a["NSG_NAME"], a["URL_BESCHL"]
-        cls = classify(texts[nr], pdfs[nr])
+        cls, excerpt = classify(texts[nr], pdfs[nr])
         level = "restricted" if cls in ("banned", "entry") else "caution"
         rings = []
         for ring in f["geometry"]["rings"]:
@@ -157,12 +159,12 @@ def main() -> None:
             {"id": nr, "name": name, "level": level, "decree": url, "scan": cls,
              **({"exception": EXCEPTIONS[nr]} if nr in EXCEPTIONS else {}), "rings": rings}
         )
-        rows.append([nr, name, cls, level, url])
+        rows.append([nr, name, cls, level, url, excerpt])
     with gzip.open(out, "wt", encoding="utf-8") as g:
         json.dump({"canton": "BE", "generated": time.strftime("%Y-%m-%d"), "reserves": reserves}, g, separators=(",", ":"))
     with open(evidence, "w", newline="", encoding="utf-8") as g:
         w = csv.writer(g)
-        w.writerow(["nsg_nr", "name", "decree_scan", "app_level", "decree_url"])
+        w.writerow(["nsg_nr", "name", "decree_scan", "app_level", "decree_url", "excerpt"])
         w.writerows(sorted(rows))
     n = lambda c: sum(1 for r in rows if r[2] == c)
     print(f"wrote {out}: banned {n('banned')}, entry {n('entry')}, silent {n('silent')}, notext {n('notext')}", file=sys.stderr)
