@@ -390,6 +390,18 @@ export const MUNICIPAL_RULES: MunicipalEntry[] = [
       checkedOn: '2026-10-04',
     },
   },
+  {
+    bfs: 6290,
+    name: 'Saas-Fee',
+    officialHost: '3906.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeireglement (adopted 15.12.2025, homologated by the Staatsrat 22.4.2026), Art. 29: camping on public ground outside the zones designated by the municipality is an offence; camping means staying in tents, caravans or similar installations, and merely pitching a tent counts. Breaches can be fined CHF 10 to 5,000 (Art. 47). Public ground only, so it cannot be told from private land on a map; sleeping outdoors without a tent is not addressed. The saved text is OCR of a scan and its lead-in sentence is damaged.',
+      sources: [{ title: 'Polizeireglement der Gemeinde Saas-Fee, Art. 29 and 47', url: 'https://www.3906.ch/_rte/publikation/13186' }],
+      checkedOn: '2026-10-04',
+    },
+  },
 ];
 
 export function findMunicipalRule(bfs: number | undefined): MunicipalEntry | undefined {

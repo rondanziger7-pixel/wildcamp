@@ -229,8 +229,16 @@ describe('municipalities in Valais, Uri and Graubünden', () => {
   it('Grächen, Wildhaus-Alt St. Johann and Muotathal were read and have no camping article, so they are not recorded', () => {
     for (const b of [6285, 3359, 1367]) expect(findMunicipalRule(b)).toBeUndefined();
   });
-  it('Zermatt, Saas-Fee, Riederalp, Bettmeralp and Glarus Süd are not recorded because their regulations could not be read', () => {
-    for (const b of [6300, 6290, 6181, 6205, 1631]) expect(findMunicipalRule(b)).toBeUndefined();
+  it('Saas-Fee: camping on public ground outside designated zones, recorded as restricted from the saved text', () => {
+    const r = findMunicipalRule(6290)!.rule;
+    expect(r.stance).toBe('restricted');
+    expect(text('6290_Saas-Fee', 'Polizeireglement_2025-12-15.txt')).toMatch(/art\. 29 campieren[\s\S]*ausserhalb der von der gemeinde dafür bezeichneten\s+zonen\s+campiert/);
+  });
+  it('Riederalp was read (OCR) and has no camping article, so it is not recorded', () => {
+    expect(findMunicipalRule(6181)).toBeUndefined();
+  });
+  it('Zermatt, Bettmeralp and Glarus Süd are not recorded because no regulation text could be read', () => {
+    for (const b of [6300, 6205, 1631]) expect(findMunicipalRule(b)).toBeUndefined();
   });
 });
 
