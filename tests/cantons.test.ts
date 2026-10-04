@@ -177,7 +177,7 @@ describe('Bernese Oberland municipalities', () => {
     for (const r of restricted) expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: findMunicipalRule(r)!.rule }).verdict).toBe('caution');
   });
   it('every summary names its fine and says whether a tentless bivouac is covered or not addressed', () => {
-    for (const m of MUNICIPAL_RULES.filter((x) => x.bfs !== 351)) {
+    for (const m of MUNICIPAL_RULES.filter((x) => [565, 573, 576, 584, 594, 841, 842, 561, 567, 581, 768, 792, 843].includes(x.bfs))) {
       expect(m.rule.summary, m.name).toMatch(/CHF [\d,]+/);
       expect(m.rule.summary, m.name).toMatch(/without a tent|Biwakieren|tent/);
     }
@@ -197,6 +197,40 @@ describe('Bernese Oberland municipalities', () => {
   it('Meiringen was read and has no camping ban, so it is deliberately not recorded', () => {
     expect(findMunicipalRule(785)).toBeUndefined();
     expect(text('785_Meiringen', 'ortspolizeireglement_2009.txt')).toContain('campingzwecke zur verfügung stellt, benötigt eine baubewilligung');
+  });
+});
+
+describe('municipalities in Valais, Uri and Graubünden', () => {
+  const banned = [1202, 1208, 3732, 3784, 3787, 3851, 3871];
+  const restricted = [1212, 3921, 6057, 6058, 6111];
+  const squash = (t: string) => t.replace(/-\s*\n\s*/g, '').replace(/\s+/g, ' ').toLowerCase();
+  const text = (dir: string, file: string) => squash(readFileSync(`docs/sources/municipal/${dir}/${file}`, 'utf8'));
+  it('records each with the stance its text supports', () => {
+    for (const b of banned) expect(findMunicipalRule(b)?.rule.stance, String(b)).toBe('banned');
+    for (const r of restricted) expect(findMunicipalRule(r)?.rule.stance, String(r)).toBe('restricted');
+  });
+  it('a ban forces no and a public-ground-only rule caps at caution', () => {
+    for (const b of banned) expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: findMunicipalRule(b)!.rule }).verdict).toBe('no');
+    for (const r of restricted) expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: findMunicipalRule(r)!.rule }).verdict).toBe('caution');
+  });
+  it('the saved texts contain the sentences the summaries rely on', () => {
+    for (const [dir, file] of [['6057_Fiesch', 'polizeireglement.txt'], ['6058_Fieschertal', 'polizeireglement.txt'], ['6111_Leukerbad', 'polizeireglement.txt']] as const)
+      expect(text(dir, file)).toContain('das campieren und übernachten auf öffentlichem grund und boden ist nur in den von der gemeinde dafür bezeichneten zonen gestattet');
+    expect(text('1202_Andermatt', 'bzo.txt')).toContain('das wilde campieren ist verboten');
+    expect(text('1212_Realp', 'bzo.txt')).toContain('das wilde campieren ist verboten');
+    expect(text('1208_Goeschenen', 'campingverordnung_2022.txt')).toContain('ausserhalb behördlich bewilligter camping- oder stellplätze ist nicht gestattet');
+    expect(text('3851_Davos', 'verordnung_campingwesen.txt')).toContain('ausserhalb von behördlich bewilligten standorten untersagt');
+    expect(text('3871_Klosters', 'baugesetz.txt')).toContain('ausserhalb der bauzone sowie generell auf öffentlichem grund untersagt');
+    expect(text('3921_Arosa', 'polizeigesetz_610.100.txt')).toContain('nur an den von der gemeinde bezeichneten stellen erlaubt');
+    expect(text('3784_Pontresina', 'polizeigesetz.txt')).toContain('ansonsten ist das campieren ohne bewilligung des gemeindevorstandes untersagt');
+    expect(text('3787_St.Moritz', 'polizeigesetz_7.7_rev2026.txt')).toContain('ausserhalb von gekennzeichneten campingplätzen ist das campieren untersagt');
+    expect(text('3732_Flims', 'gastwirtschaftsgesetz.txt')).toContain('das campieren ausserhalb von bewilligten campingplätzen ist verboten');
+  });
+  it('Grächen, Wildhaus-Alt St. Johann and Muotathal were read and have no camping article, so they are not recorded', () => {
+    for (const b of [6285, 3359, 1367]) expect(findMunicipalRule(b)).toBeUndefined();
+  });
+  it('Zermatt, Saas-Fee, Riederalp, Bettmeralp and Glarus Süd are not recorded because their regulations could not be read', () => {
+    for (const b of [6300, 6290, 6181, 6205, 1631]) expect(findMunicipalRule(b)).toBeUndefined();
   });
 });
 

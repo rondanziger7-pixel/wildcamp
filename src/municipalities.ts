@@ -220,6 +220,176 @@ export const MUNICIPAL_RULES: MunicipalEntry[] = [
       checkedOn: '2026-10-04',
     },
   },
+  {
+    bfs: 6057,
+    name: 'Fiesch',
+    officialHost: 'gemeinde-fiesch.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeireglement (approved 2016), Art. 16: camping and overnighting on public ground is only allowed in the zones the municipality designates ("Campieren und Übernachten", so a tent is not required). Breaches can be fined up to CHF 5,000 (Art. 2). Public ground only, so it cannot be told from private land on a map. The municipality\'s notice board says camping outside campsites is banned, which is wider than the regulation\'s text.',
+      sources: [
+        { title: 'Polizeireglement der Gemeinde Fiesch (Urversammlung 23.6.2015), Art. 2, 16', url: 'https://www.gemeinde-fiesch.ch?action=get_file&id=90&resource_link_id=55a' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 6058,
+    name: 'Fieschertal',
+    officialHost: 'fieschertal.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeireglement (approved 2021), Art. 18: camping and overnighting on public ground is only allowed in the zones the municipality designates ("Campieren und Übernachten", so a tent is not required). Breaches can be fined CHF 10 to 5,000 (Art. 2). Public ground only. The saved PDF is a scan transcribed by hand.',
+      sources: [
+        { title: 'Polizeireglement der Gemeinde Fieschertal (Urversammlung 19.8.2020), Art. 2, 18', url: 'https://www.fieschertal.ch/dienste/reglemente?action=get_file&id=56&resource_link_id=311' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 6111,
+    name: 'Leukerbad',
+    officialHost: 'regionalpolizei-leuk-leukerbad.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeireglement (homologated 2014), Art. 16: camping and overnighting on public ground is only allowed in the zones the municipality designates, and exceptions need a permit from the municipality ("Campieren und Übernachten", so a tent is not required). Breaches can be fined up to CHF 5,000 (Art. 33). Public ground only. The PDF is hosted by the regional police and is a scan transcribed by hand.',
+      sources: [
+        { title: 'Polizeireglement der Gemeinde Leukerbad (Urversammlung 26.6.2012), Art. 16, 33', url: 'https://regionalpolizei-leuk-leukerbad.ch/wp-content/uploads/2022/10/Polizeireglement_Gemeinde_Leukerbad.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 1202,
+    name: 'Andermatt',
+    officialHost: 'lisag.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Bau- und Zonenordnung (approved by the Regierungsrat 2021, amended to 2025), Art. 95a: on the whole municipal territory camping is only allowed on approved campsites and wild camping is banned. Camping is defined as using tents, caravans, mobile homes and the like; sleeping outdoors without a tent is not mentioned. No fine is stated in the BZO. Published on the Uri planning geoportal.',
+      sources: [
+        { title: 'Bau- und Zonenordnung Andermatt (BZO), Art. 95a', url: 'https://webgis.lisag.ch/PDF/Nutzungsplanung/1202_BZO_Andermatt.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 1212,
+    name: 'Realp',
+    officialHost: 'lisag.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Bau- und Zonenordnung, Art. 50: on the whole municipal territory camping is only allowed on approved campsites and wild camping is banned (same wording as Andermatt). The copy on the Uri planning geoportal is a "Genehmigungsexemplar" with the Regierungsrat approval date left blank, so it is recorded as a restriction, not a ban, until that is confirmed. No fine is stated.',
+      sources: [
+        { title: 'Bau- und Zonenordnung Realp (BZO), Art. 50', url: 'https://webgis.lisag.ch/PDF/Nutzungsplanung/1212_BZO_Realp.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 1208,
+    name: 'Goeschenen',
+    officialHost: 'goeschenen.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Campingverordnung (Gemeindeversammlung 29.4.2022), Art. 2: pitching tents, caravans, motorhomes and camper buses to camp outside approved campsites or pitches is not permitted, on any land; Art. 3 allows temporary free camping on a residential property with the owner\'s consent. Breaches are punished with a fine (Art. 12, no amount in the text). Sleeping outdoors without a tent is not mentioned. The saved PDF is a scan transcribed by hand.',
+      sources: [
+        { title: 'Campingverordnung der Gemeinde Göschenen (29.4.2022), Art. 2, 3, 12', url: 'https://www.goeschenen.ch/files/bilder/Campingverordnung-vom-29.04.2022_unterzeichnet.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3851,
+    name: 'Davos',
+    officialHost: 'gemeindedavos.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Verordnung über das Campingwesen (DRB 30.22, state 1.6.2023), Art. 1: on the territory of the municipality camping, meaning pitching tents, caravans and motorhomes, is banned outside officially approved sites, on any land. Breaches can be fined up to CHF 200 (Art. 8). Sleeping outdoors without a tent is not defined.',
+      sources: [
+        { title: 'Verordnung über das Campingwesen der Gemeinde Davos (DRB 30.22), Art. 1, 8', url: 'https://www.gemeindedavos.ch/_docn/5008618/DRB_30.22_Verordnung_%C3%BCber_das_Campingwesen.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3871,
+    name: 'Klosters',
+    officialHost: 'gemeindeklosters.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Baugesetz (approved 2024), Art. 100: camping in tents, motorhomes and the like is banned outside the building zone and generally on public ground; only sites the municipality expressly designates are excepted. No fine is stated in the text. This is the law of the former Klosters district; whether Serneus has its own was not checked. Sleeping outdoors without a tent is not mentioned.',
+      sources: [
+        { title: 'Baugesetz der Gemeinde Klosters, Art. 100 Campieren', url: 'https://www.gemeindeklosters.ch/_doc/5073418' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3921,
+    name: 'Arosa',
+    officialHost: 'gemeindearosa.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'Polizeigesetz (2024), Art. 24: on public ground camping in tents, caravans, motorhomes, cars and the like is only allowed at places designated by the municipality. Sleeping in a vehicle counts as camping except an unforeseen emergency stop (Reglement Art. 11). Ordnungsbusse CHF 100. Public ground only. Art. 24 was transcribed by hand from a scan.',
+      sources: [
+        { title: 'Polizeigesetz der Gemeinde Arosa (610.100), Art. 24', url: 'https://www.gemeindearosa.ch/_doc/5661181' },
+        { title: 'Polizeireglement Arosa (610.110), Art. 11 and Ordnungsbussenliste', url: 'https://www.gemeindearosa.ch/_doc/7224430' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3784,
+    name: 'Pontresina',
+    officialHost: 'gemeinde-pontresina.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Polizeigesetz (revised 2025), Art. 26: on the territory of the municipality camping, meaning pitching tents, caravans and motorhomes to sleep in, is only allowed at places designated by the authorities and otherwise needs a permit from the Gemeindevorstand, on any land. Breaches can be fined CHF 50 to 10,000 (Art. 46). Sleeping outdoors without a tent is not mentioned.',
+      sources: [
+        { title: 'Polizeigesetz der Gemeinde Pontresina, Art. 26, 46', url: 'https://api.gemeinde-pontresina.ch/fileadmin/user_upload/gemeinde-pontresina/Dokumente/Gesetzessammlung/P_Polizeigesetz_Genehmigt_durch_Urnengemeinde_vom_28._September_20.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3787,
+    name: 'St.Moritz',
+    officialHost: 'gemeinde-stmoritz.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Polizeiordnung of 22.9.2002, Art. 16, kept in force by the Polizeigesetz (Anhang A, Art. 35; in force 1.2.2026): camping outside marked campsites is banned, on any land; there is no definition of camping and no mention of bivouacking. Ordnungsbusse CHF 100. The municipality may repeal Art. 16 later (the rule is to move to the Baugesetz). The 2002 ordinance itself was not found online; its article is quoted in the Anhang.',
+      sources: [
+        { title: 'Polizeigesetz St. Moritz (7.7), Anhang A and Art. 35', url: 'https://www.gemeinde-stmoritz.ch/fileadmin/user_upload/dokumente/pdf/gesetze/7.7_Polizeigesetz_Anhang_Teilrevision_vom_26.11.2025_in_Kraft_am_01.02.2026.pdf' },
+        { title: 'Verordnung über Ordnungsbussen (7.7.1)', url: 'https://www.gemeinde-stmoritz.ch/fileadmin/user_upload/dokumente/pdf/gesetze/7.7.1_VO-Ordnungsbussen_Teilrevision_vom_26.11.2025_in_Kraft_am_01.02.2026.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
+    bfs: 3732,
+    name: 'Flims',
+    officialHost: 'gemeindeflims.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Gastwirtschaftsgesetz der Gemeinde Flims (in force 2000), Art. 17: camping outside approved campsites is banned; the Gemeinderat can grant exceptions. No fine is stated (Art. 18 refers to the cantonal law). A draft Polizeigesetz with a camping and bivouac ban (Art. 23) is in consultation and not in force.',
+      sources: [
+        { title: 'Gastwirtschaftsgesetz der Gemeinde Flims, Art. 17, 18', url: 'https://www.gemeindeflims.ch/_doc/2010893' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
 ];
 
 export function findMunicipalRule(bfs: number | undefined): MunicipalEntry | undefined {
