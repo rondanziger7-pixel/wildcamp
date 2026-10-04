@@ -29,6 +29,7 @@ import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
+import { moonNight } from './comfort/moon';
 import { sunTimes } from './comfort/sun';
 import { analyseTerrain, fetchProfiles, FAR, NEAR, type Profiles, type TerrainMetrics } from './comfort/terrain';
 import { fetchForecast, nightWindows, summariseNight, windowHours, zurichNow, type Hourly } from './comfort/weather';
@@ -175,6 +176,8 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       avalanche: got.avalanche,
       avalancheFailed: failed.avalanche,
       sun: sunTimes(new Date(`${w.to.slice(0, 10)}T12:00:00Z`), lat, lng, horizon),
+      eveningSun: sunTimes(new Date(`${w.day}T12:00:00Z`), lat, lng, horizon),
+      moon: moonNight(lat, lng, w),
       inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
     });
     if (waiting.length < 7 || done.near) ui.setSleep(comfort, nightName, waiting);

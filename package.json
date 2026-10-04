@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "suncalc": "^2.1.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.12",

@@ -1,6 +1,7 @@
 import type { Item } from '../assess';
 import { compassName, type Night } from './weather';
 import { formatLocalTime, type SunTimes } from './sun';
+import type { MoonNight } from './moon';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
@@ -48,6 +49,10 @@ export interface ComfortInput {
   /** Huts, bivouac boxes, inns and alps nearby. */
   shelters?: ShelterResult;
   sun?: SunTimes;
+  /** Sun times of the evening the night begins (for evening sun at the spot). */
+  eveningSun?: SunTimes;
+  /** The moon over the chosen night. */
+  moon?: MoonNight;
   /** True when the forest map says the spot is in forest. */
   inForest?: boolean;
 }
@@ -278,6 +283,31 @@ export function comfortFor(input: ComfortInput): Comfort {
     const flat = formatLocalTime(sun.sunrise);
     if (delay <= 20) f.push({ tone: 'ok', score: 1, title: 'Early morning sun', text: `Sun reaches the spot about ${at} (sunrise ${flat}).` });
     else f.push({ tone: 'info', score: 0, title: `Morning sun at ${at}`, text: `Sunrise is ${flat}, but the terrain hides the sun until about ${at}.` });
+  }
+
+  // evening sun: how long the sun stays on the spot before it sets
+  const ev = input.eveningSun;
+  if (ev?.sunset && ev.sunLeavesSpot) {
+    const gap = Math.round((ev.sunset.getTime() - ev.sunLeavesSpot.getTime()) / 60000);
+    const until = formatLocalTime(ev.sunLeavesSpot);
+    const set = formatLocalTime(ev.sunset);
+    if (gap <= 20) f.push({ tone: 'ok', score: 1, title: 'Evening sun to sunset', text: `Sun stays on the spot until about ${until} (sunset ${set}), good for drying gear and a warm evening.` });
+    else if (gap >= 120) f.push({ tone: 'info', score: 0, title: `In shade from ${until}`, text: `The terrain hides the sun from about ${until}, ${Math.round(gap / 60 * 10) / 10} hours before sunset (${set}). Expect a cold, early evening here.` });
+    else f.push({ tone: 'info', score: 0, title: `Evening sun until ${until}`, text: `Sun reaches the spot until about ${until}; sunset is ${set}.` });
+  }
+
+  // moon: information about the night sky, it does not change the score
+  const mo = input.moon;
+  if (mo) {
+    const pct = Math.round(mo.illumination * 100);
+    const upText = mo.up ? `The moon is above the horizon from about ${mo.up.from} to ${mo.up.to}.` : 'The moon stays below the horizon all night.';
+    f.push({
+      wx: true,
+      tone: 'info',
+      score: 0,
+      title: mo.bright ? `Bright moonlight (${mo.phase.toLowerCase()}, ${pct} %)` : mo.upShare === 0 || mo.illumination < 0.15 ? `Dark sky (${mo.phase.toLowerCase()}, ${pct} %)` : `${mo.phase} (${pct} % lit)`,
+      text: `${upText} ${mo.bright ? 'Easy to see by, and the stars will be washed out; light through the tent can wake light sleepers.' : mo.upShare === 0 || mo.illumination < 0.15 ? 'A good night for stargazing, but take a headlamp: it will be very dark.' : 'Some moonlight, so not fully dark.'} Moon phase and rise from a standard astronomical model; the terrain horizon is ignored.`,
+    });
   }
 
   const score = f.reduce((a, x) => a + x.score, 0);
