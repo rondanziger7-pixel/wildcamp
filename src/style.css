@@ -1,0 +1,13 @@
+html, body { margin: 0; height: 100%; font-family: system-ui, sans-serif; }
+#map { position: absolute; inset: 0; }
+#panel {
+  position: absolute; z-index: 1000; left: 12px; bottom: 12px; right: 12px; max-width: 380px;
+  background: #fff; border-radius: 10px; padding: 12px 16px; box-shadow: 0 2px 12px #0004;
+}
+#panel h1 { font-size: 1rem; margin: 0 0 6px; }
+.verdict { margin: 0; }
+.verdict.no { color: #b3261e; }
+.verdict.caution { color: #b26a00; }
+.verdict.likely_ok { color: #1b7a34; }
+.verdict.unknown { color: #555; }
+.disclaimer { font-size: .75rem; color: #666; margin: 8px 0 0; }
