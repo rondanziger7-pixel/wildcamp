@@ -5,7 +5,7 @@ import { isInSwitzerland } from './coords';
 import { assess, type Assessment } from './assess';
 import { wgs84ToLv95 } from './coords';
 import { loadForestMask, type ForestMask } from './forestmask';
-import { fetchElevation, fetchZoneHits } from './geoadmin';
+import { fetchCanton, fetchElevation, fetchZoneHits } from './geoadmin';
 import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { ZONE_LAYERS } from './zones';
@@ -60,7 +60,7 @@ function render(a: Assessment, elevation?: number) {
   h.className = `verdict ${a.verdict}`;
   h.textContent = LABEL[a.verdict];
   const meta = document.createElement('p');
-  meta.textContent = elevation === undefined ? '' : `Elevation ${Math.round(elevation)} m`;
+  meta.textContent = [a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · ');
   const ul = document.createElement('ul');
   for (const r of a.reasons) {
     const li = document.createElement('li');
@@ -80,7 +80,11 @@ map.on('click', async (ev: L.LeafletMouseEvent) => {
     return;
   }
   result.textContent = 'Checking…';
-  const [elev, zones] = await Promise.allSettled([fetchElevation(lat, lng), fetchZoneHits(lat, lng)]);
+  const [elev, zones, canton] = await Promise.allSettled([
+    fetchElevation(lat, lng),
+    fetchZoneHits(lat, lng),
+    fetchCanton(lat, lng),
+  ]);
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
   const { e, n } = wgs84ToLv95(lat, lng);
   const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
@@ -90,6 +94,7 @@ map.on('click', async (ev: L.LeafletMouseEvent) => {
       zoneLookupFailed: zones.status === 'rejected',
       treeline,
       treelineNote,
+      canton: canton.status === 'fulfilled' ? canton.value : undefined,
     }),
     elevation,
   );

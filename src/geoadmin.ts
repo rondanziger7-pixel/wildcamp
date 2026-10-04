@@ -1,6 +1,7 @@
 import { wgs84ToLv95 } from './coords';
 import { ZONE_LAYERS } from './zones';
 import type { ZoneHit } from './assess';
+import { findCanton, type Canton } from './cantons';
 
 const API = 'https://api3.geo.admin.ch/rest/services';
 
@@ -55,4 +56,28 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }): ZoneHit[] {
     hits.push({ layer, name: str(a.label), detail });
   }
   return hits;
+}
+
+/** Canton at a point from swissBOUNDARIES3D, or undefined if the point is outside every canton. */
+export async function fetchCanton(lat: number, lon: number): Promise<Canton | undefined> {
+  const { e, n } = wgs84ToLv95(lat, lon);
+  const params = new URLSearchParams({
+    geometry: `${e},${n}`,
+    geometryType: 'esriGeometryPoint',
+    sr: '2056',
+    layers: 'all:ch.swisstopo.swissboundaries3d-kanton-flaeche.fill',
+    tolerance: '0',
+    mapExtent: `${e - 100},${n - 100},${e + 100},${n + 100}`,
+    imageDisplay: '200,200,96',
+    returnGeometry: 'false',
+    lang: 'en',
+  });
+  const res = await fetch(`${API}/api/MapServer/identify?${params}`);
+  if (!res.ok) throw new Error(`canton ${res.status}`);
+  return parseCanton(await res.json());
+}
+
+export function parseCanton(body: { results?: IdentifyResult[] }): Canton | undefined {
+  const code = str(body.results?.[0]?.attributes?.ak);
+  return findCanton(code);
 }
