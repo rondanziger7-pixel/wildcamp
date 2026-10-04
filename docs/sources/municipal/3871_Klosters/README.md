@@ -1,0 +1,3 @@
+Source: https://www.gemeindeklosters.ch/_doc/5073418 (Baugesetz Klosters vom 28.11.2021 bzw. 25.1.2024; listed at https://www.gemeindeklosters.ch/gesetzessam as publication 39124 -> /_rte/publikation/39124). Art. 100 Campieren. Applies to Baugesetz "Fraktion Klosters" (Urnengemeinde 28.11.2021, Regierung RB 25/2024 vom 15.1.2024). A later version "incl. Revision 14.6.26 (Planungszone)" (/_doc/7071199) has the same Art. 100 text.
+Retrieved: 2026-10-04
+Found via web search (which surfaced the Baugesetz; an older docplayer copy of a Polizeigesetz was NOT used). The Klosters Gastwirtschaftsgesetz (811) and Flurgesetz (421) were also downloaded and contain no camping text.

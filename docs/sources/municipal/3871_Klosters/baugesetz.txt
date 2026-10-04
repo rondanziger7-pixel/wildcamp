@@ -1,0 +1,2206 @@
+Kanton Graubünden
+
+Gemeinde Klosters
+
+
+
+
+Baugesetz
+(Fraktion Klosters)
+
+
+
+Von der Urnengemeinde beschlossen am 28. November 2021
+
+Genehmigt von der Regierung mit RB Nr. 25/2024 vom 15. Januar 2024
+Baugesetz Klosters (Fraktion Klosters)                                                                                          2
+
+
+
+Inhaltsverzeichnis
+
+I.    Allgemeines
+               Geltungsbereich und Zweck .................................................................... Art. 1
+               Gleichstellung der Geschlechter .............................................................. Art. 2
+               Regionale Zusammenarbeit .................................................................... Art. 3
+               Grundlagen .............................................................................................. Art. 4
+               Förderung ................................................................................................. Art. 5
+               Baubehörde ............................................................................................. Art. 6
+               Baukommission ....................................................................................... Art. 7
+               Planungskommission ............................................................................... Art. 8
+               Bauberatung ............................................................................................ Art. 9
+               Bauamt.................................................................................................... Art. 10
+II.   Kommunale Richtplanung, kommunales räumliches Leitbild
+               Inhalt, Zuständigkeit und Verfahren ....................................................... Art. 11
+               Mitwirkung bei kantonalen und regionalen Richtplänen ....................... Art. 12
+III. Grundordnung
+      1. Allgemeines
+               Bestandteile der Grundordnung ............................................................. Art. 13
+               Verfahren/Zuständigkeit ........................................................................ Art. 14
+      2. Zonenplan
+          A. Allgemeines
+               Festlegungen ......................................................................................... Art. 15
+          B. Bauzonen
+               a) Regelbauweise
+               Regelbauweise ...................................................................................... Art. 16
+               Zonenschema ........................................................................................ Art. 17
+               Zulässige Abweichungen bei Grossbauten .......................................... Art. 18
+               b) Begriffe und Messweisen
+               IVHB-Begriffe (Masse)............................................................................ Art. 19
+               Ausnützungsziffer / Mindestausschöpfung                                   ................................ Art. 20
+               Nutzungsübertragung / Abparzellierung ............................................... Art. 21
+               Fassadenhöhe ........................................................................................ Art. 22
+               Gebäudelänge (IVHB 4.1) ..................................................................... Art. 23
+               Grenz- und Gebäudeabstände* (IVHB 7.1, 7.2), Mehrlängen-
+               zuschlag ................................................................................................. Art. 24
+               Strassenabstände................................................................................... Art. 25
+               c)    Zonenvorschriften*
+               Kernzone ................................................................................................ Art. 26
+               Dorfzone ................................................................................................ Art. 27
+               Wohnzone ............................................................................................... Art. 28
+               Hotel- und Kurzone ................................................................................ Art. 29
+               Spezialzone Ober Ganda ...................................................................... Art. 30
+               Gewerbe- und Wohnzone ...................................................................... Art. 31
+               Gewerbezone ........................................................................................ Art. 32
+Baugesetz Klosters (Fraktion Klosters)                                                                                        3
+
+
+
+          C. Schutzzonen
+               Wald- und Wildschonzone ..................................................................... Art. 33
+               Trockenstandortzone ............................................................................. Art. 34
+          D. Weitere Zonen
+               Wintersportzone ..................................................................................... Art. 35
+               Golfplatzzone ......................................................................................... Art. 36
+               Zone für Pferdesport .............................................................................. Art. 37
+               Deponiezone (Typ A gemäss VVEA) ..................................................... Art. 38
+          E. Weitere Festlegungen
+               Folgeplanungen ..................................................................................... Art. 39
+     3. Genereller Gestaltungsplan
+               Festlegungen ......................................................................................... Art. 40
+               Geschützte Bauten, partiell geschützte Bauten, zu erhaltende
+               Bauvolumen* .......................................................................................... Art. 41
+               Vorläufig geschützte Bauten und Anlagen............................................. Art. 42
+               Ortsbildschutzbereich ............................................................................. Art. 43
+               Ortsbildschutzbereich Monbiel ............................................................... Art. 44
+               Erhaltenswerter Kleinsiedlungsbereich.................................................. Art. 45
+               Geschützte Natur- und Kulturobjekte .................................................... Art. 46
+               Bereich mit ausschliesslich gewerblicher Erdgeschossnutzung .......... Art. 47
+     4. Genereller Erschliessungsplan
+          A. Allgemeines
+               Festlegungen ......................................................................................... Art. 48
+          B. Erschliessungsanlagen
+               Allgemeines ........................................................................................... Art. 49
+               Verkehrswege der Grob- und Feinerschliessung ................................. Art. 50
+               Permanente Fuss/Wander-, Rad-, Bike- und Freeride/Downhillwege .. Art. 51
+               Temporäre Langlaufloipen, Winterwanderwege und Schlittelbahnen .. Art. 52
+               Land- und Forstwirtschaftswege ............................................................ Art. 53
+               Öffentliche Parkierungsanlagen / Bushaltestellen ................................. Art. 54
+               Versorgungs- und Entsorgungsanlagen ................................................ Art. 55
+               Sport- und Freizeitanlagen .................................................................... Art. 56
+          C. Rechtliche Wirkungen der Festlegungen im GEP
+               Verkehrswege der Grob- und Feinerschliessung ................................. Art. 57
+               Permanente Fuss/Wander-, Rad-, Bike- und Freeride/Downhillwege .. Art. 58
+               Temporäre Langlaufloipen, Winterwanderwege und Schlittelbahnen . Art. 59
+               Öffentliche Leitungen............................................................................. Art. 60
+     5. Folgeplanungen
+               Folgeplanung .......................................................................................... Art. 61
+               Abweichungen von der zonengemässen Regelbauweise..................... Art. 62
+IV. Erschliessungsordnung
+     1. Allgemeines und Finanzierung
+               Erschliessungsgesetzgebung ............................................................... Art. 63
+               Finanzierung ........................................................................................... Art. 64
+               Erschliessungsprogramm ....................................................................... Art. 65
+Baugesetz Klosters (Fraktion Klosters)                                                                                          4
+
+
+
+     2. Projektierung und Bewilligung
+               Generelle Projekte und Bauprojekte ..................................................... Art. 66
+     3. Ausführung, Betrieb, Unterhalt und Erneuerung
+               Öffentliche Erschliessungsanlagen ....................................................... Art. 67
+               Schneeräumung .................................................................................... Art. 68
+               Private Erschliessungsanlagen ............................................................. Art. 69
+               Sanierungsquartierplanungen ................................................................ Art. 70
+     4. Gemeinschaftsanlagen, Mitbenützungsrechte, Notweg- und
+        Notankerrechte
+               Gemeinschaftsanlagen .......................................................................... Art. 71
+               Mitbenützung privater Anlagen, Notweg- und Notankerrecht .............. Art. 72
+V. Kommunale Bauvorschriften
+     1. Sicherheit und Gesundheit, Bauausführung
+               Sicherheit und Gesundheit .................................................................... Art. 73
+               (Dach-)Wasser und Schneeablagerung ............................................... Art. 74
+               Bauarbeiten / Baulärm* ......................................................................... Art. 75
+               Aussenbeleuchtung ............................................................................... Art. 76
+               Schallschutz ........................................................................................... Art. 77
+               Vermessungswerk ................................................................................. Art. 78
+     2. Gestaltung
+               Allgemeines ........................................................................................... Art. 79
+               Dächer ................................................................................................... Art. 80
+               Balkone und Fassaden .......................................................................... Art. 81
+               Einfriedungen ......................................................................................... Art. 82
+               Terrainveränderungen, Böschungen, Stütz- und Futtermauern .......... Art. 83
+               Reklamen* .............................................................................................. Art. 84
+               Baugerüste und Baureklamen* .............................................................. Art. 85
+               Strassen, Hausnamen und Nummern ................................................... Art. 86
+               Solaranlagen .......................................................................................... Art. 87
+               Antennen ................................................................................................ Art. 88
+               Lagerung von Siloballen ......................................................................... Art. 89
+     3. Verkehr, Versorgung und Entsorgung
+          A. Allgemeines
+               Verkehrssicherheit* ............................................................................... Art. 90
+               Zu- und Ausfahrten ................................................................................ Art. 91
+          B. Pflichtparkplätze
+               Abstellplätze für Motorfahrzeuge .......................................................... Art. 92
+          C. Arten der Pflichterfüllung
+               Realerfüllung .......................................................................................... Art. 93
+               Abstellplätze auf nahegelegenen Grundstücken .................................. Art. 94
+               Gemeinschafts-Parkierungsanlagen ..................................................... Art. 95
+               Ersatzabgabe und nachträgliche Realerfüllung .................................... Art. 96
+          D. Versorgung und Entsorgung
+               Abwässer ............................................................................................... Art. 97
+               Abfallsammelstellen ............................................................................... Art. 98
+Baugesetz Klosters (Fraktion Klosters)                                                                                           5
+
+
+
+     4. Öffentlicher und privater Grund und Luftraum
+               Nutzung des öffentlichen Grundes und Luftraums ............................... Art. 99
+               Campieren, Aufstellen von Wohnwagen und Wohnmobilen .............. Art. 100
+               Nutzung des Privateigentums für öffentliche Zwecke ........................ Art. 101
+VI. Besitzstand und Ausnahmen
+               Besitzstand innerhalb der Bauzonen .................................................. Art. 102
+               Ausnahmen innerhalb und ausserhalb Bauzonen ............................... Art. 103
+VII. Formelles Baurecht
+               Allgemeines .......................................................................................... Art. 104
+               Baugesuch / Baugesuchsunterlagen .................................................. Art. 105
+               Revers .................................................................................................. Art. 106
+               Verfahrenskosten ................................................................................. Art. 107
+VIII. Rechtsschutz
+               Rechtsschutz ....................................................................................... Art. 108
+IX. Übergangs-, Vollzugs- und Schlussbestimmungen
+               Übergangsbestimmungen .................................................................... Art. 109
+               Vollzug .................................................................................................. Art. 110
+               Inkrafttreten, Aufhebung und Änderung bisherigen Rechts ................ Art. 111
+
+
+
+Hinweise: Die nachstehend mit Sternen (*) gekennzeichneten Hinweise haben keinen Gesetzescha-
+rakter, sondern enthalten bloss informative Angaben / Verweise.
+Baugesetz Klosters (Fraktion Klosters)                                                      6
+
+
+
+I. Allgemeines
+
+Geltungsbereich und Zweck                                                               Art. 1
+1    Das Baugesetz gilt für das ganze Gemeindegebiet mit Ausnahme des Territoriums der
+     ehemaligen Gemeinde Saas. Für Letztere bleibt bis auf Weiteres die Grundordnung der
+     bis zum 1. Januar 2016 bestehenden Gemeinde Saas in Kraft.
+2    Das Baugesetz dient der zielgerichteten räumlichen Entwicklung des Siedlungs- und
+     Landschaftsraums im kommunalen und regionalen Zusammenhang und regelt das Bau-
+     und Planungswesen, soweit die Gemeinde hierfür zuständig ist.
+3    Bei Planungen und bei der Erteilung von Baubewilligungen sind neben den kommunalen
+     Vorschriften die einschlägigen Bestimmungen des eidgenössischen* und kantonalen
+     Rechts** einzuhalten. Zu beachten sind ferner die im öffentlichen Interesse mit Organisa-
+     tionen abgeschlossenen Verträge.
+4    Die von Berufsorganisationen aufgestellten Normen (SIA-Normen, VSS-Normen und der-
+     gleichen) gelten bei der Beurteilung von Bauvorhaben als Richtlinien.
+* Auf Stufe Bund namentlich:
+     - Bundesgesetz über die Raumplanung (RPG) und Raumplanungsverordnung (RPV)
+     - Zweitwohnungsgesetz / Zweitwohnungsverordnung
+     - Bundesgesetz über den Umweltschutz (USG)
+     - Lärmschutzverordnung (LSV)
+     - Bundesgesetz über den Schutz der Gewässer (GSchG) und Gewässerschutzverordnung
+        (GSchV)
+     - Bundesgesetz über Natur- und Heimatschutz (NHG) und Verordnung über den Natur- und
+        Heimatschutz (NHV)
+     - Moorlandschaftsverordnung (MLVO)
+     - Behindertengleichstellungsgesetz (BehiG)
+
+** Auf Stufe Kanton namentlich:
+     - Raumplanungsgesetz für den Kanton Graubünden (KRG) und Raumplanungsverordnung für
+        den Kanton Graubünden (KRVO)
+     - Kantonales Waldgesetz (KWaG) und Kantonale Waldverordnung (KWaV)
+     - Strassengesetz (StrG) und Strassenverordnung des Kantons Graubünden (StrV)
+     - Gesetz über den Natur- und Heimatschutz im Kanton Graubünden (KNHG) und Kantonale Na-
+        tur- und Heimatschutzverordnung (KNHV)
+     - Energiegesetz (BEG) und Energieverordnung des Kantons Graubünden (BEV)
+     - Brandschutzgesetz und Brandschutzverordnung des Kantons Graubünden
+     - Verwaltungsrechtspflegegesetz des Kantons Graubünden (VRG)
+
+
+Gleichstellung der Geschlechter                                                         Art. 2
+1    Personen-, Funktions- und Berufsbezeichnungen in diesem Gesetz und den dazugehöri-
+     gen Ausführungserlassen beziehen sich auf beide Geschlechter, soweit sich aus dem
+     Sinn der Bestimmung nicht etwas anderes ergibt.
+
+Regionale Zusammenarbeit                                                                Art. 3
+1    Die Gemeinde arbeitet in Fragen der Raumentwicklung aktiv mit den benachbarten Ge-
+     meinden und mit der regionalen Organisation zusammen. Sie wirkt insbesondere in über-
+     kommunalen Richtplanungen sowie bei der Erfüllung weiterer überkommunaler Raument-
+     wicklungsaufgaben mit. Sie kann Verpflichtungen zur Zusammenarbeit (Kooperationen)
+     im regionalen Rahmen eingehen und die gemeinsamen Bestrebungen anteilsmässig mit-
+     finanzieren.
+Baugesetz Klosters (Fraktion Klosters)                                                         7
+
+
+
+2    Die Gemeinde kann Aufgaben im Bereich des formellen Baurechts wie Bauberatung, Bau-
+     kontrolle und dergleichen gemeinsam mit andern Gemeinden oder regional lösen. Die
+     Entscheidkompetenzen bleiben indessen bei der Gemeinde. Einzelheiten sind in geeig-
+     neter Form zu regeln.
+
+Grundlagen                                                                                 Art. 4
+1    Die Gemeinde erarbeitet nach Bedarf die für Festlegungen in der Grundordnung erforder-
+     lichen Grundlagen für die Raumentwicklung wie Siedlungs- und Landschaftsanalysen, In-
+     ventare, Konzepte oder Leitbilder. Sie stimmt die Beschaffung der Grundlagen mit den
+     Nachbargemeinden, der Region und den kantonalen Fachstellen ab und sorgt für deren
+     Austausch.
+2    Die Gemeinde kann gestützt auf Grundlagen auch Programme zur Umsetzung von Mas-
+     snahmen eines Raumentwicklungskonzepts oder eines Leitbilds erarbeiten und entspre-
+     chende Aktionen durchführen.
+
+Förderung                                                                                  Art. 5
+1    Die Gemeinde fördert mit geeigneten Massnahmen den Tourismus und die touristische
+     Infrastruktur, die Beherbergungs- und Restaurationsbetriebe, die ortsansässigen Be-
+     triebe, die Schaffung von Arbeitsplätzen, die Schaffung von Wohnraum für die ortsansäs-
+     sige Bevölkerung, die verstärkte Nutzung erneuerbarer Energien, den Erhalt von Natur
+     und Landschaft sowie des kulturellen Erbes.
+2    Entsprechend den in der Verfassung definierten Kreditkompetenzen kann die Gemeinde
+     an Vorhaben nach Abs. 1 projektbezogene Beiträge gewähren. Beiträge können von einer
+     angemessenen Mitsprache der Gemeinde abhängig gemacht werden.
+
+Baubehörde                                                                                 Art. 6
+1    Baubehörde ist - vorbehältlich Absatz 3 - der Gemeindevorstand.
+2    Der Baubehörde obliegt im Rahmen der Zuständigkeit der Gemeinde der Vollzug dieses
+     Gesetzes sowie die Anwendung eidgenössischer und kantonaler Vorschriften.
+3    Zuständig für Mitteilungen und Verfügungen im Rahmen von Art. 40a und Art. 40b KRVO*
+     sind alternativ der Departementsvorsteher Hochbau, sein Stellvertreter oder der zustän-
+     dige Abteilungsleiter. Sie können zudem - neben dem Gemeindevorstand - nach Erteilung
+     der Baubewilligung notwendig werdende Auflagen minderer Tragweite (z.B. betreffend
+     Bauabfälle) verfügen.
+*   Anzeigepflichten betreffend nicht baubewilligungspflichtige Bauvorhaben gemäss Art. 40 Abs. 1
+    KRVO und betreffend Solaranlagen auf Dächern (Art. 18a Abs. 1 RPG, Art. 32a Abs. 3 RPV)
+
+
+Baukommission                                                                              Art. 7
+1    Die Baukommission besteht aus drei Mitgliedern und zwei Stellvertretern. Sie wird vom
+     Gemeinderat gewählt.
+2    Das mit dem Hochbau- und Planungswesen betraute Gemeindevorstandsmitglied sowie
+     ein Vertreter der Abteilung Baubewilligungen nehmen an den Sitzungen der Baukommis-
+     sion von Amtes wegen mit beratender Stimme teil.
+3    Die Baukommission konstituiert sich selbst.
+4    Die Baukommission prüft Baugesuche auf ihre Rechtmässigkeit und hält das Resultat ih-
+     rer Prüfung in einer verwaltungsinternen Stellungnahme zuhanden der Baubehörde fest.
+Baugesetz Klosters (Fraktion Klosters)                                                      8
+
+
+
+Planungskommission                                                                      Art. 8
+1    Die Baubehörde kann bei Bedarf eine Planungskommission wählen. Das mit dem Bau-
+     und Planungswesen betraute Mitglied des Gemeindevorstandes gehört der Planungskom-
+     mission von Amtes wegen an.
+2    Die Planungskommission bereitet die Planungsmassnahmen zuhanden der Baubehörde
+     vor.
+
+Bauberatung                                                                             Art. 9
+1    Die Baubehörde kann externe Fachleute zur vertieften und unabhängigen Beurteilung und
+     Bearbeitung von rechtlichen, technischen, energetischen oder gestalterischen Fragen bei-
+     ziehen.
+2    Die Baubehörde kann einen ständigen Gestaltungsberater bestimmen.
+3    Die Kosten der Bauberatung gehen grundsätzlich zulasten der Bauherrschaft.
+
+Bauamt                                                                                 Art. 10
+1    Die Gemeinde betreibt ein Bauamt mit Fachleuten und geeigneter technischer
+     Infrastruktur.
+2    Das Bauamt ist für die sach- und fristgerechte Erfüllung der ihm übertragenen Aufgaben
+     verantwortlich. Der Gemeindevorstand regelt diese in einem Pflichtenheft. Für Aufgaben,
+     die nicht in eigener Kompetenz bearbeitet werden können, sind externen Fachleuten
+     beizuziehen.
+
+
+II. Kommunale Richtplanung, kommunales räumliches Leitbild
+
+Inhalt, Zuständigkeit und Verfahren                                                    Art. 11
+1    Kommunale und regionale Leitbilder und Raumentwicklungskonzepte können von der Ge-
+     meinde in einem kommunalen Richtplan umgesetzt werden.
+2    Zuständig für den Erlass und Änderungen von Richtplänen ist der Gemeinderat. Er sorgt
+     bei Bedarf für eine angemessene Mitwirkung der Nachbargemeinden und der Region. Er
+     unterstellt den Erlass und Änderung der Urnenabstimmung, wenn es um Festlegungen
+     geht, deren Umsetzung eine breite Abstützung in der Bevölkerung bedingt. Fortschreibun-
+     gen von Richtplänen sind in jedem Fall Sache der Baubehörde.
+3    Die Baubehörde lässt den Entwurf für den kommunalen Richtplan in der Gemeinde wäh-
+     rend 30 Tagen öffentlich auflegen und gibt die Auflage im amtlichen Publikationsorgan der
+     Gemeinde und im Kantonsamtsblatt bekannt. Während der öffentlichen Auflage kann je-
+     dermann bei der Baubehörde Vorschläge und Einwendungen einbringen. Diese prüft die
+     Eingaben und sorgt in geeigneter Form für eine öffentliche Bekanntmachung des Ergeb-
+     nisses.
+4    Die Bestimmungen über den kommunalen Richtplan gelten sinngemäss für den Erlass
+     des kommunalen räumlichen Leitbilds (KRL). Letzteres ist nicht behördenverbindlich.
+
+Mitwirkung bei kantonalen und regionalen Richtplänen                                   Art. 12
+1    Die Mitwirkung bei kantonalen und regionalen Richtplänen richtet sich nach den einschlä-
+     gigen Verfahrensbestimmungen von Region, Kanton und Bund. Soweit solche fehlen, gel-
+     ten die Verfahrensvorschriften für die kommunale Richtplanung sinngemäss.
+Baugesetz Klosters (Fraktion Klosters)                                                      9
+
+
+
+III. Grundordnung
+
+1.    ALLGEMEINES
+
+Bestandteile der Grundordnung                                                         Art. 13
+1     Die Grundordnung besteht aus dem Baugesetz, dem Zonenplan, dem Generellen Gestal-
+      tungsplan und dem Generellen Erschliessungsplan.
+2     Für Teilgebiete kann ein Arealplan erlassen werden.
+
+Verfahren/Zuständigkeit                                                               Art. 14
+1     Für das Verfahren betreffend Erlass und Änderung der Grundordnung gelten die einschlä-
+      gigen Bestimmungen der kantonalen Raumplanungsgesetzgebung*.
+2     Der Gemeindevorstand ist zuständig für den Erlass und die Änderung von Arealplänen
+      sowie für alle Planänderungen von untergeordneter Bedeutung gemäss Art 48 Abs. 3
+      KRG.
+3     Der Gemeinderat ist zuständig für den Erlass und die Änderung des Generellen Erschlies-
+      sungsplanes. Er kann entsprechende Beschlüsse von sich aus der Urnenabstimmung un-
+      terbreiten.
+4     Die Urnengemeinde ist in allen übrigen Fällen zuständig für den Erlass und die Änderung
+      der Grundordnung.
+5     Die Gemeinde kann den Erlass von projektbezogenen Planungen von einer angemesse-
+      nen Kostenbeteiligung der Interessenz abhängig machen.
+* Art. 47 - 50 KRG und Art. 12 - 15 KRVO
+
+
+2.    ZONENPLAN
+
+
+A. Allgemeines
+
+Festlegungen                                                                          Art. 15
+1     Der Zonenplan der Gemeinde beinhaltet namentlich folgende Zonenarten und Festlegun-
+      gen:
+      Bauzonen
+       Kernzone
+       Dorfzone
+       Wohnzone
+       Hotel- und Kurzone
+       Spezialzone Ober Ganda
+       Gewerbe- und Wohnzone
+       Gewerbezone
+       Zone für öffentliche Bauten und Anlagen (Art. 28 KRG)
+       Zone für Grünflächen (Art. 30 KRG)
+      Landwirtschaftszonen
+       Landwirtschaftszone (Art. 32 KRG)
+Baugesetz Klosters (Fraktion Klosters)                                                  10
+
+
+
+     Schutzzonen
+      Freihaltezone (Art. 35 KRG)
+      Wald- und Wildschonzone
+      Gewässerraumzone (Art. 37a KRG)
+      Trockenstandortzone
+      Naturschutzzone (Art. 33 KRG)
+      Landschaftsschutzzone (Art. 34 KRG)
+      Archäologiezone (Art. 36 KRG)
+      Grundwasser- und Quellschutzzone (Art. 37 KRG)
+     Weitere Zonen
+      Lagerzone (Platzhalter)
+      Campingzone (Platzhalter)
+      Gefahrenzone (Art. 38 KRG)
+      Wintersportzone (Art. 39 KRG / Art. 35 BauG)
+      Golfplatzzone
+      Zone für Pferdesport
+      Deponiezone (Typ A gemäss VVEA)
+      Zone übriges Gemeindegebiet (Art. 41 KRG)
+     Weitere Festlegungen
+      Folgeplanungen
+      Statische Waldgrenzen (Art. 10 und 13 WAG)
+2    Zonenplan und Zonenschema bezeichnen die Empfindlichkeitsstufen. Zuweisungen und
+     Anwendung der Empfindlichkeitsstufen richtet sich nach den Vorgaben der Umweltschutz-
+     gesetzgebung*.
+* Art. 1 - 25 USG und Art. 36 - 44 LSV
+
+
+B. Bauzonen
+
+
+a) Regelbauweise
+
+Regelbauweise                                                                       Art. 16
+1    Die Bauweise und das Mass der Nutzung in den Bauzonen richtet sich, soweit in der kan-
+     tonalen Raumplanungsgesetzgebung Vorschriften über Begriffe und Messweisen fehlen,
+     nach dem Zonenschema und den zugehörigen Begriffsbestimmungen sowie der Interkan-
+     tonalen Vereinbarung über die Harmonisierung der Baubegriffe (IVHB).
+2    Liegt ein Grundstück in verschiedenen Bauzonen, sind Ausnützungsziffer, Gebäudeab-
+     messungen und Grenzabstände in jeder Zone für die dort gelegenen Gebäudeteile einzu-
+     halten.
+Baugesetz Klosters (Fraktion Klosters)                                                                                        11
+
+
+
+Zonenschema                                                                                                      Art. 17
+1       In den einzelnen Bauzonen gelten folgende Grundmasse:
+ Art.             Zone                AZ       Fassadenhöhe    Gebäude-      Grenzabstand      Mehrlängen-      ES nach
+                                                 traufseitig     länge        klein / gross     zuschlag         LSV1)
+                                   (Art. 20)       (Art. 22)    (Art. 23)       (Art. 24)
+                                                    Meter        Meter            Meter
+ 26
+     Kernzone (K)                      -           10.8               30      4.0       4.0       Art. 24           III
+BauG
+ 27
+     Dorfzone (D)                      -            8.0           15 2)       2.5       2.5        Keiner           III
+BauG
+ 28
+     Wohnzone a (Wa)                 0.55           7.2               25      4.0       8.0       Art. 24            II
+BauG
+ 28
+     Wohnzone b (Wb)                 0.65           7.6               25      4.0       8.0       Art. 24            II
+BauG
+ 28
+     Wohnzone c (Wc)                  0.8           8.6               30      4.0       8.0       Art. 24            II
+BauG
+ 28
+     Wohnzone d (Wd)                  1.0           9.6               30      4.0       8.0       Art. 24            II
+BauG
+ 29
+     Hotel- und Kurzone (KU)           -           11.8               -       3.0       3.0        Keiner            II
+BauG
+ 30
+     Spezialzone Obere Ganda                        Genereller Gestaltungsplan Obere Ganda                          III
+BauG
+ 31 Gewerbe- u. Wohnzone
+                                      1.0         10.2           40         5.0       5.0         Keiner            III
+BauG (GW)
+ 32
+     Gewerbezone (G)                   -          11.8           60         5.0       5.0         Keiner            III
+BauG
+ 28 Zone für öffentliche Bauten
+                                       -            -             -         2.5       2.5         keiner         II / III3)
+KRG und Anlagen (ZöBA)
+
+1) Empfindlichkeitsstufe nach Lärmschutzverordnung (LSV; SR 814.41)
+2) Beim Zusammenbau mehrerer Baukörper darf die Gebäudelänge um maximal 7.0 m erhöht werden; die Gebäudebreite darf
+   das Regelmass nicht überschreiten. Ein Zusammenbau mehrerer Baukörper liegt vor, wenn mehrere Gebäude zu einer bauli-
+   chen Einheit zusammengebaut werden, welche von aussen klar als an sich selbstständige einzelne Baukörper/Gebäude in
+   Erscheinung treten.
+3) Die der ES III zugeordneten Flächen der ZöBA sind im Zonenplan entsprechend gekennzeichnet.
+
+
+Zulässige Abweichungen bei Grossbauten                                                                           Art. 18
+1       Für Hotels, Kureinrichtungen sowie öffentliche oder öffentlichen Interessen dienende Bau-
+        ten kann die Baubehörde Ausnahmen bezüglich der Fassadenhöhe (maximal 15% Mehr-
+        höhe), Gebäudelänge (maximal 20% Mehrlänge) und - bei sehr guter Gestaltung - Dach-
+        form gestatten.
+2       Der Grenzabstand vergrössert sich allseitig um die Mehrhöhe bzw. gegenüber den ent-
+        sprechenden Fassaden um 1/3 der zusätzlichen Gebäudelänge; die beiden Zuschläge
+        gelten kumulativ.
+3       Wird der Höhen- und/oder Längenbonus gemäss dieser Bestimmung beansprucht, so ist
+        die privilegierte Nutzung gemäss Absatz 1 dauernd beizubehalten. Diese gesetzliche öf-
+        fentlichrechtliche Eigentumsbeschränkung wird in der Regel (deklaratorisch) im Grund-
+        buch angemerkt.
+Baugesetz Klosters (Fraktion Klosters)                                                    12
+
+
+
+b) Begriffe und Messweisen
+
+IVHB-Begriffe (Masse)                                                                Art. 19
+1    Für die Gegenstand der IVHB bildenden Begriffe und Messweisen gelten die in den An-
+     hängen zur IVHB und den entsprechenden Erläuterungen enthaltenen Umschreibungen.
+     Wo die IVHB konkrete Masse vorbehält, gelten die folgenden Masse:
+     a) Kleinbauten (IVHB 2.2) und Anbauten (IVHB 2.3):
+        - maximal 3.00 m traufseitige Fassadenhöhe (IVHB 5.2)
+        - maximal 5.00 m zulässige Gesamthöhe (IVHB 5.1)
+        - maximal 45 m2 Nebennutzfläche (NNF) bzw. Aussennutzflächen (ANF)
+        Falls die traufseitige Fassadenhöhe bei Kleinbauten - deren Flachdach als Terrasse
+        genutzt wird - Oberkante einer notwendigen Absturzsicherung zu messen ist, so er-
+        höht sich die maximale traufseitige Fassadenhöhe um das Mass der notwendigen Ab-
+        sturzsicherung; Voraussetzung ist, dass Letztere in Form eines offenen Geländers re-
+        alisiert wird.
+     b) Unterniveaubauten (IVHB 2.5):
+        - maximales Durchschnittsmass b über dem massgebenden Terrain: 1.00 m
+        - maximales Mass f über dem massgebenden Terrain: 1.20 m
+     c) Vorspringende Gebäudeteile (IVHB 3.4)
+        - maximal zulässiges Mass a für die Tiefe: 1.50 m
+        - maximal zulässiger Anteil b des zugehörigen Fassadenabschnittes: 2/5
+     d) Unbedeutend zurückspringende Gebäudeteile (IVHB 3.5)
+        - maximal zulässiges Mass a für die Tiefe: 1 m
+        - maximal zulässiges Mass b für Breite: 2 m
+
+Ausnützungsziffer / Mindestausschöpfung                                              Art. 20
+1    Die im Zonenschema festgelegten Ausnützungsziffern (AZ) sind nach Massgabe der kan-
+     tonalen Raumplanungsgesetzgebung* und nachfolgenden Bestimmungen einzuhalten.
+2    Die Baubehörde kann für unterirdische Schwimmbäder sowie - bei Mehrfamilienhäusern
+     - auch für andere gemeinschaftlich genutzte Wellness- und Fitnessräume einen Bonus
+     von 20% auf die maximal zulässige anrechenbare Geschossfläche gewähren; der Bonus
+     kann ausschliesslich für die besagten Flächen verwendet werden.
+3    Neubauten sowie grössere Erweiterungen und neubauähnliche Umgestaltungen beste-
+     hender Bauten werden grundsätzlich nur bewilligt, wenn die Ausnützungsziffer zu mindes-
+     tens 80% ausgeschöpft wird. Wird dieses Mass unterschritten, gilt Folgendes:
+     - Das Gebäude ist so zu platzieren, dass die 80%-ige Mindestausschöpfung der Ausnüt-
+       zungsziffer auf der unbebauten Grundstücksfläche noch sinnvoll möglich ist, was von
+       der Bauherrschaft im Baugesuch mit einem entsprechenden Überbauungskonzept
+       nachzuweisen ist. Dieses Konzept ist für spätere bauliche Massnahmen – vorbehältlich
+       Al. 2 - verbindlich und im Grundbuch anzumerken.**
+     - Das Überbauungskonzept gemäss Al. 1 kann im Rahmen späterer Baubewilligungen
+       jederzeit abgeändert werden, sofern die 80%-ige Mindestausschöpfung mit dieser Än-
+       derung ebenfalls erreicht wird.
+Baugesetz Klosters (Fraktion Klosters)                                                       13
+
+
+
+4    Bei sachlich nicht nachvollziehbaren Nutzungsübertragungen, bei Bildung von nicht oder
+     schlecht überbaubaren Parzellen und bei anderen Umgehungen (auch unter Beteiligung
+     Dritter), wird die entsprechende AZ im Rahmen von Absatz 3 dem Ausgangsgrundstück
+     zugerechnet. Überdies kann die Gemeinde zur Erreichung der Zielsetzung gemäss Ab-
+     satz 3 auf Kosten der betreffenden Grundeigentümer ein Landumlegungsverfahren durch-
+     führen.
+* Art. 37a KRVO
+** Betreffend Ausnahmebewilligung wenn diese Voraussetzung nicht sinnvoll umgesetzt werden kann
+   vgl. Art. 82 Abs. 1 KRG
+
+
+Nutzungsübertragung / Abparzellierung                                                    Art. 21
+1    Die Baubehörde kann Nutzungsübertragungen zwischen angrenzenden oder bloss durch
+     Strassen, Bäche oder Bahnen getrennten Grundstücken innerhalb der gleichen Bauzone
+     zulassen, sofern ein entsprechender Vertrag zwischen den betroffenen Grundeigentü-
+     mern vorliegt und keine öffentlichen Interessen entgegenstehen. Vorbehalten bleiben wei-
+     tergehende Nutzungsverlegungen nach den Anordnungen des Generellen Gestaltungs-
+     planes oder einer Folgeplanung.
+2    Nutzungsübertragungen sind im Grundbuch anmerken zu lassen.
+3    Bei Abparzellierungen dürfen die abgetrennten Flächen nur soweit überbaut werden, als
+     das vorgeschriebene Nutzungsmass über das ganze ursprüngliche Grundstück eingehal-
+     ten wird.
+4    Die Baubehörde führt eine Kontrolle über den realisierten Anteil der zulässigen Nutzung
+     der Grundstücke.
+
+Fassadenhöhe                                                                             Art. 22
+1    Die traufseitigen Fassadenhöhen (IVHB 5.2) von Gebäuden dürfen die Werte gemäss Zo-
+     nenschema nicht überschreiten.
+2    Bei Abgrabungen* gilt das abgegrabene Terrain als massgebliches Terrain (IVHB 1.1).
+     Abgrabungen zur Freilegung des Untergeschosses für Garageneinfahrten und Hausein-
+     gänge werden nicht berücksichtigt, sofern sie die Länge der jeweiligen Fassade nicht um
+     mehr als die Hälfte überschreiten.
+3    Bei Gebäuden in Hanglage (ab 5° mittlere Hangneigung) erhöht sich die maximal zuläs-
+     sige Fassadenhöhe um den Zuschlag z. Kein solcher Zuschlag gilt bei traufständig zum
+     Hang stehenden Satteldachbauten für die Bergfassade.
+4    Der Zuschlag z entspricht der Differenz zwischen der mittleren Höhe in m ü. M. aller Haupt-
+     gebäudeecken und der Höhe der tiefstgelegenen Hauptgebäudeecke entlang der Fassa-
+     denlinie, gemessen ab gewachsenem Terrain. Der Zuschlag z beträgt maximal 2.5 Meter.
+5    Bei geschlossener Bauweise (Zusammenbau mehrerer separater Gebäude) werden die
+     Fassadenhöhe und der Zuschlag z für jeden Gebäudekörper separat ermittelt.
+6    Alle giebelseitigen Fassadenhöhen (IVHB 5.2) dürfen die Breite des jeweils dazugehöri-
+     gen Fassadenabschnitts (ohne Anbauten) nicht überschreiten. Bei positiver Beurteilung
+     durch die Gestaltungsberatung ist eine Überschreitung um maximal 10% zulässig, wenn
+     das Bauprojekt damit mindestens die gleichen siedlungsbaulichen Qualitäten aufweist wie
+     ein vergleichbares Projekt ohne diese Überschreitung.
+
+* Betreffend die Zulässigkeit von Abgrabungen vgl. nachstehend Art. 83.
+Baugesetz Klosters (Fraktion Klosters)                                                  14
+
+
+
+
+Gebäudelänge (IVHB 4.1)                                                             Art. 23
+1    Gebäude, die das massgebende Terrain (Art. 22 Abs. 2 sinngemäss) überragen, dürfen
+     die Gebäudelänge gemäss Zonenschema nicht überschreiten.
+2    Die Gebäudelänge von unterirdischen Bauten (IVHB 2.4) beziehungsweise unterirdischen
+     Teilen von Unterniveaubauten (IVHB 2.5) ist nicht beschränkt.
+3    Anbauten (IVHB 2.3; Art. 19) werden bei der Ermittlung der Gebäudelänge nicht ange-
+     rechnet.
+
+Grenz- und Gebäudeabstände* (IVHB 7.1, 7.2), Mehrlängenzuschlag                     Art. 24
+1    Die Grenz- und Gebäudeabstände sind unter dem Vorbehalt von Unterschreitungen ge-
+     mäss der kantonalen Raumplanungsgesetzgebung** einzuhalten.
+2    Vor der Hauptfassade ist der grosse Grenzabstand einzuhalten, vor den übrigen der
+     Kleine. Massgebend für die Bestimmung der Hauptfassade sind die örtlichen Verhältnisse
+     (Besonnung, Nutzung der Räume, Einpassung und dgl.).
+3    Überschreiten die Gebäudelänge (IVBH 4.1) und/oder -breite 18 Meter, so vergrössert
+     sich in den im Zonenschema definierten Zonen der Grenzabstand gegenüber der betref-
+     fenden Fassade um 1/3 der Mehrlänge, maximal aber um 3 Meter.
+4    Der minimale Gebäudeabstand ergibt sich aus der Summe der einzuhaltenden Grenzab-
+     stände.
+5    Gegenüber Altbauten, die den gesetzlichen Grenzabstand nicht einhalten, bemisst sich
+     der Gebäudeabstand aus der Summe des tatsächlichen Grenzabstandes der Altbaute und
+     dem gesetzlichen Grenzabstand der Neubaute, sofern nicht zugunsten der Altbaute ein
+     Näherbaurecht besteht oder überwiegende öffentliche Interessen die Einhaltung des ge-
+     setzmässigen Gebäudeabstandes verlangen.
+6    Unterirdische Bauten (IVHB 2.4), jene Teile von Unterniveaubauten (IVHB 2.5), die das
+     massgebende Terrain nicht überschreiten sowie generell unterirdische Gebäudeteile müs-
+     sen unter Vorbehalt strengerer Strassenabstandsvorschriften (Art. 25) einen Grenzab-
+     stand von 1 m einhalten.
+7    Wo das Baugesetz keine Grenzabstände vorschreibt, für An- und Kleinbauten sowie für
+     jene Teile von Unterniveaubauten, die das massgebende Terrain überragen, gelten die
+     minimalen Abstandsvorschriften der kantonalen Raumplanungsgesetzgebung***.
+Baugesetz Klosters (Fraktion Klosters)                                                            15
+
+
+
+8    Der Grenzabstand von Erdsonden für Wärmepumpen beträgt in allen Zonen 2.5 m. Die
+     Erdsonden sind einzumessen und in den Leitungskataster aufzunehmen.
+9    Vorbehalten bleiben in jedem Fall Baulinien und abweichende Festlegungen in der Grund-
+     ordnung oder in einer Folgeplanung.
+* Betreffend Waldabstand vgl. Art. 29 und 30 KWAG,
+** Art. 75-77 KRG
+*** Art. 75 ff. KRG
+
+
+Strassenabstände                                                                            Art. 25
+1    Bauten und Anlagen haben gegenüber öffentlichen oder öffentlichen Zwecken dienenden
+     Strassen und Trottoirs oberirdisch die minimalen Grenzabstände (ohne Mehrlängenzu-
+     schlag) der betreffenden Zone und unterirdisch einen Grenzabstand von 2 m einzuhalten.
+     Der Mindestabstand von Einfriedigungen zu solchen Strassen beträgt 0.5 m und zu Trot-
+     toirs 0.3 m.
+2    Äste, Sträucher und Lebhäge und dergleichen haben folgende Abstände einzuhalten be-
+     ziehungsweise sind regelmässig wie folgt zurückzuschneiden:
+     - Angrenzend an Strassen ist dauernd ein Lichtraumprofil mit einer Höhe von 5 m und
+        einem Strassenabstand von 0.5 m freizuhalten.
+     - Angrenzend an Trottoirs ist dauernd ein Lichtraumprofil mit einer Höhe von 3.5 m und
+        einem Trottoirabstand von 0.3 m freizuhalten.
+     - Bei rechtmässig vor Inkrafttreten dieser Bestimmung mit geringerem Abstand realisier-
+        ten Pflanzungen kann die Baubehörde aus Gründen der Verhältnismässigkeit temporär
+        Abstandsunterschreitungen tolerieren, wenn keine überwiegenden öffentlichen Inte-
+        ressen (Verkehrssicherheit etc.) entgegenstehen.
+3    Für vorspringende Gebäudeteile gilt Art. 55 Abs. 3 KRG sinngemäss.
+4    Die Baubehörde kann - in der Regel gegen Revers (Art. 106) - Unterschreitungen bewilli-
+     gen, wenn es die Verhältnisse erlauben.
+5    Vorbehalten bleiben in jedem Fall Baulinien und die Strassenabstandsvorschriften der
+     kantonalen Strassengesetzgebung* sowie abweichende Festlegungen in der Grundord-
+     nung oder in einer Folgeplanung.
+* Art. 17, 45, 46 und 52 StrG sowie Art. 19-22 StrV
+
+
+c)   Zonenvorschriften*
+* Für die im Zonenschema enthaltenen und nachstehend nicht definierten Zonenvorschriften gelten
+die einschlägigen Bestimmungen in der kantonalen und eidgenössischen Raumplanungsgesetzge-
+bung.
+
+
+Kernzone                                                                                    Art. 26
+1    Die Kernzone ist für Wohnbauten, Dienstleistungsbetriebe und für mässig störende
+     Produktionsbetriebe bestimmt. Nicht zulässig sind Landwirtschaftsbetriebe.
+2    Siedlungsstruktur und Bauweise sind zu erhalten und zu ergänzen.*
+3    Geschlossene Gebäudezeilen mit eigenständigen Häusern sind ohne Rücksicht auf die
+     Vorschriften über die Gebäudelänge und ohne Einhaltung von seitlichen Grenz- und Ge-
+     bäudeabständen zulässig.**
+* Betreffend Bereich mit ausschliesslich gewerblicher Erdgeschossnutzung vgl. Art 47 und GGP.
+** Vorbehalten bleibt in allen Fällen Art. 73 Abs. 1 KRG.
+Baugesetz Klosters (Fraktion Klosters)                                                       16
+
+
+
+Dorfzone                                                                                 Art. 27
+1    Die Dorfzone ist für Wohnbauten, Dienstleistungsbetriebe und für mässig störende
+     Produktionsbetriebe bestimmt. Nicht zulässig sind Landwirtschaftsbetriebe.
+2    Alle Neu-, An- und Nebenbauten sowie Umbauten haben bezüglich Höhe, Stellung, Volu-
+     men, Proportionen, Dachform, Material, Farbe und Gestaltung der traditionellen Bauweise
+     bzw. den angrenzenden Gebäuden zu entsprechen.
+3    Bei baulichen Vorkehren in der Umgebung von geschützten Bauten, partiell geschützten
+     Bauten oder zu erhaltenden Bauvolumen sind besondere Massnahmen zu treffen, die
+     eine Beeinträchtigung dieser Gebäude ausschliessen.
+
+Wohnzone                                                                                 Art. 28
+1    Die Wohnzonen sind für das Erstellen von Wohnbauten bestimmt.
+2    Zulässig sind auch nicht störende Dienstleistungs- und Produktionsbetriebe (einschliess-
+     lich Gastgewerbebetriebe). Nicht zulässig sind Landwirtschaftsbetriebe.
+
+Hotel- und Kurzone                                                                       Art. 29
+1    Die Hotel- und Kurzone ist bestimmt für traditionelle Hotels, Kurhotels und -einrichtungen,
+     dazugehörige Gaststätte(n) sowie weitere dazugehörige Bauten und Anlagen wie Sport-
+     und Freizeitanlagen, Heilbäder, Parkierungsanlagen und dergleichen. Ebenfalls zulässig
+     sind mit dem Hotel- und Kurbetrieb zusammenhängende Dienstleistungs- und Gewerbe-
+     betriebe.
+2    Touristisch bewirtschaftete Wohnungen gemäss Art. 7 Abs. 2 lit. b ZWG sind in der ganzen
+     Zone nur zulässig, sofern die einzelnen Wohnungen nicht verkauft werden bzw. zusam-
+     men mit dem Beherbergungsbetrieb dauernd in der Hand desselben Eigentümers verblei-
+     ben.
+3    Die Begründung von Stockwerkeigentum und dergleichen (Aparthotellerie) ist nicht zuläs-
+     sig.
+
+Spezialzone Ober Ganda                                                                   Art. 30
+1    Die Spezialzone Ober Ganda (SZOG) ist für ein Feriendorf bestimmt. Zulässig sind Hotels
+     sowie touristisch bewirtschaftete Wohnungen gemäss Art. 7 Abs. 2 lit. b des Bundesge-
+     setzes über Zweitwohnungen (ZWG). Andere Wohnungen, insbesondere Wohnungen ge-
+     mäss Art. 8 ZWG, sind nicht zulässig. Mit dem Feriendorf in Zusammenhang stehende
+     Nutzungen, wie Ladenlokale und Freizeiteinrichtungen sind in untergeordnetem Ausmass
+     zulässig.
+2    Die Begründung von Stockwerkeigentum ist in der Spezialzone Ober Ganda untersagt.
+3    Einzelheiten betreffend Baufelder, Gestaltung und Erschliessung regeln der Generelle
+     Gestaltungsplan sowie der Generelle Erschliessungsplan "Ober Ganda", welchen das
+     Richtprojekt vom 18. Juni 2018 zugrunde liegt. Das Richtprojekt vom
+     18. Juni 2018 ist als Beurteilungsmassstab für die qualitativen Mindestanforderungen ver-
+     bindlich.
+4    Für die Baufelder gelten folgende Maximalmasse gemäss Richtprojekt:
+Baugesetz Klosters (Fraktion Klosters)                                                                       17
+
+
+
+                           Nutzung                 max. Höhe Traufe / Flachdach   max. Höhe First
+      Baufeld A            Hotel                            1‘163 m.ü.M.                  1‘165 m.ü.M.
+      Baufeld B            Wohnung                          1‘153 m.ü.M.                  1‘158 m.ü.M.
+      Baufeld C            Wohnung                          1‘161 m.ü.M.                  1‘167 m.ü.M.
+      Baufeld D            Wohnung                          1‘162 m.ü.M.                  1‘166 m.ü.M.
+      Baufeld E            Wohnung                          1‘165 m.ü.M.                  1‘169 m.ü.M.
+      Baufeld F            Wohnung                          1‘167 m.ü.M.                  1‘171 m.ü.M.
+      Baufeld G            Wohnung                          1‘176 m.ü.M.                  1‘181 m.ü.M.
+      Baufeld H            Wohnung                          1‘170 m.ü.M.                  1‘175 m.ü.M.
+      Baufeld I            Parkhaus                         1‘151 m.ü.M.                        -
+      Anbaute              Garage Pistenfahrzeug            1‘167 m.ü.M.                        -
+
+     Technisch bedingte Dachaufbauten (bspw. Kamine, Dunstrohre, Antennen, Liftschächte)
+     richten sich nach dem Richtprojekt und dürfen die maximal zulässigen Höhen überschrei-
+     ten.
+5    Die Lage und die Ausrichtung des Firsts gemäss Generellem Gestaltungsplan sind ver-
+     bindlich. Abweichungen bezüglich Lage sind bis max. 0.5 m gestattet.
+6    Die der Spezialzone Ober Ganda zugewiesene Fläche fällt ohne erneuten Beschluss der
+     Urnengemeinde entschädigungslos in die bisherige Zone für öffentliche Bauten und Anla-
+     gen und Zone Übriges Gemeindegebiet zurück und alle speziellen Festlegungen (Bauge-
+     setz, Genereller Gestaltungsplan, Genereller Erschliessungsplan) gelten als aufgehoben,
+     sobald eine der nachfolgenden Voraussetzungen nicht erfüllt wird:
+     - Nach rechtskräftiger Erteilung der Baubewilligung hat der Baubeginn innerhalb der
+        (maximal um zwei Jahre verlängerten) Frist von Art. 91 KRG zu erfolgen.
+     - Der Baubeginn muss spätestens innert 8 Jahren seit rechtskräftiger Genehmigung der
+        Teilrevision Ober Ganda (25.11.2018) erfolgen.
+     Der Rückfall erfolgt jedoch nur dann, falls sämtliche Verfahren gegen das Bauvorhaben
+     rechtskräftig abgeschlossen sind. Sind noch Verfahren offen, verlängert sich die Frist bis
+     zum Rückfall um ein Jahr, gerechnet ab letztinstanzlichem rechtskräftigen Entscheid in
+     Bezug auf das Bauvorhaben.
+7    Im Rahmen des Baubewilligungsverfahrens ist der Nachweis zu erbringen, dass das Fe-
+     riendorf voraussichtlich wirtschaftlich betrieben werden kann. Dieser Nachweis ist spätes-
+     tens vor der Baufreigabe zu erbringen.
+
+Gewerbe- und Wohnzone                                                                                    Art. 31
+1    Die Gewerbe- und Wohnzone ist für Dienstleistungs- und Produktionsbetriebe bestimmt.
+     Überdies darf pro Betriebskomplex maximal 60% der tatsächlich realisierten anrechenba-
+     ren Geschossfläche (aGF)* als Wohnraum genutzt werden.
+2    Für separate, hauptsächlich der Wohnnutzung dienende Gebäude gelten betreffend
+     Grenzabstand, Fassadenhöhe und Gebäudelänge die Vorschriften der Wohnzone Wd.
+* Art. 37a KRVO
+
+
+Gewerbezone                                                                                              Art. 32
+1    Die Gewerbezone ist bestimmt für Produktions- und für Dienstleistungsbetriebe, jedoch
+     unter Ausschluss jeder Wohnnutzung im weiteren Sinn, d.h. namentlich im Zusammen-
+     hang mit Hotels, Pensionen, Personalunterkünften und dergleichen.
+Baugesetz Klosters (Fraktion Klosters)                                                   18
+
+
+
+C. Schutzzonen
+
+Wald- und Wildschonzone                                                              Art. 33
+1    Die Wald- und Wildschonzone dient der ungestörten Entfaltung von Wald und Fauna.
+2    Die in dieser Zone befindlichen Gebiete dürfen in der Zeit vom 20. Dezember bis zum 15.
+     April grundsätzlich nicht betreten und nicht befahren werden. Ausgenommen von diesem
+     Verbot sind:
+     - die markierten Wege;
+     - allfällige markierte Ski- und/oder Langlaufrouten;
+     - Walderhaltungs- und Pflegemassnahmen;
+     - Not- und Rettungsmassnahmen.
+3    Die Baubehörde kann von Amtes wegen oder auf Antrag weitere, zeitlich befristete Aus-
+     nahmen gestatten, wenn sich solche mit der Zielsetzung von Abs. 1 vereinbaren lassen.
+4    Verstösse gegen die oben genannten Vorschriften werden nach kantonaler Raumpla-
+     nungsgesetzgebung* geahndet.
+* Art. 95 KRG
+
+
+Trockenstandortzone                                                                  Art. 34
+1    Die Trockenstandortzone umfasst Trockenwiesen und -weiden, deren Fläche und Qualität
+     erhalten werden soll.
+2    Für die Bewirtschaftung werden Verträge zwischen Kanton und Bewirtschaftern abge-
+     schlossen.
+3    Zulässig sind neue standortgebundene Bauten und Anlagen, die für die land- oder forst-
+     wirtschaftliche Nutzung des Gebietes notwendig sind oder dem Schutz vor Naturgefahren
+     oder einem anderen überwiegenden öffentlichen Interesse dienen, wenn ein Standort aus-
+     serhalb der Trockenstandortzone nicht zumutbar ist. Werden Trockenwiesen und -weiden
+     beeinträchtigt, sind Ersatzmassnahmen zu leisten.
+4    Für Trockenwiesen und -weiden von nationaler Bedeutung gelten ausschliesslich die
+     Bestimmungen des Bundesrechts.
+
+
+D. Weitere Zonen
+
+Wintersportzone                                                                      Art. 35
+1    Für die Wintersportzone gelten grundsätzlich die Bestimmungen in der kantonalen Raum-
+     planungsgesetzgebung *.
+2    In der Wintersportzone besteht ein allgemeines Zutrittsrecht zur Ausübung des Winter-
+     sportes. Die maschinelle Präparierung von Pisten, Loipen und Wegen innerhalb der Win-
+     tersportzone ist zulässig und von den jeweiligen Grundeigentümern zu dulden.
+3    Düngungen im Bereich von Wintersportzonen dürfen deren Anlage und Benützung nicht
+     beeinträchtigen. Bei bestehenden oder absehbaren Konflikten bestimmt die Baubehörde
+     den Zeitraum, in welchem in bestimmten Bereichen Düngungen zu unterlassen sind.
+4    Der Betrieb von Beschneiungsanlagen und die Ausführung von notwendigen Terrainver-
+     änderungen etc. ist zulässig. Grössere Bauten und Anlagen und namentlich fest instal-
+     lierte Beschneiungsanlagen bedürfen einer Festsetzung im Generellen Erschliessungs-
+     plan. Temporäre Infrastrukturanlange (z.B. Snowparks) können im Generellen Erschlies-
+     sungsplan festgesetzt werden. Die Beschneiung ist nur auf gefrorenem Boden zulässig.
+Baugesetz Klosters (Fraktion Klosters)                                                      19
+
+
+
+5    Oberirdische Bauten und Anlagen haben sich gut in das Landschaftsbild einzufügen. Mo-
+     bile Anlageteile, die das massgebende Terrain überragen, sind nach Saisonschluss nach
+     Möglichkeit zu entfernen.
+6    Wo die Naturschutzzone, die Trockenstandortzone oder die Gewässerraumzone die Win-
+     tersportzonen überlagern, darf die Pistenpräparierung zu keiner Schädigung des zu schüt-
+     zenden Biotops führen und nur bei gefrorenem Boden und mit 30 cm minimaler Mächtig-
+     keit gesetzten Schnees erfolgen.
+7    Sachschäden an Grundstücken sowie Erntemindererträge in der Landwirtschaft, die durch
+     die Ausübung des Wintersports und durch die Präparierung von Pisten an Grundstücken
+     innerhalb der Wintersportzone entstehen, werden von einer Fachperson beurteilt und von
+     der Gemeinde behoben und entschädigt. Die Gemeinde ist berechtigt, auf die Verursacher
+     solcher Schäden (verschuldensunabhängig) Regress zu nehmen und entsprechende Ver-
+     fügungen zu erlassen.
+8    Kosten, die der Gemeinde aus der Freihaltung und Nutzung des Wintersportgeländes er-
+     wachsen, können im Rahmen von vertraglichen Abmachungen oder auf dem Verfügungs-
+     weg den vom Wintersport profitierenden Unternehmungen und Vereinigungen wie Berg-
+     bahnen, Beherbergungsbetriebe, Tourismusorganisationen, Skischulen überbunden wer-
+     den.
+9    In der Wintersportzone nordisch gilt einschränkend zum vorstehend Ausgeführten Folgen-
+     des: Die temporären Langlaufloipen, Winterwanderwege und Schlittelbahnen sind grund-
+     sätzlich gemäss Festlegung im Generellen Gestaltungsplan (GEP) anzulegen (Art. 52).
+     Abweichend von dieser Festlegung im GEP ist die Gemeinde berechtigt, temporäre Lang-
+     laufloipen, Winterwanderwege und Schlittelbahnen in der ganzen Wintersportzone zu re-
+     alisieren,
+     - für Veranstaltungen wie Langlaufrennen und dergleichen, oder
+     - wenn die im GEP vorgesehen Linienführung aufgrund der konkreten Umstände nicht
+         möglich oder nicht sinnvoll ist.
+
+*Art. 39 KRG
+
+
+Golfplatzzone                                                                           Art. 36
+1    Die Golfplatzzone umfasst die für den Golfsport bestimmten Flächen. Es sind ausschliess-
+     lich Bauten und Anlagen zulässig, die dem Golfsport dienen, wie Klubhaus mit Restaurant
+     sowie Bauten und Anlagen für den Betrieb und Unterhalt.
+2    Die Spielflächen und Übungsplätze, die Hindernisse und die Bepflanzung sowie Lage und
+     Grösse der Bauten und Anlagen werden im Generellen Gestaltungsplan festgelegt.
+
+Zone für Pferdesport                                                                    Art. 37
+1    Die Zone für Pferdesport ist für den Betrieb einer Reitschule sowie für die Ausbildung und
+     Unterbringung von Pferden bestimmt. Es sind nur Bauten und Anlagen zulässig, die aus
+     betrieblichen Gründen unerlässlich sind. Hochbauten dürfen ausschliesslich in dem im
+     Gestaltungsplan ausgeschiedenen Hochbaubereich realisiert werden.
+2    Temporäre Bauten und Anlagen für besondere Reitsportanlässe bedürfen der Bewilligung
+     der Gemeinde.
+3    Werden Bauten und Anlagen zu einem späteren Zeitpunkt für die Ausübung des Pferde-
+     sports nicht mehr benötigt, so sind diese Bauten und Anlagen - soweit sie gestützt auf
+     diese Zonenvorschrift bewilligt wurden - innert zwei Jahres abzubrechen resp. zurückzu-
+     bauen.
+Baugesetz Klosters (Fraktion Klosters)                                                               20
+
+
+
+Deponiezone (Typ A gemäss VVEA)                                                                 Art. 38
+1     Die Deponiezone (Typ A gemäss VVEA) umfasst die für die Annahme, Zwischenlagerung,
+      Sortierung, Aufbereitung und Ablagerung von Inertstoffen bestimmten Fläche.
+2     Zulässig sind nur betriebsnotwendige und projektbezogene Bauten und Anlagen für die
+      Aufbereitung, den Verlad sowie die Zu- und Abtransporteinrichtungen (Rampen) während
+      der Betriebsdauer.
+3     Die Gestaltung des Deponiegeländes nach Abschluss der Deponie oder einzelner Etap-
+      pen sowie weitere Massnahmen betreffend den Aufbau und die Gestaltung der Deponie
+      und den Schutz der Umgebung sind im Generellen Gestaltungsplan festgelegt. Die Ge-
+      meinde kann eine geeignete Sicherheit (zweckgebundenes Depositum) für die finanziellen
+      Mittel verlangen, welche für die Rekultivierung erforderlich sind.
+4     Für die Errichtung, den Betrieb und den Unterhalt der Deponie sowie für den Abschluss
+      und dessen Sicherstellung gelten im Übrigen die einschlägigen eidgenössischen und kan-
+      tonalen Vorschriften. Vorbehalten bleiben insbesondere die notwendigen Bewilligungen
+      des kantonalen Amtes für Natur und Umwelt.
+5     Der Gemeindevorstand kann die Betreiber einer Deponie verpflichten, unverschmutztes
+      Aushub- und Abräummaterial, welches nach Unwetterereignissen anfällt, im Rahmen der
+      betrieblichen Möglichkeiten und zu günstigen Konditionen anzunehmen.
+
+
+E. Weitere Festlegungen
+
+Folgeplanungen                                                                                  Art. 39
+1     Im Zonenplan oder Generellen Gestaltungsplan werden die Gebiete mit Pflicht zur Folge-
+      planung festgelegt. Es gilt die Regelung in Art. 61.
+
+
+3.    GENERELLER GESTALTUNGSPLAN
+
+Festlegungen                                                                                    Art. 40
+1     Der Generelle Gestaltungsplan (GGP) enthält folgende Festlegungen:
+      -   Geschützte Bauten, partiell geschützte Bauten, zu erhaltende Bauvolumen
+      -   Vorläufig geschützte Bauten und Anlagen
+      -   Ortsbildschutzbereich
+      -   Ortsbildschutzbereich Monbiel
+      -   Erhaltenswerter Kleinsiedlungsbereich
+      -   Baulinien (Art. 55 KRG)
+      -   Geschützte Natur- und Kulturobjekte
+      -   Hochbaubereich in der Zone für Pferdesport (vgl. Art. 37 BauG)
+
+Geschützte Bauten, partiell geschützte Bauten, zu erhaltende Bauvolumen*                        Art. 411
+1     Als geschützte Bauten bezeichnet der Generelle Gestaltungsplan Bauten, die wegen
+      ihrer Architektur, Bausubstanz (sowie allenfalls ihrer Lage und Gestalt) von hohem
+      siedlungsbaulichem und bauhistorischem Wert sind. Sie sind grundsätzlich zu erhal-
+      ten und dürfen weder abgebrochen noch ausgekernt werden. Erneuerungen und Um-
+      bauten sind unter grösstmöglicher Wahrung der historischen Bausubstanz zulässig.
+      Allfällige Anbauten dürfen das Schutzziel nicht nennenswert beeinträchtigen.
+
+
+1
+     Nicht genehmigt gemäss RB Nr. 25/2024 vom 15. Januar 2024: Art. 41 Abs. 3 Passus «und 2»
+Baugesetz Klosters (Fraktion Klosters)                                                               21
+
+
+
+2    Als partiell geschützte Bauten bezeichnet der Generelle Gestaltungsplan Bauten, die
+     wegen ihrer Architektur, Bausubstanz (sowie allenfalls ihrer Lage und Gestalt) von
+     siedlungsbaulichem und bauhistorischem Wert sind. Die wesentliche äussere Bau-
+     substanz sowie allenfalls wichtige historische Bausubstanz im Gebäudeinnern sind zu
+     erhalten. Teilabbrüche können bewilligt werden, sofern sie sich für die bessere Nut-
+     zung des Gebäudes als unerlässlich erweisen und dem Erhaltungsziel nicht wider-
+     sprechen.
+3    Bauten gemäss Absatz 1 gelten als geschützt im Sinne von Art. 9 Abs. 1 ZWG. Ob im
+     Einzelfall neue Wohnungen ohne Nutzungsbeschränkung nach Art. 7 Abs. 1 ZWG
+     realisiert werden dürfen, beurteilt sich nach Art. 9 Abs. 1 ZWG.
+4    Als zu erhaltende Bauvolumen bezeichnet der Generelle Gestaltungsplan Bauten, die
+     durch ihre Lage und Gestalt wesentlich zur erhaltenswerten Qualität des Ortsbildes
+     und zur Identität des Ortes beitragen. Zu erhaltende Bauvolumen dürfen abgebrochen
+     und wiederaufgebaut werden, wenn das Neubauprojekt bezüglich Stellung, Form und
+     Gestaltung mindestens die gleichen siedlungsbaulichen Qualitäten aufweist wie das
+     abzubrechende Objekt.
+5    Mit Ausnahme unwesentlicher Sanierungsarbeiten sind
+     - Bauvorhaben gemäss Absatz 1 und Absatz 2 durch die Denkmalpflege sowie
+     - alle übrigen Bauvorhaben durch die Gestaltungsberatung oder ausnahmsweise
+        durch die Denkmalpflege
+     zu begleiten.
+6    Bei der Beurteilung von Bauvorhaben gemäss diesem Artikel sind die öffentlichen In-
+     teressen betreffend Förderung erneuerbarer Energien beziehungsweise Reduktion
+     fossiler Brennstoffe gebührend zu berücksichtigen.
+
+* Die Ausscheidung ortsbildprägende Bauten gemäss 9 ZWG erfolgt erst in einer späteren Planungs-
+  phase (vgl. Art. 109 BauG).
+
+
+Vorläufig geschützte Bauten und Anlagen                                                      Art. 42
+1    Als vorläufig geschützt bezeichnet der Generelle Gestaltungsplan Bauten und Anlagen,
+     welche vermutungsweise ganz oder partiell schutzwürdig sind. Bis zu ihrer definitiven Ein-
+     stufung gemäss Art. 41 beziehungsweise der Feststellung ihrer Nicht-Schutzwürdigkeit
+     sind diese Bauten und Anlagen umfassend geschützt, d. h. sie sind zu erhalten und dürfen
+     weder umgestaltet, abgebrochen noch ausgekernt werden.*
+2    Sollen bauliche Massnahmen an vorläufig geschützten Bauten und Anlagen ausgeführt
+     werden oder droht der Verfall, entscheidet die Baubehörde im Einzelfall gestützt auf eine
+     Stellungnahme der Denkmalpflege mittels Verfügung,
+     a) ob kein Schutzbedarf besteht,
+     b) ob ein Schutzbedarf entsprechend Art. 41 Abs. 1, 2 oder 4 besteht, und
+     c) im Fall von lit. b, ob das konkrete Bauvorhaben mit den entsprechenden Vorgaben
+        in Art. 41 Abs. 1, 2 oder 4 vereinbar ist. Die Beurteilung gemäss dieser lit. c kann
+        bei einem Schutzbedarf gemäss Absatz 4 auch gestützt auf eine Stellungnahme
+        der kommunalen Gestaltungsberatung erfolgen.
+
+* Die definitive Einstufung von «vorläufig geschützten Bauten und Anlagen» in eine Schutzkategorie
+  gemäss Art. 41 BauG oder als nicht schutzwürdig kann auch in späteren Planungsphasen erfolgen
+  (vgl. Art. 109 BauG).
+Baugesetz Klosters (Fraktion Klosters)                                                     22
+
+
+
+Ortsbildschutzbereich                                                                  Art. 43
+1    Im Ortsbildschutzbereich sind Neubauten und Umbauten sowie Renovationen mit beson-
+     derer Sorgfalt zu gestalten und in den Ortsbildschutzbereich einzufügen. Die umgebende
+     Situation betreffend Gassen, Plätze, Mauern, Gärten und Pflanzen etc. ist qualitativ zu
+     erhalten oder aufzuwerten.
+2    Bauvorhaben sind der Gemeinde vor Ausarbeitung der Projektpläne bekannt zu geben
+     und - mit Ausnahme unwesentlicher Sanierungsarbeiten - durch die Gestaltungsberatung
+     zu begleiten. Bei Bedarf bestimmt die Baubehörde unter Beizug der Gestaltungsberatung
+     bereits im Voraus die projektbezogenen Rahmenbedingungen.
+3    Bei Neubauten sowie bei Umbauten, durch welche das bestehende Volumen verändert
+     wird, ist mit dem Baugesuch ein auch die umliegenden Bauten zeigendes Modell oder
+     eine andere Form der Visualisierung in geeignetem Massstab einzureichen.
+
+Ortsbildschutzbereich Monbiel                                                          Art. 44
+1    Der Ortsbildschutzbereich Monbiel ist aufgrund der vorhandenen Bauten und freien All-
+     mendflächen von erheblicher ortsbaulicher Bedeutung. Der Charakter dieses Bereichs ist
+     zu erhalten. Art. 43 gilt sinngemäss.
+2    Im Allmendbereich gemäss Generellem Gestaltungsplan ist ausserhalb der jeweils beste-
+     henden Gebäudekuben die Realisierung von (Klein-)Bauten und Anlagen untersagt, na-
+     mentlich die Realisierung von Fahrnisbauten, Zäunen, Parkplätzen und dergleichen.
+3    Im Ortsbildschutzbereich Monbiel sind in Form von Quartierplanbestimmungen Gestal-
+     tungsrichtlinien namentlich betreffend Bauten, Umgebung und Beseitigung störender Aus-
+     senelemente zu erlassen.
+
+Erhaltenswerter Kleinsiedlungsbereich                                                  Art. 45
+1    Der erhaltenswerte Kleinsiedlungsbereich dient zur Erhaltung von landschaftlich und kul-
+     turgeschichtlich wertvollen Kleinsiedlungen ausserhalb der Bauzone. Bauten und Anlagen
+     sind in ihrem ursprünglichen Charakter und in ihrer Substanz zu erhalten. Im Übrigen gel-
+     ten Art. 43 Abs. 1 und 2 sinngemäss.
+2    In den erhaltenswerten Kleinsiedlungsbereichen ‘Schwäderloch’, ‘Alp’ und ‘Schlappin’
+     sind in Form von Quartierplanbestimmungen Gestaltungsrichtlinien namentlich betreffend
+     Bauten, Umgebung und Beseitigung störender Aussenelemente zu erlassen.
+
+Geschützte Natur- und Kulturobjekte                                                    Art. 46
+1    Die im Generellen Gestaltungsplan bezeichneten geschützten Natur- und Kulturobjekte
+     und ihre Umgebung sind zu schützen beziehungsweise zu erhalten und dürfen weder zer-
+     stört noch beeinträchtigt werden.*
+*    Art. 44 KRG
+
+
+Bereich mit ausschliesslich gewerblicher Erdgeschossnutzung                            Art. 47
+1    Im Bereich mit ausschliesslich gewerblicher Erdgeschossnutzung dürfen die strassensei-
+     tigen Erdgeschossflächen – unter Ausschluss der Wohnnutzung - ausschliesslich für
+     Dienstleistungs- und Produktionsbetriebe genutzt werden, und zwar auf einer für die ent-
+     sprechende gewerbliche Nutzung üblichen Bautiefe. Schaufenster und dergleichen sind
+     nur als Bestandteil von Betriebsflächen zulässig.
+Baugesetz Klosters (Fraktion Klosters)                                                   23
+
+
+
+4.   GENERELLER ERSCHLIESSUNGSPLAN
+
+
+A. Allgemeines
+
+Festlegungen                                                                         Art. 48
+1    Der Generelle Erschliessungsplan (GEP) enthält namentlich folgende Festlegungen:
+     - Erschliessungsanlagen
+       -- Verkehrswege der Grob- und Feinerschliessung
+       -- Permanente Fuss/Wander-, Rad-, Bike- und Freeride/Downhillwege
+       -- Golfverbindungsweg
+       -- Temporäre Langlaufloipen, Winterwanderwege und Schlittelbahnen
+       -- Land- und Forstwirtschaftswege
+       -- Öffentliche Parkierungsanlagen / Bushaltestellen
+       -- Versorgungs- und Entsorgungsanlagen
+       -- Sport- und Freizeitanlagen
+
+2    Für Verkehrsanlagen wie Kantonsstrassen oder Eisenbahnen sowie für Versorgungs- und
+     Entsorgungsanlagen wie Hochspannungsleitungen, Telefonleitungen, bei denen Bund,
+     Kanton oder Dritte Träger sind, gelten die jeweiligen eidgenössischen und kantonalen
+     Vorschriften. Diese Anlagen sind im Generellen Erschliessungsplan mit Hinweis auf den
+     Träger gekennzeichnet.
+
+
+B. Erschliessungsanlagen
+
+Allgemeines                                                                          Art. 49
+1    Der GEP legt in den Grundzügen die Verkehrs-, Versorgungs- und Entsorgungsanlagen
+     der Grund- und Groberschliessung der Bauzonen und anderer Nutzungszonen fest. Er
+     kann auch Anlagen der Feinerschliessung enthalten.
+2    Wo der GEP für Erschliessungsanlagen der Feinerschliessung lediglich Anschlusspunkte
+     bestimmt, wird die genaue Linienführung der Anlagen im Rahmen einer Folgeplanung
+     oder im Baubewilligungsverfahren festgelegt.
+
+Verkehrswege der Grob- und Feinerschliessung                                         Art. 50
+1    Die im GEP festgelegten Sammel- und Erschliessungsstrassen sind nach Art und Aus-
+     mass dem zu erschliessenden Gebiet anzupassen. Sie sind mit dem übergeordneten
+     Strassennetz so zu verbinden, dass sie keinen Fremdverkehr anziehen. Wo es die Ver-
+     hältnisse erfordern, werden die Strassen und Plätze beleuchtet.
+2    Quartierstrassen sind so auszugestalten, dass sie als Aussenräume für gemeinschaftliche
+     Zwecke des Quartiers und als Zufahrt benutzt werden können.
+
+Permanente Fuss/Wander-, Rad-, Bike- und Freeride/Downhillwege                       Art. 51
+1    Die im GEP festgelegten permanenten Fuss- und Wanderwege, Radwege, Bike- und
+     Freeride/Downhillwege sind nach Möglichkeit vom motorisierten Verkehr getrennt anzule-
+     gen.
+2    Wanderwege ausserhalb der Siedlungen sind als Naturwege anzulegen und zu kenn-
+     zeichnen.
+Baugesetz Klosters (Fraktion Klosters)                                                     24
+
+
+
+Temporäre Langlaufloipen, Winterwanderwege und Schlittelbahnen                         Art. 52
+1    Die im GEP bezeichneten temporären Langlaufloipen, Winterwanderwege und
+     Schlittelbahnen definieren deren generelle Linienführung im Rahmen von Art. 59.
+
+Land- und Forstwirtschaftswege                                                         Art. 53
+1    Die im GEP festgelegten Land- und Forstwirtschaftswege dienen der land- und forstwirt-
+     schaftlichen Nutzung des angeschlossenen Nichtsiedlungs-Gebietes.
+2    Sie sind grundsätzlich als Naturstrassen anzulegen und nur dort zu befestigen, wo sich
+     dies aus zwingenden Gründen als notwendig erweist.
+3    Die Benutzung der Land- und Forstwirtschaftswege richtet sich nach den Vorschriften der
+     Wald- und Meliorationsgesetzgebung sowie der örtlichen Verkehrsregelung der Ge-
+     meinde.
+4    Die Gemeinde erlässt nach Bedarf Nutzungsbeschränkungen für den Langsamverkehr.
+
+Öffentliche Parkierungsanlagen / Bushaltestellen                                       Art. 54
+1    Die Gemeinde sorgt für ein ausreichendes Angebot an öffentlichen Parkierungsanlagen
+     für Motorfahrzeuge und für Fahrräder. Parkierungsanlagen der Grund- und Groberschlies-
+     sung bedürfen einer Grundlage im Generellen Erschliessungsplan.
+2    Die Gemeinde erlässt bei Bedarf für öffentliche Parkplätze sowie für die von der Gemeinde
+     erstellten Gemeinschaftsanlagen eine Benützungs- und Gebührenordnung.
+3    Bushaltestellen können in den Generellen Erschliessungsplan aufgenommen werden.
+
+Versorgungs- und Entsorgungsanlagen                                                    Art. 55
+1    Der GEP unterscheidet die bestehenden und geplanten Versorgungs- und Entsorgungs-
+     anlagen, die für die hinreichende Erschliessung der Bauzonen notwendig sind. Dazu zäh-
+     len namentlich Anlagen der Trinkwasserversorgung, der Energieversorgung, der Abfall-
+     bewirtschaftung und nach Massgabe des Generellen Entwässerungsplans Anlagen der
+     Abwasserbeseitigung.
+2    Grundstücke in der Bauzone müssen an die im GEP oder in Folgeplanungen festgelegten
+     öffentlichen Leitungen angeschlossen werden.
+3    Die Benutzung der öffentlichen Versorgungs- und Entsorgungsanlagen richtet sich nach
+     der Erschliessungsgesetzgebung der Gemeinde, soweit in diesem Gesetz keine Rege-
+     lung enthalten ist.
+
+Sport- und Freizeitanlagen                                                             Art. 56
+1    Bestehende und geplante Sport- und Freizeitanlagen wie Skilifte, Sesselbahnen, Schlit-
+     telbahnen sowie die zugehörigen Betriebseinrichtungen wie Wasserbezugsquellen, Was-
+     serleitungen und Zapfstellen für die Beschneiung sind nach Massgabe des GEP zulässig.
+Baugesetz Klosters (Fraktion Klosters)                                                    25
+
+
+
+C. Rechtliche Wirkungen der Festlegungen im GEP
+
+Verkehrswege der Grob- und Feinerschliessung                                          Art. 57
+1    Im GEP eingezeichnete, bestehende Sammel- und Erschliessungsstrassen samt den da-
+     zugehörigen Ausstattungen sind öffentlich, sofern die Gemeinde über entsprechende Nut-
+     zungsrechte (Eigentum, Dienstbarkeiten) verfügt. Sie können im Rahmen ihrer Zweckbe-
+     stimmung und der örtlichen Verkehrsregelung bzw. den Erschliessungsreglementen von
+     jedermann benutzt werden.
+2    Soweit es sich bei den im GEP eingezeichneten geplanten oder bestehenden Strassen
+     nicht um Privatstrassen handelt, welche im Privateigentum verbleiben sollen, sorgt die
+     Gemeinde bei Bedarf für den Erwerb der erforderlichen Nutzungsrechte nach den ein-
+     schlägigen Vorschriften.*
+*Kantonales Enteignungsgesetz (BR 801.100), Art. 97 Abs. 1 Ziff. 3 KRG
+
+
+Permanente Fuss/Wander-, Rad-, Bike- und Freeride/Downhillwege                        Art. 58
+1    Für die bestehenden Fuss- und Wanderwege, Radwege, Bike- und
+     Freeride/Downhillwege, für welche die Gemeinde noch nicht über die entsprechenden
+     Nutzungsrechte verfügt, ist der Gemeinde mit Festlegung im GEP gestützt auf Art. 97 Abs.
+     1 Ziff. 3 KRG das Enteignungsrecht erteilt.
+2    Für verschiedene Fuss- und Wanderwege gilt Kraft Art. 67 BauG-1993 sowie Generellem
+     Erschliessungsplan, öffentliche Fuss- und Wanderwege, vom 28. November 1993 bereits
+     seit 1993/1995 eine öffentlichrechtliche Eigentumsbeschränkung im Sinne eines Fuss-
+     wegrechts zugunsten der Öffentlichkeit. Diese öffentlichrechtliche Eigentumsbeschrän-
+     kung (Fusswegrecht zugunsten der Öffentlichkeit) gilt für die im Generellen Erschlies-
+     sungsplan entsprechend als "Fuss- und Wanderwege (Art. 58 Abs. 2 BauG)" gekenn-
+     zeichneten Wege weiterhin.
+3    Für die geplanten Fuss- und Wanderwege, Radwege, Bike- und Freeride/Downhillwege
+     gilt Art. 57 Abs. 2 sinngemäss.
+
+Temporäre Langlaufloipen, Winterwanderwege und Schlittelbahnen                        Art. 59
+1    Für die Anlage der im GEP eingezeichneten temporären Langlaufloipen,
+     Winterwanderwege und Schlittelbahnen steht beidseits der im Plan festgelegten Linien
+     ausserhalb der Bauzone ein Bereich von je 10 m und innerhalb der Bauzone ein solcher
+     von je 3 m zur Verfügung. Im Hinblick auf eine schonungsvollere Nutzung können Grund-
+     eigentümer/innen verlangen, dass der Verlauf der Langlaufloipen, Winterwanderwege und
+     Schlittelbahnen innerhalb der erwähnten Bereiche verlegt wird, sofern die topografischen
+     Verhältnisse es erlauben. Die damit verbundenen Kosten gehen zulasten des Betreibers.
+2    Die Gemeinde ist befugt, die temporären Langlaufloipen, Winterwanderwege und
+     Schlittelbahnen bei genügender Schneedecke mechanisch herrichten zu lassen. Die tem-
+     porären Langlaufloipen, Winterwanderwege und Schlittelbahnen dürfen von jedermann
+     zweckentsprechend benutzt werden. Die Grundeigentümer haben die Anlage der besag-
+     ten Langlaufloipen, Winterwanderwege und Schlittelbahnen sowie deren Benützung zu
+     dulden.
+3    Im Übrigen gilt die Regelung über die Wintersportzone (Art. 35 BauG und Art. 39 KRG)
+     sinngemäss.
+Baugesetz Klosters (Fraktion Klosters)                                                     26
+
+
+
+Öffentliche Leitungen                                                                  Art. 60
+1    Mit Festlegung im GEP gelten die für die öffentlichen Leitungen benötigten
+     Durchleitungsrechte als erteilt beziehungsweise die Grundeigentümer haben die
+     entsprechenden Leitungen zu dulden. Bei bestehenden Leitungen gilt das
+     Durchleitungsrecht für den Bestand, bei noch nicht realisierten Leitungen wird die exakte
+     Leitungsführung mittels Verfügung konkretisiert. Die Grundeigentümer können im
+     Rahmen von Art. 45 Abs. 4 KRG die Verlegung solcher Leitungen zulasten der Gemeinde
+     verlangen, wenn ein objektiv beachtenswertes privates Interesse besteht, wenn ein
+     gleichwertiger Leitungsverlauf gewährleistet ist und wenn der Gemeinde aus der
+     Verlegung keine unverhältnismässigen Kosten erwachsen.
+2    Muss eine im GEP nicht eingezeichnete öffentliche Leitung Privatgrundstücke durchque-
+     ren, so sind die Grundeigentümer im Rahmen des Zumutbaren verpflichtet, die Leitung
+     samt zugehöriger Anlagen zu dulden. Die exakte Leitungsführung wird mittels Verfügung
+     konkretisiert. Ändern sich später die Bedürfnisse des belasteten Grundstücks, so ist die
+     Leitung auf Kosten der Gemeinde zu verlegen.
+3    Allfällige Entschädigungsforderungen werden im Streitfall nach Massgabe des kantonalen
+     Raumplanungsrechts* durch die zuständige Enteignungskommission festgesetzt.
+*Art. 97 Abs. 4 KRG
+
+
+5.   FOLGEPLANUNGEN
+
+Folgeplanung                                                                           Art. 61
+1    Für Folgeplanungen (Arealplanungen und Quartierplanungen) gelten die einschlägigen
+     Bestimmungen des kantonalen Raumplanungsrechts*.
+2    In den im Zonenplan oder GGP bezeichneten Gebieten mit Folgeplanung dürfen Bauvor-
+     haben grundsätzlich nur bewilligt werden, wenn die Folgeplanung rechtskräftig abge-
+     schlossen ist. Die Baubehörde kann von diesem Grundsatz Abweichungen gestatten,
+     wenn durch die betreffenden Bauvorhaben eine Präjudizierung der Folgeplanung ausge-
+     schlossen ist.
+3    Die im Zonenplan oder GGP festgelegte Abgrenzung des Folgeplanungsgebiets ist für
+     jedermann verbindlich. Die Baubehörde kann jedoch zu Beginn oder im Verlauf der Fol-
+     geplanung das Verfahren auf weitere Grundstücke ausdehnen, sofern sich dies als not-
+     wendig oder zweckmässig erweist.
+*Art. 51 ff. KRG und Art. 16 ff. KRVO
+
+
+Abweichungen von der zonengemässen Regelbauweise                                       Art. 62
+1    Im Rahmen von Folgeplanungen können folgende Abweichungen von der zonengemäs-
+     sen Regelbauweise festgelegt werden, wenn damit ein haushälterischer Umgang mit dem
+     Boden bei guter Wohn- und Gestaltungsqualität erreicht wird:
+     a)   Die Grenz- und Gebäudeabstände auf Grundstücken im Beizugsgebiet können nach
+          architektonischen Kriterien frei festgelegt werden. Gegenüber Nachbargrundstücken
+          ausserhalb des Plangebiets gelten die Grenz- und Gebäudeabstände der Regelbau-
+          weise.
+     b)   Die Gebäudelängen und der Zusammenbau mehrerer Baukörper können nach archi-
+          tektonischen Kriterien frei festgelegt werden.
+     c)   Die Baubehörde kann die Berechnung der Fassadenhöhe ab neuem Terrain vor-
+          schreiben, wenn sich aus gestalterischen Gründen eine Terrainveränderung auf-
+          drängt.
+Baugesetz Klosters (Fraktion Klosters)                                                    27
+
+
+
+2    Für weitergehende Abweichungen im Arealplan gilt das kantonale Recht.*
+*Art. 46 KRG
+
+
+IV. Erschliessungsordnung
+
+1.   ALLGEMEINES UND FINANZIERUNG
+
+Erschliessungsgesetzgebung                                                            Art. 63
+1    Die Erschliessungsgesetzgebung (Wasserversorgungs-, Abwasserentsorgungs- und Ab-
+     fallgesetz) regelt in Ergänzung des Baugesetzes die Projektierung, die Erstellung und
+     technische Gestaltung, die Benützung, den Unterhalt und die bedarfsgerechte Erneue-
+     rung der öffentlichen und privaten Erschliessungsanlagen, insbesondere in den Bereichen
+     der Verkehrserschliessung, der Wasserversorgung, der Abwasserbehandlung, der Abfall-
+     bewirtschaftung sowie der Energieversorgung und der Telekommunikation, soweit nicht
+     einzelne Aufgaben Gemeindeverbindungen, konzessionierten Trägerschaften oder Priva-
+     ten übertragen sind. Die Erschliessungsgesetzgebung legt die Anschlusspflichten und An-
+     schlussvoraussetzungen fest.
+2    Vorbehalten bleiben besondere Regelungen im Rahmen von Folgeplanungen.
+
+Finanzierung                                                                          Art. 64
+1    Die Grundeigentümer beteiligen sich an den Auslagen der Gemeinde für die Erschlies-
+     sung mittels Grundeigentümerbeiträgen, Anschluss- und Benützungsgebühren.
+2    Grundeigentümerbeiträge werden erhoben (a) für Verkehrsanlagen der Grob- und Feiner-
+     schliessung, (b) für Ver- und Entsorgungsanlagen der Feinerschliessung in den Bauzonen
+     sowie (c) für Ver- und Entsorgungsanlagen aller Erschliessungsstufen, die zur Erschlies-
+     sung von Bauten ausserhalb der Bauzone realisiert werden müssen. Voraussetzung ist,
+     dass den Grundeigentümern aus der Erstellung, Änderung oder Erneuerung solcher An-
+     lagen ein wirtschaftlicher Sondervorteil erwächst.
+3    Zur Deckung aller nicht durch Beiträge finanzierter Kosten von Versorgungsanlagen der
+     Grund-, Grob- und Feinerschliessung werden Anschlussgebühren und wiederkehrende
+     Gebühren (Grundgebühren, Mengengebühren) erhoben. Vorbehalten bleibt Art. 60a Abs.
+     2 GSchG.
+4    Zur Deckung der Kosten der Abfallbewirtschaftung werden Mengengebühren und jährlich
+     wiederkehrende Grundgebühren erhoben.
+
+Erschliessungsprogramm                                                                Art. 65
+1    Die Baubehörde ist zuständig für den Erlass des Erschliessungsprogramms.
+2    Die Baubehörde legt den Entwurf für das Erschliessungsprogramm in der Gemeinde wäh-
+     rend 30 Tagen öffentlich auf und gibt die Auflage im amtlichen Publikationsorgan der Ge-
+     meinde und im Kantonsamtsblatt bekannt. Während der öffentlichen Auflage können Be-
+     troffene bei der Baubehörde Vorschläge und Einwendungen einbringen. Diese prüft die
+     Eingaben, entscheidet über allfällige Anpassungen und erlässt das Erschliessungspro-
+     gramm.
+3    Die Baubehörde sorgt dafür, dass die sich aus dem Erschliessungsprogramm ergebenden
+     finanziellen Verpflichtungen aus dem jährlichen Budget der Gemeinde ersichtlich sind.
+4    Bei wesentlichen Anpassungen des Erschliessungsprogramms ist das Auflageverfahren
+     zu wiederholen.
+Baugesetz Klosters (Fraktion Klosters)                                                               28
+
+
+
+2.   PROJEKTIERUNG UND BEWILLIGUNG
+
+Generelle Projekte und Bauprojekte                                                           Art. 66
+1    Die generellen Projekte umfassen die Verkehrsanlagen der Grund- und Groberschlies-
+     sung, die Hauptanlagen der Wasserversorgung und der Abwasserentsorgung sowie An-
+     lagen der Energieversorgung und der Abfallbewirtschaftung. Sie können auch Anlagen
+     der Feinerschliessung enthalten.*
+2    Die Bauprojekte bestimmen Art, Umfang, Lage und bautechnische Gestaltung von Er-
+     schliessungsanlagen und weitere Einzelheiten.
+3    Erschliessungsanlagen erfordern eine Baubewilligung.
+4    Vorbehalten bleiben Sonderregelungen in der Erschliessungsgesetzgebung.
+* Betreffend Bauten und Anlagen an Kantonsstrassen vgl. Art. 45 ff. StrG. Betreffend Anschlüsse an
+  Kantonsstrassen vgl. Art. 51 ff. StrG und namentlich Art. 52 StrG (Zusatzbewilligung TBA).
+
+
+3.   AUSFÜHRUNG, BETRIEB, UNTERHALT UND ERNEUERUNG
+
+Öffentliche Erschliessungsanlagen                                                            Art. 67
+1    Die gemeindeeigenen Anlagen der Grund- und Groberschliessung werden von der Ge-
+     meinde nach Massgabe des Erschliessungsprogramms ausgeführt.
+2    Anlagen der Feinerschliessung werden von der Gemeinde erstellt, wenn diese einer grös-
+     seren Anzahl von Grundstücken dienen. Lehnt die Baubehörde Anträge Interessierter auf
+     Durchführung der Feinerschliessung ab, sind die Antragstellenden befugt, die Anlagen
+     nach den Plänen der Gemeinde als private Erschliessungsanlagen zu erstellen.
+3    Die Gemeinde sorgt für einen einwandfreien Betrieb und Unterhalt sowie die rechtzeitige
+     Erneuerung aller gemeindeeigenen Anlagen.
+4    Verunreinigungen von öffentlichen Verkehrsanlagen durch Private sind zu vermeiden.
+     Trotzdem verursachte sowie unvermeidbare Verunreinigungen sind vom Verursacher um-
+     gehend auf eigene Kosten zu beseitigen. Verursacht eine Verletzung dieser Vorschrift bei
+     der Gemeinde Aufwendungen, so können diese dem Verursacher zu Selbstkosten in
+     Rechnung gestellt werden.
+
+Schneeräumung                                                                                Art. 68
+1    Die gemeindeeigenen Verkehrsanlagen werden während des Winters von der Gemeinde
+     offengehalten, soweit es den öffentlichen Bedürfnissen entspricht und es die Gefahren-
+     lage zulässt. Die Baubehörde bezeichnet im Rahmen der von der Gemeinde gesproche-
+     nen Kredite die jeweils zu räumenden Verkehrsanlagen.
+2    Die Gemeinde ist befugt, bei der Schneeräumung den Schnee unter möglichster Scho-
+     nung von Bauten und Kulturen auf angrenzenden privaten Grundstücken abzulagern. Die
+     betroffenen Grundstücke sind von der Gemeinde nach der Schneeschmelze von Split und
+     Abfällen zu reinigen. Schäden an Bauten, Zäunen oder Pflanzen werden von der Ge-
+     meinde vergütet.
+Baugesetz Klosters (Fraktion Klosters)                                                    29
+
+
+
+Private Erschliessungsanlagen                                                         Art. 69
+1    Die Ausführung und Finanzierung von privaten Erschliessungsanlagen ist Sache der
+     Grundeigentümer. Die Anlagen sind dauernd in gutem und funktionsfähigem Zustand zu
+     halten und rechtzeitig zu erneuern. Bei Vernachlässigung dieser Verpflichtung trifft die
+     Baubehörde die erforderlichen Massnahmen. Sofern notwendig, ordnet sie die Ersatzvor-
+     nahme an.
+2    Private Erschliessungsanlagen können von der Gemeinde unentgeltlich übernommen
+     werden, sofern sie dem Gemeingebrauch dienen, den technischen Anforderungen genü-
+     gen und sich in einem guten Zustand befinden. Es besteht kein Rechtsanspruch auf die
+     Übernahme solcher Strassen durch die Gemeinde.
+3    Wird die Gemeinde zufolge Eigentumsverzicht Eigentümerin einer privaten Erschlies-
+     sungsanlage, so sind bei deren Weiterbetrieb jene jeweiligen Grundeigentümer - deren
+     Grundstücke darüber erschlossen werden - weiterhin für Ausführung, Betrieb, Unterhalt,
+     Erneuerung und Finanzierung verantwortlich, und zwar so, wie wenn die besagte Anlage
+     in ihrem Eigentum stehen würde.
+4    Die Gemeinde kann die Erneuerung (inklusive Planung), den Unterhalt und die Reinigung
+     von privaten Verkehrs-, Versorgungs- oder Entsorgungsanlagen sowie den Winterdienst
+     auf Privatstrassen gegen Verrechnung der Selbstkosten übernehmen, wenn
+     a)   es die Mehrheit der beteiligten Grundeigentümer beantragt, oder
+     b)   die Grundeigentümer ihrer Erneuerungs-/Unterhaltspflicht nicht in genügender Weise
+          nachkommen.
+5    Die Kosten werden von der Baubehörde nach den in der Raumplanungsgesetzgebung
+     festgelegten Grundsätzen des Beitragsverfahrens* auf die Grundeigentümer aufgeteilt.
+     Allfällige betreffend Kostentragung abweichende privatrechtliche Regelungen (z.B. in
+     Dienstbarkeitsverträgen) können berücksichtigt werden, wenn sie genügend klar und wi-
+     derspruchslos sind. Sind die entsprechenden Regelungen unklar oder widersprüchlich,
+     erfolgt die Kostenverteilung im Verfahren vor Gemeinde ausschliesslich nach Satz 1 und
+     für allfälligen Korrekturen haben sich die Grundeigentümer nach Abschluss dieses Ver-
+     fahrens an den Zivilrichter zu wenden.
+6    Alternativ zu Absatz 4 kann die Gemeinde auch eine Sanierungsquartierplanung gemäss
+     Art. 70 durchführen.
+*Art. 62 ff RPG
+
+
+Sanierungsquartierplanungen                                                           Art. 70
+1    Zur Erneuerung von öffentlichen und/oder privaten Infrastrukturanlagen eines Quartiers
+     oder bei fehlender klarer rechtlicher Regelungen betreffend Benützung, Unterhalt, Erneu-
+     erung und Finanzierung gemeinschaftlich genutzter privater Erschliessungsanlagen kann
+     die Gemeinde Sanierungsquartierpläne, bei Bedarf ergänzt mit einer Landumlegung, er-
+     lassen.
+Baugesetz Klosters (Fraktion Klosters)                                                      30
+
+
+
+4.   GEMEINSCHAFTSANLAGEN, MITBENÜTZUNGSRECHTE, NOTWEG- UND NOT-
+     ANKERRECHTE
+
+Gemeinschaftsanlagen                                                                    Art. 71
+1    Die Baubehörde kann die Grundeigentümer eines Quartiers und benachbarter Grundstü-
+     cke verpflichten, private Gemeinschaftsanlagen zu erstellen oder auch Dritten gegen an-
+     gemessene Entschädigung zur Verfügung zu stellen. Die Baubehörde legt in solchen Fäl-
+     len die Entschädigungen sowie den Kostenanteil für jedes angeschlossene Grundstück
+     fest, und sie regelt, wer in welchem Umfang künftig für den Unterhalt aufzukommen hat.
+     Für grössere Gemeinschaftsanlagen sind Quartierplanverfahren durchzuführen.
+
+Mitbenützung privater Anlagen, Notweg- und Notankerrecht                                Art. 72
+1    Die Eigentümer bestehender privater Leitungen sind verpflichtet, anderen Grundeigentü-
+     mern die Mitbenützung ihrer Leitungen (inkl. Realisierung der entsprechenden Anschluss-
+     leitung) gegen angemessene Entschädigung zu gestatten. Wird das Mitbenützungsrecht
+     bestritten oder können sich die Parteien nicht über die Entschädigung einigen, so ent-
+     scheidet die Baubehörde. Im Übrigen gilt für private Durchleitungsrechte das ZGB.
+2    Die Eigentümer bestehender privater Verkehrsanlagen können von der Baubehörde ver-
+     pflichtet werden, anderen Grundeigentümern die Mitbenützung ihrer Anlagen (inkl. Reali-
+     sierung des entsprechenden Anschlusswerks) gegen angemessene Entschädigung zu
+     gestatten, soweit die Mitbenützung im öffentlichen Interesse liegt. Die Entschädigung wird
+     im Streitfall durch die Baubehörde festgesetzt.
+3    Die Baubehörde kann Grundeigentümer im Rahmen eines öffentlichrechtlichen Notweg-
+     rechts insbesondere auch verpflichten, ihr Grundstück Dritten als Zufahrt zur Verfügung
+     zu stellen, sofern die nachstehenden Voraussetzungen kumulativ erfüllt sind:
+     - die Bauparzelle des Dritten verfügt über keine oder keine genügende Zufahrt,
+     - der Dritte kann eine genügende Zufahrt nicht oder nur mit unzumutbaren Kosten er-
+       stellen,
+     - andere planerische Instrumente (Quartierplanung und dgl.) kommen nicht in Frage
+       oder haben keine Lösung des Erschliessungsproblems gebracht,
+     - eine gütliche Einigung ist nachweislich gescheitert, und
+     - die Belastung mit der entsprechenden Grunddienstbarkeit oder öffentlichrechtlichen
+       Eigentumsbeschränkung erweist sich für den betroffenen Grundeigentümer als zumut-
+       bar.
+4    Die Baubehörde lässt das verfügte öffentlichrechtliche Notwegrecht nach Rechtskraft auf
+     allen beteiligten Parzellen im Grundbuch anmerken.
+5    Die Baubehörde kann Grundeigentümer im Rahmen eines öffentlichrechtlichen Notanker-
+     rechts verpflichten, ihr Grundstück Nachbarn für das Einbringen von temporären lnjekti-
+     onsankern zur Stabilisierung von Baugrubenwänden während der Bauphase zur Verfü-
+     gung zu stellen und das Belassen der entspannten Anker zu dulden. Voraussetzung ist,
+     - das vorgesehene Bauprojekt kann ohne temporäre Anker überhaupt nicht oder nur mit
+       unzumutbar hohem Aufwand ausgeführt werden,
+     - eine gütliche Einigung ist nachweislich gescheitert, und
+     - die Belastung des Nachbarn erweist sich für diesen als zumutbar.
+Baugesetz Klosters (Fraktion Klosters)                                                      31
+
+
+
+6    Die Baubehörde regelt die Entschädigungen für die Mitbenützung privater Anlagen durch
+     Dritte sowie wer in welchem Umfang künftig für den Unterhalt aufzukommen hat. Bei Ein-
+     räumung eines öffentlichrechtlichen Notweg- oder Notankerrechts bestimmt die Baube-
+     hörde ferner die vom Begünstigten zu bezahlende, sich nach dem Verkehrswert des ein-
+     geräumten Rechts richtende Entschädigung.
+
+
+V. Kommunale Bauvorschriften
+
+1.   SICHERHEIT UND GESUNDHEIT, BAUAUSFÜHRUNG
+
+Sicherheit und Gesundheit                                                               Art. 73
+1    Für Bauten und Anlagen gelten bezüglich Sicherheit und Gesundheit die Vorschriften der
+     kantonalen Raumplanungsgesetzgebung *.
+2    Räume mit Hauptnutzflächen müssen genügend belichtet und belüftet sein. Gegebenen-
+     falls sind durch entsprechende technische Ausrüstungen einwandfreie Verhältnisse zu
+     schaffen.
+3    Wohn- und die Mehrheit der Schlafräume sind mit Fenstern zu versehen, die über dem
+     Erdreich liegen, ins Freie führen und in ausreichendem Masse geöffnet werden können;
+     die Fensterfläche hat wenigstens einen Zehntel der Nettogeschossfläche zu betragen.
+* Art. 79 ff KRG
+
+
+(Dach-)Wasser und Schneeablagerung                                                      Art. 74
+1    Es ist untersagt, Dachwasser und anderes Abwasser von Grundstücken auf öffentliche
+     Strassen, Wege und Plätze abzuleiten oder Schnee darauf zu deponieren. Vorplätze sind
+     zu entwässern. Dach- und Sickerwasser ist versickern zu lassen oder, wo die örtlichen
+     Verhältnisse dies nicht zulassen, in ein oberirdisches Gewässer einzuleiten. Es darf weder
+     direkt noch indirekt in die Kanalisation geleitet werden, ausser es bestehen speziell für
+     diesen Zweck geschaffene Meteorwasserleitungen.*
+2    Wo Dachtraufen entlang von Strassen verlaufen, haben die Grundeigentümer durch
+     zweckentsprechende Massnahmen dafür zu sorgen, dass Schneerutschungen auf die
+     Strasse ausgeschlossen sind. Von den Dächern abgeschöpfter Schnee darf nicht auf
+     Strassen deponiert werden und ist sofort zu beseitigen bzw. beseitigen zu lassen.
+3    Bei Unterlassung nimmt die Baubehörde die notwendigen Arbeiten auf Kosten der Grund-
+     eigentümer vor. Diese Ersatzvornahme erfolgt insbesondere bei Schneeablagerungen,
+     welche den öffentlichen Verkehr beeinträchtigen können.*
+* Betreffend Ausnahmen bei ausserordentlichen Verhältnissen vgl. Art. 82 KRG.
+
+
+Bauarbeiten / Baulärm*                                                                  Art. 75
+1    Mit Rücksicht auf den Kur- und Ferienbetrieb sind die aus dem Bauvorgang hervorgehen-
+     den Emissionen auf das zumutbare Minimum zu beschränken, wobei namentlich folgende
+     zeitlichen Beschränkungen gelten:
+     a)   Abbrüche, Aushubarbeiten und - ausgenommen mit eingekleideten Fassaden - Roh-
+          bauarbeiten dürfen nicht ausgeführt werden
+          - ab 15. Dezember bis und mit 31. März, sowie
+          - ab Mittwoch vor Ostern bis und mit Ostermontag.
+Baugesetz Klosters (Fraktion Klosters)                                                       32
+
+
+
+     b)   Bauarbeiten, die Verkehrs- oder anderen Lärm sowie Staub, Erschütterungen oder
+          lästige Gerüche verursachen, dürfen vom 15. Juni bis 31 August nur montags bis
+          freitags von 08.00 bis 12.00 Uhr sowie von 13.00 bis 19.00 Uhr und samstags von
+          08.00 bis 12.00 Uhr ausgeführt werden; ausserhalb der erwähnten Zeitspanne (15.
+          Juni bis 31. August) darf morgens um 07.00 Uhr (statt um 08.00 Uhr) begonnen wer-
+          den.
+     c)   Zwischen 15. Dezember und 31. März sind Unterdrehkräne bis zu einer Hakenhöhe
+          von 18.5 m abzulegen.
+2    Die Baubehörde kann in begründeten Fällen Ausnahmen gestatten oder weitere
+     Einschränkungen** verfügen.
+3    Baustellenabwasser ist je nach Abwasserart und Anfall zu behandeln, bevor es mit Bewil-
+     ligung der zuständigen kantonalen Behörde in die Kanalisation oder in einen Vorfluter ein-
+     geleitet wird oder versickert. Die auf Baustellen anfallenden Abfälle sind nach den eidge-
+     nössischen, kantonalen und kommunalen Vorschriften zu entsorgen. Das Verbrennen von
+     Abfällen auf Baustellen ist untersagt.
+* Vgl. auch Art. 79 Abs. 2 KRG
+** Vgl. Art. 6 LSV und Baulärm-Richtlinie des BUWAL
+
+
+Aussenbeleuchtung                                                                        Art. 76
+1    Die Beleuchtung von Bauten und Anlagen einschliesslich historischer Gebäude und An-
+     lagen sind bewilligungspflichtig.
+2    Zulässig sind nur solche Beleuchtungseinrichtungen, deren Auswirkungen eine gute Ge-
+     samtwirkung der gebauten und natürlichen Umgebung nicht beeinträchtigen.
+3    Der Betrieb von himmelwärts gerichteten Anlagen, welche keine Sicherheits- oder Be-
+     leuchtungsfunktion für Bauten erfüllen (Skybeamer, Laserscheinwerfer, Reklameschein-
+     werfer oder ähnliche künstliche Lichtquellen), ist untersagt.
+
+Schallschutz                                                                             Art. 77
+1    Neubauten, wesentliche Umbauten und Erweiterungen haben in Bezug auf den Schall-
+     schutz den Vorgaben der eidgenössischen Lärmschutzgesetzgebung zu genügen.*
+
+* Die Empfindlichkeitsstufen zur Bestimmung der Belastungsgrenzwerte sind aus dem Zonenplan und
+  dem Zonenschema ersichtlich.
+
+
+Vermessungswerk                                                                          Art. 78
+1    Aufwendungen im Zusammenhang mit der Wiederherstellung von Marksteinen oder Po-
+     lygonpunkten zufolge Bauarbeiten trägt die verursachende Bauherrschaft.
+
+
+2.   GESTALTUNG
+
+Allgemeines                                                                              Art. 79
+1    Für die Gestaltung und Einordnung von Bauten und Anlagen gelten die Vorschriften der
+     kantonalen Raumplanungsgesetzgebung *.
+*Art. 73 und 74 KRG
+Baugesetz Klosters (Fraktion Klosters)                                                        33
+
+
+
+Dächer                                                                                 Art. 80
+1    Dächer sind als ästhetisch ansprechende, gestalterische Einheit mit Bezug zur umgeben-
+     den Bausubstanz (Dachformen, Farbe) und Siedlungsstruktur zu gestalten und mit orts-
+     üblichen Materialien einzudecken.
+2    Zulässig sind ausschliesslich Giebeldächer mit einer Neigung zwischen 32 bis 45% und
+     Vordächern von mindestens 0.5 Metern. Für An- und Kleinbauten sowie generell für ein-
+     geschossige Gebäudeteile bis 60 m2 HNF/NNF/ANF können auch andere Dachformen
+     bewilligt werden; werden solche Gebäude(-teile) mit Giebeldächern ausgeführt, muss das
+     Vordach mindestens 0.3 Meter messen.
+3    Technisch bedingte Dachaufbauten (inklusive Liftaufbauten) sind auf ein Minimum zu be-
+     schränken und dürfen die Dachfläche nur im minimal erforderlichen Mass überschreiten,
+     welches technisch möglich und wirtschaftlich tragbar ist. Entlüftungen dürfen den First
+     jedenfalls nicht um mehr als 1 m und die Dachfläche nicht um mehr als 1.5 m überragen.
+4    Dachaufbauten sind im Übrigen nur in Form von Giebel- oder Schleppgauben mit Vordä-
+     chern von mindestens 0.3 Metern sowie folgenden Einschränkungen zulässig:
+     -    Gaubenbreite:
+          Maximal 5 m je Gaube; alle Gauben insgesamt maximal 1/3 der Fassadenlänge des
+          entsprechenden Dachabschnitts
+     -    Gaubenhöhe seitlich:
+          Maximal 1.2 m (ab Dachhaut bis OK Pfette)
+     -    Höchster Punkt von Schleppgauben:
+          0.4 m unter dem höchsten Punkt des darüberliegenden Firstes (Oberkante Dachflä-
+          che)
+     -    Dachneigung:
+          -- Giebelgauben: Gleiche Neigung wie das dazugehörige Hauptdach.
+          -- Schleppgauben: Minimale Neigung von 9%
+     -    Es darf jeweils nur eine Gaubenart verwendet und die Dachtraufe darf nicht unter-
+          brochen werden.
+5    Dacheinschnitte sind ausschliesslich vorgelagert zu Lukarnen, maximal gleich breit wie
+     diese und ohne Unterbrechung der Dachtraufe zulässig; im Übrigen sind Dacheinschnitte
+     nicht zulässig.
+6    Dachfenster sind nur vereinzelt, klar voneinander abgesetzt, liegend sowie mit einer Flä-
+     che von maximal 2.5 m2 zulässig.
+7    Es besteht kein Rechtsanspruch auf Ausschöpfung der Masse gemäss Absatz 4 bis 6
+     beziehungsweise diese Masse dürfen nur in dem Umfang ausgeschöpft werden, als die
+     Voraussetzung von Absatz 1 erfüllt sind.
+
+Balkone und Fassaden                                                                   Art. 81
+1    Fenster- und Fassadengliederungen, Balkonbrüstungen und Trennwände von Balkonen
+     sind besonders sorgfältig zu gestalten und zu proportionieren.
+2    Auskragende Balkone dürfen nur seitlich verglast werden und haben überdies in jedem
+     Fall die gestalterischen Vorgaben der kantonalen Raumplanungsgesetzgebung* zu erfül-
+     len.
+* Art. 73 KRG
+Baugesetz Klosters (Fraktion Klosters)                                                              34
+
+
+
+Einfriedungen                                                                                  Art. 82
+1    Mobile Weidezäune sind - sobald die Weiden nicht mehr bestossen werden - zu entfernen.
+     Zäune aus Stacheldraht oder anderen gefährlichen Materialien sind auf dem ganzen Ge-
+     meindegebiet verboten.
+
+Terrainveränderungen, Böschungen, Stütz- und Futtermauern                                      Art. 83
+1    Terrainveränderungen, Böschungen, Stütz- und Futtermauern sind auf das Unerlässliche
+     zu beschränken und haben sich gut in die Umgebung einzuordnen.
+2    Bei guter Einordnung darf eine Fassade auf der ganzen Länge und dürfen die übrigen
+     Fassaden auf höchstens einem Drittel der jeweiligen Fassadenlänge abgegraben werden.
+     Die Baubehörde kann Abweichungen bewilligen, wenn es die Verhältnisse erlauben.
+3    Im Übrigen finden die Vorschriften der kantonalen Raumplanungsgesetzgebung* Anwen-
+     dung.
+* Art. 76 KRG
+
+
+Reklamen*                                                                                      Art. 84
+1    Reklameeinrichtungen sind nur zulässig, sofern sie ein zurückhaltendes Erscheinungsbild
+     aufweisen und sich namentlich betreffend Gestalt, Farbe und Grösse gut ins Strassen-,
+     Orts- und Landschaftsbild einfügen sowie die Verkehrssicherheit und das Wohlbefinden
+     der Anwohner nicht beeinträchtigen.
+2    Auf öffentlichem Grund sind Reklameeinrichtungen ausschliesslich an den von der Bau-
+     behörde bezeichneten Stellen zulässig.
+3    Zur Fremdwerbung bestimmte Reklameeinrichtungen sind auf Privatgrund in der Kern-
+     zone nicht gestattet. Ausserhalb dieser Zone sind solche Reklamen nur an den von der
+     Baubehörde in einem speziellen Plan bezeichneten Standorten zulässig; neue Standorte
+     müssen in jedem Fall sinngemäss die Voraussetzungen von Absatz 1 erfüllen und es darf
+     namentlich keine mit Absatz 1 nicht vereinbare örtliche Konzentration vorliegen.
+4    Bewegliche Lichtreklamen, Leuchtschriften mit Farb- und Lichtwechsel sowie akustische
+     Reklamevorrichtungen sind generell verboten.
+5    Die Baubehörde kann im Zusammenhang mit Veranstaltungen oder in andern begründe-
+     ten Fällen temporäre Aussenreklameeinrichtungen bewilligen.
+* Im Bereich von Kantonsstrassen erfordern Reklamen und Hinweistafeln einer Bewilligung des TBA
+  (Art. 24 StrV)
+
+
+Baugerüste und Baureklamen*                                                                    Art. 85
+1    Baureklamen bedürfen der vorgängigen Bewilligung durch die Baubehörde.*
+2    Baureklamen sind in der Regel an einem Standort auf dem Baugrundstück zusammenzu-
+     fassen und dürfen nur vom Beginn bis zur Beendigung des Bauvorhabens aufgestellt wer-
+     den. Sie müssen sich auf die am Bau beteiligten Personen und Firmen beziehen und dür-
+     fen das Orts-, Strassen- und Landschaftsbild nicht beeinträchtigen.
+3    Die Beleuchtung von Baustellen zu Reklamezwecken ist untersagt.
+*    Nicht baubewilligungspflichtig sind Reklamen mit einer Fläche < 1.5 m2 (vgl. Art. 40 Ziff. 9 KRVO)
+
+
+Strassen, Hausnamen und Nummern                                                                Art. 86
+1    Die Strassen, Wege, Plätze aller Art werden durch die Baubehörde benannt. Berechtigten
+     Wünschen der Anstösser ist Rechnung zu tragen.
+Baugesetz Klosters (Fraktion Klosters)                                                                        35
+
+
+
+2    Die Baubehörde legt eine einheitliche Art der Hausnummern, den Anbringungsort, die
+     Lage und die Finanzierung fest.
+
+Solaranlagen                                                                                         Art. 872
+1    Das Erstellen von Solaranlagen richtet sich grundsätzlich nach den Vorschriften der eid-
+     genössischen Raumplanungsgesetzgebung*.
+2    Solaranlagen, welche gemäss der Raumplanungsgesetzgebung des Bundes nicht als ge-
+     nügend angepasst gelten**, haben - unter Berücksichtigung der bundesrechtlichen Vor-
+     gaben*** - den allgemeinen Gestaltungsvorschriften des kantonalen Raumplanungsrechts
+     zu genügen.
+3    Für aufgeständerte Kollektoren auf Flachdächern gelten überdies folgende Einschränkun-
+     gen:
+     - Sie haben ab Dachrand einen Abstand von mindestens 0.5 Meter einzuhalten.
+     - Sie dürfen nur innerhalb eines 45°-Winkels ab Dachrand realisiert werden.
+     - Sie dürfen das Flachdach nur bis maximal 1.5 m überragen
+4    Solaranlagen in den Ortsbildschutzbereichen im weiteren Sinn (Art. 43 - 45), auf geschütz-
+     ten Bauten, partiell geschützten Bauten und zu erhaltenden Bauvolumen (Art. 41) sowie
+     auf vorläufig geschützten Bauten (Art. 42) sind in jedem Fall baubewilligungspflichtig.
+5    Nicht in andere Bauten und Anlagen integrierte, frei stehende Solaranlagen, welche das
+     gewachsene Terrain um mehr als 1.5 m überragen, sind nur gestützt auf eine Festlegung
+     im Generellen Erschliessungsplan zulässig.
+*   Art. 18 a RPG, Art. 32a ff. RPV; betreffend Anzeigepflichten 18a Abs. 1 RPG, Art. 32a Abs. 3 RPV
+    und Art. 40b KRVO; Art. 40 Ziff. 16 KRVO und Art. 40a KRVO.
+** Art. 32a RPV
+*** Art. 18a Abs. 4 RPG
+
+
+Antennen                                                                                              Art. 88
+1    Die Standorte von Aussenantennen einschliesslich Parabolantennen sind so zu wählen,
+     dass sie das Ortsbild möglichst wenig beeinträchtigen.
+2    Die Baubehörde kann bei Neubauten sowie wesentlichen Umbauten oder Erweiterungen
+     in Ortsbildschutzbereichen im weiteren Sinn (Art. 43 - 45) sowie von geschützten Bauten,
+     partiell geschützten Bauten und zu erhaltenden Bauvolumen (Art. 41) die Erstellung von
+     Gemeinschaftsantennen vorschreiben und das anschlusspflichtige Gebiet bestimmen.
+
+Lagerung von Siloballen                                                                               Art. 89
+1    Siloballen sind grundsätzlich beim Betriebszentrum oder bei einem Betriebsgebäude zu
+     lagern und vor dem Wild zu schützen.
+
+
+
+
+2
+    Korrektur gemäss Regierungsbeschluss Nr. 25/2024 vom 15. Januar 2024: Art. 87 Abs. 3, 3. Spiegelstrich,
+    «maximal 1.5 m»
+Baugesetz Klosters (Fraktion Klosters)                                                               36
+
+
+
+3.   VERKEHR, VERSORGUNG UND ENTSORGUNG
+
+
+A. Allgemeines
+
+Verkehrssicherheit*                                                                             Art. 90
+1    Die Baubehörde sorgt dafür, dass die gemeindeeigenen Verkehrsanlagen bei einer der
+     Witterung angepassten Verhaltensweise und bei gebotener Rücksichtnahme auf beson-
+     dere winterliche Gefahren durch die Benutzer ohne aussergewöhnliche Risiken benützt
+     werden können.
+2    Pflanzungen und Einfriedungen aller Art, bauliche Anlagen wie Einmündungen, Ausfahr-
+     ten und Ausgänge auf Strassen, Wege und Plätze dürfen die Benützer der Verkehrsanla-
+     gen nicht gefährden. Die Baubehörde kann die Anpassung oder Beseitigung gefährlicher
+     Anlagen auf Kosten der Eigentümer der Anlage verfügen.
+3    Private Ausfahrten, welche im Zeitpunkt ihrer Realisierung bestehende Sichtfelder zulas-
+     ten von Nachbargrundstücken beanspruchen, sind vom jeweiligen Nachbarn - sofern die
+     damit verbundene Belastung verhältnismässig und zumutbar ist - zu dulden und die be-
+     sagten Sichtfelder sind von Letzterem bis auf eine Höhe von 0.6 m hindernisfrei zu halten.
+* Betreffend Bauten und Anlagen an Kantonsstrassen vgl. Art. 45 ff. StrG. Betreffend Anschlüsse an
+  Kantonsstrassen vgl. Art. 51 ff. StrG und namentlich Art. 52 StrG (Erfordernis der Zusatzbewilligung
+  durch das TBA).
+
+
+Zu- und Ausfahrten                                                                              Art. 91
+1    Einstellhallen und Garagen mit direkter Ausfahrt auf öffentliche Strassen, Wege und
+     Plätze müssen einen Vorplatz von mindestens 6 m Länge und 3 m Breite aufweisen. Die-
+     nen sie zur Unterbringung von Fahrzeugen mit mehr als 5 m Länge, ist der Vorplatz ent-
+     sprechend zu vergrössern.
+2    Rampen dürfen eine maximale Neigung von 12% nicht überschreiten. Sind sie gedeckt
+     oder ausnahmsweise beheizt*, so kann eine Überschreitung dieses Masses bewilligt wer-
+     den. Bei Rampen an öffentlichen Strassen muss zwischen der Strassengrenze und dem
+     Beginn der Neigung ein Vorplatz mit einer Neigung von höchstens 5% und von mindes-
+     tens 5 m Länge vorhanden sein.
+3    Die Baubehörde kann beim Vorliegen von besonderen Verhältnissen abweichende Masse
+     gestatten, sofern die Verkehrssicherheit dennoch gewährleistet ist.
+* Art. 11 kant. Energiegesetz und Art. 32 kant. Energieverordnung
+
+
+B. Pflichtparkplätze
+
+Abstellplätze für Motorfahrzeuge                                                                Art. 92
+1    Bei Zweckänderung oder Erweiterungen von Bauten oder Bauteilen und baulichen Anla-
+     gen, welche zusätzlichen Verkehr erwarten lassen, sowie bei Neuerstellung und Wieder-
+     aufbau nach freiwilligem Abbruch hat der Grundeigentümer für genügend Abstellplätze für
+     Motorfahrzeuge zu sorgen und diese dauernd durch jene benutzen zu lassen, denen sie
+     dienen.
+2    Für Wohnflächen sind pro Wohnung bis 80 m2 HNF ein Autoabstellplatz, pro Wohnung
+     bis 140 m2 HNF zwei Autoabstellplätze und pro Wohnung über 140 m2 HNF drei Autoab-
+     stellplätze bereitzustellen.
+Baugesetz Klosters (Fraktion Klosters)                                                       37
+
+
+
+     Bei Gebäuden mit drei oder mehr Wohnungen ist überdies pro 5 Wohnungen (oder Bruch-
+     teilen davon) je ein zusätzlicher, öffentlich zugänglicher Besucherparkplatz zu erstellen.
+     An diesen Besucherparkplätzen dürfen keine Sondernutzungsrechte begründet werden.
+3    Für andere Bauten und Anlagen bestimmt die Baubehörde die Anzahl der Pflichtpark-
+     plätze für Bewohner und Besucher bzw. für Personal und Kunden/Besucher gestützt auf
+     die als Richtlinie beizuziehenden Normen des Schweizerischen Verbandes der Strassen-
+     und Verkehrsfachleute VSS.
+4    Die Abstellplätze sind so anzuordnen, dass sie unabhängig voneinander benützt werden
+     können. Dienen zwei oder mehrere Abstellplätze der gleichen Wohnung oder dem glei-
+     chen Betrieb, so kann von dieser Vorschrift abgewichen werden.
+5    In einem der Baubehörde einzureichenden Parkplatzplan ist festzulegen, welchen Gebäu-
+     deteilen die entsprechenden Pflichtparklätze dienen bzw. bei welchen Pflichtparkplätzen
+     es sich um Besucherparkplätze handelt. Pflichtparkplätze und dazugehörige Gebäudeteile
+     dürfen nicht unabhängig voneinander veräussert werden. Die Baubehörde lässt den Park-
+     platzplan im Grundbuch anmerken*.
+*    Auflage Art. 90 KRG
+
+
+C. Arten der Pflichterfüllung
+
+Realerfüllung                                                                            Art. 93
+1    Die Pflicht zur Schaffung von Abstellplätzen ist grundsätzlich real auf dem jeweiligen Bau-
+     grundstück zu erfüllen.
+
+Abstellplätze auf nahegelegenen Grundstücken                                             Art. 94
+1    Wer aus objektiven Gründen zur Schaffung von Abstellplätzen auf der Bauparzelle nicht
+     in der Lage ist, hat seine Pflicht auf einem nahegelegenen Grundstück zu erfüllen, wenn
+     er dort die nötigen Abstellplätze dauernd rechtlich sichern kann.
+
+Gemeinschafts-Parkierungsanlagen                                                         Art. 95
+1    Die Baubehörde kann in allen Zonen den Einkauf in eine bestehende oder zu erstellende
+     private oder öffentliche Parkierungsanlage anordnen (vgl. auch Art. 71).
+
+Ersatzabgabe und nachträgliche Realerfüllung                                             Art. 96
+1    Können die Abstellflächen aus objektiven oder verkehrsbedingten Gründen sowie wegen
+     unzumutbarer Immissionen oder einer Beeinträchtigung des Orts-, Strassen- oder Land-
+     schaftsbildes nicht auf eigenem Boden erstellt werden, ist der Bauherr verpflichtet, der
+     Gemeinde pro fehlenden Parkplatz eine einmalige Ersatzabgabe zu bezahlen.
+2    Die Ersatzabgabe pro fehlendem Abstellplatz beträgt CHF 5'000.--.
+3    Der vorerwähnte Betrage wird an den Zürcher Wohnbaukostenindex Stand April 2020 von
+     101.1 Punkte (Basis April 2017 = 100 Punkte) gekoppelt und bei jeder Veränderung um
+     mindestens 5 Punkte (im Verhältnis zu 101.1 Punkten) an den aktuellen Indextand ange-
+     passt.
+4    Die Ersatzabgabe wird der Bauherrschaft bei Erteilung der Baubewilligung in Rechnung
+     gestellt und ist vor Baubeginn zu bezahlen. Der Ertrag der Abgaben ist für die Erstellung
+     und den Unterhalt öffentlicher Parkplätze zu verwenden. Die Bezahlung des Betrages gibt
+     kein Anrecht auf eine feste Zuteilung oder auf die gebührenfreie Benützung eines Park-
+     platzes.
+Baugesetz Klosters (Fraktion Klosters)                                                     38
+
+
+
+5    Die bezahlte Ersatzabgabe ist bei einem späteren Einkauf in eine öffentliche oder private
+     Anlage (indexiert, aber unverzinst) anrechenbar beziehungsweise zu erstatten, sofern
+     dieser Einkauf innerhalb von 10 Jahren seit Erteilung der Baubewilligung erfolgt.
+6    Bei Erstellung einer Gemeinschafts-Parkierungsanlagen können auch solche Grundei-
+     gentümer, welche - aus welchen Gründen auch immer - nicht real über die für ihr Gebäude
+     in Art. 92 vorgesehene Anzahl Abstellplätze verfügen, zum Erwerb von Parkplätzen ver-
+     pflichtet werden, sofern ein öffentliches Interesse daran besteht und der Erwerb als zu-
+     mutbar erscheint.
+
+
+D. Versorgung und Entsorgung
+
+Abwässer                                                                               Art. 97
+1    Abwässer von Bauten und Anlagen sind nach den eidgenössischen und kantonalen Vor-
+     schriften über den Schutz der Gewässer sowie nach Massgabe des Generellen Entwäs-
+     serungsplans zu behandeln und zu entsorgen.
+2    Einzelheiten bestimmen die Erlasse über die Abwasserbehandlung.
+
+Abfallsammelstellen                                                                    Art. 98
+1    Bei der Erstellung von Wohn- bzw. Umbauten kann nach Bedarf der nötige Raum für eine
+     Abfallsammelstelle auf dem Baugrundstück gefordert werden, ebenso eine hierfür genü-
+     gende Zufahrt.
+
+
+4.   ÖFFENTLICHER UND PRIVATER GRUND UND LUFTRAUM
+
+Nutzung des öffentlichen Grundes und Luftraums                                         Art. 99
+1    Gesteigerter Gemeingebrauch an öffentlichem Grund oder öffentlichen Gewässern ist nur
+     mit Bewilligung der Baubehörde zulässig.
+2    Über den gesteigerten Gemeingebrauch hinausgehende Sondernutzungen an öffentli-
+     chem Grund oder an öffentlichen Gewässern bedürfen einer Konzession der Gemeinde.
+3    Die Baubehörde kann die Nutzung des öffentlichen Luftraums durch Erker, Balkone oder
+     andere ausladende Gebäudeteile bewilligen, wenn die Benützung des öffentlichen Grunds
+     nicht erschwert wird, die Verkehrssicherheit gewährleistet ist und keine andern öffentli-
+     chen Interessen entgegenstehen.
+4    Bewilligungen für gesteigerten Gemeingebrauch und Sondernutzungen können von der
+     Leistung einer Entschädigung abhängig gemacht werden. Einzelheiten über die Bemes-
+     sung und Erhebung regelt die Gemeinde in einer Gebührenordnung.
+
+Campieren, Aufstellen von Wohnwagen und Wohnmobilen                                   Art. 100
+1    Das Campieren in Zelten, Wohnmobilen etc. sowie das ständige Stationieren unbewohn-
+     ter Wohnwagen und Wohnmobile ist ausserhalb der Bauzone sowie generell auf öffentli-
+     chem Grund untersagt.
+2    Ausgenommen von diesem Verbot sind die von der Gemeinde für das Campieren aus-
+     drücklich bezeichneten Standorte. Die Gemeinde kann überdies
+     - Standorte bezeichnen, an welchen unbewohnte Wohnwagen und Wohnmobile abge-
+        stellt werden dürfen, und
+     - auf Gesuch im Einzelfall (z.B. für die Durchführung von organisierten Zeltlagern) Aus-
+        nahmen bewilligen.
+Baugesetz Klosters (Fraktion Klosters)                                                           39
+
+
+
+Nutzung des Privateigentums für öffentliche Zwecke                                         Art. 101
+1    Die Gemeinde ist berechtigt, Schilder und Tafeln wie Verkehrssignale, Strassentafeln,
+     Wegmarkierungen, Vermessungszeichen, Angaben über Werkleitungen sowie technische
+     Einrichtungen wie Hydranten, Vorrichtungen für die öffentliche Beleuchtung, Schaltkästen,
+     Messeinrichtungen auf Privatgrundstücken oder an Privatbauten unentgeltlich anzubrin-
+     gen. Berechtigten Wünschen der Grundeigentümer ist Rechnung zu tragen.
+2    Im Falle von Differenzen entscheidet die Baubehörde auf dem Verfügungsweg sowohl
+     über die Zulässigkeit der Inanspruchnahme wie auch über eine allfällige Entschädigung.
+
+
+VI. Besitzstand und Ausnahmen
+
+Besitzstand innerhalb der Bauzonen                                                         Art. 102
+1    Innerhalb der Bauzonen gelten für Erhalt und Erneuerung sowie Umbau, massvolle Er-
+     weiterung und Nutzungsänderung von rechtmässig erstellten Bauten, die den geltenden
+     Vorschriften nicht mehr entsprechen, die Vorschriften der kantonalen Raumplanungsge-
+     setzgebung*. Dasselbe gilt für von der Regelbauweise abweichende Aussenisolationen
+     an derartigen Bauten**.
+2    Werden Bauten und Anlagen gemäss Abs. 1 durch höhere Gewalt zerstört oder freiwillig
+     abgebrochen, dürfen sie ohne Rücksicht auf die Vorschriften über die maximale Ausnüt-
+     zungsziffer, die Gebäudeabmessungen sowie die Abstände im gleichen Umfang und im
+     Rahmen der bisherigen Nutzungsart wieder aufgebaut werden. Anpassungen an die Nut-
+     zungsart der betreffenden Zone sind zulässig.
+3    Die Baubehörde kann beim Wiederaufbau minimale Abweichungen vom bestehenden
+     Grundriss und Gebäudeprofil gestatten, wenn damit eine bessere Überbauung und Ge-
+     staltung erreicht wird und keine überwiegenden öffentlichen oder privaten Interessen ent-
+     gegenstehen.
+4    Bauten und Anlagen gemäss Abs. 1 dürfen in horizontaler und vertikaler Hinsicht in dem
+     Masse erweitert werden, als die erweiterten Gebäudeteile die gesetzlichen Vorgaben ein-
+     halten. Bei AZ-mässig übernutzten Parzellen ist eine Erweiterung der anrechenbaren Ge-
+     schossfläche insoweit zulässig, als die gesamte fehlende Nutzung durch Nutzungsüber-
+     tragungen ab einer Drittparzelle beschafft wird.
+5    Ein Anspruch auf Wiederaufbau besteht nur, sofern die relevanten Masse der bestehen-
+     den Baute vor dem Abbruch bzw. binnen zwei Jahren seit der Zerstörung im Einverneh-
+     men mit der Gemeinde durch Pläne festgehalten wurden und der Wiederaufbau innerhalb
+     von drei Jahren seit der Zerstörung bzw. dem Abbruch erfolgt. Die vorerwähnten Pläne
+     sind bei der Gemeinde zu deponieren. Die Überreste vom zerstörten Gebäude sind mög-
+     lichst rasch, spätestens innerhalb eines Jahres seit dem Ereignis zu beseitigen.
+6    Die Besitzstandsregelung gilt nur insoweit, als das übergeordnete Recht, die Grundord-
+     nung sowie die Areal- und Quartierpläne und Baulinien nichts Gegenteiliges bestim-
+     men.***
+7    Der Wiederaufbau von Bauten ausserhalb der Bauzone richtet sich nach übergeordnetem
+     Recht.
+*Art. 81 KRG
+** Art. 82 Abs. 3 KRG
+*** Die beschriebene Besitzstandsgarantie gilt v.a. entlang von Kantonsstrassen nur beschränkt (vgl.
+  dazu Art. 46 StrG).
+Baugesetz Klosters (Fraktion Klosters)                                                   40
+
+
+
+Ausnahmen innerhalb und ausserhalb Bauzonen                                         Art. 103
+1    Für Ausnahmen innerhalb der Bauzonen gelten die Vorschriften der kantonalen Raumpla-
+     nungsgesetzgebung*, für Ausnahmen ausserhalb der Bauzonen die Vorschriften der eid-
+     genössischen Raumplanungsgesetzgebung**.
+*Art. 82 KRG
+** Art. 24 sowie Art. 24a - d RPG und Art. 39 - 43 RPV
+
+
+VII. Formelles Baurecht
+
+Allgemeines                                                                         Art. 104
+1    Für das formelle Baurecht, insbesondere das Baubewilligungsverfahren, die Profilierung
+     und die öffentliche Ausschreibung, sind die einschlägigen Bestimmungen der kantonalen
+     Raumplanungsgesetzgebung* massgebend.
+*Art. 85 ff. KRG und Art. 40 ff. KRVO
+
+
+Baugesuch / Baugesuchsunterlagen                                                    Art. 105
+1    Für alle der Baubewilligungspflicht unterliegenden Bauten und Anlagen (Bauvorhaben) ist
+     bei der Baubehörde ein Baugesuch auf amtlichem Formular in zwei, bei Gesuchen für
+     Bauten ausserhalb der Bauzone in vier Ausfertigungen einzureichen. In besonderen Fäl-
+     len kann die Baubehörde die Einreichung weiterer Ausfertigungen verlangen.
+2    Dem Baugesuch sind, soweit erforderlich, beizulegen:
+     a)   Pläne:
+           Situationsplan im Massstab 1:500 (beglaubigte Katasterkopie) enthaltend: Grenz-
+            verlauf, Parzellennummern, Grundstücksflächen, überbaute Fläche, projizierte
+            Fassadenlinie (IVHB 3.3), Lage der Nachbargebäude, Zufahrten, Abstellplätze,
+            Baulinien, Grenz- und Gebäudeabstände, versicherte Höhenbezugspunkte;
+           Situationsplan mit Anschlüssen für Wasser, Kanalisation, elektrischem Strom und
+            Telefon/Telekommunikation;
+           Grundrisse aller Geschosse im Massstab 1:100 mit Zweckbestimmung der
+            Räume;
+           Schnitte 1:100 mit vollständigen Angaben über Stockwerk- und Fassadenhöhe,
+            Dachneigung in Prozenten, alter und neuer Geländeverlauf bis zur Grenze, Stras-
+            senhöhen;
+           Fassadenpläne 1:100 mit bestehenden und neuen Terrainlinien einschliesslich Hö-
+            henkoten, Angabe Dachneigung in Graden oder Prozenten;
+           Projektpläne der Umgebungsarbeiten mit Darstellung von Terrainveränderungen,
+            Stützmauern, Einfriedungen, Parkplätzen, Bepflanzungen usw.;
+           Bauplatzinstallationsplan;
+           bei Wasser- und Abwasseranschlüssen Angaben über Wasserbedarf, Rohrdurch-
+            messer, Rohrmaterial und Gefälle der Anschlussleitungen.
+     b)   Grundbuchauszug
+     c)   Bei Erweiterungen und Umbauten sowie bei Aussenrenovationen Fotodokumentation
+          über das bestehende Gebäude.
+Baugesetz Klosters (Fraktion Klosters)                                                    41
+
+
+
+     d)   Detaillierte Berechnung der Ausnützungsziffer und der Abstellplätze sowie - im
+          Anwendungsbereich der eidgenössischen Zweitwohnungsgesetzgebung - der
+          Hauptnutzflächen von Erst- und Zweitwohnungen.
+     e)   Baubeschrieb mit Angaben über Zweckbestimmung, Bauausführung, Material, Farb-
+          gebung usw.
+     f)   Bei Wohnbauten Bezeichnung von Erst- und Zweitwohnungen.
+     g)   Angabe der approximativen Baukosten.
+     h)   Vorprüfungsentscheid der Gebäudeversicherung bei Bauten in der Gefahrenzone.
+     i)   Parkplatzplan, aus welchem ersichtlich ist, welche Pflichtparkplätze welchen Gebäu-
+          deteilen dienen bzw. bei welchen Pflichtparkplätzen es sich um Besucherparkplätze
+          handelt.
+     j)   Gesuche für koordinationsbedürftige Zusatzbewilligungen* u.a. namentlich:
+           Gesuche gemäss Gewässerschutzgesetzgebung, namentlich betreffend Grund-
+            wasserabsenkung, Grundwasserentnahmen, Wärmepumpen für die Benutzung
+            von Wasser- oder Bodenwärme etc.
+           Gesuche gemäss Umweltschutzgesetzgebung;
+           Gesuche gemäss Natur- und Heimatschutzgesetzgebung;
+           Gesuche gemäss Strassengesetzgebung, namentlich bei Bauten und Anlagen im
+            Bereich von Kantonsstrassen;
+           Gesuche gemäss Brandschutzgesetzgebung für die der feuerpolizeilichen Bewilli-
+            gungspflicht unterstellten Anlagen;
+           Gesuche gemäss Zivilschutzgesetzgebung (Genehmigung Schutzraumprojekt
+            oder Ersatzbeitragsgesuch).
+     k)   Die gemäss Umweltschutzgesetzgebung erforderlichen Nachweise, Prognosen etc.,
+          namentlich:
+           Energienachweis sowie Ergebnis desselben auf offiziellem Formular;
+           Nachweis betreffend Schallschutz gemäss eidgenössischen Vorschriften;
+           Lärmdeklaration für Luft- / Luftwärmepumpen oder Luft- / Wasserwärmepumpen
+            oder Heizungs-, Lüftungs- und Klimaanlagen nach den Vorgaben der kantonalen
+            Lärmschutzfachleute (Cercle Bruit);
+           bei Bauvorhaben der landwirtschaftlichen Nutztierhaltung: Berechnung des Min-
+            destabstands gemäss FAT-Bericht und Nachweis, dass der Mindestabstand ge-
+            genüber benachbarten Gebäuden und bewohnten Zonen eingehalten ist;
+           bei Bauvorhaben, einschliesslich temporäre Anlagen wie Baustelleninstallationen,
+            mit erheblichen Emissionen von Luftverunreinigungen: Immissionsprognose ge-
+            mäss eidgenössischen Vorschriften (auf Verlangen der Baubehörde);
+           bei Bauvorhaben, die nichtionisierende Strahlung verursachen: Standortdatenblatt
+            und Angaben gemäss eidgenössischen Vorschriften;
+           Angaben über Art und Menge der bei Ausführung des Bauvorhabens anfallenden
+            Abfälle und Angaben über deren Entsorgung auf besonderem Formular (Entsor-
+            gungserklärung Amt für Natur und Umwelt).
+3    Die Baubehörde kann auf einzelne Planunterlagen verzichten oder weitere anfordern, so-
+     fern dies für die Beurteilung des Bauvorhabens notwendig ist. Bei besonderen Bauvorha-
+     ben kann sie ein Modell oder eine Visualisierung verlangen.
+Baugesetz Klosters (Fraktion Klosters)                                                          42
+
+
+
+4    Bei Bauvorhaben, die dem vereinfachten Baubewilligungsverfahren unterliegen, ist das
+     Baugesuch in vereinfachter Ausführung und lediglich mit den für das Verständnis des Vor-
+     habens notwendigen Unterlagen einzureichen. Bei nicht baubewilligungspflichtigen aber
+     anzeigepflichtigen Bauvorhaben kann das Bauamt nach Ermessen für das Verständnis
+     des Vorhabens erforderliche Unterlagen nachfordern.
+5    Die Baugesuchsunterlagen sind vom Grundeigentümer, der Bauherrschaft und vom Pro-
+     jektverfasser zu unterzeichnen.
+6    Bei Umbauten oder Änderung bewilligter Pläne muss aus den Plänen der Zustand der
+     betreffenden Bauteile vor und nach dem Umbau bzw. der Abänderung ersichtlich sein
+     (bestehend: grau oder schwarz; neu: rot; Abbruch: gelb).
+7    Nach Abschluss der Bauarbeiten ist der Gemeinde unaufgefordert eine Dokumentation
+     des ausgeführten Werks abzugeben. Bei Bauvorhaben mit Bewilligung für Bauten aus-
+     serhalb der Bauzone sind der Gemeinde zwei Ausfertigungen abzuliefern.
+* Vgl. «Liste der zu koordinierenden Zusatzbewilligungen» (Art. 52 KRVO) des Departements für
+  Volkswirtschaft und Soziales Graubünden
+
+
+Revers                                                                                    Art. 106
+1    Werden Bauten und Anlagen, welche nicht mit der gesetzlichen Regelung übereinstim-
+     men, ausnahmsweise für eine beschränkte Dauer oder auf Zusehen hin bewilligt, kann
+     die Bewilligung mit der Auflage verknüpft werden, dass der jeweilige Grundeigentümer auf
+     Verlangen der Baubehörde innert angemessener Frist den gesetzlichen Zustand auf ei-
+     gene Kosten wieder herstellt beziehungsweise dass die im Baulinienbereich geschaffenen
+     Mehrwerte im Enteignungsfall nicht entschädigt werden (Revers).
+2    Die Baubehörde lässt Reverse auf Kosten der Bauherrschaft im Grundbuch anmerken.
+
+Verfahrenskosten                                                                          Art. 107
+1    Die Verfahrenskosten werden nach Massgabe der kantonalen Raumplanungsgesetzge-
+     bung* erhoben.
+2    Details über die Bemessung und Erhebung der Gebühren werden in einem separaten
+     Erlass geregelt.
+* Art. 96 KRG
+
+
+VIII. Rechtsschutz
+
+Rechtsschutz                                                                              Art. 108
+1    Der Rechtsschutz ist nach Massgabe der eidgenössischen* und kantonalen** Raumpla-
+     nungsgesetzgebung gewährleistet.
+* Art. 33 und 34 RPG
+** Art. 100 - 104 KRG i.V.m. Art. 49 ff. VRG
+Baugesetz Klosters (Fraktion Klosters)                                                     43
+
+
+
+IX. Übergangs-, Vollzugs- und Schlussbestimmungen
+
+Übergangsbestimmungen                                                                 Art. 109
+1    Für Grossbauten, welche gestützt auf die Privilegierung in Art. 7 BauG-1993 beziehungs-
+     weise vergleichbarer Regelungen in älteren Baugesetzen bewilligt wurden, gilt die Nut-
+     zungsbeschränkung von Art. 18 Abs. 3, und zwar unabhängig davon, ob diese im Grund-
+     buch angemerkt worden ist oder nicht.
+2    Soweit in bisherigen Quartierplänen konkrete Festlegungen bezüglich Nutzungsmass,
+     Gebäudeabmessungen und Abstände erfolgt sind, gelten die damals anwendbaren Be-
+     griffe und Messweisen. Vorbehalten bleibt die Revision dieser Pläne.
+3    Die gestützt auf die früheren Baulinienpläne (vgl. Art. 43 BauG-1973, Art. 69 BauG-1993)
+     verfügten Reverse** gelten fort. Sie können - sofern ihnen grössere Abstände zugrunde
+     liegen - an die aktuell geltende Regelung (Baulinienplänen, Strassenabstandsvorschriften
+     etc.) angepasst werden.
+4    Folgende Änderungen der Grundordnung erfolgen in späteren Planungsphasen, weshalb
+     der vorliegenden Ortsplanungsrevision diesbezüglich keine Planbeständigkeit zukommt:
+     - Ausscheidung ortsbildprägender Bauten im Generellen Gestaltungsplan gemäss Art.
+         9 ZWG sowie die entsprechende Ergänzung des Baugesetzes.
+     - Definitive Einstufung von «vorläufig geschützten Bauten und Anlagen» (Art. 42) in eine
+         Schutzkategorie gemäss Art. 41 oder als nicht-schutzwürdig.
+     - Integration der Grundordnung der bis zum 1. Januar 2016 bestehenden Gemeinde
+         Saas (vgl. Art. 1 Abs. 1 und Art. 111 Abs. 5) in die Grundordnung der Gemeinde Klos-
+         ters.
+     - Reduktion der Bauzonen entsprechend den Vorgaben in Art. 15 Abs. 2 RPG.
+     - Massnahmen betreffend Verdichtung entsprechend dem Kantonalen Richtplan.
+     - Massnahmen betreffend Baulandmobilisierung (Bauverpflichtungen) und ergänzende
+         Regelungen betreffend Ausgleich planungsbedingter Vor- und Nachteile.
+     - Anpassungen/Erweiterungen betreffend Wintersportnutzung in den Skigebieten.
+     - Allfällige Anpassungen der Grundordnung namentlich in den Bereichen Gulfia, Bahhof
+         Klosters Platz / Gotschnabahn und Bündi.
+
+Vollzug                                                                               Art. 110
+1    Die Baubehörde vollzieht die ihr nach diesem Gesetz, den darauf beruhenden Erlassen
+     und der übergeordneten Gesetzgebung überbundenen Aufgaben. Sie sorgt für eine recht-
+     zeitige und sachgerechte Erfüllung aller gesetzlichen Pflichten.
+2    Die Baubehörde kann zu den einzelnen Bestimmungen des Baugesetzes präzisierende
+     bzw. ergänzende Ausführungsbestimmungen erlassen. Sie kann bei Bedarf auch Voll-
+     zugshilfen wie Merkblätter oder Richtlinien für die Ausgestaltung von Bauvorhaben na-
+     mentlich mit Bezug auf Gestaltung, Wohnhygiene, Sicherheit, Unterhalt erlassen.
+3    Der Gemeindevorstand kann die Zuständigkeit für feuerpolizeiliche Bewilligungen, für wel-
+     che die Gemeinde zuständig ist, mittels öffentlichrechtlichem Vertrag an die Gebäudever-
+     sicherung übertragen.*
+4    Rechtserlasse und Vollzugshilfen werden Interessierten zu den Selbstkosten zur Verfü-
+     gung gestellt.
+* Art. 8 kantonales Brandschutzgesetz
+Baugesetz Klosters (Fraktion Klosters)                                                   44
+
+
+
+Inkrafttreten, Aufhebung und Änderung bisherigen Rechts                             Art. 111
+1    Gegenstand der vorliegenden Teilrevision 2018, Phase II, bilden:
+     - das vorliegende Baugesetz
+     - Zonenplan Klosters und Saas 1:20‘000
+     - Zonenplan Klosters und Saas 1:10‘000 (Saas Bereich Grundwasser- und Quellschutz-
+        zone sowie Gewässerraumzone)
+     - Zonenplan 1:2’500 Monbiel
+     - Zonenplan 1:2’500 Klosters-Platz
+     - Zonenplan 1:2’500 Klosters-Dorf
+     - Zonenplan 1:2’500 Serneus-Mezzaselva
+     - Zonenplan und Genereller Gestaltungsplan Saas 1:2’500 (Saas Bereich Grundwas-
+        ser- und Quellschutzzone, Gewässerabstandslinie sowie Gewässerraumzone
+     - Genereller Gestaltungsplan 1:2’500 Monbiel
+     - Genereller Gestaltungsplan 1:2’500 Klosters-Platz
+     - Genereller Gestaltungsplan 1:2’500 Klosters-Dorf, Schlappin
+     - Genereller Gestaltungsplan 1:2’500 Serneus-Mezzaselva
+     - Genereller Erschliessungsplan Verkehr Klosters und Saas 1:20‘000
+     - Genereller Erschliessungsplan Verkehr Klosters und Saas 1:10‘000
+     - Genereller Erschliessungsplan Verkehr 1:2’500 Monbiel
+     - Genereller Erschliessungsplan Verkehr 1:2’500 Klosters-Platz
+     - Genereller Erschliessungsplan Verkehr 1:2’500 Klosters-Dorf
+     - Genereller Erschliessungsplan Verkehr 1:2’500 Serneus-Mezzaselva
+     - Genereller Erschliessungsplan Ver- und Entsorgung Klosters und Saas 1:20‘000
+     - Genereller Erschliessungsplan Ver- und Entsorgung Klosters und Saas 1:10‘000
+     - Genereller Erschliessungsplan Ver- und Entsorgung 1:2’500 Monbiel
+     - Genereller Erschliessungsplan Ver- und Entsorgung 1:2’500 Klosters-Platz
+     - Genereller Erschliessungsplan Ver- und Entsorgung 1:2’500 Klosters-Dorf
+     - Genereller Erschliessungsplan Ver- und Entsorgung 1:2’500 Serneus-Mezzaselva
+
+2    Folgende bisherigen Pläne der bisherigen Grundordnung bleiben in folgendem Umfang in
+     Kraft:
+     a) Folgende Generellen Gestaltungspläne bleiben unverändert in Kraft:
+        - Genereller Gestaltungsplan 1:2'500 Golfplatz Selfranga, RB Nr.564 vom 23.4.2002
+        - Genereller Gestaltungsplan 1:2'000 In den Erlen, RB Nr. 1119 vom 26.11.2013
+        - Genereller Gestaltungsplan 1:500, Obere Ganda, vom 25.11.2018
+     b) Folgende Zonenpläne bleiben betreffend die Bauzonen, die statischen Waldgrenzen
+        und die Waldabstandslinien in Kraft; aufgehoben werden in diesen Plänen alle übrigen
+        Festlegungen/Gestaltungselemente sowie die Ortsbildschutzzonen:
+        - Zonenplan 1:2‘500 Serneus, Mezzaselva, RB Nr. 1701 vom 4.07.1995 resp. RB. Nr.
+          1114 vom 03.07.2001
+        - Zonenplan 1:2‘500 Klosters-Dorf, Schlappin RB Nr. 1701 vom 4.07.1995 resp. RB.
+          Nr. 1114 vom 03.07.2001
+        - Zonenplan 1:2‘500 Klosters-Platz, Selfranga, Aeuja RB Nr. 1701 vom 4.07.1995 resp.
+          RB. Nr. 1114 vom 03.07.2001
+        - Zonenplan 1:2‘500 (Unwetter 2005) Serneus, Mezzaselva, RB Nr. 422 und 423 vom
+          11.05.2010
+        - Zonenplan 1:2‘500 (Unwetter 2005) Klosters-Dorf, RB Nr. 423 vom 11.05.2010
+        - Zonenplan 1:2‘500 (Unwetter 2005) Klosters-Platz, RB Nr. 423 vom 11.05.2010
+        - Zonenplan mit Gestaltungselementen 1:2'500 (Unwetter 2005), Serneus, Mezzaselva
+          RB Nr. 423 vom 11.05.2010
+        - Zonenplan mit Gestaltungselementen 1:2'500, Serneus, Mezzaselva RB Nr. 1276
+          vom 10.09.2002
+        - Zonenplan1:1‘000 Werkhofareal, Feuerwehrlokal RB Nr. 148 vom 19.02.2013
+Baugesetz Klosters (Fraktion Klosters)                                                        45
+
+
+
+        - Zonenplan 1:1'000, Obere Ganda, 25.11.2018
+        - Zonenplan mit Gestaltungselement 1:500, Parzelle Nr. 1575, DVS 8/17 vom
+          04.07.2017
+3    Die vorerwähnten Zonenpläne werden wie folgt geändert:
+     - die bisherige Materialablagerungs- und -aufbereitungszone wird in Deponiezone (Typ A
+       gemäss VVEA) unbenannt;
+     - die bisherige Kurzone wird in Hotel- und Kurzone unbenannt;
+     - in allen Zonenplänen werden folgende Zonen wie folgt unbenannt:
+       -- Wohnzone 04 in Wohnzone a
+       -- Wohnzone 05 in Wohnzone b
+       -- Wohnzone 06 in Wohnzone c
+       -- Wohnzone 08 in Wohnzone d
+4    Im Geltungsbereich dieses Baugesetzes (alle Fraktionen ohne Saas; vgl. Art. 1) werden
+     aufgehoben:
+     - das Baugesetz vom 28. November 1993,
+     - alle bisherigen Pläne der Grundordnung vorbehältlich der in Absatz 2 erwähnten Aus-
+       nahmen,
+     - die Baulinienpläne „Aeujerstrasse/Schwaderloch“, „alte Bahnhofstrasse“, „alte Land-
+       strasse“, „Äussere Bahnhofstrasse“, „Bahnhofstrasse“, „Bildstrasse“, „Bisträssli“, „Brach-
+       weg“, „Brüggerschweg“, „Capeiraweg“, „Doggilochstrase (a und b)“, „Dörfjistrasse /Er-
+       lenweg“, „Erlenweg“, „Eggastrasse Selfranga“, Gäuggeliweg“, „Gotschnastrasse“,
+       „Gruobastrasse“, „Gsteinweg“, „Gulfiastrasse (a und b)“, „Höfjiweg“, „Landquart (Brücke
+       Kantonstr. -Wehr)“, „Mülliweg“, „Murastrasse“, „Rufenastrasse“, „Ruossenbodenweg“,
+       „Schwaderloch/Aeujerstrasse“, „Selfrangastrasse (a und b)“, „Spetzgerweg“, „Talbach-
+       strasse“, „Talgasse“, „Talstrasse (a und b)“, „Töntschisweg“ und „Winkelstrasse“.
+5    Die Grundordnung der Gemeinde Saas bildet - mit Ausnahme der Änderungen im "Zo-
+     nenplan 1:10'000 Klosters und Saas" und im Zonenplan 1:2'500 Saas (vorstehend Abs. 1
+     Al. 3 und Al 8) - nicht Gegenstand der vorliegenden Revision und bleibt bis auf Weiteres
+     unverändert in Kraft (vgl. auch Art. 1 Abs. 1).
+6    Im Übrigen werden die Änderungen des bisherigen Rechts im Anhang geregelt.
+Baugesetz Klosters (Fraktion Klosters)                                                        46
+
+
+
+Anhang (Art. 111 Abs. 6)
+Die nachstehenden Gesetze werden wie folgt geändert:
+
+1    Gebühren- und Beitragsordnung (GBO) vom 6. Mai 1993
+     Art. 20 bis 32
+     Aufgehoben
+
+
+2    Gesetz über die Abwasseranlagen (AAG) vom 20. Oktober 1974
+     Art. 14 lit. a, Art. 16 bis 17, Art. 18 Abs. 3 Satz 2, Art. 20 Abs. 2, Art. 23 Abs. 2 und 3
+     Aufgehoben
+     Art. 20 Abs. 1
+     Die Höhe der in Artikel 18 und 19 genannten Abgaben werden durch den Gemeinderat
+     nach den vorgenannten Grundsätzen in den Ausführungsbestimmungen festgelegt.
+     Ingress Art. 23
+     Einsprache
+
+
+3    Reglement über die Abwasseranlagen vom 24. September 1974
+     Art. 40
+     Aufgehoben
+

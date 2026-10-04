@@ -4,6 +4,7 @@ import { formatLocalTime, type SunTimes } from './sun';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
+import type { ShelterResult } from './shelters';
 
 export type ComfortRating = 'great' | 'good' | 'fair' | 'poor';
 
@@ -31,6 +32,8 @@ export interface ComfortInput {
   surroundings?: Partial<Surroundings>;
   /** Nearest water, glacier and treatment-plant flags. */
   water?: WaterInfo;
+  /** Huts, bivouac boxes, inns and alps nearby. */
+  shelters?: ShelterResult;
   sun?: SunTimes;
   /** True when the forest map says the spot is in forest. */
   inForest?: boolean;
@@ -43,6 +46,13 @@ interface Factor extends Item {
 }
 
 const m = (x: number) => `${Math.round(x / 10) * 10} m`;
+const km = (x: number) => (x < 950 ? `${Math.round(x / 50) * 50} m` : `${(x / 1000).toFixed(1)} km`);
+
+/** The nearest hut or bivouac box, as a short sentence for storm warnings. */
+function nearestHutNote(sh: ShelterResult | undefined): string {
+  const h = sh?.shelters.find((x) => x.kind === 'hut' || x.kind === 'biwak');
+  return h ? ` The nearest hut, ${h.name}, is about ${km(h.meters)} away in a straight line.` : '';
+}
 
 /** Rating thresholds are my own judgement, not measured against campers' experience. */
 export function rate(score: number): ComfortRating {
@@ -88,11 +98,11 @@ export function comfortFor(input: ComfortInput): Comfort {
 
     if (night.thunder) {
       weatherStop = true;
-      wx({ tone: 'bad', score: exposed ? -4 : -3, title: 'Thunderstorm forecast', text: exposed ? 'Thunderstorms are forecast and the spot is exposed. Lightning makes this unsafe: do not camp on a ridge, top or open slope.' : 'Thunderstorms are forecast. Avoid camping on exposed ground or under isolated trees, and keep away from the tallest point around.' });
+      wx({ tone: 'bad', score: exposed ? -4 : -3, title: 'Thunderstorm forecast', text: (exposed ? 'Thunderstorms are forecast and the spot is exposed. Lightning makes this unsafe: do not camp on a ridge, top or open slope.' : 'Thunderstorms are forecast. Avoid camping on exposed ground or under isolated trees, and keep away from the tallest point around.') + nearestHutNote(input.shelters) });
     }
     if (night.maxGustKmh >= 80) {
       weatherStop = true;
-      wx({ tone: 'bad', score: -3, title: 'Storm-force gusts', text: `${wind}. A tent will not hold at this strength.` });
+      wx({ tone: 'bad', score: -3, title: 'Storm-force gusts', text: `${wind}. A tent will not hold at this strength.${nearestHutNote(input.shelters)}` });
     } else if (t) {
       const upwind = horizonToward(t.horizon, night.windFromDeg);
       if (night.maxGustKmh >= 50 && upwind < 5) wx({ tone: 'bad', score: -2, title: 'Strong wind forecast, open to it', text: `${wind} tonight, and the terrain to the ${dirName} is open (horizon ${upwind.toFixed(0)}°).` });
@@ -189,6 +199,22 @@ export function comfortFor(input: ComfortInput): Comfort {
       if (w.failed.includes('glacier')) missing.push('glacier water check');
     }
   } else missing.push('water');
+
+  // shelter: where to go if the weather turns or someone is hurt
+  if (input.shelters) {
+    const sh = input.shelters.shelters;
+    const hut = sh.find((x) => x.kind === 'hut' || x.kind === 'biwak');
+    const inn = sh.find((x) => x.kind === 'inn');
+    const alp = sh.find((x) => x.kind === 'alp' && x.meters <= 3000);
+    const check = ' Distances are in a straight line, not walking times. Many huts are staffed only in summer; a winter room or bivouac box may be the only part open, so check before you rely on it.';
+    const label = (x: { name: string; kind: string; club?: boolean }) => (x.kind === 'biwak' ? `Bivouac shelter ${x.name}` : x.club ? `${x.name} (club hut)` : x.name);
+    if (hut && hut.meters <= 1500) f.push({ tone: 'ok', score: 1, title: hut.kind === 'biwak' ? 'Bivouac shelter nearby' : 'Mountain hut nearby', text: `${label(hut)} is about ${km(hut.meters)} away.${check}` });
+    else if (hut) f.push({ tone: 'info', score: 0, title: 'Mountain hut within 5 km', text: `${label(hut)} is about ${km(hut.meters)} away.${check}` });
+    else if (!input.shelters.incomplete) f.push({ tone: 'info', score: 0, title: 'No hut within 5 km', text: 'No mountain hut or bivouac shelter is mapped within 5 km. Plan to be self-sufficient: in bad weather or after an injury shelter may be far away.' });
+    else missing.push('huts nearby');
+    if (inn && (!hut || inn.meters < hut.meters)) f.push({ tone: 'info', score: 0, title: 'Mountain inn nearby', text: `${inn.name} is about ${km(inn.meters)} away. Inns and restaurants are usually open only in season.` });
+    if (alp) f.push({ tone: 'info', score: 0, title: 'Alp nearby', text: `${alp.name} lies about ${km(alp.meters)} away. Alp buildings are usually private and locked outside the summer season, so they are not a dependable emergency shelter, but in season someone there can help. Livestock may be around.` });
+  } else missing.push('huts nearby');
 
   // sun
   if (sun?.sunrise && sun.sunOnSpot) {

@@ -2,6 +2,7 @@ import type { Assessment } from './assess';
 import type { Comfort } from './comfort/comfort';
 import { compassName, describeCode, type Night } from './comfort/weather';
 import type { WaterInfo } from './comfort/water';
+import type { ShelterResult } from './comfort/shelters';
 import { legalityScore, sleepScore, type Score } from './scores';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
@@ -66,6 +67,7 @@ export interface ResultUi {
   setSleep(c: Comfort, nightLabel: string, loading?: string[]): void;
   setSleepUnavailable(why: string): void;
   setWater(w: WaterInfo | undefined, failed?: boolean): void;
+  setShelter(r: ShelterResult | undefined, failed?: boolean): void;
   setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
 }
 
@@ -108,11 +110,13 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   scores.append(legal.b, sleep.b);
 
   const waterChip = chip('water');
+  const shelterChip = chip('shelter');
   const weatherChip = chip('weather');
+  shelterChip.textContent = '🏠 Checking for huts…';
   waterChip.textContent = '💧 Checking water…';
   weatherChip.textContent = '🌦️ Loading forecast…';
   const chips = el('div', 'chips');
-  chips.append(waterChip, weatherChip);
+  chips.append(waterChip, shelterChip, weatherChip);
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
@@ -126,6 +130,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     [legal.b, legalPanel],
     [sleep.b, sleepPanel],
     [waterChip, sleepPanel],
+    [shelterChip, sleepPanel],
     [weatherChip, weatherPanel],
   ];
   const panels = [legalPanel, sleepPanel, weatherPanel];
@@ -198,6 +203,24 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         }
       }
       if (w.meters > 400 || w.kind === 'none') waterChip.classList.add('far');
+    },
+    setShelter(r, failed) {
+      shelterChip.className = 'chip shelter';
+      if (failed || !r) {
+        shelterChip.textContent = '🏠 Huts: could not check';
+        return;
+      }
+      const hut = r.shelters.find((x) => x.kind === 'hut' || x.kind === 'biwak');
+      const km = (m: number) => (m < 950 ? `${Math.round(m / 50) * 50} m` : `${(m / 1000).toFixed(1)} km`);
+      if (hut) {
+        shelterChip.textContent = `🏠 ${hut.kind === 'biwak' ? 'Bivouac shelter' : hut.club ? 'Club hut' : 'Hut'}: ${hut.name} · ${km(hut.meters)}`;
+        if (hut.meters > 1500) shelterChip.classList.add('far');
+      } else if (r.incomplete) shelterChip.textContent = '🏠 Huts: could not check fully';
+      else {
+        const alp = r.shelters.find((x) => x.kind === 'alp');
+        shelterChip.textContent = `🏠 No hut within 5 km${alp ? ` · ${alp.name} ${km(alp.meters)}` : ''}`;
+        shelterChip.classList.add('far');
+      }
     },
     setWeatherChip(night, nightLabel, failed) {
       weatherChip.className = 'chip weather';
