@@ -4,11 +4,15 @@
 Polygons come from the canton's geoservice (layer NSG_NSGP, 244 reserves, LV95). Each reserve record links
 its protection decree (PDF on the canton's ÖREB file store). The decree text is searched for camping or
 tenting provisions:
-  restricted = the decree text prohibits camping/tenting (or allows it only at designated places)
-  caution    = the readable text has no camping or tenting term, or the decree is a scan with no text layer
+  banned  -> restricted: the decree text prohibits camping/tenting (German or French), or allows it only at designated places
+  entry   -> restricted: no camping term, but the decree prohibits entering the reserve (or leaving the marked paths),
+             so camping is effectively prohibited
+  silent  -> caution:    readable text with neither
+  notext  -> caution:    the decree is a scan with no readable text, even after OCR (if rapidocr_onnxruntime is installed,
+             scans without a text layer are OCR'd first)
 
 Usage: python3 scripts/build_be_reserves.py [cache_dir] [out.json.gz] [evidence.csv]
-Needs: shapely, pdftotext (poppler). Decree PDFs are cached in cache_dir.
+Needs: shapely, pdftotext/pdftoppm (poppler); optional rapidocr_onnxruntime for scans. Decree PDFs and OCR text are cached in cache_dir.
 Limits: decrees are old scans with OCR text; terms garbled beyond recognition are missed (those reserves
 stay 'caution'); there is no OCR for the scans that have no text layer.
 """
@@ -28,7 +32,20 @@ import shapely
 from shapely.geometry import shape
 
 LAYER = "https://www.geoservice.apps.be.ch/geoservice3/rest/services/a42geo/of_environment01_de_ms_wms/MapServer/14278"
-TERM = re.compile(r"(?i)campier|kampier|zelten|zelt\b|zelte\b|biwak|wildcamp|camping")
+TERM = re.compile(
+    r"(?i)campier|kampier|zelten|zelt\b|zelte\b|biwak|wildcamp|camping"  # German
+    r"|c[ao][mnr]{1,2}pieren"  # OCR variants of "campieren"
+    r"|\bcamper\b|\btentes?\b|bivouaqu|\bcaravanes?\b"  # French
+)
+# "untersagt" is often mangled by OCR ("untersaq", "unter;agt", "untersä9t", "r:ntersagt")
+PROHIBIT = re.compile(
+    r"(?i)nt[eo]r\W{0,2}s\W{0,2}[aäo]\W{0,2}[gq9]|verbot|nicht gestattet|ist nicht|sind nicht|dürfen nicht|interdit|ne (?:doit|peut|doivent|peuvent)"
+)
+PERMISSIVE = re.compile(r"(?i)erlaubt|gestattet|bewilligt|autoris|permis")
+# an entry ban: "a) das Betreten;" / "Betreten oder Befahren mit Ausnahme der befestigten Strassen" / "Betreten ausserhalb der ... Wege"
+ENTRY = re.compile(
+    r"(?i)(?:nt[eo]r\W{0,2}s\W{0,2}[aäo]\W{0,2}[gq9]|verbot)[^.]{0,300}?[a-e]\)\s*(?:das\s+)?(?:Befahren\s+und\s+)?Betreten(?:\s+oder\s+Befahren)?\s*(?:;|,|mit\s+Ausnahme|ausserhalb)"
+)
 # Designated-place exceptions found by reading the decrees (reserve number -> note)
 EXCEPTIONS = {
     55: "Camping is prohibited outside places set by the municipalities with the nature promotion office.",
@@ -44,6 +61,26 @@ def fetch_features() -> list[dict]:
         return json.load(r)["features"]
 
 
+def ocr_pdf(pdf: str, out_txt: str) -> bool:
+    """OCR a scan page by page (first 6 pages); returns False if no OCR engine is available."""
+    try:
+        from rapidocr_onnxruntime import RapidOCR
+    except ImportError:
+        return False
+    import glob
+    prefix = pdf[:-4] + "_ocr"
+    subprocess.run(["pdftoppm", "-r", "170", "-png", "-f", "1", "-l", "6", pdf, prefix], capture_output=True)
+    engine = RapidOCR()
+    pages = []
+    for png in sorted(glob.glob(prefix + "-*.png")):
+        res, _ = engine(png)
+        if res:
+            pages.append(" ".join(r[1] for r in res))
+        os.remove(png)
+    open(out_txt, "w", encoding="utf-8").write("\n".join(pages))
+    return True
+
+
 def download(nr: int, url: str, cache: str) -> str:
     fn = f"{cache}/{nr}.pdf"
     if not os.path.exists(fn) or os.path.getsize(fn) < 500:
@@ -54,20 +91,39 @@ def download(nr: int, url: str, cache: str) -> str:
                 break
             except Exception:
                 time.sleep(1.5)
-    subprocess.run(["pdftotext", "-layout", fn, fn[:-4] + ".txt"], capture_output=True)
-    return fn[:-4] + ".txt"
+    txt = fn[:-4] + ".txt"
+    subprocess.run(["pdftotext", "-layout", fn, txt], capture_output=True)
+    return txt
 
 
-def classify(txt_path: str) -> str:
+def normalise(t: str) -> str:
+    flat = re.sub(r"\s+", " ", t)
+    flat = re.sub(r"(?<=[A-Za-zäöüÄÖÜ])-\s?(?=[a-zäöü])", "", flat)  # OCR line-break hyphens: "Zel-ten" -> "Zelten"
+    return flat
+
+
+def classify(txt_path: str, pdf_path: str) -> str:
     try:
         t = open(txt_path, encoding="utf-8", errors="replace").read()
     except FileNotFoundError:
-        return "notext"
+        t = ""
     if len(re.sub(r"\s+", "", t)) < 300:
-        return "notext"
-    flat = re.sub(r"\s+", " ", t)
+        ocr_txt = pdf_path[:-4] + "_ocr.txt"
+        if not os.path.exists(ocr_txt):
+            ocr_pdf(pdf_path, ocr_txt)
+        t = open(ocr_txt, encoding="utf-8", errors="replace").read() if os.path.exists(ocr_txt) else ""
+        if len(re.sub(r"\s+", "", t)) < 300:
+            return "notext"
+    flat = normalise(t)
     despaced = re.sub(r"(?<=\b\w) (?=\w\b)", "", flat)  # OCR spaced letters like "Z e l t e n"
-    return "banned" if TERM.search(flat) or TERM.search(despaced) else "silent"
+    for src in (flat, despaced):
+        for m in TERM.finditer(src):
+            context = src[max(0, m.start() - 1500) : m.end() + 400]
+            near = src[max(0, m.start() - 100) : m.end() + 100]
+            # a camping term inside a prohibition list is a ban; one with only permissive wording nearby is not
+            if PROHIBIT.search(context) or not PERMISSIVE.search(near):
+                return "banned"
+    return "entry" if ENTRY.search(flat) else "silent"
 
 
 def ring_to_ints(ring: list[list[float]]) -> list[int]:
@@ -84,12 +140,13 @@ def main() -> None:
     items = [(f["attributes"]["NSG_NR"], f["attributes"]["URL_BESCHL"]) for f in feats]
     with cf.ThreadPoolExecutor(4) as ex:
         texts = dict(zip([i[0] for i in items], ex.map(lambda it: download(it[0], it[1], cache), items)))
+    pdfs = {nr: f"{cache}/{nr}.pdf" for nr, _ in items}
     reserves, rows = [], []
     for f in feats:
         a = f["attributes"]
         nr, name, url = a["NSG_NR"], a["NSG_NAME"], a["URL_BESCHL"]
-        cls = classify(texts[nr])
-        level = "restricted" if cls == "banned" else "caution"
+        cls = classify(texts[nr], pdfs[nr])
+        level = "restricted" if cls in ("banned", "entry") else "caution"
         rings = []
         for ring in f["geometry"]["rings"]:
             simple = shapely.Polygon(ring).simplify(2.0, preserve_topology=True)
@@ -108,7 +165,7 @@ def main() -> None:
         w.writerow(["nsg_nr", "name", "decree_scan", "app_level", "decree_url"])
         w.writerows(sorted(rows))
     n = lambda c: sum(1 for r in rows if r[2] == c)
-    print(f"wrote {out}: banned {n('banned')}, silent {n('silent')}, notext {n('notext')}", file=sys.stderr)
+    print(f"wrote {out}: banned {n('banned')}, entry {n('entry')}, silent {n('silent')}, notext {n('notext')}", file=sys.stderr)
 
 
 if __name__ == "__main__":

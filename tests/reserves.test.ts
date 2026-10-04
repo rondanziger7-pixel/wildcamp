@@ -51,8 +51,28 @@ describe('real Bern reserves (public/reserves-be.json.gz)', () => {
   });
   it('is in the expected split of decree classifications', () => {
     const n = (l: string) => set.reserves.filter((r) => r.level === l).length;
-    expect(n('restricted')).toBeGreaterThan(140);
-    expect(n('caution')).toBeGreaterThan(60);
+    expect(n('restricted')).toBeGreaterThan(190);
+    expect(n('caution')).toBeGreaterThan(30);
+    expect(n('caution')).toBeLessThan(60);
+  });
+  it('classifies known decrees correctly, including French, entry-ban and OCR\'d scans', () => {
+    const by = (id: number) => set.reserves.find((r) => r.id === id)!;
+    expect([by(41).scan, by(41).level]).toEqual(['banned', 'restricted']); // Wengimoos: camping and tents named
+    expect([by(10).scan, by(10).level]).toEqual(['banned', 'restricted']); // Derrière la Gruère: French decree
+    expect([by(47).scan, by(47).level]).toEqual(['banned', 'restricted']); // Grosser Moossee: scan, OCR'd
+    expect([by(94).scan, by(94).level]).toEqual(['banned', 'restricted']); // Enggisteinmoos: heavily garbled text
+    expect([by(70).scan, by(70).level]).toEqual(['entry', 'restricted']); // Siehenmoos: "das Betreten" prohibited
+    expect(set.reserves.every((r) => r.scan !== 'notext')).toBe(true);
+  });
+  it('an entry-ban reserve explains why camping is prohibited', () => {
+    const r = set.reserves.find((x) => x.id === 70)!;
+    const [x, y] = [r.rings[0]![0]!, r.rings[0]![1]!];
+    // nudge from a vertex toward the bbox centre until inside
+    const cx = (r.bbox[0] + r.bbox[2]) / 2, cy = (r.bbox[1] + r.bbox[3]) / 2;
+    const p = [0.05, 0.1, 0.2, 0.3, 0.5].map((t) => [x + (cx - x) * t, y + (cy - y) * t] as const).find(([px, py]) => reservesAt(set, px, py).some((q) => q.id === 70))!;
+    const hit = reserveZoneHits(set, p[0], p[1]).find((h) => h.name === r.name)!;
+    expect(hit.layer.severity).toBe('restricted');
+    expect(hit.layer.note).toMatch(/entering/);
   });
   it('contains points taken from inside the source polygons', () => {
     const hits = fixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;

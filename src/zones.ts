@@ -109,6 +109,12 @@ export const RESERVE_ZONES = {
     severity: 'restricted',
     note: 'The reserve\'s protection decree prohibits camping and tenting.',
   },
+  beDecreeEntry: {
+    id: 'be-nsg-entry',
+    label: 'Bern nature reserve',
+    severity: 'restricted',
+    note: 'The reserve\'s protection decree prohibits entering it (or leaving the marked paths), so camping is effectively prohibited.',
+  },
   beOther: {
     id: 'be-nsg-other',
     label: 'Bern nature reserve',

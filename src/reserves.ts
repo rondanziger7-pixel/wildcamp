@@ -11,7 +11,7 @@ export interface Reserve {
   level: ReserveLevel;
   /** Link to the reserve's protection decree. */
   decree: string;
-  /** How the decree text was classified: banned, silent or notext. */
+  /** How the decree text was classified: banned, entry, silent or notext. */
   scan: string;
   /** Designated-place exception read from the decree, if any. */
   exception?: string;
@@ -78,7 +78,12 @@ export function reservesAt(set: ReserveSet, e: number, n: number): Reserve[] {
 
 export function reserveZoneHits(set: ReserveSet, e: number, n: number): ZoneHit[] {
   return reservesAt(set, e, n).map((r) => ({
-    layer: r.level === 'restricted' ? RESERVE_ZONES.beDecreeBan : RESERVE_ZONES.beOther,
+    layer:
+      r.level !== 'restricted'
+        ? RESERVE_ZONES.beOther
+        : r.scan === 'entry'
+          ? RESERVE_ZONES.beDecreeEntry
+          : RESERVE_ZONES.beDecreeBan,
     name: r.name,
     detail: [r.exception, `Decree: ${r.decree}`].filter(Boolean).join(' '),
   }));
