@@ -18,9 +18,15 @@
       </form>
     </header>
 
-    <button id="layers-btn" type="button" aria-expanded="false" aria-controls="legend">Zones</button>
+    <button id="layers-btn" type="button" aria-expanded="false" aria-controls="legend">Layers</button>
     <section id="legend" hidden>
       <h2>Map layers</h2>
+      <label><input type="checkbox" id="toggle-trails" checked /> Hiking trails</label>
+      <ul class="swatches">
+        <li><i style="background:#f2c200"></i> Hiking trail</li>
+        <li><i style="background:#e02020"></i> Mountain trail</li>
+        <li><i style="background:#1f3fe0"></i> Alpine trail</li>
+      </ul>
       <label><input type="checkbox" id="toggle-zones" checked /> Restricted zones</label>
       <p>Colours come from the source layers (federal hunting reserves, wildlife quiet zones, floodplains, bogs and more). A coloured area is not always a ban: tap the spot to see what applies.</p>
       <p>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, SO, JU) is checked when you tap a spot but is not drawn on the map.</p>

@@ -174,6 +174,12 @@ describe('local treeline (synthetic)', () => {
     expect(classifyTreeline(mask, undefined, near.e, near.n, 1900).status).toBe('unknown');
     expect(classifyTreeline(mask, makeSurface(1500), near.e, near.n, 1900).status).toBe('above');
   });
+  it('a low forest limit does not make low ground "above": nothing below 1500 m, and 1500 to 1600 m is left undecided', () => {
+    const low = makeSurface(800);
+    expect(classifyTreeline(mask, low, p.e, p.n, 1400).status).toBe('below');
+    expect(classifyTreeline(mask, low, p.e, p.n, 1550).status).toBe('unknown');
+    expect(classifyTreeline(mask, low, p.e, p.n, 1700).status).toBe('above');
+  });
   it('forest still wins, and missing estimate falls back to the elevation bands', () => {
     expect(classifyTreeline(mask, surface, at(50, 50).e, at(50, 50).n, 3000).status).toBe('forest');
     const noEstimate = makeSurface(0);
@@ -183,17 +189,20 @@ describe('local treeline (synthetic)', () => {
 
 describe('real treeline surface (public/treeline-surface.bin.gz)', () => {
   let surface: TreelineSurface;
+  let mask: Awaited<ReturnType<typeof decodeForestMask>>;
   beforeAll(async () => {
     const b = readFileSync('public/treeline-surface.bin.gz');
     surface = await decodeTreelineSurface(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength));
+    const m = readFileSync('public/forest-mask.bin.gz');
+    mask = await decodeForestMask(m.buffer.slice(m.byteOffset, m.byteOffset + m.byteLength));
   });
 
-  it('almost no forest vertex sits above the local limit (alignment + conservative bias)', () => {
+  it('few forest vertices sit above the local limit (alignment check; the limit is a 98th percentile, so a few percent are expected)', () => {
     const above = vertices.filter(([e, n, z]) => {
       const t = treelineAt(surface, e!, n!);
       return t === undefined || z! > t;
     }).length;
-    expect(above / vertices.length).toBeLessThan(0.03);
+    expect(above / vertices.length).toBeLessThan(0.06);
   });
 
   const t = (lat: number, lon: number) => {
@@ -205,12 +214,20 @@ describe('real treeline surface (public/treeline-surface.bin.gz)', () => {
     expect(t(46.02, 7.75)).toBeLessThan(2500);
     expect(t(46.5, 9.84)).toBeGreaterThan(2150); // Engadin
     expect(t(47.13, 7.05)).toBeLessThan(1700); // Jura
-    expect(t(47.25, 9.34)).toBeGreaterThan(1600); // Säntis
-    expect(t(47.25, 9.34)).toBeLessThan(1950);
+    expect(t(47.25, 9.34)).toBeGreaterThan(1350); // Säntis (forest ends near 1500 to 1600 m)
+    expect(t(47.25, 9.34)).toBeLessThan(1700);
     expect(t(46.95, 7.44)).toBeLessThan(1100); // Bern lowlands
   });
   it('is higher in the central Alps than in the northern Prealps and the Jura', () => {
     expect(t(46.02, 7.75)!).toBeGreaterThan(t(47.25, 9.34)!);
-    expect(t(47.25, 9.34)!).toBeGreaterThan(t(47.13, 7.05)!);
+    expect(t(46.5, 9.84)!).toBeGreaterThan(t(47.13, 7.05)!);
+  });
+  it('Capanna Barone (Ticino): forest within 1.5 km ends near 1800 m, so treeless ground at 2050 m is above the treeline', () => {
+    // A 5 km maximum read 2177 m here and called this "below the treeline" with no tree in sight.
+    expect(t(46.3948, 8.7468)!).toBeLessThan(1900);
+    expect(t(46.3948, 8.7468)!).toBeGreaterThan(1700);
+    const { e, n } = wgs84ToLv95(46.3948, 8.7468);
+    const r = classifyTreeline(mask, surface, e, n, 2050);
+    expect(r.status).toBe('above');
   });
 });

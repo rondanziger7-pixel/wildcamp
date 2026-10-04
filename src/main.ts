@@ -45,23 +45,43 @@ const zoneOverlay = L.tileLayer
   });
 zoneOverlay.addTo(map);
 
-// Forest map (3.7 MB) loads in the background; clicks before it arrives fall back to elevation only.
+// Signposted hiking trails (swissTLM3D): yellow hiking, red mountain, blue alpine trails.
+const trailOverlay = L.tileLayer.wms('https://wms.geo.admin.ch/', {
+  layers: 'ch.swisstopo.swisstlm3d-wanderwege',
+  format: 'image/png',
+  transparent: true,
+  opacity: 0.9,
+  attribution: '© swisstopo (trails)',
+});
+trailOverlay.addTo(map);
+
+// Local data (forest map 3.7 MB, reserves, treeline surface) loads in the background. A check waits for it (up to
+// DATA_WAIT_MS), so a deep link or an early tap is not judged without the forest map or the reserve polygons.
+const loading: Promise<unknown>[] = [];
+const DATA_WAIT_MS = 20000;
 let forestMask: ForestMask | undefined;
-loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
-  .then((m) => (forestMask = m))
-  .catch((err) => console.warn('forest map failed to load', err));
+loading.push(
+  loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
+    .then((m) => (forestMask = m))
+    .catch((err) => console.warn('forest map failed to load', err)),
+);
 
 const reserveSets: ReserveSet[] = [];
 for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz', 'reserves-vs.json.gz', 'reserves-ge.json.gz', 'reserves-gl.json.gz', 'reserves-fr.json.gz', 'reserves-lu.json.gz', 'reserves-so.json.gz']) {
-  loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
-    .then((r) => reserveSets.push(r))
-    .catch((err) => console.warn(`${file} failed to load`, err));
+  loading.push(
+    loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
+      .then((r) => reserveSets.push(r))
+      .catch((err) => console.warn(`${file} failed to load`, err)),
+  );
 }
 
 let treelineSurface: TreelineSurface | undefined;
-loadTreelineSurface(`${import.meta.env.BASE_URL}treeline-surface.bin.gz`)
-  .then((t) => (treelineSurface = t))
-  .catch((err) => console.warn('treeline surface failed to load', err));
+loading.push(
+  loadTreelineSurface(`${import.meta.env.BASE_URL}treeline-surface.bin.gz`)
+    .then((t) => (treelineSurface = t))
+    .catch((err) => console.warn('treeline surface failed to load', err)),
+);
+const dataReady = Promise.all(loading);
 
 const sheet = document.getElementById('sheet')!;
 const result = document.getElementById('result')!;
@@ -257,6 +277,7 @@ async function checkSpot(lat: number, lng: number) {
     fetchMunicipality(lat, lng),
     inJura ? fetchJuraReserves(lat, lng) : Promise.resolve([]),
   ]);
+  await Promise.race([dataReady, new Promise((r) => setTimeout(r, DATA_WAIT_MS))]);
   if (id !== checkId) return; // a newer tap superseded this one
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
   const { e, n } = wgs84ToLv95(lat, lng);
@@ -362,6 +383,10 @@ const layersBtn = document.getElementById('layers-btn')!;
 layersBtn.addEventListener('click', () => {
   legend.hidden = !legend.hidden;
   layersBtn.setAttribute('aria-expanded', String(!legend.hidden));
+});
+document.getElementById('toggle-trails')!.addEventListener('change', (ev) => {
+  if ((ev.target as HTMLInputElement).checked) trailOverlay.addTo(map);
+  else trailOverlay.remove();
 });
 document.getElementById('toggle-zones')!.addEventListener('change', (ev) => {
   if ((ev.target as HTMLInputElement).checked) zoneOverlay.addTo(map);

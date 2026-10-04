@@ -14,7 +14,7 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
    - otherwise compare elevation with the **local upper forest limit** (`public/treeline-surface.bin.gz`, 1 km grid, 29 KB): ≥ limit + 100 m → `above`; < limit − 100 m → `below`; within ±100 m → `unknown`
    - where there is no local estimate (no forest within 5 km): fixed bands — below 1500 m → `below`; forest within 500 m → `unknown`; ≥ 1800 m → `above`; else `unknown`
 
-   The local limit comes from the swissTLM3D forest polygons' vertex heights: the 98th percentile per 1 km cell, then the *maximum* over a 5 km neighbourhood. That max is deliberately conservative, so the limit tends to read high (e.g. ~2045 m in the Gantrisch where ~1750 m is typical). The effect is that spots genuinely above the treeline may get "below"/"unknown" (a caution), not the reverse.
+   The local limit comes from the swissTLM3D forest polygons' vertex heights: for each 500 m cell, the 98th percentile of the forest vertices within 1.5 km (widening to 3 km and then 5 km where there is hardly any forest). An earlier version took the maximum over 5 km, which let one high stand of trees in the next valley decide: near Capanna Barone (Ticino) it read 2177 m while forest within 1.5 km ends near 1800 m, so treeless ground at 2050 m was called "below the treeline". "Above" is never claimed below 1600 m, and nothing below 1500 m counts as above the treeline.
 
    If the forest map fails to load, it falls back to an elevation-only estimate and says so.
 
@@ -22,7 +22,7 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 
 5. **Municipality** (swissBOUNDARIES3D) is shown for every spot. Municipal rules are verified for the City of Bern only (Campingverordnung SSSB 732.221: ban on the city's public ground outside designated areas; it cannot tell public from private ground, so it only caps at "Caution"). Everywhere else the app tells users to look up the municipality's police regulations. Entries live in `src/municipalities.ts` under the same source gate as cantonal rules.
 
-**Interface**: mobile-first map with place search (geo.admin.ch SearchServer), a locate-me button, a bottom sheet with a verdict banner and a checklist (worst findings first, sources linked), a zones layer toggle and a copy-link button. Every spot has a shareable `#lat,lon,zoom` link.
+**Interface**: mobile-first map with place search (geo.admin.ch SearchServer), a locate-me button, a bottom sheet with a verdict banner and a checklist (worst findings first, sources linked), a layers menu (signposted hiking trails from swissTLM3D, restricted zones) and a copy-link button. Every spot has a shareable `#lat,lon,zoom` link.
 
 6. **Weather card** (every spot in Switzerland): a night picker (tonight and the next three nights), headline tiles (sky, low and freezing level, gusts and direction, rain and chance), and three hourly charts (temperature, rain, wind gusts) with hover and keyboard readouts and a table view. Code: `src/weatherview.ts`, `src/chart.ts`, `src/comfort/weather.ts`. The forecast request asks for the extra variables (rain chance, sky code, cloud, snow, freezing level, dew point) and falls back to the core five if the service refuses them.
 7. **Sleep comfort** (separate from legality; not shown where camping is not allowed or outside Switzerland; follows the night chosen in the weather card). Code in `src/comfort/`. Rule-of-thumb rating (great / good / okay / poor) from:

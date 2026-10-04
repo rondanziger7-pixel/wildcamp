@@ -7,6 +7,8 @@ import { treelineAt, type TreelineSurface } from './treelinesurface';
 export const ABOVE_TREELINE_MIN_M = 1800;
 /** Below this, an unforested spot is valley/lowland, not alpine. */
 export const BELOW_TREELINE_MAX_M = 1500;
+/** "Above the treeline" is only claimed from this elevation, whatever a low local forest limit suggests (grazed alps sit under the natural limit). */
+export const ABOVE_LOCAL_MIN_M = 1600;
 /** With a local treeline estimate, spots within this many metres of it count as undecided. */
 export const TREELINE_MARGIN_M = 100;
 /** How far to look for forest before trusting that a spot is clear of it. */
@@ -41,9 +43,12 @@ export function classifyTreeline(
   }
   const m = elevationM === undefined ? undefined : Math.round(elevationM);
   const local = surface ? treelineAt(surface, e, n) : undefined;
-  if (elevationM !== undefined && local !== undefined) {
-    const where = `${m} m, local upper forest limit about ${local} m`;
-    if (elevationM >= local + TREELINE_MARGIN_M) return { status: 'above', note: `Above the treeline: ${where}.` };
+  if (elevationM !== undefined && local !== undefined && elevationM >= BELOW_TREELINE_MAX_M) {
+    const where = `${m} m, upper forest limit nearby about ${local} m`;
+    if (elevationM >= local + TREELINE_MARGIN_M) {
+      if (elevationM < ABOVE_LOCAL_MIN_M) return { status: 'unknown', note: `Higher than the forest nearby, but ${m} m is low for a treeline, so it can't be called: ${where}.` };
+      return { status: 'above', note: `Above the treeline: ${where}.` };
+    }
     if (elevationM < local - TREELINE_MARGIN_M) return { status: 'below', note: `Not in forest, but below the local treeline: ${where}.` };
     return { status: 'unknown', note: `Close to the local treeline, can't tell which side: ${where}.` };
   }

@@ -29,7 +29,7 @@ button { font: inherit; cursor: pointer; }
 #legend p { color: var(--muted); margin: 8px 0 0; }
 .swatches { list-style: none; padding: 0; margin: 8px 0 0; }
 .swatches li { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
-.swatches i { width: 16px; height: 16px; border-radius: 4px; opacity: .7; flex: none; }
+.swatches i { width: 22px; height: 4px; border-radius: 2px; flex: none; }
 
 #sheet { position: absolute; z-index: 1000; left: 0; right: 0; bottom: 0; background: var(--bg); border-radius: 18px 18px 0 0; box-shadow: 0 -2px 16px #0004; padding: 8px 16px calc(12px + env(safe-area-inset-bottom)); max-height: 62vh; overflow-y: auto; overscroll-behavior: contain; }
 @media (min-width: 720px) { #sheet { left: 12px; right: auto; bottom: 12px; width: 400px; border-radius: 16px; max-height: calc(100vh - 24px); } }
