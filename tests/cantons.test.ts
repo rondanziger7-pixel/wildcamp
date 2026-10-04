@@ -163,6 +163,43 @@ describe('Kandersteg (BFS 565)', () => {
   });
 });
 
+describe('Bernese Oberland municipalities', () => {
+  const banned = [565, 573, 576, 584, 594, 841, 842];
+  const restricted = [561, 567, 581, 768, 792, 843];
+  const squash = (t: string) => t.replace(/-\s*\n\s*/g, '').replace(/\s+/g, ' ').toLowerCase();
+  const text = (dir: string, file: string) => squash(readFileSync(`docs/sources/municipal/${dir}/${file}`, 'utf8'));
+  it('records each municipality with the stance its regulation supports', () => {
+    for (const b of banned) expect(findMunicipalRule(b)?.rule.stance, String(b)).toBe('banned');
+    for (const r of restricted) expect(findMunicipalRule(r)?.rule.stance, String(r)).toBe('restricted');
+  });
+  it('a ban forces no and a public-ground-only rule caps at caution', () => {
+    for (const b of banned) expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: findMunicipalRule(b)!.rule }).verdict).toBe('no');
+    for (const r of restricted) expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: findMunicipalRule(r)!.rule }).verdict).toBe('caution');
+  });
+  it('every summary names its fine and says whether a tentless bivouac is covered or not addressed', () => {
+    for (const m of MUNICIPAL_RULES.filter((x) => x.bfs !== 351)) {
+      expect(m.rule.summary, m.name).toMatch(/CHF [\d,]+/);
+      expect(m.rule.summary, m.name).toMatch(/without a tent|Biwakieren|tent/);
+    }
+  });
+  it('the saved regulations contain the sentences the summaries rely on', () => {
+    expect(text('581_Interlaken', 'gemeindepolizeireglement_552.11.txt')).toContain('campieren und feste feiern ist auf öffentlichem grund ohne bewilligung verboten');
+    expect(text('573_Brienz', 'gemeindepolizeireglement_2014.txt')).toContain('das campieren im öffentlichen raum ist verboten');
+    expect(text('573_Brienz', 'gemeindepolizeireglement_2014.txt')).toContain('das biwakieren');
+    expect(text('768_Spiez', 'gemeindepolizeireglement_2013.txt')).toContain('auf öffentlichem grund ist das campieren verboten');
+    expect(text('843_Saanen', 'ortspolizeireglement.txt')).toContain('drei aufeinanderfolgenden nächten bewilligungsfrei');
+    expect(text('842_Lauenen', 'campingreglement_1984.txt')).toContain('auf öffentlichem grund ist das campieren nicht gestattet');
+    expect(text('841_Gsteig', 'camping-reglement_2006.txt')).toContain('wildes campieren');
+    expect(text('594_Wilderswil', 'gemeindepolizeireglement_2017.txt')).toContain('übernachten in fahrzeugen und zelten (campieren) ausserhalb der speziell dafür vorgesehenen flächen verboten');
+    expect(text('561_Adelboden', 'ortspolizeireglement.txt')).toContain('auf öffentlichem grund ist das campieren nur an den von der ortspolizeibehörde bezeichneten stellen gestattet');
+    expect(text('792_Lenk', 'gemeindepolizeireglement_2007.txt')).toContain('übernachten in fahrzeugen und zelten (campieren) ausserhalb der speziell dafür vorgesehenen flächen verboten');
+  });
+  it('Meiringen was read and has no camping ban, so it is deliberately not recorded', () => {
+    expect(findMunicipalRule(785)).toBeUndefined();
+    expect(text('785_Meiringen', 'ortspolizeireglement_2009.txt')).toContain('campingzwecke zur verfügung stellt, benötigt eine baubewilligung');
+  });
+});
+
 describe('Ticino mountain exception', () => {
   const ti = findCanton('TI')!;
   it('is restricted below the treeline but tolerated above it (Art. 2 para. 2 of the camping law)', () => {
