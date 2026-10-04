@@ -192,3 +192,5 @@ button { font: inherit; cursor: pointer; }
 .save-btn { width: 100%; margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: transparent; color: var(--fg); font-weight: 600; cursor: pointer; }
 .save-btn[aria-pressed="true"] { border-color: var(--green); background: var(--ok-bg, #d9f2e0); }
 .report-link { display: block; margin-top: 10px; font-size: .85rem; }
+.spot-pin { background: none; border: 0; filter: drop-shadow(0 2px 2px #0007); }
+.spot-pin svg { display: block; }

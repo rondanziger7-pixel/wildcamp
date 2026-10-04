@@ -10,6 +10,7 @@ import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import { reportUrl } from './report';
+import { spotIcon } from './markers';
 import { fetchJuraReserves } from './jura';
 import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { searchPlaces, type Place } from './search';
@@ -277,7 +278,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   marker?.remove();
   focusMarker?.remove();
   focusMarker = undefined;
-  marker = L.marker([lat, lng]).addTo(map);
+  marker = L.marker([lat, lng], { icon: spotIcon(), keyboard: false }).addTo(map);
   history.replaceState(null, '', `#${lat.toFixed(5)},${lng.toFixed(5)},${map.getZoom()}`);
   if (!isInSwitzerland(lat, lng)) {
     sheet.dataset.state = 'result';
@@ -402,7 +403,7 @@ async function findBest(lat: number, lng: number) {
   const id = ++finderId;
   ++checkId; // stops a running spot check from painting over the list
   marker?.remove();
-  marker = L.marker([lat, lng]).addTo(map);
+  marker = L.marker([lat, lng], { icon: spotIcon(), keyboard: false }).addTo(map);
   focusMarker?.remove();
   finderPins.clearLayers();
   sheet.classList.remove('closed');
