@@ -271,3 +271,27 @@ describe('comfort rating', () => {
     expect([5, 4, 3, 2, 1, 0, -1, -2].map(rate)).toEqual(['great', 'great', 'good', 'good', 'fair', 'fair', 'fair', 'poor']);
   });
 });
+
+describe('ground frost', () => {
+  const night = (over: Record<string, number | boolean | string | undefined> = {}) => ({ from: '2026-10-04T18:00', to: '2026-10-05T08:00', minTempC: 3, maxGustKmh: 8, meanWindKmh: 4, windFromDeg: 0, precipMm: 0, thunder: false, meanCloud: 10, ...over }) as never;
+  const terr = (tpi: number) => ({ elevation: 2000, slopeDeg: 3, horizon: Array(8).fill(10), meanHorizon: 10, tpi, steepAboveM: undefined, dropNearM: undefined });
+  const has = (c: ReturnType<typeof comfortFor>) => c.weatherFactors.some((f) => f.title === 'Ground frost likely');
+  it('a clear calm night with a forecast low of 3 °C can frost the ground (3 - 3 = 0)', () => {
+    expect(has(comfortFor({ terrain: terr(0), night: night() }))).toBe(true);
+  });
+  it('cloud or wind removes the effect', () => {
+    expect(has(comfortFor({ terrain: terr(0), night: night({ meanCloud: 90 }) }))).toBe(false);
+    expect(has(comfortFor({ terrain: terr(0), night: night({ meanWindKmh: 30 }) }))).toBe(false);
+  });
+  it('a hollow adds to it; a milder low or one already below zero does not trigger it', () => {
+    expect(has(comfortFor({ terrain: terr(-35), night: night({ minTempC: 5 }) }))).toBe(true); // 5 - 3 - 2 = 0
+    expect(has(comfortFor({ terrain: terr(0), night: night({ minTempC: 5 }) }))).toBe(false);
+    expect(has(comfortFor({ terrain: terr(0), night: night({ minTempC: -4 }) }))).toBe(false); // the plain low-temperature factor covers it
+  });
+  it('costs one point and needs a cloud forecast to be judged', () => {
+    const a = comfortFor({ terrain: terr(0), night: night() });
+    const b = comfortFor({ terrain: terr(0), night: night({ meanCloud: 90 }) });
+    expect(b.score - a.score).toBe(1);
+    expect(has(comfortFor({ terrain: terr(0), night: night({ meanCloud: undefined }) }))).toBe(false);
+  });
+});

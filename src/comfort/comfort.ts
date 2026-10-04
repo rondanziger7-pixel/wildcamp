@@ -155,6 +155,16 @@ export function comfortFor(input: ComfortInput): Comfort {
 
     // fog and condensation
     if (night.minDewSpreadC !== undefined && night.minDewSpreadC <= 1.5 && night.precipMm < 1) wx({ tone: 'info', score: 0, title: 'Fog or heavy condensation likely', text: 'The air will be saturated. Expect a wet tent and sleeping bag; use a ventilated pitch and keep gear dry.' });
+    // ground frost: on clear, calm nights the ground and the tent are colder than the forecast air temperature at 2 m,
+    // and cold air collects in hollows. Rule-of-thumb numbers, not a measurement.
+    const cloud = night.meanCloud;
+    if (cloud !== undefined && night.minTempC > 0 && night.minTempC <= 8) {
+      const clearTerm = cloud <= 30 ? 3 : cloud <= 60 ? 1.5 : 0;
+      const calm = night.meanWindKmh <= 10 ? 1 : night.meanWindKmh <= 20 ? 0.5 : 0;
+      const hollow = t ? (t.tpi <= -30 ? 2 : t.tpi <= -15 ? 1 : 0) : 0;
+      const groundLow = night.minTempC - clearTerm * calm - hollow;
+      if (groundLow <= 0) wx({ tone: 'warn', score: -1, title: 'Ground frost likely', text: `The forecast low is ${night.minTempC.toFixed(1)} °C at 2 m, but with a ${cloud <= 30 ? 'clear' : 'partly clear'} sky, ${night.meanWindKmh <= 10 ? 'calm air' : 'light wind'}${hollow ? ' and cold air pooling in a hollow' : ''} the ground and tent can drop to about ${groundLow.toFixed(0)} °C: frost on the tent and a stiff, damp morning. Camp on a slight rise or a slope instead of the lowest ground, and use a warmer bag than the forecast suggests.` });
+    }
   } else missing.push('overnight forecast');
 
   // crowds
