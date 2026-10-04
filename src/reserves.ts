@@ -1,6 +1,6 @@
 import { gunzipIfNeeded } from './binary';
 import type { ZoneHit } from './assess';
-import { RESERVE_ZONES } from './zones';
+import { RESERVE_ZONES, type ZoneLayer } from './zones';
 
 export type ReserveLevel = 'restricted' | 'caution';
 
@@ -11,7 +11,7 @@ export interface Reserve {
   level: ReserveLevel;
   /** Link to the reserve's protection decree. */
   decree: string;
-  /** How the decree text was classified: banned, entry, silent or notext. */
+  /** How the legal text was classified: banned, entry, silent, notext, law (a regulation) or unchecked. */
   scan: string;
   /** Designated-place exception read from the decree, if any. */
   exception?: string;
@@ -23,12 +23,15 @@ export interface Reserve {
 export interface ReserveSet {
   canton: string;
   generated: string;
+  /** Zone wording carried by the data itself (cantons built by scripts/build_cantonal_reserves.py). */
+  label?: string;
+  notes?: { restricted: string; caution: string };
   reserves: Reserve[];
 }
 
 interface RawReserve extends Omit<Reserve, 'bbox'> {}
 
-export function parseReserveSet(raw: { canton: string; generated: string; reserves: RawReserve[] }): ReserveSet {
+export function parseReserveSet(raw: { canton: string; generated: string; label?: string; notes?: { restricted: string; caution: string }; reserves: RawReserve[] }): ReserveSet {
   const reserves = raw.reserves.map((r) => {
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (const ring of r.rings) {
@@ -42,7 +45,7 @@ export function parseReserveSet(raw: { canton: string; generated: string; reserv
     }
     return { ...r, bbox: [x0, y0, x1, y1] as [number, number, number, number] };
   });
-  return { canton: raw.canton, generated: raw.generated, reserves };
+  return { canton: raw.canton, generated: raw.generated, label: raw.label, notes: raw.notes, reserves };
 }
 
 export async function decodeReserveSet(buf: ArrayBuffer): Promise<ReserveSet> {
@@ -76,7 +79,25 @@ export function reservesAt(set: ReserveSet, e: number, n: number): Reserve[] {
   );
 }
 
-function layerFor(canton: string, r: Reserve) {
+const generated = new Map<string, ZoneLayer>();
+function generatedLayer(set: ReserveSet, level: ReserveLevel): ZoneLayer {
+  const key = `${set.canton}-${level}`;
+  let layer = generated.get(key);
+  if (!layer) {
+    layer = {
+      id: `${set.canton.toLowerCase()}-reserve-${level}`,
+      label: set.label ?? `${set.canton} nature reserve`,
+      severity: level,
+      note: set.notes?.[level] ?? '',
+    };
+    generated.set(key, layer);
+  }
+  return layer;
+}
+
+function layerFor(set: ReserveSet, r: Reserve): ZoneLayer {
+  const canton = set.canton;
+  if (set.notes) return generatedLayer(set, r.level);
   if (canton === 'VS') {
     if (r.level !== 'restricted') return RESERVE_ZONES.vsOther;
     return r.scan === 'entry' ? RESERVE_ZONES.vsDecisionEntry : RESERVE_ZONES.vsDecisionBan;
@@ -88,8 +109,8 @@ function layerFor(canton: string, r: Reserve) {
 
 export function reserveZoneHits(set: ReserveSet, e: number, n: number): ZoneHit[] {
   return reservesAt(set, e, n).map((r) => ({
-    layer: layerFor(set.canton, r),
+    layer: layerFor(set, r),
     name: r.name,
-    detail: [r.exception, `Decree: ${r.decree}`].filter(Boolean).join(' '),
+    detail: [r.exception, r.scan === 'unchecked' ? '' : `${r.scan === 'law' ? 'Legal basis' : 'Decree'}: ${r.decree}`].filter(Boolean).join(' '),
   }));
 }

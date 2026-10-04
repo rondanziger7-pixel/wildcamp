@@ -6,6 +6,10 @@ import { wgs84ToLv95 } from '../src/coords';
 import fixture from './fixtures/be-reserve-points.json';
 import tiFixture from './fixtures/ti-reserve-points.json';
 import vsFixture from './fixtures/vs-reserve-points.json';
+import geFixture from './fixtures/ge-reserve-points.json';
+import glFixture from './fixtures/gl-reserve-points.json';
+import luFixture from './fixtures/lu-reserve-points.json';
+import frFixture from './fixtures/fr-reserve-points.json';
 
 const square = (x: number, y: number, s: number) => [x, y, x + s, y, x + s, y + s, x, y + s];
 const synthetic = parseReserveSet({
@@ -167,5 +171,61 @@ describe('real Valais protected sites (public/reserves-vs.json.gz)', () => {
     const p = [0.05, 0.1, 0.2, 0.3, 0.5].map((t) => [x + (cx - x) * t, y + (cy - y) * t] as const).find(([px, py]) => reservesAt(set, px, py).some((q) => q.id === al.id))!;
     expect(assess({ zones: reserveZoneHits(set, p[0], p[1]), treeline: 'above' }).verdict).toBe('no');
     expect(reservesAt(set, ...(Object.values(wgs84ToLv95(46.0207, 7.7491)) as [number, number]))).toEqual([]);
+  });
+});
+
+describe('cantons built from their own data (Geneva, Glarus)', () => {
+  const load = async (file: string) => {
+    const b = readFileSync(file);
+    return decodeReserveSet(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength));
+  };
+  it('Geneva: nature reserves are prohibited by regulation, with the legal basis cited', async () => {
+    const set = await load('public/reserves-ge.json.gz');
+    expect(set.canton).toBe('GE');
+    expect(set.reserves.length).toBe(68);
+    expect(set.reserves.filter((r) => r.level === 'restricted').length).toBeGreaterThan(60);
+    const hits = geFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / geFixture.length).toBeGreaterThan(0.9);
+    const p = geFixture.find((q) => set.reserves.find((r) => r.id === q.id)?.level === 'restricted')!;
+    const zone = reserveZoneHits(set, p.e, p.n).find((h) => h.layer.severity === 'restricted')!;
+    expect(zone.layer.label).toBe('Geneva nature reserve');
+    expect(zone.layer.note).toMatch(/Art\. 19/);
+    expect(zone.detail).toContain('https://silgeneve.ch/legis/data/rsg_l4_05p11.htm');
+    expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('no');
+  });
+  it('Glarus: protected areas only trigger caution and say the rules were not checked', async () => {
+    const set = await load('public/reserves-gl.json.gz');
+    expect(set.reserves.length).toBeGreaterThan(8);
+    expect(set.reserves.every((r) => r.level === 'caution' && r.scan === 'unchecked')).toBe(true);
+    const hits = glFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / glFixture.length).toBeGreaterThan(0.85);
+    const p = glFixture[0]!;
+    const zone = reserveZoneHits(set, p.e, p.n)[0]!;
+    expect(zone.layer.note).toMatch(/not checked/);
+    expect(zone.detail ?? '').not.toMatch(/Decree/);
+    expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('caution');
+  });
+  // Fixture points for LU/FR are interior points of the stored polygons (not re-fetched from the source).
+  it('Lucerne: ordinances that ban camping make the area restricted, the rest only caution', async () => {
+    const set = await load('public/reserves-lu.json.gz');
+    expect(set.canton).toBe('LU');
+    expect(set.reserves.filter((r) => r.scan === 'banned').every((r) => r.level === 'restricted')).toBe(true);
+    expect(set.reserves.filter((r) => r.scan === 'silent').every((r) => r.level === 'caution')).toBe(true);
+    const hits = luFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / luFixture.length).toBeGreaterThan(0.9);
+    const p = luFixture.find((q) => set.reserves.find((r) => r.id === q.id)?.level === 'restricted')!;
+    const zone = reserveZoneHits(set, p.e, p.n).find((h) => h.layer.severity === 'restricted')!;
+    expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('no');
+  });
+  it('Fribourg: reserves are caution only, since their rules were not checked', async () => {
+    const set = await load('public/reserves-fr.json.gz');
+    expect(set.canton).toBe('FR');
+    expect(set.reserves.every((r) => r.level === 'caution' && r.scan === 'unchecked')).toBe(true);
+    const hits = frFixture.filter((p) => reservesAt(set, p.e, p.n).some((r) => r.id === p.id)).length;
+    expect(hits / frFixture.length).toBeGreaterThan(0.9);
+    const p = frFixture[0]!;
+    const zone = reserveZoneHits(set, p.e, p.n)[0]!;
+    expect(zone.layer.note).toMatch(/not checked/);
+    expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('caution');
   });
 });

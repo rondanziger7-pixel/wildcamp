@@ -2,18 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1f4d36" />
+    <meta name="description" content="Check whether a spot in Switzerland is likely legal for wild camping: treeline, protected zones, cantonal rules." />
     <title>Wildcamp CH</title>
   </head>
   <body>
-    <div id="map"></div>
-    <aside id="panel">
-      <h1>Wildcamp CH</h1>
-      <p id="hint">Tap the map to check a spot.</p>
-      <div id="result"></div>
+    <div id="map" aria-label="Map of Switzerland"></div>
+
+    <header id="topbar">
+      <form id="search" role="search" autocomplete="off">
+        <input id="q" type="search" placeholder="Search a place or peak…" aria-label="Search a place" />
+        <button type="button" id="locate" title="Use my location" aria-label="Use my location">◎</button>
+        <ul id="suggest" hidden></ul>
+      </form>
+    </header>
+
+    <button id="layers-btn" type="button" aria-expanded="false" aria-controls="legend">Zones</button>
+    <section id="legend" hidden>
+      <h2>Map layers</h2>
+      <label><input type="checkbox" id="toggle-zones" checked /> Restricted zones</label>
+      <ul class="swatches">
+        <li><i style="background:#c0392b"></i> Camping banned / entry banned</li>
+        <li><i style="background:#e08e0b"></i> Protected area, check the rules</li>
+      </ul>
+      <p>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, JU) is checked when you tap a spot but is not drawn on the map.</p>
+    </section>
+
+    <aside id="sheet" data-state="intro" aria-live="polite">
+      <div id="grab" aria-hidden="true"></div>
+      <div id="intro">
+        <h1>Can I camp here?</h1>
+        <p>Tap anywhere on the map to check a spot, or search for a place. The check covers the treeline, federal and cantonal protected zones, and recorded cantonal rules.</p>
+      </div>
+      <div id="result" hidden></div>
       <p class="disclaimer">
-        Guidance only, not legal advice. Wild camping rules are set by cantons and
-        municipalities and can change. Check local rules before you go.
+        Guidance only, not legal advice. Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.
       </p>
     </aside>
     <script type="module" src="/src/main.ts"></script>

@@ -115,6 +115,11 @@ def classify(txt_path: str, pdf_path: str) -> tuple[str, str]:
         t = open(ocr_txt, encoding="utf-8", errors="replace").read() if os.path.exists(ocr_txt) else ""
         if len(re.sub(r"\s+", "", t)) < 300:
             return "notext", ""
+    return classify_text(t)
+
+
+def classify_text(t: str) -> tuple[str, str]:
+    """Classify legal text (German or French): banned / entry / silent, with a quoted excerpt."""
     flat = normalise(t)
     despaced = re.sub(r"(?<=\b\w) (?=\w\b)", "", flat)  # OCR spaced letters like "Z e l t e n"
     for src in (flat, despaced):
