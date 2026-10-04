@@ -3,6 +3,7 @@ import type { Comfort } from './comfort/comfort';
 import { compassName, describeCode, type Night } from './comfort/weather';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
+import type { SpotSnapshot } from './saved';
 import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
@@ -78,6 +79,8 @@ export interface ResultUi {
   setWater(w: WaterInfo | undefined, failed?: boolean): void;
   setShelter(r: ShelterResult | undefined, failed?: boolean): void;
   setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
+  /** What the result shows right now, for saving the spot. */
+  snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
 
 function scoreCard(kind: string, title: string) {
@@ -109,6 +112,7 @@ function chip(kind: string) {
 export function renderResult(root: HTMLElement, a: Assessment, elevation: number | undefined, focus?: Focus): ResultUi {
   let waterAt: { e: number; n: number; label: string } | undefined;
   let hutAt: { e: number; n: number; label: string } | undefined;
+  const snap: { sleep?: Score; weather?: Score; night?: string; label?: string; pros: string[]; cons: string[]; complete: boolean; water?: string; hut?: string } = { pros: [], cons: [], complete: false };
   const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · '));
 
   const legal = scoreCard('legal', 'Legality');
@@ -196,6 +200,15 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const s = sleepScore(c);
       sleep.set(s, loading.length ? `${RATING_SHORT[c.rating]} …` : RATING_SHORT[c.rating]);
       const w = weatherScore(c, !c.missing.includes('overnight forecast'));
+      Object.assign(snap, {
+        sleep: s,
+        weather: w.value === undefined ? undefined : w,
+        night: nightLabel,
+        label: RATING_SHORT[c.rating],
+        complete: loading.length === 0,
+        pros: c.spotFactors.filter((x) => x.tone === 'ok').slice(0, 3).map((x) => x.title),
+        cons: c.spotFactors.filter((x) => x.tone === 'bad' || x.tone === 'warn').slice(0, 3).map((x) => x.title),
+      });
       if (w.value !== undefined) weather.set(w, c.weatherStop ? 'Dangerous' : c.weatherScore >= 1 ? 'Good' : c.weatherScore >= 0 ? 'Fine' : c.weatherScore > -3 ? 'Poor' : 'Bad');
       weatherFactors.replaceChildren(...(c.weatherFactors.length ? [el('h3', 'wx-factors-title', `What the forecast means for ${nightLabel}`), ...checklist(c.weatherFactors, 'weather details', focus)] : []));
       const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
@@ -224,6 +237,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       waterAt = w.kind !== 'none' && w.at ? { ...w.at, label: w.name ? `${w.kind === 'lake' ? 'Lake' : 'Stream'} ${w.name}` : w.kind === 'lake' ? 'Nearest lake' : 'Nearest stream' } : undefined;
       const kind = w.kind === 'lake' ? 'Lake' : w.kind === 'stream' ? 'Stream' : '';
       const base = w.kind === 'none' ? '💧 No water within 800 m' : `💧 ${kind}${w.name ? ` ${w.name}` : ''} · ${Math.round(w.meters / 10) * 10 || 5} m`;
+      snap.water = base.replace('💧 ', '') + (w.kind !== 'none' && w.glacierM !== undefined ? ', glacier water' : '') + (w.upstreamPlants.length ? ', sewage upstream' : '');
       waterChip.replaceChildren(base);
       if (waterAt) waterChip.append(el('span', 'tag go', '📍 map'));
       if (w.kind !== 'none') {
@@ -248,6 +262,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const km = (m: number) => (m < 950 ? `${Math.round(m / 50) * 50} m` : `${(m / 1000).toFixed(1)} km`);
       if (hut) {
         hutAt = { ...hut.at, label: hut.name };
+        snap.hut = `${hut.name} · ${km(hut.meters)}`;
         shelterChip.textContent = `🏠 ${hut.kind === 'biwak' ? 'Bivouac shelter' : hut.club ? 'Club hut' : 'Hut'}: ${hut.name} · ${km(hut.meters)}`;
         shelterChip.append(el('span', 'tag go', '📍 map'));
         if (hut.meters > 1500) shelterChip.classList.add('far');
@@ -257,6 +272,21 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         shelterChip.textContent = `🏠 No hut within 5 km${alp ? ` · ${alp.name} ${km(alp.meters)}` : ''}`;
         shelterChip.classList.add('far');
       }
+    },
+    snapshot() {
+      return {
+        verdict: a.verdict,
+        legal: L.value,
+        sleep: snap.sleep?.value,
+        weather: snap.weather?.value,
+        night: snap.night,
+        sleepLabel: snap.label,
+        water: snap.water,
+        hut: snap.hut,
+        pros: snap.pros,
+        cons: snap.cons,
+        complete: snap.complete,
+      };
     },
     setWeatherChip(night, nightLabel, failed) {
       weatherChip.className = 'chip weather';

@@ -18,6 +18,8 @@ import { fetchGround, type GroundInfo } from './comfort/ground';
 import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './finder';
 import { RESERVE_FILES, FOREST_FILE, TREELINE_FILE } from './localdata';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
+import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, type SavedSpot } from './saved';
+import { renderSaved } from './savedview';
 import { combined, renderFinder, type FinderRow } from './finderview';
 import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
@@ -285,6 +287,34 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
     back.onclick = finderBack;
     result.prepend(back);
   }
+  const sid = spotId(lat, lng);
+  const save = el('button', 'save-btn');
+  save.type = 'button';
+  const paintSave = () => {
+    const on = isSaved(store, sid);
+    save.setAttribute('aria-pressed', String(on));
+    save.textContent = on ? '★ Saved: tap to remove' : '☆ Save this spot';
+  };
+  paintSave();
+  save.onclick = () => {
+    if (isSaved(store, sid)) removeSpot(store, sid);
+    else {
+      const spot: SavedSpot = {
+        id: sid,
+        lat,
+        lng,
+        name: defaultName(assessment.municipality, elevation, lat, lng),
+        elevation,
+        municipality: assessment.municipality,
+        canton: assessment.canton?.name,
+        snapshot: { ...ui.snapshot(), savedAt: Date.now() },
+      };
+      if (!saveSpot(store, spot).stored) say('This browser would not keep the spot (private mode or storage blocked).');
+    }
+    paintSave();
+    syncSavedCount();
+  };
+  result.append(save);
   const find = el('button', 'finder-btn', '🔍 Find the best spots near here');
   find.type = 'button';
   find.onclick = () => void findBest(lat, lng);
@@ -293,6 +323,42 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   void loadDetails(ui, lat, lng, elevation, id, tappedAt);
 }
 
+
+// Saved spots
+const store = (() => {
+  try {
+    return window.localStorage;
+  } catch {
+    return undefined;
+  }
+})();
+const savedBtn = el('button', 'finder-btn');
+savedBtn.type = 'button';
+function syncSavedCount() {
+  savedBtn.textContent = `★ Saved spots (${loadSaved(store).length})`;
+}
+syncSavedCount();
+function showSaved() {
+  ++checkId;
+  ++finderId;
+  finderPins.clearLayers();
+  sheet.classList.remove('closed');
+  sheet.dataset.state = 'result';
+  result.hidden = false;
+  renderSaved(result, loadSaved(store), {
+    onOpen: (sp) => {
+      map.flyTo([sp.lat, sp.lng], Math.max(map.getZoom(), 15), { duration: 0.6 });
+      void checkSpot(sp.lat, sp.lng);
+    },
+    onRemove: (id) => {
+      removeSpot(store, id);
+      syncSavedCount();
+      showSaved();
+    },
+  });
+}
+savedBtn.onclick = showSaved;
+document.getElementById('intro')!.append(savedBtn);
 
 // Best spots nearby
 const finderPins = L.layerGroup().addTo(map);
@@ -599,6 +665,20 @@ const SaveControl = L.Control.extend({
   },
 });
 new SaveControl({ position: 'topright' }).addTo(map);
+
+const SavedControl = L.Control.extend({
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'map-locate map-saved') as HTMLButtonElement;
+    btn.type = 'button';
+    btn.title = 'Saved spots';
+    btn.setAttribute('aria-label', 'Saved spots');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', showSaved);
+    return btn;
+  },
+});
+new SavedControl({ position: 'topright' }).addTo(map);
 
 // Handle for browser tests in the dev server only.
 if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map; focusOn: typeof focusOn } }).__wildcamp = { map, focusOn };
