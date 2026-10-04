@@ -144,3 +144,10 @@ button { font: inherit; cursor: pointer; }
 .outside p { margin: 4px 0 0; font-size: .88rem; }
 .panel.weather .wx-title { display: none; }
 .scores { position: sticky; top: 0; z-index: 3; background: var(--bg); padding: 6px 0; margin-top: 0; }
+
+.map-locate { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-top: 8px; background: #fff; color: #1a73e8; border: 2px solid rgba(0,0,0,.2); border-radius: 4px; padding: 0; cursor: pointer; }
+.map-locate:hover { background: #f4f4f4; }
+@media (prefers-color-scheme: dark) { .map-locate { background: #26302b; color: #8ab4f8; border-color: #0006; } .map-locate:hover { background: #2f3a34; } }
+#toast { position: absolute; z-index: 1200; left: 50%; top: calc(max(10px, env(safe-area-inset-top)) + 64px); transform: translateX(-50%); max-width: min(420px, calc(100vw - 32px)); background: #1b1f1d; color: #fff; padding: 10px 14px; border-radius: 10px; font-size: .88rem; box-shadow: 0 2px 10px #0006; }
+#toast[hidden] { display: none; }
+.leaflet-top.leaflet-right { margin-top: calc(max(10px, env(safe-area-inset-top)) + 54px); }

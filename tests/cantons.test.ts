@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { assess } from '../src/assess';
 import { CANTONS, findCanton, validateRule, type Canton, type CantonRule } from '../src/cantons';
@@ -139,6 +139,27 @@ describe('municipal rules', () => {
   it('a municipal ban forces no', () => {
     const rule = { ...MUNICIPAL_RULES[0]!.rule, stance: 'banned' as const };
     expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: rule }).verdict).toBe('no');
+  });
+});
+
+describe('Kandersteg (BFS 565)', () => {
+  const k = findMunicipalRule(565)!;
+  it('is recorded with the municipality\'s own documents', () => {
+    expect(k.name).toBe('Kandersteg');
+    expect(k.rule.stance).toBe('banned');
+    expect(k.rule.sources.every((x) => x.url.startsWith('https://www.gemeindekandersteg.ch/'))).toBe(true);
+  });
+  it('forces no, and the summary says the tentless bivouac is outside the municipal ban', () => {
+    const a = assess({ zones: [], treeline: 'above', municipality: 'Kandersteg', municipalRule: k.rule });
+    expect(a.verdict).toBe('no');
+    expect(k.rule.summary).toMatch(/Biwakieren/);
+    expect(k.rule.summary).toMatch(/Art\. 7/);
+  });
+  it('the saved regulation says what the summary says', () => {
+    const text = readFileSync('docs/sources/municipal/565_Kandersteg/Gemeindepolizeireglement_2021-01-01.txt', 'utf8');
+    expect(text).toMatch(/Das Campieren ausserhalb der speziell dafür vorgesehenen und\s+bewilligten Flächen ist nicht gestattet/);
+    expect(text).toMatch(/Übernachten im Freien ohne Zelt, im Iglu oder in einer\s+Schneehöhle \(Biwakieren\)/);
+    expect(text).toMatch(/Fr\. 5’000/);
   });
 });
 

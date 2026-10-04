@@ -1,0 +1,2558 @@
+BAU- UND ZONENORDNUNG (BZO)
+
+
+
+  Vom Regierungsrat genehmigt mit Beschluss Nr. 2021-579 R-362-30 am 28. September 2021.
+
+
+  Neue Bestimmungen zum Artikel 44 vom Regierungsrat genehmigt mit Beschluss Nr. 2024-210
+  R-362-30 am 26. März 2024.
+
+  Ergänzungen im Artikel 22a und Tabelle der Grundmasse vom Regierungsrat genehmigt mit
+  Beschluss Nr. 2024-393 R-362-30 am 11. Juni 2024.
+
+  Ergänzung Artikel 22a vom Regierungsrat genehmigt mit Beschluss Nr. 2025-396 R-362-30 am
+  24. Juni 2025.
+
+  Ergänzungen Artikel 42 und neuer Artikel 42a vom Regierungsrat genehmigt mit Beschluss
+  Nr. 2025-788 R-362-30 am 22. Dezember 2025.
+
+
+
+
+Datum: 28. September 2021, rev. 22. Dezember 2025
+Abkürzungen:
+PBG Kantonales Planungs- und Baugesetz
+RPBG Reglement zum Planungs- und Baugesetz
+MBO Musterbauordnung Uri
+IVHB Interkantonale Vereinbarung über die Harmonisierung der Baubegriffe
+BZO Bau- und Zonenordnung
+aBZO alte Bau- und Zonenordnung (rechtsgültige BZO)
+
+
+
+
+                                                                           2
+INHALTSVERZEICHNIS
+
+
+1. KAPITEL           ZWECK, GELTUNGSBEREICH UND VORBEHALTENES RECHT              6
+Artikel 1            Zweck und Geltungsbereich                                   6
+Artikel 2            Vorbehaltenes Recht                                         6
+2. KAPITEL           ORGANISATION                                                6
+Artikel 3            Gemeindeversammlung                                         6
+Artikel 4            Baubehörde a) Zusammensetzung und Wahl                      6
+Artikel 5            b) Aufgaben                                                 7
+Artikel 6            Gemeinderat                                                 7
+3. KAPITEL           NUTZUNGSPLAN                                                7
+1. ABSCHNITT:        ZONENARTEN                                                  7
+Artikel 7            Gliederung des Gemeindegebiets                              7
+2. ABSCHNITT:        BAUZONEN                                                    7
+Artikel 8            Arten                                                       7
+1. Unterabschnitt:   Kernzonen                                                   8
+Artikel 9            Allgemeine Bestimmungen                                     8
+Artikel 10           Kernzone 1 (K1)                                             8
+Artikel 11           Gestaltungszone A                                           9
+Artikel 12           Schutzwürdige Bauten und Anlagen                            9
+Artikel 13           Strassen, Gassen, Plätze                                    9
+Artikel 14           Geschosszahl, Fassadenhöhe a) im Allgemeinen                9
+Artikel 15           b) an der Gotthardstrasse und Kirchgasse                    9
+Artikel 16           Gebäudelänge, Fassadenvorsprünge                           10
+Artikel 17           Dachgestaltung                                             10
+Artikel 18           Fassadengestaltung                                         10
+Artikel 19           Gestaltung des Erdgeschosses                               10
+Artikel 20           Parkierung                                                 10
+Artikel 21           Grenz- und Gebäudeabstände                                 11
+Artikel 22           Kernzone 2 (K2)                                            11
+Artikel 22a          Gastgewerbezone (GGZ)                                      11
+2. Unterabschnitt:   übrige Bauzonen                                            12
+Artikel 23           Wohnzonen (W)                                              12
+Artikel 24           Wohn- und Gewerbezonen (WG)                                12
+Artikel 25           Bahnhofzone (B)                                            12
+Artikel 26           Tourismuszonen (TZ)                                        13
+Artikel 27           Zonen für öffentliche Bauten und Anlagen (OE)              15
+Artikel 28           Zonen für Sport- und Freizeitanlagen (SF)                  15
+Artikel 29           Zone für Sport- und Freizeitanlagen Sommercamping (SFSC)   16
+Artikel 30           Zone für Sport- und Freizeitanlagen Tennisplatz (SFTP)     16
+Artikel 31           Zone für Sport- und Freizeitanlagen Golf (SFGo)            16
+Artikel 32           Freihaltezone (FZ)                                         17
+Artikel 33           Verkehrsflächen (VF)                                       17
+Artikel 34           Vertragliche Bauverpflichtung                              18
+3. ABSCHNITT:        NICHTBAUZONEN                                              18
+Artikel 35           Arten                                                      18
+Artikel 36           Landwirtschaftszone (L)                                    18
+Artikel 37           Reservezonen (RZ)                                          18
+4. ABSCHNITT:        WEITERE ZONEN UND FESTLEGUNGEN                             18
+Artikel 38           Arten                                                      18
+Artikel 39           Schutzzonen a) Grundsatz                                   19
+Artikel 40           lokale Naturschutzzone (NSl)                               19
+
+
+
+
+                                                                                3
+Artikel 41           lokale Landschaftsschutzzone (LSl)                                  20
+Artikel 42           Zone für Wintersport (ZW)                                           20
+Artikel 42a          Abfahrtsrouten (AR)                                                 21
+Artikel 43           Abbauzone (A)                                                       21
+Artikel 44           Zone für besondere Anlagen und Betriebsstätten überlagert (ABü)
+                     (Windkraftanlagen)                                                  22
+Artikel 45           Zone für besondere Anlagen und Betriebsstätten, Bahn und
+                     Parkierungsanlagen (AB)                                             22
+Artikel 46           Zone mit Quartierplan- oder Quartiergestaltungsplanpflicht (QGPp)   22
+Artikel 47           Gefahrenzonen (GZ)                                                  23
+Artikel 48           Gewässerraumzone (GR)                                               23
+Artikel 49           Naturobjekte lokal (Nol)                                            23
+Artikel 50           Kulturobjekte lokal (Kol)                                           23
+Artikel 51           Ortsbildschutzzone                                                  24
+5. ABSCHNITT:        EMPFINDLICHKEITSSTUFEN                                              24
+Artikel 52           Zuordnung                                                           24
+Artikel 53           Lärmschutzvorbehalt                                                 24
+4. KAPITEL           WEITERE PLANUNGSINSTRUMENTE UND DIE ERSCHLIESSUNG                   24
+Artikel 54           Hinweis auf das PBG                                                 24
+5. KAPITEL           ÖFFENTLICH-RECHTLICHE BAUVORSCHRIFTEN                               24
+1. ABSCHNITT:        KANTONALE BAUVORSCHRIFTEN                                           24
+Artikel 55           Hinweis auf das PBG                                                 24
+2. ABSCHNITT:        ERGÄNZENDE BAUVORSCHRIFTEN GEMEINDE                                 24
+Artikel 56           Grenz- und Gebäudeabstand                                           25
+Artikel 57           Abstandsvorschriften                                                25
+Artikel 58           Baubegriffe und Messweisen                                          25
+Artikel 59           Stand der Technik                                                   25
+2. Unterabschnitt:   Ausmass von Gebäuden                                                25
+Artikel 60           Gebäudelänge, Gesamthöhe, Fassadenhöhe und Geschosszahl             25
+Artikel 61           Dachaufbauten und Dachflächenfenster                                25
+Artikel 62           Minimale Baumasse und Einrichtungen                                 26
+Artikel 63           Kleinbauten, Kleinstbauten                                          26
+Artikel 64           Anbauten                                                            26
+Artikel 65           Unterniveaubauten                                                   26
+Artikel 66           Vorspringende Gebäudeteile                                          26
+Artikel 67           Gesamthöhe und Fassadenhöhe                                         27
+Artikel 68           Kniestockhöhe, lichte Höhe und Geschosshöhe                         27
+Artikel 69           Untergeschoss                                                       27
+Artikel 70           Attikageschoss                                                      27
+3. Unterabschnitt:   Ausnützungsziffer                                                   27
+Artikel 71           Ausnützungsziffer                                                   27
+Artikel 72           Anrechenbare Bruttogeschossfläche                                   27
+Artikel 73           Wohn- und Arbeitsräume                                              27
+Artikel 74           Nicht anrechenbare Geschossflächen                                  28
+Artikel 75           Anrechenbare Grundstücksfläche                                      28
+Artikel 76           Zusätzliche Ausnützung bei bestehenden Gewerbebauten                28
+Artikel 77           Zusätzliche Ausnützung im Dachgeschoss                              29
+Artikel 78           Ausnützungstransport                                                29
+Artikel 79           Zulässige Ausnützungsziffer                                         29
+Artikel 80           Ausnützungspflicht                                                  29
+4. Unterabschnitt:   Erstwohnungsanteil (EWA)                                            29
+Artikel 81           Zweck                                                               29
+Artikel 82           Geltungsbereich                                                     29
+Artikel 83           Begriffe                                                            30
+
+
+
+
+                                                                                         4
+Artikel 84           Minimaler Erstwohnungsanteil                                       30
+Artikel 85           Besondere Fälle (Um-, Aus-, Anbauten bestehender Wohneinheiten und
+                     deren Nutzung)                                                     30
+Artikel 86           Besondere Fälle (Mehrere Bauten, mehrere Parzellen)                30
+Artikel 87           Ausnahmen                                                          31
+Artikel 88           Verfahren                                                          31
+Artikel 89           Kontrolle                                                          31
+Artikel 90           Besitzstandgarantie                                                32
+5. Unterabschnitt:   Orts- und Landschaftsbild, architektonische Gestaltung             32
+Artikel 91           Grundsatz                                                          32
+6. Unterabschnitt:   Umgebungsgestaltung                                                32
+Artikel 92           Grundsatz                                                          32
+Artikel 93           Abgrabungen und Aufschüttungen                                     32
+Artikel 94           Entsorgungseinrichtungen                                           33
+7. Unterabschnitt:   Weitere Bauvorschriften der Gemeinde                               33
+Artikel 95           Hindernisfreies Bauen                                              33
+Artikel 95a          Campieren                                                          33
+Artikel 96           Spielplätze                                                        33
+Artikel 97           Abstellplätze a) Grundsatz                                         33
+Artikel 98           b) bestehende Bauten und Anlagen                                   34
+Artikel 99           c) Abweichungen aus öffentlichen Interessen                        34
+Artikel 100          d) Ersatzabgabe                                                    34
+Artikel 101          Verkehrssicherheit                                                 34
+6. KAPITEL:          AUSNAHMEN                                                          35
+Artikel 102          Hinweis auf das PBG                                                35
+7. KAPITEL:          BAUBEWILLIGUNG                                                     35
+Artikel 103          Hinweis auf das PBG                                                35
+Artikel 104          Bewilligungspflicht                                                35
+Artikel 105          bewilligungsfreie Bauten und Anlagen                               35
+Artikel 106          Meldepflicht                                                       36
+Artikel 107          Bewilligungsverfahren                                              36
+Artikel 108          Projektänderungen                                                  36
+Artikel 109          Formlose Anfrage                                                   36
+Artikel 110          Baukontrolle                                                       36
+8. KAPITEL:          RECHTSPFLEGE UND GEBÜHREN                                          36
+Artikel 111          Rechtspflege                                                       36
+Artikel 112          Kosten und Gebühren                                                36
+9. KAPITEL:          SCHLUSSBESTIMMUNGEN                                                37
+Artikel 113          Hängige Baugesuche                                                 37
+Artikel 114          Aufhebung bisherigen Rechts                                        37
+Artikel 115          Genehmigung und Inkrafttreten                                      37
+ANHANG 1             TABELLE DER GRUNDMASSE                                             38
+ANHANG 2             TABELLE VERMINDERTE GRENZABSTÄNDE                                  39
+ANHANG 3             ZUSAMMENFASSUNG WICHTIGER MASSE                                    40
+ANHANG 4             RICHTLINIEN ZU DEN QUARTIERGESTALTUNGSPLÄNEN
+                     (informativ)                                                       41
+ANHANG 5             VERZEICHNISSE (informativ)                                         46
+
+
+
+
+                                                                                        5
+Die Gemeindeversammlung Andermatt gestützt auf Artikel 17 des Planungs- und Baugesetzes vom
+13. Juni 2010 (PBG1) und auf Artikel 106 und Artikel 110 Absatz 1 Buchstabe a der Verfassung des
+Kantons Uri 2, beschliesst:
+
+
+
+1. KAPITEL            ZWECK, GELTUNGSBEREICH UND VORBEHALTENES RECHT
+
+Artikel 1             Zweck und Geltungsbereich
+1
+ Die BZO regelt die Nutzung des Bodens und das Bauen in der Gemeinde Andermatt. Sie
+verdeutlicht und ergänzt das PBG.
+2Sie gilt für das ganze Gemeindegebiet, sofern die Gemeindeversammlung nicht besonde-
+
+re Bestimmungen und Zonenordnungen für einzelne Gemeindegebiete erlässt.
+
+Artikel 2             Vorbehaltenes Recht
+1Die
+    Vorschriften des Bundes und des Kantons sowie besondere Vorschriften der Ge-
+meinde bleiben vorbehalten.
+2Namentlich vorbehalten bleiben:
+
+a)     die Interkantonale Vereinbarung vom 22. September 2005 über die Harmonisierung
+       der Baubegriffe (IVHB) 3;
+b)     die Interkantonale Vereinbarung vom 23. Oktober 1998 zum Abbau technischer Han-
+       delshemmnisse IVTH) 4;
+c)     das PBG;
+d)     das Reglement des Regierungsrats zum PBG. 5;
+
+
+
+2. KAPITEL            ORGANISATION
+
+Artikel 3             Gemeindeversammlung
+1Die Gemeindeversammlung erfüllt die Aufgaben, die ihr die Kantonsverfassung und das
+
+PBG übertragen.
+2Sie erlässt insbesondere die BZO und genehmigt6 den Nutzungsplan, den der Gemeinde-
+
+rat ihr vorlegt.
+
+Artikel 4             Baubehörde
+                      a) Zusammensetzung und Wahl
+1Die
+      Baukommission ist die Baubehörde der Gemeinde. Sie besteht aus insgesamt 3-5
+Mitglieder und wird auf 2 Jahre gewählt.
+
+
+
+
+1 RB 40.1111
+2 RB10.1101
+3 RB 40.1117
+4 RB 70.1811
+5 RB 40.1115
+6 siehe Art. 42 PBG
+
+
+
+
+                                                                                               6
+2
+ Die Baukommission besteht aus dem Präsidium, dem Vizepräsidium und zusätzlich 1-3
+Mitgliedern. Das Präsidium und 2-4 Mitglieder wählt die Gemeindeversammlung. Die Ge-
+meindekanzlei übernimmt das Sekretariat. Im Übrigen konstituiert sich die Baubehörde
+selbst.
+
+Artikel 5        b) Aufgaben
+1
+ Die Baubehörde vollzieht das übergeordnete und das gemeindliche Bau- und Planungs-
+recht, soweit nicht ausdrücklich eine andere Behörde zuständig ist.
+2Sie kann Fachexpertinnen oder Fachexperten beiziehen und Gutachten einholen, wenn
+
+ein Bauvorhaben das erfordert. Die Bauherrschaft ist vorher anzuhören.
+
+Artikel 6        Gemeinderat
+
+Der Gemeinderat ist Weiterzugs- und Aufsichtsinstanz gegenüber der Baukommission, der
+er generelle Weisungen erteilen kann.
+
+
+
+3. KAPITEL       NUTZUNGSPLAN
+
+1. Abschnitt:    Zonenarten
+
+Artikel 7        Gliederung des Gemeindegebiets
+
+Das Gemeindegebiet gliedert sich in Bauzonen und in Nichtbauzonen. Hinzu kommen
+weitere Zonen im Sinne von Artikel 21 Absatz 3 PBG.
+
+2. Abschnitt:    Bauzonen
+
+Artikel 8        Arten
+
+Als Bauzonen gelten:
+a) Kernzonen (K)
+b) Gastgewerbezone (GGZ)
+c) Wohnzonen (W)
+d) Wohn- und Gewerbezonen (WG)
+e) Bahnhofzone (B)
+f) Tourismuszonen (TZ)
+g) Zonen für öffentliche Bauten und Anlagen (OE)
+h) Zonen für Sport- und Freizeitanlagen (SF)
+i) Freihaltezone (FZ)
+j) Verkehrsflächen (VF)
+
+
+
+
+                                                                                    7
+1. Unterabschnitt:     Kernzonen
+
+Artikel 9        Allgemeine Bestimmungen
+1Die Kernzone dient dem Zweck, die Zentrumsfunktion eines Ortsteils zu erhalten, auszu-
+
+bauen und neu zu schaffen. Dabei sind die ortstypischen Besonderheiten möglichst zu
+erhalten.
+2Die touristischen Nutzungen, wie namentlich Hotel- und Gastbetriebe sollen erhalten und
+
+gefördert werden.
+3
+ Entlang der Gotthardstrasse sind die Erdgeschosse gewerblicher, vorab publikumsinten-
+siver Nutzung vorbehalten. Auf die Gotthardstrasse orientierte Wohnungen und Garagen
+im Erdgeschoss sind nicht zulässig.
+4Neben Wohnnutzungen sind öffentliche Bauten und mässig störende Betriebe mit zent-
+
+rumsbildender Funktion zulässig. Es gelten die Vorschriften für die Regelbauweise.
+5Der Abbruch von Gebäuden ist nur zulässig, wenn die Baubewilligung für eine neue Be-
+
+bauung vorliegt oder wenn sich zeigt, dass die dauernde Freihaltung der betreffenden
+Parzelle das Ortsbild nicht beeinträchtigt.
+6In den Kernzonen kann die Baubehörde bewilligen, den Grenz- und Gebäudeabstand zu
+
+verkleinern oder aufzuheben, wenn damit dem Charakter der Kernzone besser entspro-
+chen wird.
+7Um zu beurteilen, ob ein Bauvorhaben in das Gesamtbild passt, kann die Baubehörde auf
+
+Kosten der Bauherrschaft Gutachten einholen. Sie kann ein Modell mit Einbezug der
+Nachbargebäude verlangen. Die betroffene Bauherrschaft ist vorgängig anzuhören.
+8Die Kernzone wird unterteilt in die Kernzonen 1 und 2; Sie sind im speziellen Nutzungs-
+
+plan Dorfkern 1:1'000 dargestellt und abgegrenzt.
+
+Artikel 10       Kernzone 1 (K1)
+1Bauten und Anlagen haben sich in Massstab, Stellung, kubischer Gestaltung und Materi-
+
+alwahl sowie in Fassaden-, Farb- und Dachgestaltung in das vorhandene Gesamtbild ein-
+zufügen. Dabei ist eine passende Verbindung zwischen ortstypischer und zeitgemässer
+Architektur zu wählen.
+2Bei Neu- und Umbauten darf das Bauvolumen das bisherige Mass nicht überschreiten.
+
+Wenn wichtige Gründe das rechtfertigen und keine überwiegenden öffentliche oder private
+Interessen entgegenstehen, kann eine Anpassung an die Bauvolumen der bestehenden
+Gebäude in der Umgebung und an angemessene Geschosshöhen gestattet werden.
+3Die Gemeinde kann für Massnahmen, die der Erhaltung des Ortsbildes dienen, Beiträge
+
+ausrichten.
+4Reklametafeln, Lichtreklamen usw. dürfen nicht störend wirken und das Strassenbild nicht
+
+beeinträchtigen. Bei Lichtreklamen soll das Licht blendfrei sein. Unzulässig sind Rekla-
+men, die durch Bewegung oder durch wechselnde Lichteffekte wirken.
+5Die bestehenden Gassenräume zwischen den Häusern müssen erhalten bleiben.
+
+
+
+
+                                                                                        8
+Artikel 11       Gestaltungszone A
+
+In der Gestaltungszone A dürfen Neubauten nur nach den Bauvorschriften für die Regel-
+bauweise errichtet werden. Dies gilt auch im Rahmen eines Quartiergestaltungsplanes.
+
+Artikel 12       Schutzwürdige Bauten und Anlagen
+1
+ Die im Nutzungsplan für den Dorfkern als geschützte Bauten bezeichneten Kulturobjekte
+sind in ihrem besonderen Wert als Ganzes zu erhalten und können nur im Rahmen der
+Restaurierung der wertbestimmenden Teile baulich verändert werden.
+2
+ Die im Nutzungsplan für den Dorfkern als Ortsbildschutzobjekte bezeichneten Bauten
+sind in ihrer Grundsubstanz wie Bauvolumen, Fassaden- und Dachgestaltung, typische
+Merkmale und Materialien zu erhalten oder wiederherzustellen. Sie dürfen unter diesen
+Bedingungen verändert, umgebaut, erneuert oder in eine Neubebauung einbezogen wer-
+den. Eine Erneuerung oder Neubebauung ist dann möglich, wenn sich der Umbau als un-
+verhältnismässig herausstellt.
+3Die im Nutzungsplan für den Dorfkern als massgebende Bauvolumen bezeichneten Bau-
+
+ten sind in ihrer kubischen Erscheinung zu erhalten. Sie können unter Wahrung oder Ver-
+besserung der räumlichen Anordnung verändert, umgebaut, erneuert oder in eine Neube-
+bauung einbezogen werden.
+
+Artikel 13       Strassen, Gassen, Plätze
+1Die
+      öffentlichen Strassen, Gassen und Plätze dürfen nicht überbaut und nur in ihren
+Grenzen verändert werden, wenn dies im öffentlichen Interesse steht, den Gestaltungsab-
+sichten dienlich ist und den Charakter des Dorfkerns nicht verändert. Eine Veränderung ist
+nur im Einvernehmen mit dem Träger der Strassenhoheit an der betreffenden Verkehrsein-
+richtung zulässig.
+2Die bestehende Pflästerung der Gotthardstrasse muss erhalten bleiben.
+
+
+
+Artikel 14       Geschosszahl, Fassadenhöhe
+                 a) im Allgemeinen
+1In der Kernzone 1 sind zwei Vollgeschosse zulässig.
+
+
+2Der Fussboden des Erdgeschosses darf höchstens 1.50 m über dem tiefsten Punkt des
+
+massgebenden Terrains liegen.
+3Die
+    Fassadenhöhe darf, gemessen vom tiefsten Punkt des massgebenden Terrains,
+höchstens 7.50 m betragen.
+
+Artikel 15       b) an der Gotthardstrasse und Kirchgasse
+1Für Gebäude oder Gebäudeteile, die einen Abstand von weniger als 16 m zur Gott-
+hardstrasse oder Kirchgasse aufweisen, sind drei Vollgeschosse zulässig.
+2Der
+      Fussboden des Erdgeschosses darf höchstens 0.30 m über dem Strassenniveau
+liegen.
+3Die Fassadenhöhe darf, gemessen vom Strassenniveau, höchstens 9.0 m betragen.
+
+
+
+
+                                                                                         9
+Artikel 16        Gebäudelänge, Fassadenvorsprünge
+1
+ Die Gebäudelänge (Traufseite) darf 16.00 m nicht überschreiten und von zusammenge-
+bauten Gebäuden max. 24.00 m betragen. Die Gebäudebreite (Giebelseite) darf 13.00 m
+nicht überschreiten.
+2Fassadenvorsprünge    wie Balkone, Aussentreppen und Vorbauten sind bis zu max.
+1.00 m über den Grenzabstand hinaus gestattet, wenn sie den Durchgang der Gassen
+nicht stören und höchstens 1/3 der Fassadenlänge betragen.
+
+Artikel 17        Dachgestaltung
+1An Hauptbauten sind nur Giebeldächer gestattet. Die Giebelfront soll in der Regel zur
+Strasse gerichtet sein.
+2Die Dachneigung soll in der Regel zwischen 25° und 45° alter Teilung liegen. Dachauf-
+
+bauten und Dacheinschnitte können bei guter architektonischer Gestaltung bewilligt wer-
+den. Sie dürfen zusammen 1/4 der entsprechenden Fassadenlänge nicht überschreiten.
+3
+ Vereinzelte Dachflächenfenster mit einem Rahmenlichtmass von je max. 1.20 m2 sind
+zulässig. Sie dürfen nicht störend wirken. Ihre Länge darf 15 % der zugeordneten Fassa-
+denlänge nicht überschreiten.
+4Die Farbe des Bedachungsmaterials muss in der Regel grau bis schwarz sein.
+
+
+
+Artikel 18        Fassadengestaltung
+1Die Fassaden sind gemäss den ortsüblichen Materialien zu konstruieren. Die Farbgebung
+
+unterliegt der Bewilligung der Baukommission.
+2Für
+     die Gestaltung der Fenster ist der Stil der Fassaden massgebend. Kunsthistorisch
+wertvolle Türen, Hofportale und Einfassungen sind nach Möglichkeit zu erhalten. Asym-
+metrische Fensteranordnungen sind vorzuziehen. Die Fenster sollen zweiflüglig sein und
+nach Möglichkeit zusammengefasst werden; die Flügelbreiten der Fenster dürfen höchs-
+tens 70 cm betragen und sollen einheitlich sein.
+3An
+    der Gotthardstrasse, an der Kirchgasse und an der hinteren Kirchgasse sind keine
+Balkone und Fassadenvorsprünge gestattet. An den übrigen Orten sind Balkone und Fas-
+sadenvorsprünge in Leichtbauweise zu erstellen.
+
+Artikel 19        Gestaltung des Erdgeschosses
+1Das Erdgeschoss muss massiv gebaut werden. Es darf von der Fassade zurückversetzt
+
+werden. Tür- und Fensteröffnungen dürfen höchstens 2/3 der Fassadenlänge betragen.
+2An der Gotthardstrasse dürfen keine oberirdischen Garagenausfahrten errichtet werden.
+
+
+
+Artikel 20        Parkierung
+1Die Zahl der Abstellplätze richtet sich nach Art. 97.
+
+
+2Innerhalb des Parkierungsperimeters gemäss Nutzungsplan für den Dorfkern ist die Er-
+
+richtung von weiteren Abstellplätzen nicht zulässig. Die erforderlichen Plätze sind aus-
+serhalb des Perimeters zu realisieren, oder es ist eine entsprechende Ersatzabgabe ge-
+mäss Art. 100 zu bezahlen.
+
+
+
+
+                                                                                         10
+Artikel 21            Grenz- und Gebäudeabstände
+
+Der Grenzabstand beträgt 3.00 m. Er kann mit Zustimmung des Nachbars und unter
+1
+
+Wahrung der vorgeschriebenen Gebäudeabstände auf 1.50 m verringert werden.
+2
+ Der Gebäudeabstand beträgt 6.00 m. Er kann auf zwei Gebäudeseiten bis auf 3.00 m
+verringert werden.
+3Der Gebäudeabstand wird in der Regel von zwei Grundstücken hälftig getragen.
+
+
+4Werden die feuerpolizeilichen Gebäudeabstände unterschritten, so sind die Brandschutz-
+
+vorschriften einzuhalten.
+
+Artikel 22            Kernzone 2 (K2)
+1Bauten für gewerbliche und touristische Zwecke sind zulässig. Die bauliche Gestaltung
+
+darf den Charakter des Quartiers nicht beeinträchtigen.
+2Entlang der Gotthardstrasse sind die Erdgeschosse gewerblicher, vorab publikumsinten-
+
+siver Nutzung vorbehalten. Auf die Gotthardstrasse orientierte Wohnungen und Garagen
+im Erdgeschoss sind nicht zulässig.
+3Industrielle Bauten und Betriebe sind nicht gestattet.
+
+
+4Die touristischen Nutzungen, wie namentlich Hotel- und Gastbetriebe sollen erhalten und
+
+gefördert werden.
+5Der Gewerbebonus auf die Ausnützungsziffer (AZ) kann beansprucht werden, wenn min-
+
+destens 10 % der anrechenbaren Bruttogeschossfläche gewerblich genutzt werden. Der
+AZ-Gewerbebonus beträgt 0.05 bei einem Gewerbeanteil von mind. 10 % und erhöht sich
+linear bis max. 0.20 bei einem Gewerbeanteil von 20 % und grösser.
+
+Artikel 22a           Gastgewerbezone (GGZ)
+1
+ Die Gastgewerbezone dient dem Erhalt und der Förderung der Hotel- und Gasthausbe-
+triebe.
+2In der Gastgewerbezone sind Hotel-, Gasthaus-, Pensions-, Kur- und Restaurationsbe-
+
+triebe sowie mässig störende Betriebe mit zentrumsbildender Funktion zulässig. 20% der
+Hauptnutzfläche gemäss SIA 416 darf zudem für Wohnzwecke, namentlich für touristisch
+bewirtschaftete Wohnungen und Personalunterkünfte des eigenen Betriebes oder eines
+Drittbetriebes, genutzt werden. Zulässig ist zudem maximal eine Wohneinheit für eine be-
+triebsbedingte Wohnung.1
+3In der Gastgewerbezone gelten die allgemeinen Bestimmungen zu den Kernzonen ge-
+
+mäss Art. 9 BZO sowie die Bestimmungen zur Gestaltung gemäss Art. 10 BZO (Kernzone
+1) bzw. Art. 22 BZO (Kernzone 2).2
+
+
+
+
+1 Geänderter Absatz 2 vom Regierungsrat mit Beschluss Nr. 2025-396 R-362-30 am 24. Juni 2025 genehmigt.
+2 Geänderter Absatz 3 vom Regierungsrat mit Beschluss Nr. 2024-393 R-362-30 am 11. Juni 2024 genehmigt.
+
+
+
+
+                                                                                                          11
+2. Unterabschnitt:       übrige Bauzonen
+
+Artikel 23         Wohnzonen (W)
+
+Die Wohnzonen dienen in erster Linie dem Wohnen.
+1
+
+
+
+Neben Wohnbauten sind nicht störende Betriebe zulässig.
+2
+
+
+3
+ Die Zahlen W2 bis W3 im Nutzungsplan beziehen sich auf die zulässige Anzahl der anre-
+chenbaren Vollgeschosse.
+
+Terrassenhäuser sind nicht zulässig.
+4
+
+
+5In der Zone W2a Rüti gelten folgende zusätzliche Bestimmungen:
+
+•      Für die architektonische Gestaltung gelten erhöhte Anforderungen.
+•      Für die landwirtschaftliche Bewirtschaftung der Freihaltezone ist im Bereich von Par-
+       zelle KTN 310 ein Sommerzugang offen zu halten.
+•      Im Rahmen des Baubewilligungsverfahrens ist der entsprechende Parkplatznachweis
+       innerhalb oder ausserhalb der W2a Rüti zu erbringen.
+•      Die Fussgängererschliessung „unterer Wiler“ bis „Soldatenstube“ ist in einer Breite
+       von mind. 2.00 m auszuführen.
+•      Das Erstellen der Bauzufahrten ist Sache der Grundeigentümer.
+6Auf dem Grundstück L1049.1202 dürfen Bauten, Anlagen oder andere Einrichtungen die
+
+Gesamthöhe von 17.25 m nicht überschreiten. Die Gesamthöhe bemisst sich gemäss De-
+finition der IVHB, wobei als massgebendes Terrain für die gesamte Fläche des Grundstü-
+ckes der höchste Punkt des Grundstückes als Messkote angenommen wird. Es ist auf eine
+gute Einpassung der Bauten und Anlagen in die Nachbarschaft und das bestehende Orts-
+bild zu achten.
+
+Artikel 24         Wohn- und Gewerbezonen (WG)
+1In der Wohn- und Gewerbezone sind Wohnbauten und mässig störende Betriebe zuläs-
+
+sig.
+2Die Zahlen WG2 bis WG3 im Nutzungsplan beziehen sich auf die zulässige Anzahl der
+
+anrechenbaren Vollgeschosse.
+3Industrielle Bauten und Betriebe sind nicht gestattet.
+
+
+4Der Gewerbebonus auf die Ausnützungsziffer (AZ) kann beansprucht werden, wenn min-
+
+destens 10 % der anrechenbaren Bruttogeschossfläche gewerblich genutzt werden. Der
+AZ-Gewerbebonus beträgt 0.05 bei einem Gewerbeanteil von mind. 10 % und erhöht sich
+linear bis max. 0.20 bei einem Gewerbeanteil von 20 % und grösser.
+
+Artikel 25         Bahnhofzone (B)
+1Die Bahnhofzone bildet die städtebauliche Schnittstelle zwischen dem Tourismusresort,
+
+den Bahn- und Transportanlagen und dem heutigen Dorf Andermatt.
+2Zugelassen sind Bauten und Anlagen im Zusammenhang mit den Bahnen der Matterhorn
+
+Gotthard Bahn, den Sportbahnen sowie Dienstleistungen, gewerbliche Nutzungen, Wohn-
+nutzungen, Parkierungsanlagen und dergleichen.
+
+
+
+
+                                                                                           12
+3
+ Es besteht Quartiergestaltungsplanpflicht (QGP). Quartiergestaltungspläne werden durch
+die Bauherrschaft jeweils im Rahmen eines besonderen Verfahrens (Präqualifikation) er-
+arbeitet. Die fachliche Begleitung erfolgt durch ein Gremium, mit Einsitz der Bauherrschaft,
+Kantons- und Gemeindevertretung, neutralen Fachexperten und einer Vertretung der Um-
+welt- und Heimatschutzorganisationen. In den Quartiergestaltungsplänen sind insbesonde-
+re zu regeln, respektive aufzuzeigen:
+a) Art und Mass der Nutzung der einzelnen Baubereiche
+b) die generelle Gestaltung der Bauten
+c) die Gestaltung der Aussenräume (Strassen, Plätze, Rad- / Fuss- und Wanderwege,
+    Bepflanzungskonzept, Beleuchtungskonzept)
+d) Erschliessungs- und Parkierungsanlagen
+e) Versorgung mit Wasser und Energie, Entsorgung des Abwassers
+f) die Massnahmen zur Abwehr von Naturgefahren
+
+Artikel 26       Tourismuszonen (TZ)
+1Die Tourismuszonen A, B, C, D und E sind für Bauten und Anlagen für touristische Zwe-
+
+cke inklusive Verkehrs-, Parkierungs- und Golfanlagen bestimmt. Sämtliche Bauten und
+Anlagen haben sich den Vorgaben hinsichtlich der Abwehr von Naturgefahren unterzuord-
+nen. Die Interessen des Ortsbildschutzes sowie des Natur- und Landschaftsschutzes sind
+zu berücksichtigen.
+2In den einzelnen Tourismuszonen sind namentlich folgende Bauten zugelassen:
+
+a) Tourismuszone A (TZA): Wohngebäude (Chalets)
+b) Tourismuszone B (TZB): Hotels, Wohnungen, Restaurants, Dienstleistungen
+c) Tourismuszone C (TZC): Hotels, Wohnungen, Restaurants, Dienstleistungen
+d) Tourismuszone D (TZD): Hotels, Wohnungen, Restaurants, Dienstleistungen, Sport-,
+   Freizeitbauten und Anlagen.
+e) Tourismuszone E (TZE): Hotels, Wohnungen für betriebsnotwendig an den Standort
+   gebundenes Personal, Restaurants, Touristische Bauten und Anlagen, namentlich
+   Verpflegungs- und Verkaufsstätten, Sport- und Freizeitanlagen, Campingplätze, Par-
+   kierungsanlagen.
+3Mit der Überbauung der Tourismuszone A kann erst begonnen werden, wenn die integra-
+
+le Realisierung des Tourismusresorts sichergestellt ist. Zur integralen Realisierung des
+Tourismusresorts gehören namentlich folgende wesentliche Bestandteile:
+a) zwei Hotels
+b) Sportanlagen in der Tourismuszone D (öffentliches Hallenbad u.a.)
+c) Ersatz der Parkplätze, die aufgehoben werden
+d) Verbindungen der Tourismuszonen B, C und D mit dem Bahnhof
+Die notwendigen Sicherheiten für die integrale Realisierung des Tourismusresorts sind im
+Rahmen der Quartiergestaltungsplanungen von der Bauherrschaft aufzuzeigen.
+4In dem Bereich der Tourismuszone E, der mit der Gefahrenzone Rot (Gefährdung durch
+
+Lawinen) überlagert ist, sind ausschliesslich Standplätze für Camping während den Som-
+mermonaten zulässig.
+5Die Kosten für die Infrastrukturen der Strassen, Wasserversorgung und Abwasserbeseiti-
+
+gung inkl. Planung sind durch die Bauherrschaft zu tragen. Die Kosten für den Gefahren-
+schutz (bauliche Massnahmen inkl. Planung) sind ebenfalls durch die Bauherrschaft zu
+tragen.
+6Es besteht Quartiergestaltungsplanpflicht (QGP).
+
+
+
+
+                                                                                           13
+7
+ Quartiergestaltungspläne in den Tourismuszonen A, B, C und D werden durch die Bau-
+herrschaft jeweils im Rahmen eines besonderen Verfahrens (Präqualifikation) erarbeitet.
+Die fachliche Begleitung erfolgt durch ein Gremium, mit Einsitz der Bauherrschaft, Kan-
+tons- und Gemeindevertretung, neutralen Fachexperten und einer Vertretung der Umwelt-
+und Heimatschutzorganisationen. In den Quartiergestaltungsplänen sind insbesondere zu
+regeln, respektive aufzuzeigen:
+a) Art und Mass der Nutzung der einzelnen Baubereiche
+b) die generelle Gestaltung der Bauten
+c) die Gestaltung der privaten und öffentlichen Aussenräume und das Beleuchtungskon-
+    zept
+d) die Erschliessungs- und Parkierungsanlagen sowie die Verbindung zum Dorf und zu
+    den Transportanlagen (Eisenbahn und Skilifte)
+e) die Erschliessung der Zone westlich der Reuss mit einer neuen, lawinensicheren Brü-
+    cke nördlich der bestehenden Brücke
+f) eine nach bauökologischen Gesichtspunkten und aktuellen Energiestandards vorge-
+    sehene Bebauung
+g) öffentliches Rad-, Fuss-, Wanderweg- und Loipenkonzept
+h) Massnahmen zur Abwehr von Naturgefahren
+i) Versorgung mit Wasser und Energie, Entsorgung des Abwassers
+j) Massnahmen zum Schutz der Umwelt
+k) die vorgesehene Etappierung
+8Der Quartiergestaltungsplan für die Tourismuszone TA Unterbäz hat nachzuweisen, dass
+
+die geplante Überbauung erhöhten Ansprüchen
+a)   an die Siedlungsplanung,
+b)   an den Landschaftsschutz und
+c)   an die architektonische Qualität
+     genügt.
+
+Der Quartiergestaltungsplan für die Tourismuszone TA Unterbäz enthält Angaben über die
+gesamthafte Etappierung des Tourismusresorts. Dieser Etappierungsplan enthält die Be-
+gründung für den Bedarf der Tourismuszone TA Unterbäz als Teil des gesamten Touris-
+musresorts gemäss Masterplan, der dem Richtplan zugrunde liegt.
+9Für den Quartiergestaltungsplan in der Tourismuszone TE Oberalp ist ein qualifiziertes
+
+Verfahren (Studienauftrag, Wettbewerb oder Ähnliches) durchzuführen. Die fachliche Be-
+gleitung erfolgt durch ein Gremium, mit Einsitz der Grundeigentümer/Bauherrschaft, der
+Gemeinde Andermatt, des Kantons Uri, Vertreter Gemeinde Tujetsch sowie unabhängigen
+Fachexperten. Bauten und Anlagen, welche im Rahmen des Plangenehmigungsverfah-
+rens (PGV) durch das Bundesamt für Verkehr (BAV) bewilligt werden, sowie Umbauten
+und Ergänzungen von bestehenden Bauten und Anlagen sind von der QGP-Pflicht befreit.
+Im Quartiergestaltungsplan für die Tourismuszone TE ist insbesondere zu regeln, bezie-
+hungsweise aufzuzeigen:
+
+a)   Art und Mass der Nutzung der einzelnen Baubereiche
+b)   die generelle Gestaltung der Bauten
+c)   eine nach bauökologischen Gesichtspunkten und aktuellen Energiestandards vorge-
+     sehene Bebauung
+d)   Massnahmen zur Abwehr von Naturgefahren
+e)   Versorgung mit Wasser und Energie, Entsorgung des Abwassers
+f)   Massnahmen zum Schutz der Umwelt
+g)   Vorgesehene Etappierung
+
+
+
+
+                                                                                      14
+Artikel 27       Zonen für öffentliche Bauten und Anlagen (OE)
+1
+ In der Zone für öffentliche Bauten und Anlagen sind öffentliche oder öffentlichen Interes-
+sen dienende Bauten und Anlagen zulässig.
+2
+ Als öffentliche oder öffentlichen Interessen dienende Bauten und Anlagen gelten insbe-
+sondere Bauten der öffentlichen Verwaltung, Schulhäuser, Spitäler, Heime, Kirchen, Klös-
+ter, Friedhöfe, Versorgungs- und Entsorgungsanlagen sowie öffentliche Sport- und Erho-
+lungsanlagen.
+3Private Nutzungen sind zulässig, wenn sie von untergeordneter Natur sind und die zo-
+
+nenkonforme Nutzung nicht beeinträchtigen.
+4
+ In der Zone für öffentliche Bauten und Anlagen mit der Empfindlichkeitsstufe lll sind mäs-
+sig störende Betriebe zugelassen.
+
+Artikel 28       Zonen für Sport- und Freizeitanlagen (SF)
+1Die Zone für Sport- und Freizeitanlagen dient den verschiedenen Sport-, Spiel- und Frei-
+
+zeitbedürfnissen sowie deren Mantelnutzungen.
+2Zulässig sind Bauten und Anlagen, die dem Sport, der Freizeitgestaltung und der Erho-
+
+lung dienen, namentlich Sport-, Spiel- und Campinganlagen, Rastplätze, Familiengärten
+sowie Bauten und Anlagen von Jugend- und Freizeitorganisationen. Restaurationsbetriebe
+sind im Rahmen des Zonenzwecks zulässig.
+3Zulässige
+           Mantelnutzungen sind nebst den betriebsnotwendigen Einrichtungen für die
+Bahnen auch: Garagen für Pistenfahrzeuge, Erste-Hilfe-Stationen, Kinderlernzentrum,
+Veranstaltungsplätze, Infocenter, dem Tourismus zugeordnete Betriebe wie Restaurants
+und dergleichen. Vermietungsstationen, Kioske und der Verkauf regionaler Produkte im
+untergeordneten Rahmen sind zulässig.
+4Wohnungen sind nur für betriebsnotwendig an den Standort gebundenes Personal gestat-
+
+tet.
+5Bauten
+        und Anlagen sind auf die Naturgefahrensituation hin abzustimmen. Sie haben
+eine hohe gestalterische Qualität aufzuweisen und sich gut ins Landschaftsbild einzufü-
+gen.
+6Die
+     Kosten für die Infrastruktur der Strassen, Wasserversorgung und Abwasserbeseiti-
+gung, inkl. Planung sind durch die Bauherrschaft zu tragen. Die Kosten für den Gefahren-
+schutz (bauliche Massnahmen inkl. Planung) sind ebenfalls durch die Bauherrschaft zu
+tragen.
+7In der Zone für Sport- und Freizeitanlagen Oberalp, Nätschen und Gütsch gilt zusätzlich
+
+Quartiergestaltungsplanpflicht (QGP-Pflicht). Für die Quartiergestaltungspläne ist ein quali-
+fiziertes Verfahren (Studienauftrag, Wettbewerb oder Ähnliches) durchzuführen. Die fachli-
+che Begleitung erfolgt durch ein Gremium, mit Einsitz der Grundeigentümer/Bauherrschaft,
+der Gemeinde Andermatt, des Kantons Uri sowie unabhängigen Fachexperten. Bauten
+und Anlagen, welche im Rahmen des Plangenehmigungsverfahrens (PGV) durch das
+Bundesamt für Verkehr (BAV) bewilligt werden, sowie Bauten und Erweiterungen von be-
+stehenden Bauten und Anlagen sind von der QGP-Pflicht befreit.
+
+
+
+
+                                                                                            15
+In den Quartiergestaltungsplänen sind insbesondere zu regeln, respektive aufzuzeigen:
+a) Art und Mass der Nutzung der einzelnen Baubereiche
+b) die generelle Gestaltung der Bauten
+c) eine nach bauökologischen Gesichtspunkten und aktuellen Energiestandards vorge-
+    sehene Bebauung
+d) Massnahmen zur Abwehr von Naturgefahren
+e) Versorgung mit Wasser und Energie, Entsorgung des Abwassers
+f) Massnahmen zum Schutz der Umwelt, insbesondere der Gewässerräume
+g) Vorgesehene Etappierung
+8Zusätzlich zu den Nutzungen in Absatz 2 und 3 sind im Rahmen der Quartiergestaltungs-
+
+pläne zulässig:
+a) Oberalp: öffentlicher Parkplatz, Beherbergungsbetriebe, Bauten und Anlagen für den
+    Tourismus
+b) Nätschen: Beherbergungsbetriebe (Jugendherberge, Lagerhaus)
+
+Artikel 29       Zone für Sport- und Freizeitanlagen Sommercamping (SFSC)
+1Die Zone für Sport- und Freizeitanlagen "Sommercamping" bezweckt den Betrieb eines
+
+öffentlichen Sommercampingplatzes. Gestattet sind das Aufstellen von Wohnwagen und
+Zelten während der Sommersaison sowie die Erstellung der notwendigen infrastrukturellen
+Bauten und Anlagen für den Campingbetrieb.
+2Die gesamte Platzfläche muss für kurzfristig aufgestellte Zelte und Wohnwagen freigehal-
+
+ten werden. Das Aufstellen von Dauercamping-Einrichtungen ist untersagt.
+3Kantonale Vorschriften sowie darauf erteilte Betriebsbewilligungen bleiben vorbehalten.
+
+
+
+Artikel 30       Zone für Sport- und Freizeitanlagen Tennisplatz (SFTP)
+1Die Zone für Sport- und Freizeitanlagen Tennisplatz ist für Flächen bestimmt, die vorwie-
+
+gend der Erholung und dem Sport dienen.
+2Es sind nur Hochbauten, die für den Sport- und Erholungszweck der betreffenden Anlage
+
+erforderlich sind, sowie Nebenanlagen wie Restaurant, Kiosk etc. zulässig. Entsprechend
+ihrer Lage und Umgebung haben Bauten erhöhte Gestaltungsanforderungen zu erfüllen
+und sich besonders gut ins Orts- und Landschaftsbild einzufügen.
+
+Artikel 31       Zone für Sport- und Freizeitanlagen Golf (SFGo)
+1Die Zone für Sport- und Freizeitanlagen Golf dient dem Golfsport. Sie ist für die Erstellung
+
+und den Betrieb eines Golfplatzes bestimmt. Vorhandene landschaftstypische Elemente
+und Naturobjekte sind zu berücksichtigen. Sämtliche Anlagen haben sich den Vorgaben
+hinsichtlich der Abwehr von Naturgefahren unterzuordnen.
+2Zugelassen sind Bauten und Anlagen im Rahmen des betrieblichen Bedarfs für den Golf-
+
+platz, namentlich:
+a) Golfplatz mit 18 Löchern
+b) Driving Range
+c) Clubhaus, Restaurationsbetrieb inkl. Parkierungsanlagen und Zufahrtsstrassen
+d) Bauten und Anlagen, die zum Betrieb, zum Unterhalt und zur Pflege des Golfplatzes
+      erforderlich sind.
+Zudem ist die landwirtschaftliche Nutzung gestattet. Für diese gelten die Bestimmungen
+der Landwirtschaftszone.
+
+
+
+
+                                                                                            16
+3
+ Mit dem Bau des Golfplatzes kann erst begonnen werden, wenn die integrale Realisie-
+rung des Tourismusresorts sichergestellt ist. Zur integralen Realisierung des Tourismusre-
+sorts gehören namentlich folgende wesentliche Bestandteile:
+a) zwei Hotels
+b) Sportanlagen in der Tourismuszone D (öffentliches Hallenbad u.a.)
+c) Ersatz der Parkplätze, die aufgehoben werden
+d) Verbindungen der Tourismuszonen B, C und D mit dem Bahnhof
+Die notwendigen Sicherheiten für die integrale Realisierung des Tourismusresorts sind im
+Rahmen der Quartiergestaltungsplanungen von der Bauherrschaft aufzuzeigen.
+4Es besteht Quartiergestaltungspflicht (QGP). Quartiergestaltungspläne werden durch die
+
+Bauherrschaft jeweils im Rahmen eines besonderen Verfahrens (Präqualifikation) erarbei-
+tet. Die fachliche Begleitung erfolgt durch ein Gremium, mit Einsitz der Bauherrschaft,
+Kantons- und Gemeindevertretung neutralen Fachexperten und einer Vertretung der Um-
+welt- und Heimatschutzorganisationen. Im Quartiergestaltungsplan ist die Einhaltung der
+„Drei Drittel Regel“ nachzuweisen:
+Maximal ein Drittel der Gesamtfläche kann für Intensivrasen (Greens, Abschläge,
+Fairways) und Bauten (Gebäude, Strassen, Bunker) genutzt werden.
+Maximal ein Drittel der Gesamtfläche ist für Roughs (d.h. extensive Wiesen und/oder
+Sträucher, jedoch keine halbintensiv-Rasen) vorzusehen.
+Mindestens ein Drittel ist für naturnahe Zonen und Biotope zu reservieren.
+5Im Quartiergestaltungsplan sind zudem zu regeln, respektive aufzuzeigen:
+
+a)   Diejenigen Flächen, die für den Naturschutz reserviert werden und in einem nächs-
+     ten Nutzungsplanverfahren als Naturschutzzone festgesetzt werden.
+b)   Die Bereiche für den Golfsport, die vorgesehenen und erforderlichen Terrainverän-
+     derungen.
+c)   Diejenigen Flächen, auf denen landwirtschaftliche Nutzung möglich ist.
+d)   die Massnahmen zur Abwehr von Naturgefahren
+e)   die generelle Gestaltung der Bauten
+f)   die Gestaltung der privaten und öffentlichen Aussenräume (Landschaftsgestaltung,
+     Strassen, Rad-, Fuss- und Wanderwege, Loipen, Bepflanzungskonzept, Beleuch-
+     tungskonzept)
+g)   die Sicherstellung der Erschliessung, Ver- und Entsorgung (Strassen und Wege,
+     Versorgung mit Wasser und Energie, Entsorgung des Abwassers).
+6Bei Aufgabe der Golfnutzung ist der Golfplatz innert 5 Jahren rückzubauen, insbesondere
+
+die Intensiv-Golfnutzungs-Flächen, Hochbauten und nicht mehr benötigten Infrastrukturan-
+lagen. Die Intensiverholungszone Golf wird in diesem Fall automatisch aufgehoben und
+das Gebiet fällt der Landwirtschaftszone zu.
+
+Artikel 32       Freihaltezone (FZ)
+1Freihaltezonen umfassen Flächen, die zum Schutz des Orts- und Landschaftsbilds und
+
+von Aussichtsanlagen sowie zur Gliederung von Siedlungsgebieten freizuhalten sind.
+2Oberirdische Bauten und Anlagen sind zulässig, soweit sie der Bewirtschaftung der Frei-
+
+flächen dienen. Massgeblich sind die Zonenvorschriften der benachbarten Zonen.
+
+Artikel 33       Verkehrsflächen (VF)
+1Strassen, dazugehörige Trottoirs, Plätze, öffentliche Parkierungsanlagen, Bushaltestellen,
+
+Bahnanlagen, Bahnstationen ohne Fremdnutzungen und dergleichen sind im Nutzungs-
+plan als Verkehrsflächen zu bezeichnen.
+
+
+
+
+                                                                                          17
+2
+ Verkehrsflächen nach Absatz 1 sind für die Berechnung der Ausnützungsziffer nicht anre-
+chenbar.
+3
+ Bauten und Anlagen sind zulässig, soweit sie der Verkehrsraumgestaltung oder -nutzung
+dienen.
+4Private Nutzungen sind zulässig, wenn sie die zonenkonforme Nutzung nicht beeinträch-
+
+tigen. Massgeblich sind die Zonenvorschriften der benachbarten Zonen.
+
+Artikel 34       Vertragliche Bauverpflichtung
+1
+ Der Gemeinderat kann die Zuweisung von Land zur Bauzone im Rahmen von Artikel 7
+PBG von der vertraglichen Zusicherung der Eigentümerin oder des Eigentümers abhängig
+machen, das Land innert fünf bis zehn Jahren zu überbauen.
+2Der Vertrag regelt den Fristenlauf und kann vorsehen, dass bei Nichteinhaltung der Bau-
+
+verpflichtung das Land durch Feststellungsverfügung des Gemeinderats als ausgezont gilt.
+3Die Bauverpflichtung ist als öffentlich-rechtliche Eigentumsbeschränkung im Grundbuch
+
+anzumerken.
+
+
+3. Abschnitt:    Nichtbauzonen
+
+Artikel 35       Arten
+
+Als Nichtbauzonen gelten die Landwirtschaftszonen und die Reservezonen.
+
+Artikel 36       Landwirtschaftszone (L)
+1Die Landwirtschaftszone verfolgt den Zweck, den das Bundesrecht ihr zuordnet.
+
+
+2Das Bundesrecht bestimmt, welche Bauten und Anlagen in der Landwirtschaftszone zu-
+
+lässig sind.
+
+Artikel 37       Reservezonen (RZ)
+1Die Reservezone umfasst das Gebiet ausserhalb der Bau- und der Landwirtschaftszonen:
+
+
+a)   das keiner bestimmten Nutzung zugewiesen werden kann; oder
+b)   dessen Nutzung noch nicht bestimmt ist.
+2Bauten und Anlagen sind zulässig, wenn sie die Voraussetzungen für eine Ausnahmebe-
+
+willigung für Bauten und Anlagen ausserhalb der Bau- und der Landwirtschaftszonen erfül-
+len und eine spätere bauliche Entwicklung der Gemeinde nicht beeinträchtigen.
+
+
+4. Abschnitt:    Weitere Zonen und Festlegungen
+
+Artikel 38       Arten
+
+Als weitere Zonen gelten:
+a)   Schutzzonen
+b)   Zone für Wintersport (ZW)
+
+
+
+
+                                                                                       18
+c)   Abfahrtsrouten (AR)
+d)   Abbauzone (A)
+e)   Zone für besondere Anlagen und Betriebsstätten (AB)
+f)   Zone mit Quartierplan- der Quartiergestaltungsplanpflicht (QGPp)
+g)   Gefahrenzone (GZ)
+h)   Gewässerraumzone (GR)
+i)   Lärmschutzvorbehalt
+j)   lokale Kulturobjekte (Kol)
+k)   lokale Naturobjekte (Nol)
+
+Artikel 39        Schutzzonen
+                  a) Grundsatz
+1Schutzzonen dienen dem Schutz von:
+
+
+
+a)   Bächen, Flüssen, Seen und ihren Ufern;
+b)   besonders schönen sowie naturkundlich oder kulturgeschichtlich wertvollen Land-
+     schaften;
+c)   bedeutenden Ortsbildern, geschichtlichen Stätten sowie Natur- und Kulturdenkmälern;
+d)   Lebensräumen für schutzwürdige Tiere und Pflanzen.
+2Zulässig sind Bauten, Anlagen und Nutzungen, die dem Zonenzweck entsprechen und
+
+die nach den besonderen Vorschriften für die betreffende Schutzzone erlaubt sind.
+3Rechtskräftige
+               nationale und regionale Natur- und Landschaftsschutzzonen, für die der
+Bund bzw. der Kanton zuständig ist, sind im Nutzungsplan zur Information aufgeführt.
+
+Artikel 40        lokale Naturschutzzone (NSl)
+1In lokalen Naturschutzzonen dürfen bestehende Bauten unterhalten werden. Umbauten,
+
+Erweiterungen, Zweckänderungen sowie Neubauten sind nur zulässig, soweit sie für die
+Bewirtschaftung der geschützten Lebensräume notwendig sind und, gemessen am
+Schutzziel, die zu schützenden Lebensräume nicht beeinträchtigen. Besondere Vorschrif-
+ten bleiben vorbehalten.
+2Terrainveränderungen  (Abgrabungen, Aufschüttungen, Materialablagerungen, Material-
+abbau und dergleichen), Entwässerungen, die Beseitigung markanter Gehölzgruppen, die
+Aufforstung sowie das Erstellen von Drainagen in Feuchtgebieten sind nicht zulässig.
+3Notwendige Infrastrukturanlagen sind zulässig, sofern sie dem Schutzziel der Zone nicht
+
+widersprechen.
+4Eine
+      extensive landschaftliche Nutzung (keine Düngung) bleibt gestattet. Intensivie-
+rungsmassnahmen sind nicht zulässig.
+
+
+
+
+                                                                                           19
+Artikel 41            lokale Landschaftsschutzzone (LSl)
+1
+ In der lokalen Landschaftsschutzzone sind Elemente, die den Landschaftsraum und das
+Landschaftsbild prägen, in ihrem Bestand zu erhalten. Dazu gehören namentlich Einzel-
+bäume, Baumgruppen, Hecken, Geländeformen, Bachläufe usw. Veränderungen von Ge-
+ländeformen und Bachläufen sind nur mit Zustimmung des Gemeinderats gestattet.
+2
+ Bestehende Bauten können im Rahmen der übrigen Vorschriften der Bau- und Zonenord-
+nung erneuert, teilweise geändert oder neu erstellt werden. Form, Materialwahl und Farb-
+gebung von zulässigen Bauten und Anlagen dürfen das schutzwürdige Landschaftsbild
+nicht beeinträchtigen.
+3Im übrigen sind Bauten und Anlagen in der Landschaftsschutzzone zulässig, wenn sie
+durch ihre Stellung und ihre Gestaltung, gemessen am Schutzziel, das Landschaftsbild
+nicht beeinträchtigen. 1
+4Massnahmen, die die Schutzzone nachhaltig verändern, sind bewilligungspflichtig.
+
+
+
+Artikel 42            Zone für Wintersport (ZW)
+1Die
+      Zone für Wintersport bezweckt vorrangig die Sicherung und Offenhaltung für Ski-
+sportaktivitäten, namentlich Aufstiegs-, Abfahrts-, Langlauf- und Übungsgelände sowie
+Schlittelbahnen. Zudem sind in dieser Zone auch angepasste Sommersportaktivitäten zu-
+lässig.
+2Die Zone für Wintersport ist anderen Nutzungen überlagert. Sie darf zur Ausübung der
+
+Winter- und Sommersportarten benutzt werden.
+3Zulässig sind standortgebundene Bauten und Anlagen und die erforderlichen Infrastruktu-
+
+ren für den Wintersport sowie Bauten und Anlagen im Zusammenhang mit Lawinen-
+schutzmassnahmen. Unter den gleichen Voraussetzungen können auch Bauten und Anla-
+gen bewilligt werden die der sportlichen oder touristischen Nutzung ausserhalb der Win-
+tersaison dienen.2
+4
+ Bauten und Anlagen, Terrainveränderungen, Einfriedungen und Pflanzungen, die den
+Wintersport beeinträchtigen oder die Pistenfahrzeuge behindern, sind nicht gestattet. Im
+Winter sind Einfriedungen und Viehzäune durch die Bewirtschafter zu entfernen oder um-
+zulegen.
+5Skiwege und Skipisten sowie Strassenübergänge sind durch die Skilift- und Bahnunter-
+
+nehmungen entschädigungslos so herzurichten und zu unterhalten, dass sie während der
+Wintersaison befahren und benutzt werden können.
+6Bauten und Anlagen sind gut ins Landschaftsbild einzupassen. Der Schutz der bestehen-
+
+den Naturschutzgebiete und Biotope ist gemäss Bestimmungen des Natur- und Heimat-
+schutzgesetzes des Bundes (NHG; SR 451) und des kantonalen Gesetzes über den Na-
+tur- und Heimatschutz (NHG; RB 10.5101) zu gewährleisten.
+7In Flachmooren von nationaler Bedeutung sind keine baulichen Massnahmen für Pisten-
+
+korrekturen zulässig. Zudem ist die Präparierung von Pisten nur bei genügender Schnee-
+decke erlaubt.3
+
+1 Dazu gehören auch die notwendigen Infrastrukturanlagen.
+2 Geänderter Absatz 3 vom Regierungsrat mit Beschluss Nr. 2025-788 R-362-30 am 22. Dezember 2025 genehmigt.
+3 Neuer Absatz 7 vom Regierungsrat mit Beschluss Nr. 2025-788 R-362-30 am 22. Dezember 2025 genehmigt.
+
+
+
+
+                                                                                                              20
+8
+ Die einsehbaren Anlagen zur Beschneiung (Schneekanonen, Lanzen etc.) und Siche-
+rungseinrichtungen der Pisten (Netze, Wände, Pfosten) sind ausserhalb der Skisaison,
+spätestens einen Monat nach Saisonabschluss bis anfangs Oktober zu garagieren.
+9
+ Nicht mehr benötigte touristische Seilbahnanlagen sind durch die Konzessionsnehmerin
+des BAV innert drei Jahren nach Betriebseinstellung landschaftsgerecht zurückzubauen.
+Der Rückbau ist bewilligungspflichtig.
+
+Artikel 42a           Abfahrtsrouten (AR) 1
+1
+ Die Abfahrtsrouten sind unpräparierte, gesicherte Skiabfahrten. Die Präparierung von
+diesen Pisten ist nicht erlaubt.
+2Die Abfahrtsroute ist anderen Nutzungen überlagert. Sie darf zur Ausübung der Winter-
+
+und Sommersportarten benutzt werden.
+3Bauten
+         und Anlagen, Terrainveränderungen, Einfriedungen und Pflanzungen, die den
+Wintersport behindern, sind nicht gestattet. Im Winter sind Einfriedungen und Viehzäune
+durch die Bewirtschafter zu entfernen oder umzulegen.
+4Skiwege und Skipisten sowie Strassenübergänge sind durch die Skilift- und Bahnunter-
+
+nehmungen entschädigungslos so herzurichten und zu unterhalten, dass sie während der
+Wintersaison befahren und benutzt werden können.
+
+Artikel 43            Abbauzone (A)
+1Die Abbauzone wird anderen Nutzungszonen überlagert. Sie dient dem Abbau von mine-
+
+ralischen Stoffen, wie Stein, Kies, Sand und dergleichen.
+2Zulässig sind Bauten und Anlagen, die unmittelbar dem Abbaubetrieb, der Zwischenlage-
+
+rung oder der Aufbereitung des an Ort gewonnenen Materials dienen. Nicht mehr zweck-
+gebundene Bauten und Anlagen sind zu entfernen.
+3
+ Nach Abschluss des Abbaus sind die Flächen aufgrund eines Gesamtkonzepts zu rekulti-
+vieren. Dieses muss bei Erteilung der Bewilligung vorgelegt werden. Der Gemeinderat
+kann eine geeignete Sicherheit (zweckgebundenes Depositum) für die finanziellen Mittel
+verlangen, die für den Abschluss und die Rekultivierung erforderlich sind. Er kann weiter-
+gehende Verträge mit der Betreiberin oder dem Betreiber abschliessen.
+4Spätestens nach Abschluss der Deponie oder der Rekultivierung ist die betroffene Fläche
+
+im Nutzungsplanverfahren jener Zone zuzuteilen, die sich für die Nachnutzung eignet.
+5Hochbauten sind nur befristet zulässig, wenn sie dem Zweck der Zone dienen. Nicht mehr
+
+zweckgebundene Hochbauten sind zu entfernen.
+6Vorbehalten bleiben die erforderlichen Bewilligungen der zuständigen kantonalen Instan-
+
+zen sowie die kommunalen Baubewilligungen durch die Baukommission für Bauten und
+Infrastrukturanlagen.
+
+
+
+
+1 Neuer Artikel 42a vom Regierungsrat mit Beschluss Nr. 2025-788 R-362-30 am 22. Dezember 2025 genehmigt.
+
+
+
+
+                                                                                                            21
+Artikel 44            Zone für besondere Anlagen und Betriebsstätten überlagert (ABü)
+                      (Windkraftanlagen)1
+1
+ Die Zone für besondere Anlagen und Betriebsstätten Windkraftanlagen (überlagert) ist für
+die Erstellung von Anlagen für die Energieerzeugung mittels Windkraftanlagen bestimmt.
+Sie überlagert andere Zonen.
+2
+ Es sind im Aussehen möglichst ähnliche Anlagen in gleicher Farbe zu wählen.
+
+3
+ Die Zuleitungen zur Übertragungsleitung sind zu verkabeln und unterirdisch zu führen. Es
+sind nur betriebsnotwendige Nebenbauten wie Schaltzentralen und Trafostationen zuläs-
+sig.
+4
+ Es gilt die Lärmempfindlichkeitsstufe der Grundnutzung.
+5Können oder werden Anlagen nicht mehr weiterbetrieben, sind die Anlagen landschafts-
+
+gerecht zurückzubauen. Die Rekultivierung erfolgt mit in der unmittelbaren Umgebung
+vorhandenem Material. Die Rückbaupflicht ist als Auflage in der Baubewilligung zu verlan-
+gen.
+6 Es besteht Quartiergestaltungplanpflicht (QGP).
+
+
+
+Artikel 45            Zone für besondere Anlagen und Betriebsstätten, Bahn und Parkie-
+                      rungsanlagen (AB)
+1In der Zone für besondere Anlagen und Betriebsstätten Bahn- und Parkierungsanlagen
+
+sind Bauten und Anlagen von Bahnen und für die Parkierung von Motorfahrzeugen sowie
+die dafür erforderlichen Aussenanlagen gestattet. Bauten und Anlagen für Gewerbe- und
+Dienstleistungen können bewilligt werden.
+2In der Zone für Bahn- und Parkierungsanlagen „Gemsstockbahn“ ist zusätzlich das Auf-
+
+stellen von Wohnwagen und Wohnmobilen während der Sommersaison sowie die Erstel-
+lung der notwendigen infrastrukturellen Bauten und Anlagen für den Campingbetrieb ge-
+stattet. Nicht zulässig ist das Aufstellen von Dauercamping-Einrichtungen. Der Betrieb hat
+sich nach der Campingverordnung (RB 70.2331) zu richten.
+3Die bestehenden Parkplätze ohne Oberflächenversiegelung sind dauernd in der bisheri-
+
+gen Art zu erhalten.
+
+Artikel 46            Zone mit Quartierplan- oder Quartiergestaltungsplanpflicht (QGPp)
+1Als Zone mit Quartierplan- oder Quartiergestaltungsplanpflicht gelten zusammenhängen-
+
+de Teilgebiete, deren Überbauung und Erschliessung der Landschaft oder der Siedlung
+besonders angepasst werden sollen oder die für die Ortsentwicklung besonders bedeut-
+sam sind (wie Hanglagen, Kuppen, Ortskerne, grössere Neubaugebiete).2
+2In solchen Zonen dürfen Bauten und Anlagen nur gestützt auf einen rechtskräftigen Quar-
+
+tier- oder Gestaltungsplan erstellt werden.
+3Voraussetzung ist eine zusammenhängende Landfläche von mindestens 3'000 m 2, in den
+
+Kernzonen von mindestens 1'500 m2.
+
+
+1 Neue Bestimmungen zum Artikel vom Regierungsrat mit Beschluss Nr. 2024-210 R-362-30 am 26. März 2024 genehmigt.
+2 Gegenüber Art. 39 PBG leicht abgeändert
+
+
+
+
+                                                                                                                    22
+4
+ Die Ausnützungsziffer wird für das ganze vom Quartierplan erfasste Gebiet gesamthaft
+berechnet.
+
+Artikel 47        Gefahrenzonen (GZ)
+1Gefahrenzonen umfassen Gebiete, die durch Lawinen, Rutschungen, Steinschlag, Über-
+
+schwemmung oder andere Naturereignisse bedroht sind. Sie werden entsprechend den
+kantonalen Gefahrenkarten in Zonen mit erheblicher Gefahr (rot), mit mittlerer Gefahr
+(blau) und mit geringer Gefahr (gelb) unterteilt.
+2
+ In der Gefahrenzone "rot" dürfen keine neuen Bauten und Anlagen erstellt werden, die
+dem Aufenthalt von Menschen und Tieren dienen. Bestehende Bauten und Anlagen, die
+dem Aufenthalt von Menschen und Tieren dienen, dürfen nur unterhalten werden; die Be-
+sitzstandsgarantie gilt nur in diesem Rahmen. Andere Bauten und Anlagen sind nur zuläs-
+sig, wenn sie auf den Standort angewiesen sind und mit Schutzmassnahmen vor einer
+Zerstörung weitgehend geschützt werden.
+3Inder Gefahrenzone "blau" dürfen Bauten und Anlagen, die dem Aufenthalt von Men-
+schen und Tieren dienen, nur erstellt werden, wenn das Schadenrisiko durch eine geeig-
+nete Standortwahl oder durch geeignete Schutzmassnahmen auf ein zumutbares Mass
+gesenkt wird.
+4Bei Bauvorhaben in der Gefahrenzone "gelb", sollen die Bauwilligen über die Gefahrensi-
+
+tuation orientiert werden.
+5Fehlen kantonale Gefahrenkarten, ist diese Bestimmung sinngemäss anzuwenden.
+
+
+
+Artikel 48        Gewässerraumzone (GR)
+
+Die Gewässerraumzone richtet sich nach den einschlägigen Bestimmungen des Bundes-
+rechts und des Reglements zum PBG.
+
+Artikel 49        Naturobjekte lokal (Nol)
+1Die im Zonenplan bezeichneten lokalen Naturobjekte sind schützenswert. Der Gemeinde-
+
+rat bestimmt durch Vereinbarung mit dem Grundeigentümer, durch besondere Verfügung
+das Schutzobjekt, das Schutzziel und die Schutzmassnahmen. Massnahmen, die das
+Schutzobjekt nachhaltig verändern, bedürfen einer Bewilligung des Gemeinderates. Der
+Gemeinderat hat die Bewilligung der Justizdirektion mitzuteilen.
+2Bauten und Anlagen in der Umgebung von lokalen Naturobjekten sind so zu gestalten,
+
+dass deren Schutzwürdigkeit nicht beeinträchtigt wird.
+
+Artikel 50        Kulturobjekte lokal (Kol)
+1Die im Zonenplan bezeichneten lokalen Kulturobjekte sind schützenswert. Der Gemeinde-
+
+rat bestimmt durch Vereinbarung mit dem Grundeigentümer, durch besondere Verfügung
+das Schutzobjekt, das Schutzziel und die Schutzmassnahmen. Massnahmen, die das
+Schutzobjekt nachhaltig verändern, bedürfen einer Bewilligung des Gemeinderates. Der
+Gemeinderat hat die Bewilligung der Justizdirektion mitzuteilen.
+2Bauten und Anlagen in der Umgebung von lokalen Kulturobjekten sind so zu gestalten,
+
+dass deren Schutzwürdigkeit nicht beeinträchtigt wird.
+
+
+
+
+                                                                                       23
+Artikel 51      Ortsbildschutzzone
+
+Die Ortsbildschutzzone dient der Erhaltung und dem Schutz des Dorfkerns.
+1
+
+
+2Bauten, Anlagen und Freiräume sind so zu gestalten, dass die Schutzwürdigkeit des
+Dorfkerns nicht beeinträchtigt wird.
+
+
+5. Abschnitt:   Empfindlichkeitsstufen
+
+Artikel 52      Zuordnung
+
+Der Nutzungsplan und Sondernutzungspläne bestimmen für jede Zone die entsprechende
+Empfindlichkeitsstufe nach Artikel 43 der Lärmschutzverordnung. Diese Zuordnung ist im
+Zonenplan enthalten, der Bestandteil der BZO ist.
+
+Artikel 53      Lärmschutzvorbehalt
+1Die im Zonenplan speziell bezeichneten Gebiete mit Lärmschutzvorbehalt, sind nach In-
+
+krafttreten des Umweltschutzgesetzes eingezont und/oder erschlossen worden. Diese Ge-
+biete gelten als lärmbelastet im Sinne der Umweltschutzgesetzgebung.
+2Im Rahmen des Gestaltungsplanverfahrens respektive im Rahmen des Baubewilligungs-
+
+verfahrens ist nachzuweisen, wie der Planungswert (basierend auf den Lärmverhältnissen
+bei der Einzonung) respektive der Immissionsgrenzwert (basierend auf den Lärmverhält-
+nissen bei der Baubewilligung) eingehalten wird.
+
+
+
+4. KAPITEL      WEITERE PLANUNGSINSTRUMENTE UND DIE ERSCHLIESSUNG
+
+Artikel 54      Hinweis auf das PBG
+
+Folgende Regelungsbereiche richten sich nach den Bestimmungen des PBG:
+a) Sondernutzungspläne, wie Baulinien, Quartierpläne und Quartiergestaltungspläne
+    (Artikel 46 ff. PGB);
+b) Vorsorgliche planerische Massnahmen, wie Planungszone und Bausperre (Artikel 56
+    ff. PBG);
+c) Erschliessung, wie Groberschliessung und Feinerschliessung sowie deren Finanzie-
+    rung (Artikel 66 ff. PBG).
+
+
+
+5. KAPITEL      ÖFFENTLICH-RECHTLICHE BAUVORSCHRIFTEN
+
+1. Abschnitt:   Kantonale Bauvorschriften
+
+Artikel 55      Hinweis auf das PBG
+
+Als öffentlich-rechtliche Bauvorschriften des Kantons sind insbesondere die Bestimmun-
+gen in Artikel 78 ff. PBG anzuwenden.
+
+2. Abschnitt:   Ergänzende Bauvorschriften Gemeinde
+
+
+
+
+                                                                                     24
+1. Unterabschnitt:     Hinweise auf das übergeordnete Recht
+
+Artikel 56       Grenz- und Gebäudeabstand
+1Der Grenz- und der Gebäudeabstand richten sich nach dem Reglement zum PBG und
+
+nach der Tabelle im Anhang, die Bestandteil der BZO ist.
+2
+ Der grosse Grenzabstand wird auf der längeren, am stärksten gegen Süden bis Westen
+orientierten Gebäudeseite und der kleine Abstand auf den übrigen Gebäudeseiten gemes-
+sen.
+
+Artikel 57       Abstandsvorschriften
+
+Abstandsvorschriften gegenüber Fliessgewässern, öffentlichen Verkehrsflächen, Waldrän-
+dern oder Seeufern richten sich nach Artikel 91 ff. PBG und nach dem Reglement des Re-
+gierungsrats dazu.
+
+Artikel 58       Baubegriffe und Messweisen
+
+Die Baubegriffe, Messweisen und die zulässigen Masse richten sich nach der Interkanto-
+nalen Vereinbarung über die Harmonisierung der Baubegriffe (IVHB) und nach dem Reg-
+lement zum PBG.
+
+Artikel 59       Stand der Technik
+1Wo das PBG auf den Stand der Technik verweist, hat sich die Baubehörde bei ihren Ent-
+
+scheidungen an den technischen Normen zu orientieren, die von gesamtschweizerischen
+öffentlichen und privaten Organisationen zum betreffenden Bereich aufgestellt worden
+sind.
+2Das gilt insbesondere auch für die Höhe der Absturzsicherungen in Gebäuden und deren
+
+Umgebung.
+
+
+2. Unterabschnitt:     Ausmass von Gebäuden
+
+Artikel 60       Gebäudelänge, Gesamthöhe, Fassadenhöhe und Geschosszahl
+
+Die zulässige Gebäudelänge, Gesamthöhe, Fassadenhöhe sowie die Anzahl Vollgeschos-
+se werden im Anhang zur BZO für jede Zone gesondert festgelegt. Der Anhang ist Be-
+standteil der BZO.
+
+Artikel 61       Dachaufbauten und Dachflächenfenster
+1Die Baubehörde kann bei guter architektonischer Gestaltung Dachaufbauten bewilligen.
+
+
+2Lukarnen,
+            Gauben, Dacheinschnitte, Quergiebel und dergleichen dürfen gesamthaft in
+ihrer Länge nicht mehr als 1/3 der zugeordneten Gebäudelänge betragen.
+3Bei Schleppgauben muss der Scheitelpunkt in der Dachschräge nach Möglichkeit mind.
+
+1.00 m unterhalb des Firstes liegen.
+4Vereinzelte
+             Dachflächenfenster dürfen ein Lichtmass von je max. 1.20 m 2 nicht über-
+schreiten und höchstens 15 % der zugeordneten Fassadenlänge betragen.
+
+
+
+
+                                                                                        25
+5
+ Im zweiten Dachgeschoss sind Dachaufbauten nicht erlaubt und einzelne Dachflächen-
+fenster nur soweit, als sie zur Belichtung bzw. Belüftung von Estrichen erforderlich sind.
+Vorbehalten bleiben feuerpolizeilich bedingte Rauchabzüge.
+
+Artikel 62       Minimale Baumasse und Einrichtungen
+1
+ Die Bodenflächen von Wohn-, Arbeits- und Schlafräumen müssen mindestens 10 m2 be-
+tragen.
+2
+ Fensterflächen (Rohlichtmasse) haben mindestens 1/10 der betreffenden Bodenfläche zu
+betragen.
+3
+ Treppenläufe, Korridore, Laubengänge und dergleichen, die der Erschliessung von mehr
+als einer Wohnung dienen, müssen mindestens 1.20 m breit sein.
+
+
+4Es sind wohnungszugehörige Nebenräume wie Estrich-, Keller-, Abstellräume von min-
+
+destens 8 m2 pro Wohnung zu erstellen, bei Wohnungen ab 4 Zimmern mindestens 10 m2.
+Die Fläche kann auf mehrere Räume verteilt werden.
+
+Artikel 63       Kleinbauten, Kleinstbauten
+1Kleinbauten sind freistehende Gebäude, die eine Grundfläche von 45 m 2 nicht überschrei-
+
+ten und die nur Nebennutzflächen enthalten. Sie dürfen eine Fassadenhöhe von höchs-
+tens 3.50 m und eine Gesamthöhe von höchstens 5.00 m aufweisen.
+2Kleinstbauten sind Kleinbauten, deren Grundfläche 10 m2 nicht überschreiten. Sie dürfen
+
+eine Fassadenhöhe von höchstens 3.00 m und eine Gesamthöhe von höchstens 3.50 m
+aufweisen.
+
+Artikel 64       Anbauten
+1Anbauten sind mit einem anderen Gebäude zusammengebaut und enthalten nur Neben-
+
+nutzflächen. Sie dürfen eine Fassadenhöhe von höchstens 3.50 m und eine Gesamthöhe
+von höchstens 5.00 m aufweisen.
+2Sie
+    dürfen in ihrer Grundfläche nicht grösser sein als 45 m2, respektive höchstens die
+Grundfläche des Hauptgebäudes aufweisen.
+
+Artikel 65       Unterniveaubauten
+
+Das zulässige Durchschnittsmass für das Hinausragen der Unterniveaubauten (b) beträgt
+höchstens 1.00 m und der Höhenunterschied, gemessen in der Fassadenflucht, zwischen
+massgebendem Terrain und der darüber hinausragenden UVB-Decke (f) beträgt max. 1.50
+m.
+
+Artikel 66       Vorspringende Gebäudeteile
+
+Vorspringende Gebäudeteile ragen höchstens 1.50 m über die Fassadenflucht hinaus und
+dürfen mit Ausnahme der Dachvorsprünge höchstens 1/3 der zulässigen Fassadenlänge
+betragen, höchstens jedoch 5.00 m.
+
+
+
+
+                                                                                             26
+Artikel 67         Gesamthöhe und Fassadenhöhe
+1
+ Für Bauten an Hanglagen (Hangneigung des massgebenden Terrains, gemessen in der
+Falllinie innerhalb des Gebäudegrundrisses) werden für die max. zulässigen Gesamthöhen
+und Fassadenhöhen folgende Zuschläge gewährt:
+a)     ab 12 % Hangneigung max. 0.60 m
+b)     ab 18 % Hangneigung max. 1.20 m
+2BeiFlachdachbauten gilt die traufseitige Fassadenhöhe gemäss Zonenschema für alle
+Fassaden. Ein Attikageschoss ist zulässig.
+
+Artikel 68         Kniestockhöhe, lichte Höhe und Geschosshöhe
+
+Die kleine Kniestockhöhe bei Dachgeschossen beträgt max. 1.20 m, die grosse Knie-
+stockhöhe bei Dachgeschossen beträgt 2.30 m. Die lichte Höhe für Wohnräume beträgt
+mind. 2.30 m. In Dachräumen ist die Mindesthöhe auf der Hälfte der Fläche erforderlich,
+bei bestehenden Dachräumen ist die Mindesthöhe nicht anwendbar.
+
+Artikel 69         Untergeschoss
+
+Das zulässige Durchschnittsmass für das Herausragen des Untergeschosses (b) beträgt
+höchstens 1.50 m. Das Untergeschoss darf max. 3.00 m über das massgebende Terrain
+hinausragen.
+
+Artikel 70         Attikageschoss
+
+Der maximal notwendige Versatz (a) des Attikageschosses beträgt 3.00 m und muss min-
+destens auf zwei Fassadenseiten eingehalten werden.
+
+
+3. Unterabschnitt:       Ausnützungsziffer
+
+Artikel 71         Ausnützungsziffer
+1
+ Die Ausnützungsziffer ist die Verhältniszahl zwischen der anrechenbaren Geschossfläche
+und der anrechenbaren Grundstücksfläche.
+2Sie wird nach der folgenden Formel berechnet:
+
+
+
+       Ausnützungsziffer =    anrechenbare Geschossflächen
+                              anrechenbare Grundstücksfläche
+
+Artikel 72         Anrechenbare Bruttogeschossfläche
+
+Als anrechenbare Geschossfläche gelten die Flächen der Wohn- und Arbeitsräume aller
+Vollgeschosse und Untergeschosse einschliesslich Mauern und Wänden.
+
+Artikel 73         Wohn- und Arbeitsräume
+1Wohnräume dienen dem Aufenthalt von Menschen oder sind dazu verwendbar. Es han-
+
+delt sich insbesondere um Wohn-, Ess-, Kinder-, Schlaf- und Badezimmer, Küchen, Toilet-
+ten und Zimmer für häusliche Arbeiten.
+2Arbeitsräume enthalten feste Arbeitsplätze des Gewerbes, der Industrie und der Dienst-
+
+leistungsbetriebe. Es handelt sich insbesondere um Werkstätten, Fabrikationsräumlichkei-
+
+
+
+
+                                                                                       27
+ten, oberirdische Lagerräume, Büros, Praxisräume, Verkaufslokale und Räume, die zu
+solchen Zwecken verwendbar sind.
+
+Artikel 74       Nicht anrechenbare Geschossflächen
+
+Nicht angerechnet werden die folgenden Geschossflächen:
+a) alle dem Wohnen und dem Gewerbe nicht dienenden oder hierfür nicht verwendbaren
+    Flächen, Keller-, Abstell- und Trockenräume, Waschküchen, Zivilschutzräume und
+    dergleichen;
+b) die Heiz- und Brennstofflagerräume, die Räume für Energiespeicher sowie unterirdi-
+    sche Lagerräume, die weder dem Publikum zugänglich sind noch Arbeitsplätze für ei-
+    ne ständige Tätigkeit aufweisen;
+c) die Maschinenräume für Lift-, Lüftungs- und Klimaanlagen;
+d) Korridore, Treppen, Podeste und Lift im jeweiligen Geschoss, in dem sie keine anre-
+    chenbaren Räume erschliessen (z. B. Hauseingang im Kellergeschoss);
+e) Fitness-, Sauna- und Bastelräume in Untergeschossen von Einfamilienhäusern im
+    Ausmass von insgesamt höchstens 16 m2 und allen Bewohnerinnen und Bewohnern
+    zur Verfügung stehende gleiche Räume in Mehrfamilienhäusern im Ausmass von
+    höchstens 16 m2 für die erste Wohnung und 2 m2 für jede weitere Wohnung mit 3 und
+    mehr Zimmern;
+f) vorgeschriebene Pflichtabstellflächen für Motorfahrzeuge in oberirdischen Garagen;
+    ebenso alle unterirdischen Abstellflächen;
+g) Abstellräume für Motorfahrräder, Fahrräder und Kinderwagen; geschlossene, unbe-
+    lichtete Abstellräume in Wohnungen;
+h) die Teilfläche in Räumen mit Dachschräge sowie in Estrichen, soweit deren Raumhö-
+    he weniger als 2.00 m beträgt;
+i) die Mauerdicke von Aussenwänden von mehr als 30 cm und bei bestehenden Bauten
+   die zusätzliche äussere Wärmeisolation einschliesslich der Schutzschicht, soweit sie
+   für eine ausreichende Wärmedämmung notwendig ist;
+j) Wintergärten und Windfänge bis max. 8 Prozent der anrechenbaren Geschossflächen
+   der zugehörenden Wohnung, soweit sie die technischen und baulichen Anforderungen
+   eines Wintergartens erfüllen und nicht beheizt sind. Für lärmschutzbedingte Wintergär-
+   ten kann diese Fläche bis 15 Prozent erhöht werden;
+k) Gartensitzplätze, Dachterrassen und nicht gewerblich genutzte offene Erdgeschosshal-
+   len, auch wenn sie überdeckt sind;
+l) offene rück- und vorspringende Balkone, sofern sie nicht als Laubengänge dienen;
+    überdeckte offene Dachterrassen.
+
+Artikel 75       Anrechenbare Grundstücksfläche
+1Die anrechenbare Grundstücksfläche ist die Fläche jener Grundstücke oder Grundstück-
+
+teile der Bauzone, die von der Baueingabe erfasst und baulich noch nicht ausgenützt sind.
+2Hiervon werden abgezogen:
+
+ a) die für die Erschliessung notwendige öffentliche Fahrbahn, nicht aber von der Fahr-
+    bahn mittels Grünstreifen abgetrennte Fussgängerwege;
+ b) projektierte Verkehrsanlagen, für die das gesetzlich vorgesehene Verfahren eingelei-
+    tet oder durchgeführt ist.
+3Wald und Gewässer sind keine anrechenbaren Grundstücksflächen.
+
+
+
+Artikel 76       Zusätzliche Ausnützung bei bestehenden Gewerbebauten
+
+Um eine optimale Nutzung bestehender Bauvolumen von Gewerbebauten zu erreichen,
+kann die Baubehörde bei Um- und Ausbauten von Gebäuden, die im Zeitpunkt des Inkraft-
+
+
+
+
+                                                                                           28
+tretens dieser BZO rechtmässig bestehen, unter folgenden Voraussetzungen von der Ein-
+haltung der vorgeschriebenen Ausnützungsziffer entbinden:
+
+a) Durch den Um- und Ausbau darf die äussere Form und Erscheinung des Gebäudes
+   nicht oder nur unwesentlich verändert werden, sofern nicht eine eindeutige Verbesse-
+   rung der allenfalls unbefriedigenden architektonischen Gestaltung erreicht wird.
+b) Die durch eine Mehrnutzung bedingten Fahrzeugabstell- und Umschlagflächen müssen
+   in genügender Zahl vorhanden sein, ohne dass die Umgebungsgestaltung ungebüh-
+   rend verschlechtert wird.
+
+Artikel 77       Zusätzliche Ausnützung im Dachgeschoss
+1Zusätzlich
+          darf das Dach- oder Attikageschoss über dem obersten zulässigen Vollge-
+schoss ohne Anrechnung an die Ausnützungsziffer ausgebaut werden, sofern die zulässi-
+ge Gesamthöhe und die Fassadenhöhe nicht überschritten werden.
+2Die Lichtverhältnisse für bewohnbare Räume müssen genügen.
+
+
+
+Artikel 78       Ausnützungstransport
+1Eine Fläche, die bereits einmal für die Einhaltung der Ausnützungsziffer erforderlich war,
+
+darf nicht ein zweites Mal in Anspruch genommen werden.
+2Die Ausnützungsübertragung ist nur zwischen anstossenden und zonengleichen Grund-
+
+stücken gestattet. Sie ist nur zulässig, wenn nicht überwiegende öffentliche oder private
+Interessen dagegen sprechen.
+3Der Ausnützungstransport ist im Grundbuch anzumerken.
+
+
+
+Artikel 79       Zulässige Ausnützungsziffer
+
+Die zulässige Ausnützungsziffer ergibt sich für jede einzelne Zone aus dem Anhang, der
+Bestandteil der BZO ist.
+
+Artikel 80       Ausnützungspflicht
+
+Wer einen Neubau erstellen will, muss mit seinem Bauvorhaben eine Mindestausnüt-
+zungsziffer erreichen. Diese ergibt sich für die einzelnen Zonen aus dem Anhang, der Be-
+standteil der BZO ist.
+
+
+4. Unterabschnitt:     Erstwohnungsanteil (EWA)
+
+Artikel 81       Zweck
+
+Der EWA (Erstwohnungsanteil) bezweckt, im Interesse der ortsansässigen Bevölkerung
+und einer geordneten nachhaltigen Entwicklung sowie mit Rücksicht auf die begrenzten
+Baulandreserven der Gemeinde Andermatt einen minimalen EWA festzusetzen.
+
+Artikel 82       Geltungsbereich
+
+Die Vorschriften zur Regelung des Erstwohnungsanteils gelten für folgende Bauzonen:
+Kernzonen, Wohnzonen und Wohn- und Gewerbezonen.
+
+
+
+
+                                                                                          29
+Artikel 83       Begriffe
+
+Als Erstwohnung im Sinne dieser Vorschriften sind folgende Wohneinheiten anrechenbar:
+1
+
+
+
+a) Wohneinheiten, die von Personen mit steuerrechtlichem Wohnsitz in der Gemeinde
+   Andermatt bewohnt werden;
+b) Wohneinheiten, die von Personen ohne steuerrechtlichen Wohnsitz in Andermatt be-
+   wohnt werden, sofern diese Personen sich in Andermatt zur Berufsausübung oder zu
+   Schulzwecken aufhalten. In Zweifelsfällen haben diese Personen das mit einer Aufent-
+   haltsbewilligung, einem entsprechenden Arbeitsvertrag oder auf andere geeignete Wei-
+   se nachzuweisen. Zu dieser Gruppe Wohneinheiten gehören insbesondere Perso-
+   nalwohnungen, Personalwohnräume und dergleichen;
+c) Den Wohneinheiten gleichgestellt sind gewerblich und dienstleistungsmässig genutzte
+   Räumlichkeiten, wie Hotels, Gruppenunterkünfte, Zimmervermietungen, Büros, Ver-
+   kaufgeschäfte, Dienstleistungsräume und dergleichen. Dabei wird eine Fläche von min-
+   destens 100 m2 dieser Nutzung als Wohneinheit angerechnet.
+2Alle übrigen Wohneinheiten gelten als Zweitwohnungen, insbesondere auch solche, die
+
+zu Hotelbetrieben gehören (Aparthotels). Dabei ist es unerheblich, ob derjenige, der die
+Zweitwohnung nutzt, Eigentümer oder Mieter ist, ob die Wohneinheit möbliert oder unmöb-
+liert ist oder ob sie bloss vorübergehend oder dauernd vermietet wird.
+
+Artikel 84       Minimaler Erstwohnungsanteil
+1Es gelten folgende minimale Erstwohnungsanteile:
+
+
+
+a) 50% in allen betroffenen Bauzonen südlich der Bahnlinie der Matterhorn Gotthard
+   Bahn, ausgenommen der Bereich „Oberer Wiler“ (Kat.Nr. 507, 508, 510, 578, 579 und
+   580).
+b) 30% in allen betroffenen Bauzonen nördlich der Bahnlinie der Matterhorn Gotthard
+   Bahn, zusätzlich der Bereich „Oberer Wiler“ (Kat.Nr. 507, 508, 510, 578, 579 und 580).
+2Mindestens
+            die Hälfte der für den Erstwohnungsanteil pro Gebäude anrechenbaren
+Wohneinheiten müssen eine Bruttogeschossfläche von mindestens 90 m2 aufweisen.
+
+Artikel 85       Besondere Fälle (Um-, Aus-, Anbauten bestehender Wohneinheiten
+                 und deren Nutzung)
+1Werden
+          bestehende Wohneinheiten umgebaut, ausgebaut, erweitert oder umgenutzt,
+gelten die Bestimmungen über den Erstwohnungsanteil nur, wenn die neu erstellte Wohn-
+fläche mehr als 25% der bestehenden beträgt und mindestens 90 m2 misst.
+2Bei Bauten mit nur einer Wohnung ist die gesamte Wohnfläche als Erstwohnung zu nut-
+
+zen.
+
+Artikel 86       Besondere Fälle (Mehrere Bauten, mehrere Parzellen)
+1Werden auf einer Parzelle mehrere Bauten erstellt, kann der Erstwohnungsanteil in einem
+
+einzigen Gebäude zusammengefasst oder in einzelnen Bauten realisiert werden, sofern
+die Verwirklichung der Erstwohnungen vorgängig oder gleichzeitig erfolgt.
+2Unmittelbar
+              aneinander angrenzende Parzellen können bei Neubauten zur Errechnung
+des Erstwohnungsanteils zusammengefasst und es können die vorgeschriebenen Mini-
+malanteile aller Grundstücke auf nur einer Parzelle realisiert werden, sofern die Verwirkli-
+chung der Erstwohnungen vorgängig oder gleichzeitig erfolgt.
+
+
+
+
+                                                                                           30
+Artikel 87       Ausnahmen
+1
+ Bedeutet die Einhaltung der Erstwohnungsanteilverpflichtung für die Eigentümer infolge
+veränderter Verhältnisse (Tod, Krankheit, Scheidung, Stellenverlust und dergleichen) eine
+unverhältnismässige Härte, kann die Baukommission die Benutzung der betreffenden
+Wohneinheit für eine maximale Dauer von drei Jahren als Zweitwohnung gestatten.
+2
+  In besonderen Fällen, wie vorübergehender Veränderung des Aufenthaltsortes aus beruf-
+lichen, gesundheitlichen oder ähnlichen Gründen, kann die Baukommission die Benutzung
+der betreffenden Wohneinheit für eine maximale Dauer von drei Jahren als Zweitwohnung
+gestatten.
+3Stirbt ein Eigentümer einer Erstwohnung und wurde diese von ihm als ständiger Wohnsitz
+
+benutzt, sind seine gesetzlichen Erben berechtigt, die Wohnung als Zweitwohnung zu nut-
+zen.
+4Die Vermietung von Erstwohnungen als Zweitwohnungen ist in begründeten Fällen zuläs-
+
+sig, jedoch bewilligungspflichtig. Die Baukommission erteilt die Bewilligung für eine maxi-
+male Dauer von drei Jahren, sofern der Gesuchsteller nachweist, dass eine Vermietung
+als Zweitwohnung vorübergehend unumgänglich ist. Er hat mit entsprechenden Belegen
+nachzuweisen, dass die Wohnung trotz ernsthafter Bemühungen als Erstwohnung zu orts-
+üblichen Bedingungen weder vermietet noch verkauft werden konnte.
+5Die dreijährige Frist gemäss Absatz 1, 2 und 4 ist erneuerbar, sofern die Voraussetzun-
+
+gen für die Erteilung noch erfüllt sind. Werden während der Bewilligungsdauer die Voraus-
+setzungen nicht mehr erfüllt, wird die Bewilligung entzogen.
+6Im Übrigen gelten die Bestimmungen über die Ausnahmebewilligung.
+
+
+
+Artikel 88       Verfahren
+1Im Rahmen des Baubewilligungsverfahrens hat der Gesuchsteller die Erstwohnungen in
+
+den Baugesuchsplänen als solche zu kennzeichnen.
+2Die Zweckbestimmung der Erstwohnungen ist durch Auflagen in der Baubewilligung si-
+
+cher zu stellen. Dieselbe Regelung findet bei Ausnahmen Anwendung.
+3Die Auflage ist nach Rechtskraft der Baubewilligung von der Baukommission auf Kosten
+
+des Gesuchstellers beim Grundbuchamt zur Anmerkung anzumelden.
+
+Artikel 89       Kontrolle
+1Die Gemeinde führt ein öffentliches Register, aus dem der Wohnungseigentümer und der
+
+Wohnungsbenützer der Erstwohnungen hervorgeht.
+2Die Erstwohnungseigentümer sind verpflichtet, der Gemeinde die erforderlichen Angaben
+
+zu erteilen.
+3Die Gemeinde erstellt über die Entwicklung des Erst- und Zweitwohnungsanteils perio-
+
+disch einen Bericht.
+4Die Baukommission führt über die Einhaltung der Erstwohnungsanteile periodisch Kon-
+
+trollen durch. Sie kann dazu auf die Daten der Einwohnerkontrolle zurückgreifen.
+
+
+
+
+                                                                                          31
+Artikel 90            Besitzstandgarantie
+1
+ Die Vorschriften zur Regelung des Erstwohnungsanteils gelten nicht für Wohneinheiten,
+die vor dem Inkrafttreten dieser Bestimmungen bewilligt worden sind.
+2
+ Um-, Aus- oder Anbauten solcher Wohneinheiten sowie deren Umnutzung unterliegen
+dagegen den Bestimmungen über den EWA.
+
+
+5. Unterabschnitt:         Orts- und Landschaftsbild, architektonische Gestaltung
+
+Artikel 91            Grundsatz
+1
+ Bauten und Anlagen sind so zu gestalten, dass für das Landschafts-, Orts-, Quartier- oder
+Strassenbild eine befriedigende Gesamtwirkung entsteht.1 Das gilt insbesondere auch für
+Dachaufbauten und Kamine, Dachform, Wirkung der Materialien und Farben, Anschlüsse
+an bestehende Gebäude, Stellung der Baukörper, Terraingestaltung, Reklamen, Anschrif-
+ten, Antennen, Bemalungen und dergleichen.
+2
+ Zu berücksichtigen sind dabei namentlich die architektonische Gestaltung von Bauten und
+Anlagen, die Wahl des Baumaterials, die Stellung der Baukörper sowie die Gestaltung der
+Umgebung.
+
+
+6. Unterabschnitt:         Umgebungsgestaltung
+
+Artikel 92            Grundsatz
+1
+ Sind die Bauarbeiten abgeschlossen, ist die Umgebung so zu gestalten, dass das Orts-
+und Landschaftsbild nicht beeinträchtigt ist. Grünflächen in angemessener Grösse sind
+vorzusehen.
+2Die Baubehörde kann mit der Baubewilligung entsprechende Auflagen verbinden.
+
+
+3Die Gemeinde sorgt in intensiv genutzten Gebieten inner- und ausserhalb von Siedlungen
+
+für ökologischen Ausgleich mit Feldgehölzen, Hecken, Uferbestockungen oder mit anderer
+naturnaher und standortgerichteter Vegetation. Sie berücksichtigt dabei die Interessen der
+landwirtschaftlichen Nutzung.
+
+Artikel 93            Abgrabungen und Aufschüttungen
+1Abgrabungen, mit denen Untergeschosse freigelegt werden, sind nur gestattet,
+
+wenn sie nicht mehr als untergeordnete Bodenanpassungen darstellen.
+2Für Garageneinfahrten sind Abgrabungen zulässig, wenn dadurch keine wesentlich
+
+nachteilige architektonische Wirkung entsteht und wenn die Verkehrs- und Betriebssicher-
+heit sowie ein späterer Strassenausbau nicht beeinträchtigt werden.
+3Aufschüttungen sind nur zulässig, wenn nicht überwiegende öffentliche oder private Inte-
+
+ressen dagegenstehen.
+
+
+
+
+1 Siehe Art. 81 PBG
+
+
+
+
+                                                                                         32
+Artikel 94        Entsorgungseinrichtungen
+
+Die für die Entsorgung notwendigen Bauten und Anlagen sind auf privatem Grund zu er-
+stellen und zu unterhalten (Container, Kompostieranlagen, Kehrichtgebinde usw.).
+
+
+7. Unterabschnitt:     Weitere Bauvorschriften der Gemeinde
+
+Artikel 95        Hindernisfreies Bauen
+1Öffentlich zugängliche Bauten und Anlagen nach Artikel 80 Absatz 1 und 2 PBG sind so
+
+zu gestalten, dass sie den Anforderungen der SIA Norm 521.500 über hindernisfreies
+Bauen entsprechen.
+2Mehrfamilienhäuser mit vier und mehr Wohneinheiten und Gebäude mit Arbeitsplätzen ab
+
+einer gesamten Nutzungsfläche von mindestens 500 m2 nach Artikel 80 Absatz 3 PBG
+sind so zu gestalten, dass sie mit zumutbarem Aufwand den Anforderungen der SIA Norm
+521.500 über hindernisfreies Bauen angepasst werden können.
+
+Der Grundsatz der Verhältnismässigkeit ist zu beachten.
+3
+
+
+
+Artikel 95a       Campieren
+
+Auf dem gesamten Gemeindegebiet ist das Campieren nur auf bewilligten Campingplätzen
+zulässig. Das wilde Campieren ist verboten. Als Campieren wird die Benützung von Zel-
+ten, Wohnwagen, Mobilheimen und dergleichen definiert.
+
+Artikel 96        Spielplätze
+1Sind die Voraussetzungen nach Artikel 84 PBG erfüllt, muss die Bauherrschaft einen oder
+
+mehrere Spielplätze erstellen und erhalten.
+2Die
+     Spielplatzfläche muss insgesamt mindestens 10 Prozent der anrechenbaren Ge-
+schossfläche betragen.
+3Sind die erforderlichen Spielplätze auf privatem Grund nicht möglich, nicht zulässig oder
+
+nicht zumutbar, hat die Bauherrschaft eine Ersatzabgabe zu bezahlen. Die Ersatzabgabe
+pro fehlendem m2 Spiel- bzw. Ruhefläche beträgt Fr. 30.- und wird mit der Rechtskraft der
+Baubewilligung fällig. Die Höhe der Ersatzabgabe basiert auf dem Zürcher Baukostenin-
+dex vom 1.4.2013 (101.8 Punkte, Basis 2010: 100 Punkte) und wird jeweils auf den 1. Ap-
+ril jeden Jahres angepasst. Der Betrag ist für den Bau und Betrieb öffentlicher Spielplätze
+zu verwenden.
+
+Artikel 97        Abstellplätze
+                  a) Grundsatz
+1Sind die Voraussetzungen nach Artikel 85 PBG erfüllt, muss die Bauherrschaft die erfor-
+
+derlichen Abstellplätze erstellen und erhalten.
+2Massgeblich ist die Nutzungsart, wie sie mit dem Bauentscheid bewilligt worden ist.
+
+
+3Lässt sich die Nutzung eines Grundstücks nicht klar einer Nutzungsart zuordnen, ist sie
+
+der ähnlichsten Nutzungsart zuzuordnen.
+
+
+
+
+                                                                                          33
+Wohnungen
+4
+                        1 Abstellplatz pro 100 m2 BGF, mindestens aber 1 Platz pro Woh-
+                        nung (Aufrundung).
+Läden, Büros,           1 Abstellplatz pro 30 m2 BGF.
+Kleingewerbe etc.
+Hotels (ohne          1 Abstellplatz pro 4 Hotelbetten.
+Restaurant)
+Restaurants           1 Abstellplatz pro 20 m2 Restaurationsfläche.
+5
+ Garagenvorplätze gelten nicht als Abstellplätze.
+6
+ Sofern besondere Gründe es rechtfertigen, kann die Baukommission eine grössere oder
+eine kleinere Anzahl Plätze verlangen oder eine etappenweise Schaffung bewilligen.
+7
+ Die im Zusammenhang mit dem Bau von Lagerhäusern, Grossgewerbe- und Industrie-
+bauten zu errichtenden Parkplätze setzt die Baukommission von Fall zu Fall fest.
+8Bei Bauten und Anlagen mit grossem Publikumsverkehr bestimmt die Baukommission die
+
+Anzahl der zu schaffenden Plätze nach dem voraussehbaren Bedarf, wobei die Richtlinien
+der Vereinigung Schweizerischer Strassenfachmänner (VSS) anzuwenden sind.
+9Der Bestand von Abstellplätzen auf fremdem Boden ist grundbuchlich zu sichern.
+
+
+
+Artikel 98        b) bestehende Bauten und Anlagen
+1Bei Um-, Ersatz- und Erweiterungsbauten sowie bei Zweckänderungen bemisst sich die
+
+Zahl der Pflichtabstellplätze nach der beabsichtigten Veränderung.
+2Vorhandene Parkplätze, die die Zahl der Pflichtabstellplätze für den unveränderten Ge-
+
+bäudeteil übersteigen, sind anzurechnen.
+
+Artikel 99        c) Abweichungen aus öffentlichen Interessen
+1Wenn überwiegende öffentliche Interessen es gebieten, kann die Baubehörde darauf ver-
+
+zichten oder es untersagen, Abstellplätze zu erstellen.
+2Anstelle der erlassenen oder untersagten Pflichtabstellplätze tritt die Ersatzabgabe.
+
+
+
+Artikel 100       d) Ersatzabgabe
+
+Sind die erforderlichen Abstellplätze auf privatem Grund nicht möglich, nicht zulässig oder
+nicht zumutbar, hat die Bauherrschaft eine Ersatzabgabe zu bezahlen. Die Ersatzabgabe
+je Abstellplatz beträgt Fr. 7'000.- und wird mit der Rechtskraft der Baubewilligung fällig. Die
+Höhe der Ersatzabgabe im Zeitpunkt der Fälligkeit basiert auf dem Zürcher Baukostenin-
+dex vom 1.4.2013 (101.8 Punkte, Basis 2010: 100 Punkte) und wird jeweils auf den 1. Ap-
+ril jeden Jahres angepasst. Der Betrag ist für den Bau und Betrieb öffentlicher Abstellplät-
+ze zu verwenden.
+
+Artikel 101       Verkehrssicherheit
+1Sämtliche Aus- und Einfahrten sind bewilligungspflichtig und so anzulegen, dass durch
+
+ihre Benützung der Verkehr weder gefährdet noch behindert wird; insbesondere muss eine
+zureichende Sichtweite gewährleistet sein.
+2Ausfahrtsrampen dürfen auf eine Tiefe von 2.50 m von der Strassen- bzw. Trottoirgrenze
+
+gemessen höchstens 5 %, im übrigen höchstens 15 % Längsgefälle aufweisen. Besteht
+ein rechtskräftiger Baulinien- oder Strassenplan, so sind diese Masse von der projektierten
+Fahrbahn- oder Trottoirgrenze einzuhalten, Gefällsbrüche sind auszurunden.
+
+
+
+
+                                                                                              34
+6. KAPITEL:         AUSNAHMEN
+
+Artikel 102         Hinweis auf das PBG
+
+Die Baubehörde kann Ausnahmen von einzelnen Vorschriften und Nutzungsplänen bewil-
+ligen, wenn die Voraussetzungen nach Artikel 96 ff. PBG erfüllt sind.
+
+
+
+7. KAPITEL:         BAUBEWILLIGUNG
+
+Artikel 103         Hinweis auf das PBG
+
+Die folgenden Bestimmungen ergänzen jene nach Artikel 100 ff. PBG.
+
+Artikel 104         Bewilligungspflicht
+1Wer eine Baute oder Anlage erstellen, abbrechen oder baulich oder in ihrem Zweck än-
+
+dern will, benötigt hiefür eine Bewilligung.
+2Als
+      Bauten und Anlagen gelten alle künstlich geschaffenen und auf Dauer angelegten
+baulichen Vorkehren, die in bestimmter fester Beziehung zum Erdboden stehen und ge-
+eignet sind, die Nutzungsordnung zu beeinflussen, indem sie den Raum äusserlich erheb-
+lich verändern, die Erschliessung belasten oder die Umwelt beeinträchtigen.
+3Eine Baubewilligung benötigt insbesondere, wer:
+
+a)     ober- oder unterirdische Bauten oder Anlagen erstellt, ändert, erweitert oder erneuert;
+b)     den Zweck bestehender Bauten oder Anlagen ändert;
+c)     Hotelzimmer in Angestelltenzimmer respektive Angestellten-Wohnungen in der Gast-
+       gewerbezone umnutzt;
+d)     bestehende Bauten oder Anlagen ganz oder teilweise abbricht;
+e)     Mauern, Wände oder Einfriedungen über 1.50 m Höhe erstellt;
+f)     Abstellflächen für Fahrzeuge errichtet;
+g)     Terrainveränderungen vornimmt, die baulichen Massnahmen nach Absatz 2 entspre-
+       chen;
+h)     Antennen, Reklamen, energetische oder andere Anlagen errichtet, die baulichen Mas-
+       snahmen nach Absatz 2 entsprechen;
+i)     provisorische Bauten oder Anlagen oder Fahrnisbauten erstellt, die länger als drei
+       Monate bestehen. Dazu gehören namentlich Treibhäuser, Materiallager und derglei-
+       chen.
+
+Artikel 105         bewilligungsfreie Bauten und Anlagen
+1Keiner Baubewilligung bedürfen die Tatbestände, die in Artikel 101 PBG aufgeführt sind.
+
+
+2Es sind dies:
+
+a)     Bauvorhaben, die nach der Gesetzgebung des Bundes nicht der kantonalen Bauho-
+       heit unterliegen;
+b)     Bauvorhaben, die durch andere Gesetze umfassend geregelt sind;
+c)     reine Unterhalts- und Reparaturarbeiten;
+d)     geringfügige Bauvorhaben, die weder öffentliche noch private Interessen merklich
+       berühren;
+e)     für kurze Dauer erstellte Bauten und Anlagen.
+
+
+
+
+                                                                                             35
+Artikel 106            Meldepflicht
+
+Bauvorhaben nach Artikel 105 Absatz 2 Buchstabe c, d und e sind in jedem Fall vor der
+Ausführung der Baubehörde zu melden. Diese entscheidet über die Bewilligungspflicht.
+
+Artikel 107            Bewilligungsverfahren
+1
+ Das Baubewilligungsverfahren richtet sich nach Artikel 102 ff. PBG.
+2
+ Die Baubehörde kann Richtlinien erlassen, die die erforderlichen Angaben und Unterla-
+gen zu einem Baugesuch näher beschreiben.
+
+Artikel 108            Projektänderungen
+1Projektänderungen, die Bauvorschriften berühren, sind bei der Baubehörde rechtzeitig vor
+
+der Ausführung zu beantragen.
+2Die Baubehörde entscheidet, ob und in welchem Verfahren sie die Projektänderung bewil-
+
+ligen kann.
+
+Artikel 109            Formlose Anfrage
+1Die oder der Bauwillige kann der Baubehörde Fragen zur Anwendung der BZO vorlegen.
+
+
+2Die Antwort darauf ist unverbindlich. Sie gibt keinen Anspruch auf eine Baubewilligung.
+
+
+
+Artikel 110            Baukontrolle
+1Die
+    baupolizeilichen Massnahmen, Rechte und Pflichten richten sich nach Artikel 115
+PBG.
+2Die Bauherrschaft hat der Baubehörde rechtzeitig und vorgängig die wichtigen Etappen
+
+des Baufortschritts zu melden, wie Baubeginn, Schnurgerüst, Fertigstellung des Rohbaus
+und Bauvollendung.
+
+
+
+8. KAPITEL:            RECHTSPFLEGE UND GEBÜHREN
+
+Artikel 111            Rechtspflege
+
+Verfügungen und Pläne, die sich auf die BZO stützen, sind nach den Bestimmungen der
+Verordnung über die Verwaltungsrechtspflege1 anfechtbar, sofern das PBG nichts anderes
+bestimmt.
+
+Artikel 112            Kosten und Gebühren
+1Wer
+     eine Verfügung beantragt oder veranlasst, trägt die damit verbundenen amtlichen
+Kosten2 und Gebühren. Dazu gehören insbesondere auch die Kosten für eine allfällige
+Expertise.
+
+
+1 RB 2.2345
+2 zu den amtlichen Kosten gehören jene Auslagen, die in Artikel 6 Absatz 2 GebV (RB 3.2512) umschrieben sind (siehe den
+Verweis in Artikel 74 Absatz 3 MBO).
+
+
+
+
+                                                                                                                          36
+2
+  Wer mutwillig Einsprache erhebt, kann verpflichtet werden, die daraus entstehenden amt-
+lichen Kosten und Gebühren ganz oder teilweise zu übernehmen.
+3
+ Kosten und Gebühren für Verfügungen, die auf der BZO oder auf dem übergeordneten
+Recht gründen, richten sich nach der kantonalen Gebührenverordnung1 und dem Gebüh-
+renreglement2.
+4
+ Bei besonders umfangreichen, zeitraubenden oder mit anderen Erschwernissen verbun-
+denen Amtshandlungen kann der kantonale Kosten- und Gebührenrahmen überschritten
+werden.
+
+
+
+9. KAPITEL:      SCHLUSSBESTIMMUNGEN
+
+Artikel 113      Hängige Baugesuche
+
+Hängige Baugesuche werden bis zum erstinstanzlichen Bauentscheid nach bisherigem
+Recht beurteilt. Das Rechtsmittelverfahren richtet sich nach neuem Recht.
+
+Artikel 114      Aufhebung bisherigen Rechts
+
+Die Bau- und Zonenordnung Andermatt vom 6. Dezember 2011, mit Änderungen vom 18.
+Juni 2013 wird aufgehoben.
+
+Artikel 115      Genehmigung und Inkrafttreten
+1Die vorliegende BZO ist erst gültig, wenn der Regierungsrat sie genehmigt hat.
+
+
+2Nach der Genehmigung durch den Regierungsrat bestimmt der Gemeinderat, wann sie in
+
+Kraft tritt.
+
+
+
+                                  Im Namen der Gemeinde Andermatt
+                                  Der Gemeindepräsident
+                                  Der Gemeindeschreiber
+
+
+
+
+Anhang
+- Anhang 1: Tabelle der Grundmasse
+- Anhang 2: Tabelle verminderte Grenzabstände
+- Anhang 3: Zusammenfassung wichtiger Masse
+- Anhang 4: Richtlinien zu den Quartiergestaltungsplan
+- Anhang 5: Verzeichnisse
+
+
+1 RB 3.2512
+2 RB 3.2521
+
+
+
+
+                                                                                        37
+ANHANG 1                      TABELLE DER GRUNDMASSE
+
+
+                                                                                                                                                                            Zone für                                 Zone für besondere
+                                                                                                                                                                                           Zone für Sport und           Anlagen und
+                                                                                                             Wohn- und   Bahn-                                             öff. Bauten     Freizeitanlagen (SF)
+                             Zonen    Kernzonen        Gastgewerbe-                                                                         Tourismuszonen                                                             Betriebsstätten
+                                                                               Wohnzonen (W)                Gewerbezonen hof-                                                   und
+                                         (K)           zone (GGZ) 1                                            (WG)                               (TZ)                      Anlagen
+                                                                                                                         zone                                                          Sommer-     Tennis-                Bahn- und
+                                                                                                                                                                               (OE)                           Golf
+Grundmasse                                                                                                                                                                             Camping      platz            Parkierungsanlagen
+
+                                       K1       K2     GGZ1      GGZ2    W2a       W2b      W3      W4      WG2     WG3      BZ     TZA      TZB     TZC     TZD     TZE      OE
+
+Anzahl Vollgeschosse                   2**       4       2**       4      2          2       3       4        2      3        -       -        -       -       -      -         -          -         -         -             -
+                  Kleiner
+Minimale          Grenzabstand       3.00***   4.50    3.00***   4.50    3.50      4.50    4.50    4.50      4.50   4.50    4.50    3.50     4.50    4.50      -                *          *        3.50      3.50           *
+Grenzabstände     grosser
+                  Grenzabstand          -      6.50       -      6.50    4.50      6.50    6.50    6.50      6.50   6.50      -     4.50     6.50    6.50                       *          *         -                       *
+Mehrlängen-       ab
+zuschlag          Gebäudelänge        ****     20.00    ****     20.00   15.00     15.00   18.00   20.00    15.00   18.00     -     30.00      -       -       -      -         -          -         -         -             -
+
+maximaler Grenzabstand inkl.
+                                        -      11.00      -      11.00   9.00      9.00    11.00   11.00     9.00   11.00     -     11.00      -       -       -      -         -          -         -         -             -
+Mehrlängenzuschlag
+
+Fassadenhöhe traufseitig max.        7.50**    16.00   7.50**    16.00   8.50      8.50    11.75   16.00     8.50   12.75   19.50   8.50     23.50   30.50   26.50              -          -         -        8.50           -
+
+
+Gesamthöhe max.                         -      21.50      -      21.50   13.00     13.00   16.25   21.50    13.00   17.25   19.50   12.50    28.50   35.50   26.50    -         -          -         -       13.00           -
+
+Dachaufbauten bis max. der
+                                      1/4       1/3     1/4       1/3    1/3        1/3    1/3      1/3      1/3    1/3       -       -        -       -       -      -         -          -         -         -             -
+Fassadenlänge
+
+Ausnützungsziffer min. /                                                                                            0.4 /
+                                        -      0.50      -       0.50    0.25      0.30    0.4 /   0.45 /    0.30
+Mindest Vollgeschosse                                                                      2 VG    3 VG             3 VG      -       -        -       -       -      -         -          -         -         -             -
+
+Mindestanteil des maximal
+                                      50%        -      50%        -       -         -       -       -        -       -       -       -        -       -       -      -         -          -         -         -             -
+möglichen Bauvolumens
+
+Ausnützungsziffer max.                  -      0.85       -        -     0.40      0.45    0.65    0.85      0.45   0.65      -       -        -       -       -      -         -          -         -         -             -
+
+AZ-Bonus für Gewerbe +
+                                        -      +0.20      -        -       -         -       -       -      +0.20   +0.20     -       -        -       -       -      -         -          -         -         -             -
+Tourismus max.
+
+AZ-Bonus für QGP max.                   -      +0.10      -        -     +0.10     +0.10   +0.10   +0.10    +0.10   +0.10     -       -        -       -       -      -         -          -         -         -             -
+
+
+Empfindlichkeitsstufe (ES)             III      III      III      III     II         II      II      II       III    III     III     III      III     III     III    III      II/III      III        III       III           III
+
+
+
+*
+ Zu angrenzenden Zonen sind die entsprechenden Grenzabstände einzuhalten.
+** Entlang Gotthardstrasse und Kirchgasse siehe Artikel 15
+*** Verringerte Grenzabstände siehe Artikel 21
+**** Maximale Gebäudelängen siehe Artikel 16
+
+
+1 Aufhebung AZ in GGZ1 vom Regierungsrat mit Beschluss Nr. 2024-393 R-362-30 am 11. Juni 2024 genehmigt.
+ANHANG 2            TABELLE VERMINDERTE GRENZABSTÄNDE
+
+
+
+
+                                                      Minimaler grenz-
+
+
+
+
+                                                                         Max. traufseitige
+
+
+
+
+                                                                                             Max. Gesamthö-
+                                                                         Fassendhöhe
+                       RPBG            Grösse                                                                      Bemerkungen
+
+
+
+
+                                                      abstand
+                                                      in m
+
+
+
+
+                                                                         in m
+
+
+
+                                                                                             he
+                       Anhang 2.2/
+Kleinbauten                            10 bis 45 m2     2.50               3.50              5.00                  Freistehende Gebäude mit Nebennutzflächen
+                       Art. 9
+Kleinstbauten bis 10   Anhang 2.2.1/
+                                       bis 10 m2        1.00               3.50              5.00                  Freistehende Gebäude mit Nebennutzflächen
+m2                     Art. 9
+                       Anhang 2.3/                                                                                 Mit anderem Gebäude zusammengebaut; nur Nebennutz-
+Anbauten                               bis 45 m2        2.50               3.50              5.00
+                       Art. 9                                                                                      flächen; höchstens in der Fläche der Hauptbauten
+                       Anhang 2.4/                                                                                 Bauten die vollständig unter dem massgebenden oder
+Unterirdische Bauten                                    1.00                   -                 -
+                       Art. 9                                                                                      tiefer gelegten Terrain liegen.
+                                                                                                                   Im Durchschnitt höchstens 1.00 m und absolut höchstens
+                       Anhang 2.5/
+Unterniveaubauten                                       3.50                   -                 -                 1.50 m über massgebendes oder tiefer gelegtes Terrain
+                       Art. 9
+                                                                                                                   hinausragende Bauten
+                                                                                                                   Anlagen, die weder öffentliche noch private Interessen
+geringfügige Anlagen   Art. 6 Bst. h                    1.00                   -                 -
+                                                                                                                   merklich berühren
+
+
+
+
+                                                                                                              39
+ANHANG 3           ZUSAMMENFASSUNG WICHTIGER MASSE
+
+
+                                                             RPBG; RPBG           Mass                    Bemerkungen
+
+Abstand zu Fliessgewässer                                    PBG Art. 91 Abs. 1            6.00 m
+
+Abstand zu öffentlichen Verkehrsflächen                      PBG Art. 92 Abs. 1            4.00 m
+
+Abstand zu Wald                                              PBG Art. 93 Abs. 1            20.00 m
+
+Maximale Gebäudelänge                                        -                                -           nicht festgelegt
+
+Vorspringende Gebäudeteile bei Balkonen, Erkern, Vor-
+                                                             RPBG Anhang 3.4               1.50 m         Tiefe max. 1/3 der Gebäudelänge
+dächern und Vortreppen max.
+
+Dachvorsprünge in Grenzabstand                               RPBG Anhang 3.4             max. 1.50 m      einschliesslich Dachrinne
+
+Rückspringende Gebäudeteile                                  RPBG Anhang 3.5       max. 2.00 m x 1.00 m   Breite x Tiefe
+
+                                                                                                          In Dachräumen auf mind. der Hälfte der
+Lichte Mindesthöhe für Wohnräume                             RPBG Anhang 5.4             mind. 2.30 m     Wohnfläche bei Dachausbauten von beste-
+                                                                                                          henden Dachräumen nicht anwendbar
+Hinausragen Untergeschoss über massgebendes Terrain
+                                                             RPBG Anhang 6.2               1.50 m
+im Durchschnitt höchstens
+Hinausragen Untergeschoss über massgebendes Terrain
+                                                             RPBG Anhang 6.2               3.00 m
+maximal
+Hinausragen Unterniveaubaute über massgebendes res-
+pektive über tiefergelegtes Terrain im Durchschnitt höchs-   RPBG Anhang 2.5               1.00 m
+tens
+Hinausragen Unterniveaubaute über massgebendes res-
+                                                             RPBG Anhang 2.5               1.50 m
+pektive über tiefergelegtes Terrain absolut höchstens
+
+Kleine Kniestockhöhe bei Dachgeschossen                      RPBG Anhang 6.3             max. 1.20 m
+
+Grosse Kniestockhöhe bei Dachgeschossen                      RPBG Anhang 6.3             max. 2.30 m
+
+                                                                                    3.00 m auf 2 Seiten
+Attikageschoss                                               RPBG Anhang 6.4
+                                                                                      zurückversetzen
+
+
+
+                                                                                             40
+ANHANG 4         RICHTLINIEN ZU DEN QUARTIERGESTALTUNGSPLÄNEN (informativ)
+
+
+
+
+-   Quartiergestaltungsplan ‚Oberer Wiler’
+-   Quartiergestaltungsplan ‚Wiler’
+-   Quartiergestaltungsplan ‚Boden’
+-   Quartiergestaltungsplan Tourismuszone TE ‚Oberalp‘
+-   Quartiergestaltungsplan Zone für Sport- und Freizeitanlagen ZSF
+    ‚Oberalp‘Quartiergestaltungsplan Zobe für Sport- und Freizeitanlagen ZSF ‚Nätschen‘
+-   Quartiergestaltungsplan ‚Bonetti Haus’
+
+
+
+
+Quartiergestaltungsplan ‚Oberer Wiler’
+
+Lärmschutz               Im Perimeter Quartiergestaltungsplanpflicht ist im Bereich der Einzonung
+                         der Planungswert der Empfindlichkeitsstufe II (ES ll) einzuhalten (im Zo-
+                         nenplan entsprechend markiert). Bei der rechtskräftigen Wohnzone muss
+                         der Immissionsgrenzwert der Empfindlichkeitsstufe II (ES ll) eingehalten
+                         werden. Die Einhaltung des Planungswertes der Empfindlichkeitsstufe II
+                         (ES II) ist spätestens im Baubewilligungsverfahren nachzuweisen. Die
+                         Kosten für die Erstellung der Lärmschutzmassnahmen gehen zu Lasten
+                         der Grundeigentümer.
+
+Erschliessung            Die Erschliessung darf nur zentral über eine Einmündung/Ausfahrt in die
+                         Oberalpstrasse erfolgen. Die zentrale Einmündung/Ausfahrt darf nicht in
+                         dem jeweils mit Wintersperre belegten Bereich der Oberalpstrasse zu
+                         liegen kommen. Die Erschliessung der Überbauung hat bei der Ein-/
+                         Ausfahrt den Anforderungen der Strassenverkehrssicherheit zu entspre-
+                         chen.
+
+Anschluss an Fernwär-    Der Anschluss an die Fernheizung ist zwingend, soweit dies energetisch
+menetz                   sinnvoll und wirtschaftlich tragbar ist.
+
+
+Quartiergestaltungsplan ‚Wiler’ (KTN 381)
+
+Lärmschutz               Im Perimeter Quartiergestaltungsplanpflicht ist im Bereich der Einzonung
+                         der Planungswert der Empfindlichkeitsstufe II (ES ll) einzuhalten (im Zo-
+                         nenplan entsprechend markiert). Die Einhaltung des Planungswertes der
+                         Empfindlichkeitsstufe II (ES II) ist spätestens im Baubewilligungsverfah-
+                         ren nachzuweisen. Die Kosten für die Erstellung der Lärmschutzmass-
+                         nahmen gehen zu Lasten der Grundeigentümer.
+
+Erschliessung            Die Erschliessung darf nur zentral über eine Einmündung/Ausfahrt in die
+                         Oberalpstrasse erfolgen. Die Lage und Gestaltung der Einmün-
+                         dung/Ausfahrt erfolgt in Absprache mit der Baudirektion.
+
+Verbindliche             Die Fussgängerführung entlang der Oberalpstrasse muss im Rahmen
+Fusswegverbindung        des Quartiergestaltungsplans aufgezeigt werden (entweder Trottoir ent-
+                         lang der Oberalpstrasse oder Fusswegverbindung durch das neue Quar-
+                         tier).
+Umgebungsschutz         Die Kapelle St. Wendelin ist als überkommunales Kulturobjekt ausge-
+Kapelle St. Wendelin    schieden und hat nebst ihrem Eigenwert eine hohe landschaftliche Be-
+                        deutung. Der Umgebungsschutz dieses Objekts muss in einer geeigne-
+                        ten Art und Weise im Rahmen des Quartiergestaltungsplanes sicherge-
+                        stellt und aufgezeigt werden.
+
+Ortsbild- und Land-     Die Situation stellt hohe städtebauliche und gestalterische Anforderun-
+schaftsschutz           gen an Bauten und Aussenräume. Die Bebauung unterstützt in einer
+                        ländlichen Bauweise die Ausgestaltung des Ortsrandes im Übergang
+                        zum Unteralptal. Dabei bleibt die Hangkante zur Unteralpreuss unange-
+                        tastet. Im Rahmen eines Bebauungskozeptes werden mit Hilfe eines
+                        Modells die Bauvolumen und deren präzise Setzung definiert. Das Amt
+                        für Raumentwicklung wird in einer frühen Phase in die Erarbeitung des
+                        Bebauungskonzepts mit einbezogen.
+
+Anschluss an Fernwär-   Der Anschluss an die Fernheizung ist zwingend, soweit dies energetisch
+menetz                  sinnvoll und wirtschaftlich tragbar ist.
+
+
+Quartiergestaltungsplan ‚Boden’
+
+
+
+
+                                                                                              42
+Bereich Überlauf         Der bezeichnete Bereich für einen neuen Überlauf der Unteralpreuss soll
+Unteralpreuss            von jeglicher Überbauung freigehalten werden. Das Bauen bis an den
+                         Bereich Überlauf Unteralpreuss ist möglich.
+
+Verbindliche             Die bezeichnete Fusswegverbindung soll freigehalten werden.
+Fusswegverbindung
+Maximale                 Im Rahmen des Quartiergestaltungsplans sind maximal 4 Vollgeschosse
+Geschosszahl             zulässig. Eine Erhöhung der Vollgeschosszahl ist nicht gestattet.
+
+Maximale Abstellplätze   Auf dem Grundstück KTN 26 sind maximal 4 Ein- und Abstellplätze für
+für Lastwagen            Lastwagen (inkl. Busse) und dergleichen zulässig. Die erforderliche Ma-
+                         növrierfläche darf nicht als zusätzliche Abstellfläche für Lastwagen (inkl.
+                         Busse) und dergleichen verwendet werden.
+
+Informationen und        Die Liegenschaft befindet sich im Überschwemmungsgebiet mit einer
+Grundlagen zum           mittleren Gefährdung (Gefahrenkarte Wasser). Periodische Über-
+Hochwasserschutz         schwemmungen sind möglich. Ziel war im Rahmen des Hochwasser-
+                         schutzprojektes die heutige Situation zu verbessern, indem die Abfluss-
+                         kapazität der Unteralpreuss mit baulichen Massnahmen im Bereich der
+                         Brücke der Matterhorn-Gotthardbahn erhöht wurde (Schutzziel HQ100).
+                         Trotz diesen Massnahmen besteht aber weiterhin die Gefahr, dass die
+                         Liegenschaft bei sehr seltenen Ereignissen durch Überschwemmungen
+                         betroffen ist. Deshalb wurde die Überbauung so gestaltet, dass der
+                         Fliessweg bei einem Überlastfall zwischen Unteralpreuss und Boden-
+                         strasse erhalten bleibt. Zudem waren für die Wohn- und Gewerbegebäu-
+                         de Objektschutzmassnahmen erforderlich. Ergeben sich im Überlastfall
+                         trotzdem Schäden, kann der Eigentümer keine Entschädigungsansprü-
+                         che geltend machen.
+
+Anschluss an             Der Anschluss an die Fernheizung ist zwingend, soweit dies energetisch
+Fernwärmenetz            sinnvoll und wirtschaftlich tragbar ist.
+
+
+Quartiergestaltungsplan Tourismuszone TE ‚Oberalp’
+
+Anforderungen            Im QGP „Tourismuszone TE Oberalp“ sind folgende Sachverhalte aufzu-
+                         zeigen:
+
+                         A:      Nutzungen
+                                 -   Nutzung Hotel, Art und Mass der Nutzung
+                                 -   Nutzung der Campinganlage, Art und Gestaltung der Stell-
+                                     plätze und dazugehörige Infrastrukturanlagen
+                                 -   Beleuchtung
+
+                         B:    Erschliessung und Parkierungsanlage
+                                 -   Anzahl der Parkplätze und Gestaltung der Parkierungsanla-
+                                     gen für die Sommernutzung der Seilbahnen
+                                 -   Gestaltung der Erschliessungsanlagen für den Campingplatz
+                                     und das Hotel
+                                 -   Beleuchtung der Erschliessungsanlage
+
+
+
+
+                                                                                                   43
+                        C:    Wege und Wegverknüpfungen
+                               -   Lage und Gestaltung der Wege und Weganschlüsse (Wan-
+                                   der- und Velowegnetz, Seilbahnanlagen, Pisten, Rodel-/
+                                   Schlittelbahn, Restaurationsbetriebe, MGB-Bahnhof und An-
+                                   schlüsse beziehungsweise Fortsetzung in die Zone für Sport-
+                                   und Freizeitanlagen Oberalp)
+                               -   Beleuchtung
+
+                        D:     Aufgrund der landschaftlich besonderen Lage bestehen erhöhte
+                               Ansprüche an die Gestaltung der Bauten und Anlagen. Diese
+                               gelten namentlich für:
+                               -   Die architektonische Qualität der Bauten und Anlagen
+                               -   Die Aussenraumgestaltung (Erschliessung, Parkierung etc.)
+                        Die Übergänge zur Landschaft.
+
+
+Quartiergestaltungsplan Zone für Sport und Freizeitanlagen ‚Oberalp’
+
+Anforderungen           Im QGP „Oberalp“ sind folgende Sachverhalte aufzuzeigen:
+
+                        A:    Nutzungen
+                               -   Lage, Art und Mass der Nutzung der geplanten Bauten und
+                                   Anlagen
+                               -   Beleuchtung
+
+                        B:    Parkierungskonzept
+                               -   Art und Gestaltung der Parkplätze
+                               -   Verkehrskonzept (Erschliessung der Parkierungsanlagen)
+                               -   Beleuchtung
+
+                        C:    Zentraler Platz
+                               -   Lage und Gestaltung des zentralen Platzes mit touristischer
+                                   Infrastruktur (Sanitäranlagen, Infocenter etc.)
+                               -   Beleuchtung
+
+                        C:    Wege und Wegverknüpfungen
+                               -   Lage und Gestaltung der Wege und Weganschlüsse (Wan-
+                                   der- und Velowegnetz, Seilbahnanlagen, Pisten, Rodel-/
+                                   Schlittelbahn, Restaurationsbetriebe, MGB-Bahnhof und An-
+                                   schlüsse beziehungsweise Fortsetzung in die Tourismuszone
+                                   E)
+                               -   Beleuchtung
+
+
+                        E:    Schnittstelle zur Gemeinde Tujetsch, Kanton Graubünden
+
+                        F:   Bei der Erarbeitung des QGP sind die Interessen der MGB ange-
+                        messen zu berücksichtigen.
+
+
+
+
+                                                                                                 44
+Quartiergestaltungsplan Zone für Sport und Freizeitanlagen ‚Nätschen‘
+
+Anforderungen           Im QGP „Nätschen“ sind folgende Sachverhalte aufzuzeigen:
+
+                        A:    Nutzungen
+                               -   Lage, Art und Mass der Nutzung der geplanten Bauten und
+                                   Anlagen
+                               -   Beleuchtung
+
+                        B:      Bei der Erarbeitung des QGP sind die Interessen der MGB an-
+                                gemessen zu berücksichtigen.
+
+                        C:     Aufgrund der landschaftlich einmaligen Lage bestehen erhöhte
+                               Ansprüche an die Gestaltung. Diese bestehen namentlich für:
+                               -   Die architektonische Qualität der Bauten und Anlagen
+                               -   Die Aussenraumgestaltung
+                               -   Die Übergänge zur Landschaft.
+
+
+
+
+Quartiergestaltungsplan ‚Bonetti Haus’
+
+Erschliessung           Im Perimeter Quartiergestaltungsplanpflicht ist die Erschliessung vom
+                        QGP «Bonetti Haus» sowie die Erschliessung zur Trögligasse aufzuzei-
+                        gen und sicherzustellen.
+
+Unterirdische           Im Bereich des heutigen «Bonetti Hauses» ist im Rahmen der Quartier-
+Fliessgewässer          gestaltungsplanung die Offenlegung allfällig vorhandener Fliessgewässer
+                        zu prüfen.
+
+Anschluss an            Der Anschluss an die Fernheizung ist zwingend, soweit dies energetisch
+Fernwärmenetz           sinnvoll und wirtschaftlich tragbar ist.
+
+
+
+
+                                                                                              45
+ANHANG 5         VERZEICHNISSE (informativ)
+
+
+   -   Kulturobjekte
+   -   Massgebendes Bauvolumen
+   -   Naturobjekte
+   -   Landschaftsschutzgebiete
+   -   Aussichtspunkte
+   -   Naturschutzgebiete
+
+
+Kulturobjekte (Art. 50 BZO)
+
+
+
+
+                                              46
+47
+Massgebendes Bauvolumen (Art. 12 BZO)
+
+
+
+
+                                        48
+Naturobjekte (Art. 49 BZO)
+
+
+
+
+Landschaftsschutzzone (Art. 41 BZO)
+
+
+
+
+Aussichtspunkte
+
+
+
+
+                                      49
+Naturschutzzonen (Art. 40 BZO)
+
+
+
+
+                                 50
+

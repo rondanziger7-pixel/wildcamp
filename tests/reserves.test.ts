@@ -242,4 +242,22 @@ describe('cantons built from their own data (Geneva, Glarus)', () => {
     const zone = reserveZoneHits(set, p.e, p.n).find((h) => h.layer.severity === 'restricted')!;
     expect(assess({ zones: [zone], treeline: 'above' }).verdict).toBe('no');
   });
+  it('Oeschinensee: the landowners\' court prohibition is restricted at the lake and caution around it, and says the perimeter is approximate', async () => {
+    const set = await load('public/bans-court.json.gz');
+    expect(set.canton).toBe('COURT');
+    const at = (lat: number, lon: number) => {
+      const { e, n } = wgs84ToLv95(lat, lon);
+      return reserveZoneHits(set, e, n);
+    };
+    const lake = at(46.4984, 7.7267); // middle of the lake
+    expect(lake.map((h) => h.layer.severity)).toEqual(['restricted']);
+    expect(lake[0]!.layer.note).toMatch(/Art\. 258 ZPO/);
+    expect(lake[0]!.layer.note).toMatch(/perimeter is not published/);
+    expect(lake[0]!.detail).toContain('oeschinensee.ch');
+    expect(at(46.5035, 7.7285).map((h) => h.layer.severity)).toEqual(['restricted']); // north shore, a few hundred metres from the water
+    expect(at(46.4890, 7.7300).map((h) => h.layer.severity)).toEqual(['caution']); // about 1 km away
+    expect(at(46.4400, 7.7300)).toEqual([]); // 6 km south
+    expect(assess({ zones: lake, treeline: 'above' }).verdict).toBe('no');
+    expect(assess({ zones: at(46.4890, 7.7300), treeline: 'above' }).verdict).toBe('caution');
+  });
 });

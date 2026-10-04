@@ -69,7 +69,7 @@ loading.push(
 );
 
 const reserveSets: ReserveSet[] = [];
-for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz', 'reserves-vs.json.gz', 'reserves-ge.json.gz', 'reserves-gl.json.gz', 'reserves-fr.json.gz', 'reserves-lu.json.gz', 'reserves-so.json.gz']) {
+for (const file of ['reserves-be.json.gz', 'reserves-ti.json.gz', 'reserves-vs.json.gz', 'reserves-ge.json.gz', 'reserves-gl.json.gz', 'reserves-fr.json.gz', 'reserves-lu.json.gz', 'reserves-so.json.gz', 'bans-court.json.gz']) {
   loading.push(
     loadReserveSet(`${import.meta.env.BASE_URL}${file}`)
       .then((r) => reserveSets.push(r))
@@ -287,3 +287,69 @@ document.getElementById('toggle-zones')!.addEventListener('change', (ev) => {
   if ((ev.target as HTMLInputElement).checked) zoneOverlay.addTo(map);
   else zoneOverlay.remove();
 });
+
+// "My location" map button: shows where you are and brings the map back to it
+const toast = document.getElementById('toast')!;
+let toastTimer: number | undefined;
+function say(text: string) {
+  toast.textContent = text;
+  toast.hidden = false;
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => (toast.hidden = true), 5000);
+}
+let me: { dot: L.CircleMarker; ring: L.Circle; at: L.LatLng } | undefined;
+let watchId: number | undefined;
+const MY_ZOOM = 15;
+
+function showMe(pos: GeolocationPosition, recentre: boolean) {
+  const at = L.latLng(pos.coords.latitude, pos.coords.longitude);
+  if (!me) {
+    const ring = L.circle(at, { radius: pos.coords.accuracy, color: '#1a73e8', weight: 1, fillOpacity: 0.12, interactive: false }).addTo(map);
+    const dot = L.circleMarker(at, { radius: 8, color: '#fff', weight: 3, fillColor: '#1a73e8', fillOpacity: 1, interactive: false }).addTo(map);
+    me = { dot, ring, at };
+  } else {
+    me.dot.setLatLng(at);
+    me.ring.setLatLng(at);
+    me.ring.setRadius(pos.coords.accuracy);
+    me.at = at;
+  }
+  if (recentre) map.flyTo(at, Math.max(map.getZoom(), MY_ZOOM), { duration: 0.6 });
+}
+
+function locateMe() {
+  if (!navigator.geolocation) return say('This browser cannot share your location.');
+  if (me) return void map.flyTo(me.at, Math.max(map.getZoom(), MY_ZOOM), { duration: 0.6 }); // already tracking: just come back
+  say('Finding your location…');
+  let first = true;
+  watchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      showMe(pos, first);
+      if (first) toast.hidden = true;
+      first = false;
+    },
+    (err) => {
+      if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
+      watchId = undefined;
+      say(err.code === err.PERMISSION_DENIED ? 'Location is blocked. Allow it for this site in your browser settings, then try again.' : 'Could not get your location. Try again outdoors or with a better signal.');
+    },
+    { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 },
+  );
+}
+
+const LocateControl = L.Control.extend({
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'map-locate') as HTMLButtonElement;
+    btn.type = 'button';
+    btn.title = 'Center the map on my location';
+    btn.setAttribute('aria-label', 'Center the map on my location');
+    btn.innerHTML =
+      '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', locateMe);
+    return btn;
+  },
+});
+new LocateControl({ position: 'topright' }).addTo(map);
+
+// Handle for browser tests in the dev server only.
+if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map } }).__wildcamp = { map };

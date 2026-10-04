@@ -29,6 +29,23 @@ export const MUNICIPAL_RULES: MunicipalEntry[] = [
       checkedOn: '2026-10-04',
     },
   },
+  {
+    bfs: 565,
+    name: 'Kandersteg',
+    officialHost: 'gemeindekandersteg.ch',
+    rule: {
+      stance: 'banned',
+      summary:
+        'Municipal police regulation (Art. 7): camping outside the specially designated and authorised areas is not permitted anywhere in the municipality, including forest, pasture and public waters (Art. 6 let. a); ' +
+        'breaches can be fined up to CHF 5,000 (Art. 26), usually CHF 200. "Camping" means overnight stays in tents, caravans, motorhomes or cars; the regulation expressly excludes sleeping outdoors without a tent ("Biwakieren", Art. 6 let. c). ' +
+        'Around Oeschinensee a separate court prohibition by the landowners also covers bivouacking.',
+      sources: [
+        { title: 'Gemeindepolizeireglement der Einwohnergemeinde Kandersteg (1.1.2021), Art. 6, 7, 26', url: 'https://www.gemeindekandersteg.ch/fileadmin/user_upload/Gemeindepolizeireglement.pdf' },
+        { title: 'Gemeindepolizeiverordnung Kandersteg (1.1.2021), Art. 8: fixed fine CHF 200', url: 'https://www.gemeindekandersteg.ch/fileadmin/user_upload/Gemeindepolizeiverordnung.pdf' },
+      ],
+      checkedOn: '2026-10-04',
+    },
+  },
 ];
 
 export function findMunicipalRule(bfs: number | undefined): MunicipalEntry | undefined {

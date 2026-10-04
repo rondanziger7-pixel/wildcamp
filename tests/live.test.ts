@@ -31,6 +31,11 @@ describe.skipIf(!live)('live geo.admin.ch', () => {
     expect(await fetchCanton(48.8566, 2.3522)).toBeUndefined(); // Paris
     expect(await fetchCanton(46.0, 8.55)).toBeUndefined(); // Val Grande national park, Italy, inside the bounding box
   });
+  it('Kandersteg is BFS 565 and has a recorded municipal rule; the court-ban area at Oeschinensee sits inside it', async () => {
+    const m = await fetchMunicipality(46.4933, 7.6711);
+    expect(m).toMatchObject({ name: 'Kandersteg', bfs: 565 });
+    expect((await fetchMunicipality(46.5035, 7.7285))?.bfs).toBe(565);
+  });
   it('finds the municipality', async () => {
     expect(await fetchMunicipality(46.02, 7.75)).toMatchObject({ name: 'Zermatt', canton: 'VS' });
     expect(await fetchMunicipality(46.95, 7.44)).toMatchObject({ name: 'Bern', canton: 'BE' });
