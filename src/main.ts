@@ -88,6 +88,7 @@ let dataLoaded = false;
 const dataReady = Promise.all(loading).then(() => (dataLoaded = true));
 
 const sheet = document.getElementById('sheet')!;
+document.getElementById('sheet-close')!.onclick = () => sheet.classList.add('closed');
 const result = document.getElementById('result')!;
 
 function showLoading() {
@@ -198,14 +199,16 @@ function focusOn(e: number, n: number, label: string) {
     .addTo(map)
     .bindTooltip(label, { permanent: true, direction: 'top', offset: [0, -8] })
     .openTooltip();
+  const closed = sheet.classList.contains('closed');
   const wide = window.matchMedia('(min-width: 720px)').matches;
-  const pad = wide ? { paddingTopLeft: L.point(430, 70), paddingBottomRight: L.point(60, 40) } : { paddingTopLeft: L.point(40, 70), paddingBottomRight: L.point(40, Math.min(sheet.offsetHeight, window.innerHeight * 0.62) + 20) };
+  const pad = closed ? { padding: L.point(40, 70) } : wide ? { paddingTopLeft: L.point(430, 70), paddingBottomRight: L.point(60, 40) } : { paddingTopLeft: L.point(40, 70), paddingBottomRight: L.point(40, Math.min(sheet.offsetHeight, window.innerHeight * 0.62) + 20) };
   const bounds = L.latLngBounds([target, spotAt ?? target]);
   map.flyToBounds(bounds, { ...pad, maxZoom: 16, duration: 0.8 });
 }
 
 async function checkSpot(lat: number, lng: number) {
   const id = ++checkId;
+  sheet.classList.remove('closed');
   const tappedAt = Date.now();
   marker?.remove();
   focusMarker?.remove();
@@ -323,6 +326,7 @@ document.getElementById('locate')!.addEventListener('click', () => {
       void checkSpot(pos.coords.latitude, pos.coords.longitude);
     },
     () => {
+      sheet.classList.remove('closed');
       sheet.dataset.state = 'result';
       result.hidden = false;
       result.replaceChildren(el('p', 'where', 'Location unavailable. Allow location access, or tap the map instead.'));
