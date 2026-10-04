@@ -1,3 +1,4 @@
+import type { BuildingZoneInfo } from './buildingzone';
 import type { Canton, CantonRule } from './cantons';
 import type { Severity, ZoneLayer } from './zones';
 
@@ -66,6 +67,8 @@ export function assess(input: {
   municipalRule?: CantonRule;
   /** A reported but unverified municipal rule: shown as a warning, never as a ban. */
   municipalNote?: { text: string; sources: { url: string }[]; checkedOn: string };
+  /** The national building-zone lookup for the spot (inside, near, or failed). */
+  buildingZone?: BuildingZoneInfo;
   /** Set when the canton lookup worked but found no canton: the spot is outside Switzerland. */
   outsideSwitzerland?: boolean;
 }): Assessment {
@@ -158,6 +161,17 @@ export function assess(input: {
       reasons.push(`Municipality: ${municipality}. ${t}`);
       items.push({ tone: 'info', title: `Municipality: ${municipality}`, text: t });
     }
+  }
+  const bz = input.buildingZone;
+  if (bz?.failed) {
+    items.push({ tone: 'info', title: 'Building zones could not be checked', text: 'Whether this spot is inside a village or city could not be checked. Land in settlements is private or municipal and outside the public access right; check before you camp.' });
+  } else if (bz?.inside) {
+    const t = `The spot lies inside a building zone (${bz.inside.name}, national harmonised map of building zones). In settlements the public right of access does not apply: Art. 699 ZGB opens only forest and pasture to everyone. Built-up land is private or municipal, so camping needs the owner's consent (the owner may repel any unjustified use, Art. 641 ZGB), an enclosed garden or yard is also protected by the trespass offence (Art. 186 StGB), and municipal police regulations commonly ban camping on public ground (see the municipality line). Move out of the settlement, or ask.`;
+    reasons.push(t);
+    items.push({ tone: 'warn', title: 'In a village or city (building zone)', text: t, sources: ['https://fedlex.data.admin.ch/eli/cc/24/233_245_233', 'https://fedlex.data.admin.ch/eli/cc/54/757_781_799', 'https://map.geo.admin.ch/?layers=ch.are.bauzonen'] });
+    if (verdict === 'likely_ok' || verdict === 'unknown') verdict = 'caution';
+  } else if (bz?.near) {
+    items.push({ tone: 'info', title: 'Close to a village or city', text: 'A building zone lies within about 150 m. Land next to settlements is mostly private farmland or gardens: Art. 699 ZGB gives access to forest and pasture only, owners can refuse camping on their land, and a tent here is rarely unnoticed. Ask the landowner, or walk further out.', sources: ['https://fedlex.data.admin.ch/eli/cc/24/233_245_233', 'https://map.geo.admin.ch/?layers=ch.are.bauzonen'] });
   }
   if (verdict === 'likely_ok' || verdict === 'caution') {
     reasons.push('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).');

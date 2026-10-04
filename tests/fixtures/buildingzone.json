@@ -1,0 +1,64 @@
+{
+ "inside": {
+  "results": [
+   {
+    "layerBodId": "ch.are.bauzonen",
+    "featureId": 707069,
+    "attributes": {
+     "name": "Zermatt",
+     "ch_code_hn": "14",
+     "kt_kz": "VS",
+     "bfs_no": "6300",
+     "kt_no": "23",
+     "flaeche": 6066.0,
+     "ch_bez_f": "Zones centrales",
+     "ch_bez_d": "Zentrumszonen",
+     "label": "Zermatt"
+    }
+   }
+  ]
+ },
+ "near_at": {
+  "results": []
+ },
+ "near_within": {
+  "results": [
+   {
+    "layerBodId": "ch.are.bauzonen",
+    "featureId": 707065,
+    "attributes": {
+     "name": "Zermatt",
+     "ch_code_hn": "14",
+     "kt_kz": "VS",
+     "bfs_no": "6300",
+     "kt_no": "23",
+     "flaeche": 5327.0,
+     "ch_bez_f": "Zones centrales",
+     "ch_bez_d": "Zentrumszonen",
+     "label": "Zermatt"
+    }
+   },
+   {
+    "layerBodId": "ch.are.bauzonen",
+    "featureId": 707247,
+    "attributes": {
+     "name": "Zermatt",
+     "ch_code_hn": "17",
+     "kt_kz": "VS",
+     "bfs_no": "6300",
+     "kt_no": "23",
+     "flaeche": 5701.0,
+     "ch_bez_f": "Zones de tourisme et de loisirs",
+     "ch_bez_d": "Tourismus- und Freizeitzonen",
+     "label": "Zermatt"
+    }
+   }
+  ]
+ },
+ "far_at": {
+  "results": []
+ },
+ "far_within": {
+  "results": []
+ }
+}

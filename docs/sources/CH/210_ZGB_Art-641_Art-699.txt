@@ -1,0 +1,29 @@
+Schweizerisches Zivilgesetzbuch (ZGB, SR 210)
+Source: https://fedlex.data.admin.ch/eli/cc/24/233_245_233/20260101
+PDF: https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/24/233_245_233/20260101/de/pdf-a/fedlex-data-admin-ch-eli-cc-24-233_245_233-20260101-de-pdf-a.pdf
+Retrieved: 2026-10-04 with curl and pdftotext -layout (consolidated version of 1 January 2026).
+Excerpt: Art. 641 (Inhalt des Eigentums) and Art. 699 (Recht auf Zutritt). The margin notes are the PDF's side headings, left as extracted.
+
+                    Art. 641
+A. Inhalt des       1 Wer Eigentümer einer Sache ist, kann in den Schranken der Rechts-
+Eigentums
+I. Im Allgemei-
+                    ordnung über sie nach seinem Belieben verfügen.
+nen558              2 Er hat das Recht, sie von jedem, der sie ihm vorenthält, herauszuver-
+                    langen und jede ungerechtfertigte Einwirkung abzuwehren.
+
+
+
+                                                                                 215 / 388
+210                                                          Schweizerisches Zivilgesetzbuch
+
+
+                  Art. 699
+IV. Recht auf     1 Das Betreten von Wald und Weide und die Aneignung wildwachsen-
+Zutritt und
+Abwehr            der Beeren, Pilze u. dgl. sind in ortsüblichem Umfange jedermann ge-
+1. Zutritt        stattet, soweit nicht im Interesse der Kulturen seitens der zuständigen
+                  Behörde einzelne bestimmt umgrenzte Verbote erlassen werden.
+                  2 Über das Betreten fremden Eigentums zur Ausübung von Jagd und
+                  Fischerei kann das kantonale Recht nähere Vorschriften aufstellen.
+

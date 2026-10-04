@@ -1,0 +1,9 @@
+Bundesgesetz über die Raumplanung (RPG, SR 700)
+Source: https://fedlex.data.admin.ch/eli/cc/1979/1573_1573_1573/20260101
+PDF: https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1979/1573_1573_1573/20260101/de/pdf-a/fedlex-data-admin-ch-eli-cc-1979-1573_1573_1573-20260101-de-pdf-a.pdf
+Retrieved: 2026-10-04 with curl and pdftotext -layout (consolidated version of 1 January 2026).
+Excerpt: Art. 15 para. 1 (Bauzonen). The margin notes are the PDF's side headings, left as extracted.
+
+Art. 1536             Bauzonen
+1 Die Bauzonen sind so festzulegen, dass sie dem voraussichtlichen Bedarf für
+15 Jahre entsprechen.

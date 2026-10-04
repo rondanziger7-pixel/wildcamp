@@ -31,6 +31,7 @@ import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
+import { fetchBuildingZone } from './buildingzone';
 import { fetchHazards, type HazardInfo } from './comfort/hazards';
 import { fetchNoise, type NoiseInfo } from './comfort/noise';
 import { moonNight } from './comfort/moon';
@@ -275,12 +276,13 @@ async function assessSpot(lat: number, lng: number, knownElevation?: number) {
   const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
   const LOOKUP_MS = 7000;
   const dataWait = Promise.race([ensureData(), new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
-  const [elev, zones, canton, muni, jura] = await Promise.allSettled([
+  const [elev, zones, canton, muni, jura, bzone] = await Promise.allSettled([
     knownElevation !== undefined ? Promise.resolve(knownElevation) : withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
     withTimeout(fetchZoneHits(lat, lng), LOOKUP_MS),
     withTimeout(fetchCanton(lat, lng), LOOKUP_MS),
     withTimeout(fetchMunicipality(lat, lng), LOOKUP_MS),
     inJura ? withTimeout(fetchJuraReserves(lat, lng), LOOKUP_MS) : Promise.resolve([]),
+    withTimeout(fetchBuildingZone(lat, lng), LOOKUP_MS),
   ]);
   await dataWait;
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
@@ -295,6 +297,7 @@ async function assessSpot(lat: number, lng: number, knownElevation?: number) {
     municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
     municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
     municipalNote: muni.status === 'fulfilled' ? findUnverifiedNote(muni.value?.bfs) : undefined,
+    buildingZone: bzone.status === 'fulfilled' ? bzone.value : { near: false, failed: true },
     outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
   });
   return { assessment, elevation };
