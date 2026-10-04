@@ -7,7 +7,14 @@ import type { Surroundings } from './surroundings';
 export type ComfortRating = 'great' | 'good' | 'fair' | 'poor';
 
 export interface Comfort {
+  /** Overall rating for the chosen night: the spot plus the weather. */
   rating: ComfortRating;
+  /** Rating of the spot alone, ignoring the weather. */
+  spotRating: ComfortRating;
+  /** Net effect of the weather on the score (negative = the weather hurts). */
+  weatherScore: number;
+  /** True when the weather alone rules the night out (thunderstorm or storm-force gusts), whatever the spot is like. */
+  weatherStop: boolean;
   /** Sum of the factor scores; the thresholds for the rating are in `rate`. */
   score: number;
   /** One line naming the strongest points for and against. */
@@ -28,13 +35,15 @@ export interface ComfortInput {
 
 interface Factor extends Item {
   score: number;
+  /** Comes from the forecast, so it changes with the chosen night. */
+  wx?: boolean;
 }
 
 const m = (x: number) => `${Math.round(x / 10) * 10} m`;
 
 /** Rating thresholds are my own judgement, not measured against campers' experience. */
 export function rate(score: number): ComfortRating {
-  return score >= 3 ? 'great' : score >= 1 ? 'good' : score >= -1 ? 'fair' : 'poor';
+  return score >= 4 ? 'great' : score >= 2 ? 'good' : score >= -1 ? 'fair' : 'poor';
 }
 
 export function comfortFor(input: ComfortInput): Comfort {
@@ -66,23 +75,55 @@ export function comfortFor(input: ComfortInput): Comfort {
       f.push({ tone: 'warn', score: -1, title: 'Steep slope above', text: `A slope of 30° or more rises about ${m(t.steepAboveM)} away. Possible rockfall, and avalanche runout if there is snow.` });
   } else missing.push('terrain (slope, wind shelter, hazards)');
 
-  // forecast wind relative to the terrain
+  // the weather for the chosen night
+  let weatherStop = false;
   if (night) {
-    const wind = `${compassName(night.windFromDeg)} wind, gusts up to ${Math.round(night.maxGustKmh)} km/h`;
-    if (t) {
+    const exposed = !!t && (t.tpi >= 15 || t.meanHorizon < 4);
+    const dirName = compassName(night.windFromDeg);
+    const wind = `${dirName} wind, gusts up to ${Math.round(night.maxGustKmh)} km/h`;
+    const wx = (x: Factor) => f.push({ ...x, wx: true });
+
+    if (night.thunder) {
+      weatherStop = true;
+      wx({ tone: 'bad', score: exposed ? -4 : -3, title: 'Thunderstorm forecast', text: exposed ? 'Thunderstorms are forecast and the spot is exposed. Lightning makes this unsafe: do not camp on a ridge, top or open slope.' : 'Thunderstorms are forecast. Avoid camping on exposed ground or under isolated trees, and keep away from the tallest point around.' });
+    }
+    if (night.maxGustKmh >= 80) {
+      weatherStop = true;
+      wx({ tone: 'bad', score: -3, title: 'Storm-force gusts', text: `${wind}. A tent will not hold at this strength.` });
+    } else if (t) {
       const upwind = horizonToward(t.horizon, night.windFromDeg);
-      if (night.maxGustKmh >= 50 && upwind < 5) f.push({ tone: 'bad', score: -2, title: 'Strong wind forecast, open to it', text: `${wind} tonight, and the terrain to the ${compassName(night.windFromDeg)} is open (horizon ${upwind.toFixed(0)}°).` });
-      else if (night.maxGustKmh >= 50 && upwind >= 10) f.push({ tone: 'warn', score: 0, title: 'Strong wind forecast, sheltered from it', text: `${wind} tonight, but the ground to the ${compassName(night.windFromDeg)} rises ${upwind.toFixed(0)}°, which should shelter the tent.` });
-      else if (night.maxGustKmh >= 50) f.push({ tone: 'warn', score: -1, title: 'Strong wind forecast', text: `${wind} tonight. Only partial shelter to the ${compassName(night.windFromDeg)}.` });
-      else f.push({ tone: 'ok', score: 0, title: 'Calm night forecast', text: `${wind} tonight.` });
-    } else f.push({ tone: night.maxGustKmh >= 50 ? 'warn' : 'info', score: night.maxGustKmh >= 50 ? -1 : 0, title: 'Wind tonight', text: `${wind}.` });
-    f.push({
-      tone: night.minTempC <= -5 ? 'warn' : 'info',
-      score: night.minTempC <= -8 ? -1 : 0,
-      title: `Low of ${Math.round(night.minTempC)} °C`,
-      text: night.minTempC <= 0 ? 'Freezing overnight: bring a winter sleeping bag and expect frost on the tent.' : 'Forecast low at the spot’s elevation.',
+      if (night.maxGustKmh >= 50 && upwind < 5) wx({ tone: 'bad', score: -2, title: 'Strong wind forecast, open to it', text: `${wind} tonight, and the terrain to the ${dirName} is open (horizon ${upwind.toFixed(0)}°).` });
+      else if (night.maxGustKmh >= 50 && upwind >= 10) wx({ tone: 'warn', score: 0, title: 'Strong wind forecast, sheltered from it', text: `${wind}, but the ground to the ${dirName} rises ${upwind.toFixed(0)}°, which should shelter the tent.` });
+      else if (night.maxGustKmh >= 50) wx({ tone: 'warn', score: -1, title: 'Strong wind forecast', text: `${wind}. Only partial shelter to the ${dirName}.` });
+      else if (night.maxGustKmh >= 30 && upwind < 5) wx({ tone: 'warn', score: -1, title: 'Breezy and open to it', text: `${wind}, and the terrain to the ${dirName} is open.` });
+      else wx({ tone: 'ok', score: night.maxGustKmh < 30 ? 1 : 0, title: night.maxGustKmh < 30 ? 'Calm night forecast' : 'Moderate wind', text: `${wind}.` });
+    } else {
+      wx({ tone: night.maxGustKmh >= 50 ? 'warn' : 'info', score: night.maxGustKmh >= 50 ? -1 : 0, title: 'Wind', text: `${wind}.` });
+    }
+
+    // cold, frost, snow
+    const cold = night.minTempC;
+    wx({
+      tone: cold <= -10 ? 'bad' : cold <= -3 ? 'warn' : 'info',
+      score: cold <= -10 ? -2 : cold <= -5 ? -1 : cold >= 8 ? 1 : 0,
+      title: `Low of ${Math.round(cold)} °C`,
+      text: cold <= -10 ? 'Severe cold: only for a winter or expedition setup.' : cold <= 0 ? 'Freezing overnight: bring a winter sleeping bag, expect frost on the tent, and keep water bottles inside.' : cold >= 8 ? 'A mild night.' : 'Forecast low at the spot’s elevation.',
     });
-    if (night.precipMm >= 1) f.push({ tone: 'warn', score: night.precipMm >= 5 ? -2 : -1, title: 'Rain forecast', text: `About ${night.precipMm.toFixed(1)} mm overnight. Avoid hollows and stream beds.` });
+    if (night.snowCm !== undefined && night.snowCm >= 1) wx({ tone: 'warn', score: night.snowCm >= 5 ? -2 : -1, title: 'Snow forecast', text: `About ${night.snowCm.toFixed(0)} cm of new snow. It loads the tent, hides the ground and raises avalanche danger on steep slopes.` });
+    else if (night.freezingLevelM !== undefined && t && night.freezingLevelM < t.elevation && night.precipMm >= 1) wx({ tone: 'warn', score: -1, title: 'Wet snow or ice possible', text: `The freezing level drops to about ${Math.round(night.freezingLevelM / 10) * 10} m, below the spot (${Math.round(t.elevation / 10) * 10} m), and precipitation is forecast.` });
+
+    // rain
+    if (night.precipMm >= 1) {
+      const p = night.maxPrecipProb !== undefined ? ` (up to ${Math.round(night.maxPrecipProb)} % chance)` : '';
+      wx({ tone: 'warn', score: night.precipMm >= 10 ? -3 : night.precipMm >= 5 ? -2 : -1, title: night.precipMm >= 10 ? 'Heavy rain forecast' : 'Rain forecast', text: `About ${night.precipMm.toFixed(1)} mm overnight${p}. Avoid hollows, stream beds and slopes that drain across the spot.` });
+    } else if (night.maxPrecipProb !== undefined && night.maxPrecipProb >= 50) {
+      wx({ tone: 'info', score: 0, title: 'Showers possible', text: `Up to ${Math.round(night.maxPrecipProb)} % chance of rain, but little expected (${night.precipMm.toFixed(1)} mm).` });
+    } else if (night.precipMm < 0.2) {
+      wx({ tone: 'ok', score: 1, title: 'Dry night forecast', text: 'No rain expected.' });
+    }
+
+    // fog and condensation
+    if (night.minDewSpreadC !== undefined && night.minDewSpreadC <= 1.5 && night.precipMm < 1) wx({ tone: 'info', score: 0, title: 'Fog or heavy condensation likely', text: 'The air will be saturated. Expect a wet tent and sleeping bag; use a ventilated pitch and keep gear dry.' });
   } else missing.push('overnight forecast');
 
   // crowds
@@ -132,8 +173,18 @@ export function comfortFor(input: ComfortInput): Comfort {
   }
 
   const score = f.reduce((a, x) => a + x.score, 0);
+  const weatherScore = f.filter((x) => x.wx).reduce((a, x) => a + x.score, 0);
   const good = f.filter((x) => x.score > 0).map((x) => x.title.toLowerCase());
   const bad = f.filter((x) => x.score < 0).map((x) => x.title.toLowerCase());
   const summary = [good.length ? `For: ${good.slice(0, 3).join(', ')}` : '', bad.length ? `Against: ${bad.slice(0, 3).join(', ')}` : ''].filter(Boolean).join('. ') || 'Nothing stands out either way';
-  return { rating: rate(score), score, summary, factors: f.map(({ score: _s, ...item }) => item), missing };
+  return {
+    rating: weatherStop ? 'poor' : rate(score),
+    spotRating: rate(score - weatherScore),
+    weatherScore,
+    weatherStop,
+    score,
+    summary,
+    factors: f.map(({ score: _s, wx: _w, ...item }) => item),
+    missing,
+  };
 }

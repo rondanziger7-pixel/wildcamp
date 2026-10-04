@@ -1,10 +1,11 @@
 :root {
+  --viz-temp: #eb6834; --viz-rain: #2a78d6; --viz-wind: #4a3aa7; --viz-grid: #e8ebe9;
   --green: #1f4d36; --bg: #fff; --fg: #1b1f1d; --muted: #5d6661; --line: #e2e6e3;
   --bad: #b3261e; --bad-bg: #fdecea; --warn: #8a5300; --warn-bg: #fff4e0;
   --ok: #17692f; --ok-bg: #e6f4ea; --unk: #44504a; --unk-bg: #eceff0;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #1a1e1c; --fg: #eef1ef; --muted: #a2aca6; --line: #323935;
+  :root { --viz-temp: #d95926; --viz-rain: #3987e5; --viz-wind: #9085e9; --viz-grid: #2b322e; --bg: #1a1e1c; --fg: #eef1ef; --muted: #a2aca6; --line: #323935;
     --bad: #ff8a80; --bad-bg: #3b1b18; --warn: #ffc266; --warn-bg: #3a2b0f;
     --ok: #7fd993; --ok-bg: #16301e; --unk: #c3cdc7; --unk-bg: #2a302d; }
 }
@@ -73,3 +74,36 @@ button { font: inherit; cursor: pointer; }
 .comfort-head.fair { background: var(--warn-bg); color: var(--warn); }
 .comfort-head.poor { background: var(--bad-bg); color: var(--bad); }
 .check.warn { border-left-color: #e08e0b; }
+
+.weather { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.wx-title { margin: 0 0 8px; font-size: 1.05rem; }
+.wx-picker { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+.wx-picker button { flex: none; border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 999px; padding: 6px 14px; font-size: .85rem; }
+.wx-picker button.on { background: var(--green); border-color: var(--green); color: #fff; }
+.wx-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.wx-tile { border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; display: flex; flex-direction: column; gap: 1px; }
+.wx-tile .wx-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.wx-tile strong { font-size: 1.15rem; }
+.wx-tile .wx-sub { font-size: .75rem; color: var(--muted); }
+.wx-tile.warn { border-color: #e08e0b; background: var(--warn-bg); }
+.wx-tile.bad { border-color: var(--bad); background: var(--bad-bg); }
+.wx-note { margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; background: var(--bad-bg); color: var(--bad); font-size: .85rem; font-weight: 600; }
+.wx-chart { margin: 12px 0 0; }
+.wx-chart figcaption { font-size: .8rem; font-weight: 600; margin-bottom: 2px; }
+.wx-plot { position: relative; border-radius: 8px; outline-offset: 2px; touch-action: pan-y; }
+.wx-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.wx-plot .grid { stroke: var(--viz-grid); stroke-width: 1; }
+.wx-plot .ref { stroke: var(--muted); stroke-width: 1; opacity: .7; }
+.wx-plot .tick { fill: var(--muted); font-size: 9px; }
+.wx-plot .line { fill: none; stroke: var(--c); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.wx-plot .bar { fill: var(--c); }
+.wx-plot .cross { stroke: var(--muted); stroke-width: 1; }
+.wx-plot .dot { fill: var(--c); stroke: var(--bg); stroke-width: 2; }
+.wx-tip { position: absolute; top: -6px; transform: translate(-50%, -100%); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; font-size: .78rem; box-shadow: 0 2px 8px #0003; pointer-events: none; white-space: nowrap; z-index: 2; }
+.wx-tip span, .wx-tip .sub { color: var(--muted); }
+.wx-details { margin-top: 10px; font-size: .8rem; }
+.wx-details summary { cursor: pointer; color: var(--muted); }
+.wx-table { border-collapse: collapse; width: 100%; margin-top: 6px; font-size: .75rem; }
+.wx-table th, .wx-table td { text-align: right; padding: 2px 4px; border-bottom: 1px solid var(--line); }
+.wx-table th:first-child, .wx-table td:first-child, .wx-table td:nth-child(2), .wx-table th:nth-child(2) { text-align: left; }
+.comfort-split { font-weight: 600; }

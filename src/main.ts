@@ -16,7 +16,8 @@ import { comfortFor, type Comfort } from './comfort/comfort';
 import { fetchSurroundings } from './comfort/surroundings';
 import { sunTimes } from './comfort/sun';
 import { analyseTerrain, fetchProfiles, FAR, NEAR } from './comfort/terrain';
-import { fetchForecast, nightWindow, summariseNight, zurichNow } from './comfort/weather';
+import { fetchForecast, nightWindows, summariseNight, windowHours, zurichNow, type Hourly } from './comfort/weather';
+import { renderWeather } from './weatherview';
 import { forestAt } from './forestmask';
 import { ZONE_LAYERS } from './zones';
 
@@ -143,18 +144,22 @@ function render(a: Assessment, lat: number, lng: number, elevation?: number) {
     }
   };
   actions.append(share);
+  const weather = el('section', 'weather');
   const comfort = el('section', 'comfort');
-  result.replaceChildren(banner, where, list, actions, comfort);
+  result.replaceChildren(banner, where, list, actions, weather, comfort);
   sheet.scrollTop = 0;
-  return comfort;
+  return { weather, comfort };
 }
 
-const RATING: Record<Comfort['rating'], string> = { great: 'Great spot to sleep', good: 'Good spot to sleep', fair: 'Okay spot to sleep', poor: 'Poor spot to sleep' };
+const RATING: Record<Comfort['rating'], string> = { great: 'Great for sleeping', good: 'Good for sleeping', fair: 'Okay for sleeping', poor: 'Poor for sleeping' };
 
-function renderComfort(host: HTMLElement, c: Comfort) {
+const RATING_WORD: Record<Comfort['rating'], string> = { great: 'great', good: 'good', fair: 'okay', poor: 'poor' };
+
+function renderComfort(host: HTMLElement, c: Comfort, nightLabel: string) {
   const head = el('div', `comfort-head ${c.rating}`);
   const title = el('div');
-  title.append(el('h2', undefined, RATING[c.rating]), el('p', undefined, c.summary));
+  const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
+  title.append(el('h2', undefined, `${RATING[c.rating]} · ${nightLabel.toLowerCase()}`), el('p', 'comfort-split', `The spot alone: ${RATING_WORD[c.spotRating]}. For this night ${wx}.`), el('p', undefined, c.summary));
   head.append(title);
   const list = el('ul', 'checks');
   const factors = [...c.factors].sort((x, y) => TONE_ORDER[x.tone] - TONE_ORDER[y.tone]);
@@ -182,11 +187,12 @@ function renderComfort(host: HTMLElement, c: Comfort) {
   host.replaceChildren(...parts);
 }
 
-/** Sleep comfort: terrain, forecast and surroundings, shown under the legal result once loaded. */
-async function loadComfort(host: HTMLElement, lat: number, lng: number, elevation: number | undefined, id: number) {
-  host.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
+/** Terrain, surroundings and forecast for a spot; the weather card and the comfort card follow the chosen night. */
+async function loadDetails(hosts: { weather: HTMLElement; comfort?: HTMLElement }, lat: number, lng: number, elevation: number | undefined, id: number) {
+  hosts.weather.replaceChildren(el('p', 'where', 'Loading the forecast…'));
+  hosts.comfort?.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
   const { e, n } = wgs84ToLv95(lat, lng);
-  const win = nightWindow(zurichNow(new Date()));
+  const windows = nightWindows(zurichNow(new Date()));
   const [near, far, around, forecast] = await Promise.allSettled([
     fetchProfiles(lat, lng, NEAR),
     fetchProfiles(lat, lng, FAR),
@@ -195,19 +201,37 @@ async function loadComfort(host: HTMLElement, lat: number, lng: number, elevatio
   ]);
   if (id !== checkId) return;
   const terrain = near.status === 'fulfilled' ? analyseTerrain(near.value, far.status === 'fulfilled' ? far.value : undefined) : undefined;
-  const night = forecast.status === 'fulfilled' ? summariseNight(forecast.value, win) : undefined;
   const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
-  const morning = new Date(`${win.to.slice(0, 10)}T12:00:00Z`);
-  renderComfort(
-    host,
-    comfortFor({
-      terrain,
-      night,
-      surroundings: around.status === 'fulfilled' ? around.value : undefined,
-      sun: sunTimes(morning, lat, lng, horizon),
-      inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
-    }),
-  );
+  const hourly: Hourly | undefined = forecast.status === 'fulfilled' ? forecast.value : undefined;
+  let selected = 0;
+  const paint = () => {
+    const w = windows[selected]!;
+    const night = hourly ? summariseNight(hourly, w) : undefined;
+    const comfort = hosts.comfort
+      ? comfortFor({
+          terrain,
+          night,
+          surroundings: around.status === 'fulfilled' ? around.value : undefined,
+          sun: sunTimes(new Date(`${w.to.slice(0, 10)}T12:00:00Z`), lat, lng, horizon),
+          inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
+        })
+      : undefined;
+    if (!hourly) hosts.weather.replaceChildren(el('h2', 'wx-title', 'Weather'), el('p', 'where', 'The forecast could not be loaded.'));
+    else
+      renderWeather(hosts.weather, {
+        windows,
+        selected,
+        night,
+        hours: windowHours(hourly, w),
+        note: comfort?.weatherStop ? 'This weather rules the night out, however good the spot is.' : undefined,
+        onSelect: (i) => {
+          selected = i;
+          paint();
+        },
+      });
+    if (hosts.comfort && comfort) renderComfort(hosts.comfort, comfort, w.label === 'Tonight' ? 'tonight' : w.label === 'Tomorrow' ? 'tomorrow night' : `${w.label} night`);
+  };
+  paint();
 }
 
 let marker: L.Marker | undefined;
@@ -247,10 +271,14 @@ async function checkSpot(lat: number, lng: number) {
       municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
       outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
   });
-  const comfortHost = render(assessment, lat, lng, elevation);
-  if (assessment.outside) comfortHost.remove();
-  else if (assessment.verdict === 'no') comfortHost.replaceChildren(el('p', 'where', 'Sleep comfort is not shown where camping is not allowed.'));
-  else void loadComfort(comfortHost, lat, lng, elevation, id);
+  const hosts = render(assessment, lat, lng, elevation);
+  if (assessment.outside) {
+    hosts.weather.remove();
+    hosts.comfort.remove();
+  } else if (assessment.verdict === 'no') {
+    hosts.comfort.replaceChildren(el('p', 'where', 'Sleep comfort is not shown where camping is not allowed.'));
+    void loadDetails({ weather: hosts.weather }, lat, lng, elevation, id);
+  } else void loadDetails(hosts, lat, lng, elevation, id);
 }
 
 map.on('click', (ev: L.LeafletMouseEvent) => {

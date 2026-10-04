@@ -124,7 +124,7 @@ describe('sun position and times against an independent library (astral)', () =>
 });
 
 describe('overnight forecast summary', () => {
-  const times = ['2026-10-04T19:00', '2026-10-04T20:00', '2026-10-04T23:00', '2026-10-05T02:00', '2026-10-05T06:00', '2026-10-05T07:00', '2026-10-05T12:00'];
+  const times = ['2026-10-04T17:00', '2026-10-04T18:00', '2026-10-04T23:00', '2026-10-05T02:00', '2026-10-05T07:00', '2026-10-05T08:00', '2026-10-05T12:00'];
   const hourly: Hourly = {
     time: times,
     temperature_2m: [9, 7, 4, -1, -3, -2, 5],
@@ -134,10 +134,10 @@ describe('overnight forecast summary', () => {
     precipitation: [0, 0, 0.5, 0.5, 0, 9, 9],
   };
   it('window: evening, night in progress, small hours', () => {
-    expect(nightWindow('2026-10-04T15:30')).toEqual({ from: '2026-10-04T20:00', to: '2026-10-05T07:00' });
-    expect(nightWindow('2026-10-04T21:10')).toEqual({ from: '2026-10-04T21:10', to: '2026-10-05T07:00' });
-    expect(nightWindow('2026-10-05T03:00')).toEqual({ from: '2026-10-05T03:00', to: '2026-10-05T07:00' });
-    expect(nightWindow('2026-12-31T22:00').to).toBe('2027-01-01T07:00');
+    expect(nightWindow('2026-10-04T15:30')).toMatchObject({ from: '2026-10-04T18:00', to: '2026-10-05T08:00', label: 'Tonight' });
+    expect(nightWindow('2026-10-04T21:10')).toMatchObject({ from: '2026-10-04T21:10', to: '2026-10-05T08:00' });
+    expect(nightWindow('2026-10-05T03:00')).toMatchObject({ from: '2026-10-05T03:00', to: '2026-10-05T08:00' });
+    expect(nightWindow('2026-12-31T22:00').to).toBe('2027-01-01T08:00');
   });
   it('summarises only the hours inside the window', () => {
     const n = summariseNight(hourly, nightWindow('2026-10-04T15:30'))!;
@@ -224,7 +224,7 @@ describe('comfort rating', () => {
     expect(f.text).toMatch(/Cabane X/);
   });
   it('strong forecast wind is bad where open to it and fine where sheltered', () => {
-    const night = { from: 'a', to: 'b', minTempC: 5, maxGustKmh: 70, meanWindKmh: 40, windFromDeg: 270, precipMm: 0 };
+    const night = { from: 'a', to: 'b', minTempC: 5, maxGustKmh: 70, meanWindKmh: 40, windFromDeg: 270, precipMm: 0, thunder: false };
     const open = [10, 10, 10, 10, 10, 10, 2, 10]; // W is open
     const shelt = [10, 10, 10, 10, 10, 10, 25, 10];
     const a = comfortFor({ terrain: terrain({ horizon: open }), night });
@@ -234,7 +234,7 @@ describe('comfort rating', () => {
     expect(a.score).toBeLessThan(b.score);
   });
   it('rain and frost are reported', () => {
-    const c = comfortFor({ night: { from: 'a', to: 'b', minTempC: -9, maxGustKmh: 10, meanWindKmh: 5, windFromDeg: 0, precipMm: 6 } });
+    const c = comfortFor({ night: { from: 'a', to: 'b', minTempC: -9, maxGustKmh: 10, meanWindKmh: 5, windFromDeg: 0, precipMm: 6, thunder: false } });
     expect(c.factors.map((f) => f.title)).toEqual(expect.arrayContaining(['Low of -9 °C', 'Rain forecast']));
     expect(c.rating).toBe('poor');
   });
@@ -254,6 +254,6 @@ describe('comfort rating', () => {
     expect(c.factors.some((f) => /^Morning sun at/.test(f.title))).toBe(true);
   });
   it('rating thresholds', () => {
-    expect([4, 3, 2, 1, 0, -1, -2].map(rate)).toEqual(['great', 'great', 'good', 'good', 'fair', 'fair', 'poor']);
+    expect([5, 4, 3, 2, 1, 0, -1, -2].map(rate)).toEqual(['great', 'great', 'good', 'good', 'fair', 'fair', 'fair', 'poor']);
   });
 });
