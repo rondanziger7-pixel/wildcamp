@@ -13,11 +13,11 @@ import { fetchJuraReserves } from './jura';
 import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { searchPlaces, type Place } from './search';
 import { comfortFor } from './comfort/comfort';
-import { fetchWater } from './comfort/water';
+import { fetchWater, type WaterInfo } from './comfort/water';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
-import { fetchSurroundings } from './comfort/surroundings';
+import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
 import { sunTimes } from './comfort/sun';
-import { analyseTerrain, fetchProfiles, FAR, NEAR } from './comfort/terrain';
+import { analyseTerrain, fetchProfiles, FAR, NEAR, type Profiles, type TerrainMetrics } from './comfort/terrain';
 import { fetchForecast, nightWindows, summariseNight, windowHours, zurichNow, type Hourly } from './comfort/weather';
 import { renderWeather } from './weatherview';
 import { forestAt } from './forestmask';
@@ -60,7 +60,7 @@ trailOverlay.addTo(map);
 // Local data (forest map 3.7 MB, reserves, treeline surface) loads in the background. A check waits for it (up to
 // DATA_WAIT_MS), so a deep link or an early tap is not judged without the forest map or the reserve polygons.
 const loading: Promise<unknown>[] = [];
-const DATA_WAIT_MS = 20000;
+const DATA_WAIT_MS = 6000;
 let forestMask: ForestMask | undefined;
 loading.push(
   loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
@@ -83,7 +83,8 @@ loading.push(
     .then((t) => (treelineSurface = t))
     .catch((err) => console.warn('treeline surface failed to load', err)),
 );
-const dataReady = Promise.all(loading);
+let dataLoaded = false;
+const dataReady = Promise.all(loading).then(() => (dataLoaded = true));
 
 const sheet = document.getElementById('sheet')!;
 const result = document.getElementById('result')!;
@@ -93,51 +94,65 @@ function showLoading() {
   result.hidden = false;
   result.replaceChildren();
   const p = el('p', 'where');
-  p.append(el('span', 'spinner'), 'Checking this spot…');
+  p.append(el('span', 'spinner'), dataLoaded ? 'Checking this spot…' : 'Checking this spot (loading the map data for the first time)…');
   result.append(p);
 }
 
-/** Terrain, surroundings, water and forecast for a spot; the sleep score, water chip and weather card follow the chosen night. */
-async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number) {
+/** Rejects after `ms`, so one stalled request cannot hold up a whole check. */
+function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([p, new Promise<never>((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+}
+
+const CHECK_BUDGET_MS = 10000;
+/** Longest any one part may take; a slow forecast service should not hold the final score for the whole budget. */
+const PART_MS = 6000;
+
+/**
+ * Terrain, surroundings, water and forecast for a spot. Every part is requested at once with a shared deadline
+ * (about 10 s from the tap): the sleep score appears as soon as the main parts are in, refreshes as the rest
+ * arrives, and anything still missing at the deadline is dropped and listed as not checked.
+ */
+async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number, tappedAt: number) {
   ui.setSleepLoading();
   ui.weatherHost.replaceChildren(el('p', 'where', 'Loading the forecast…'));
   const { e, n } = wgs84ToLv95(lat, lng);
   const windows = nightWindows(zurichNow(new Date()));
-  const [near, far, around, water, forecast] = await Promise.allSettled([
-    fetchProfiles(lat, lng, NEAR),
-    fetchProfiles(lat, lng, FAR),
-    fetchSurroundings(lat, lng),
-    fetchWater(lat, lng),
-    fetchForecast(lat, lng, elevation),
-  ]);
-  if (id !== checkId) return;
-  const terrain = near.status === 'fulfilled' ? analyseTerrain(near.value, far.status === 'fulfilled' ? far.value : undefined) : undefined;
-  const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
-  const hourly: Hourly | undefined = forecast.status === 'fulfilled' ? forecast.value : undefined;
-  const waterInfo = water.status === 'fulfilled' ? water.value : undefined;
-  ui.setWater(waterInfo, water.status === 'rejected');
+  const abort = new AbortController();
+  const budget = Math.max(3000, tappedAt + CHECK_BUDGET_MS - Date.now());
+  const deadline = window.setTimeout(() => abort.abort(), budget);
+
+  const got: { terrain?: TerrainMetrics; far?: Profiles; near?: Profiles; around?: Partial<Surroundings>; water?: WaterInfo; hourly?: Hourly } = {};
+  const done = { near: false, far: false, around: false, water: false, forecast: false };
+  const failed = { water: false, forecast: false };
   let selected = 0;
+
   const paint = () => {
+    if (id !== checkId) return;
     const w = windows[selected]!;
-    const night = hourly ? summariseNight(hourly, w) : undefined;
+    const night = got.hourly ? summariseNight(got.hourly, w) : undefined;
     const nightName = w.label === 'Tonight' ? 'tonight' : w.label === 'Tomorrow' ? 'tomorrow night' : `${w.label} night`;
+    const terrain = got.near ? analyseTerrain(got.near, got.far) : undefined;
+    const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
+    // the far profile only refines the sun times, so the score does not wait for it
+    const waiting = [!done.near && 'terrain', !done.around && 'trails and huts', !done.water && 'water', !done.forecast && 'forecast'].filter(Boolean) as string[];
     const comfort = comfortFor({
       terrain,
       night,
-      surroundings: around.status === 'fulfilled' ? around.value : undefined,
-      water: waterInfo,
+      surroundings: got.around,
+      water: got.water,
       sun: sunTimes(new Date(`${w.to.slice(0, 10)}T12:00:00Z`), lat, lng, horizon),
       inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
     });
-    ui.setSleep(comfort, nightName);
-    ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, !hourly);
-    if (!hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', 'Weather'), el('p', 'where', 'The forecast could not be loaded.'));
+    if (waiting.length < 4 || done.near) ui.setSleep(comfort, nightName, waiting);
+    ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, done.forecast && !got.hourly);
+    if (!done.forecast) return;
+    if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', 'Weather'), el('p', 'where', 'The forecast could not be loaded.'));
     else
       renderWeather(ui.weatherHost, {
         windows,
         selected,
         night,
-        hours: windowHours(hourly, w),
+        hours: windowHours(got.hourly, w),
         note: comfort.weatherStop ? 'This weather rules the night out, however good the spot is.' : undefined,
         onSelect: (i) => {
           selected = i;
@@ -145,7 +160,25 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
         },
       });
   };
-  paint();
+
+  const track = <T,>(key: keyof typeof done, p: Promise<T>, onValue: (v: T) => void, onFail?: () => void) =>
+    p
+      .then(onValue)
+      .catch(() => onFail?.())
+      .finally(() => {
+        done[key] = true;
+        paint();
+      });
+
+  const parts = [
+    track('near', withTimeout(fetchProfiles(lat, lng, NEAR, abort.signal), PART_MS), (v) => (got.near = v)),
+    track('far', withTimeout(fetchProfiles(lat, lng, FAR, abort.signal), PART_MS + 2000), (v) => (got.far = v)),
+    track('around', withTimeout(fetchSurroundings(lat, lng, abort.signal), PART_MS), (v) => (got.around = v)),
+    track('water', withTimeout(fetchWater(lat, lng, abort.signal), PART_MS), (v) => { got.water = v; ui.setWater(v); }, () => { failed.water = true; ui.setWater(undefined, true); }),
+    track('forecast', withTimeout(fetchForecast(lat, lng, elevation, abort.signal), PART_MS), (v) => (got.hourly = v), () => (failed.forecast = true)),
+  ];
+  await Promise.allSettled(parts);
+  window.clearTimeout(deadline);
 }
 
 let marker: L.Marker | undefined;
@@ -153,6 +186,7 @@ let checkId = 0;
 
 async function checkSpot(lat: number, lng: number) {
   const id = ++checkId;
+  const tappedAt = Date.now();
   marker?.remove();
   marker = L.marker([lat, lng]).addTo(map);
   history.replaceState(null, '', `#${lat.toFixed(5)},${lng.toFixed(5)},${map.getZoom()}`);
@@ -164,14 +198,16 @@ async function checkSpot(lat: number, lng: number) {
   }
   showLoading();
   const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
+  const LOOKUP_MS = 7000;
+  const dataWait = Promise.race([dataReady, new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
   const [elev, zones, canton, muni, jura] = await Promise.allSettled([
-    fetchElevation(lat, lng),
-    fetchZoneHits(lat, lng),
-    fetchCanton(lat, lng),
-    fetchMunicipality(lat, lng),
-    inJura ? fetchJuraReserves(lat, lng) : Promise.resolve([]),
+    withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
+    withTimeout(fetchZoneHits(lat, lng), LOOKUP_MS),
+    withTimeout(fetchCanton(lat, lng), LOOKUP_MS),
+    withTimeout(fetchMunicipality(lat, lng), LOOKUP_MS),
+    inJura ? withTimeout(fetchJuraReserves(lat, lng), LOOKUP_MS) : Promise.resolve([]),
   ]);
-  await Promise.race([dataReady, new Promise((r) => setTimeout(r, DATA_WAIT_MS))]);
+  await dataWait;
   if (id !== checkId) return; // a newer tap superseded this one
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
   const { e, n } = wgs84ToLv95(lat, lng);
@@ -194,7 +230,7 @@ async function checkSpot(lat: number, lng: number) {
   sheet.dataset.state = 'result';
   const ui = renderResult(result, assessment, elevation);
   sheet.scrollTop = 0;
-  void loadDetails(ui, lat, lng, elevation, id);
+  void loadDetails(ui, lat, lng, elevation, id, tappedAt);
 }
 
 map.on('click', (ev: L.LeafletMouseEvent) => {

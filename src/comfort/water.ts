@@ -100,7 +100,7 @@ export function upstreamPlants(body: { results?: { attributes?: Record<string, u
   return out.sort((p, q) => p.meters - q.meters);
 }
 
-async function identify(layer: string, e: number, n: number, toleranceM: number, geometry: boolean) {
+async function identify(layer: string, e: number, n: number, toleranceM: number, geometry: boolean, signal?: AbortSignal) {
   // The service takes the tolerance in screen pixels, so a virtual 1000 px map is scaled to give `toleranceM` metres.
   const mPerPx = Math.max(1, toleranceM / 400);
   const half = 500 * mPerPx;
@@ -116,24 +116,24 @@ async function identify(layer: string, e: number, n: number, toleranceM: number,
     lang: 'en',
   });
   if (geometry) q.set('geometryFormat', 'geojson');
-  const res = await fetch(`${API}/api/MapServer/identify?${q}`);
+  const res = await fetch(`${API}/api/MapServer/identify?${q}`, { signal });
   if (!res.ok) throw new Error(`${layer} ${res.status}`);
   return (await res.json()) as { results?: never[] };
 }
 
-async function heightLv95(e: number, n: number): Promise<number> {
-  const res = await fetch(`${API}/height?${new URLSearchParams({ easting: String(e), northing: String(n), sr: '2056' })}`);
+async function heightLv95(e: number, n: number, signal?: AbortSignal): Promise<number> {
+  const res = await fetch(`${API}/height?${new URLSearchParams({ easting: String(e), northing: String(n), sr: '2056' })}`, { signal });
   if (!res.ok) throw new Error(`height ${res.status}`);
   return Number(((await res.json()) as { height: string }).height);
 }
 
 /** Nearest water to a spot, whether glacier ice is near it, and whether a treatment plant discharges upstream of it. */
-export async function fetchWater(lat: number, lon: number): Promise<WaterInfo> {
+export async function fetchWater(lat: number, lon: number, signal?: AbortSignal): Promise<WaterInfo> {
   const { e, n } = wgs84ToLv95(lat, lon);
   const info: WaterInfo = { kind: 'none', meters: Infinity, upstreamPlants: [], failed: [] };
   let found: ReturnType<typeof nearestWater>;
   try {
-    found = nearestWater((await identify('ch.swisstopo.swisstlm3d-gewaessernetz', e, n, SEARCH_M, true)) as never, e, n);
+    found = nearestWater((await identify('ch.swisstopo.swisstlm3d-gewaessernetz', e, n, SEARCH_M, true, signal)) as never, e, n);
   } catch {
     info.failed.push('water');
     return info;
@@ -141,22 +141,23 @@ export async function fetchWater(lat: number, lon: number): Promise<WaterInfo> {
   if (!found) return info;
   Object.assign(info, { kind: found.kind, name: found.name, meters: found.meters });
   const [we, wn] = found.point as [number, number];
+  const gl = 'ch.swisstopo.geologie-gletscherausdehnung';
 
-  try {
-    const close = (await identify('ch.swisstopo.geologie-gletscherausdehnung', we, wn, GLACIER_CLOSE_M, false)).results ?? [];
-    if (close.length) info.glacierM = GLACIER_CLOSE_M;
-    else if (((await identify('ch.swisstopo.geologie-gletscherausdehnung', we, wn, GLACIER_NEAR_M, false)).results ?? []).length) info.glacierM = GLACIER_NEAR_M;
-  } catch {
-    info.failed.push('glacier');
-  }
-
-  if (found.kind === 'stream' && found.gwl) {
-    try {
-      const [plants, z] = await Promise.all([identify('ch.bafu.gewaesserschutz-klaeranlagen_reinigungstyp', we, wn, ARA_SEARCH_M, false), heightLv95(we, wn)]);
-      info.upstreamPlants = upstreamPlants(plants as never, found.gwl, z, we, wn);
-    } catch {
-      info.failed.push('plants');
-    }
-  }
+  // glacier checks and the treatment-plant check do not depend on each other, so they run together
+  const [close, near, plants] = await Promise.allSettled([
+    identify(gl, we, wn, GLACIER_CLOSE_M, false, signal),
+    identify(gl, we, wn, GLACIER_NEAR_M, false, signal),
+    found.kind === 'stream' && found.gwl
+      ? Promise.all([identify('ch.bafu.gewaesserschutz-klaeranlagen_reinigungstyp', we, wn, ARA_SEARCH_M, false, signal), heightLv95(we, wn, signal)])
+      : Promise.resolve(undefined),
+  ]);
+  if (close.status === 'fulfilled' && near.status === 'fulfilled') {
+    if ((close.value.results ?? []).length) info.glacierM = GLACIER_CLOSE_M;
+    else if ((near.value.results ?? []).length) info.glacierM = GLACIER_NEAR_M;
+  } else if (close.status === 'fulfilled' && (close.value.results ?? []).length) info.glacierM = GLACIER_CLOSE_M;
+  else info.failed.push('glacier');
+  if (plants.status === 'fulfilled') {
+    if (plants.value) info.upstreamPlants = upstreamPlants(plants.value[0] as never, found.gwl, plants.value[1], we, wn);
+  } else info.failed.push('plants');
   return info;
 }

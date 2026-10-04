@@ -32,20 +32,20 @@ export function parseProfile(body: unknown): number[] {
   return (body as ProfilePoint[]).map((p) => p.alts?.COMB ?? p.alts?.DTM2 ?? p.alts?.DTM25 ?? Number.NaN);
 }
 
-async function fetchLine(e: number, n: number, dir: readonly [number, number], radius: number, points: number): Promise<number[]> {
+async function fetchLine(e: number, n: number, dir: readonly [number, number], radius: number, points: number, signal?: AbortSignal): Promise<number[]> {
   const geom = { type: 'LineString', coordinates: [[e - radius * dir[0], n - radius * dir[1]], [e + radius * dir[0], n + radius * dir[1]]] };
   const q = new URLSearchParams({ geom: JSON.stringify(geom), sr: '2056', nbPoints: String(points) });
-  const res = await fetch(`https://api3.geo.admin.ch/rest/services/profile.json?${q}`);
+  const res = await fetch(`https://api3.geo.admin.ch/rest/services/profile.json?${q}`, { signal });
   if (!res.ok) throw new Error(`profile ${res.status}`);
   const z = parseProfile(await res.json());
   if (z.length !== points) throw new Error('unexpected profile length');
   return z;
 }
 
-export async function fetchProfiles(lat: number, lon: number, set: { radius: number; points: number }): Promise<Profiles> {
+export async function fetchProfiles(lat: number, lon: number, set: { radius: number; points: number }, signal?: AbortSignal): Promise<Profiles> {
   const { e, n } = wgs84ToLv95(lat, lon);
   const [ew, ns, nesw, nwse] = await Promise.all(
-    (Object.values(LINES) as (readonly [number, number])[]).map((d) => fetchLine(e, n, d, set.radius, set.points)),
+    (Object.values(LINES) as (readonly [number, number])[]).map((d) => fetchLine(e, n, d, set.radius, set.points, signal)),
   );
   return { step: (2 * set.radius) / (set.points - 1), ew: ew!, ns: ns!, nesw: nesw!, nwse: nwse! };
 }

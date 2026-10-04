@@ -62,7 +62,8 @@ export interface ResultUi {
   /** Where the weather card is drawn. */
   weatherHost: HTMLElement;
   setSleepLoading(): void;
-  setSleep(c: Comfort, nightLabel: string): void;
+  /** `loading` names the data still on its way; the score is shown meanwhile and refreshed as it arrives. */
+  setSleep(c: Comfort, nightLabel: string, loading?: string[]): void;
   setSleepUnavailable(why: string): void;
   setWater(w: WaterInfo | undefined, failed?: boolean): void;
   setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
@@ -157,15 +158,16 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       sleep.set({ tone: 'none' }, 'Checking…');
       sleepPanel.replaceChildren(el('p', 'where', 'Checking sleep comfort…'));
     },
-    setSleep(c, nightLabel) {
+    setSleep(c, nightLabel, loading = []) {
       const s = sleepScore(c);
-      sleep.set(s, RATING_SHORT[c.rating]);
+      sleep.set(s, loading.length ? `${RATING_SHORT[c.rating]} …` : RATING_SHORT[c.rating]);
       const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
       const head = el('div', `comfort-head ${c.rating}`);
       const t = el('div');
       t.append(el('h2', undefined, `${RATING[c.rating]} · ${nightLabel}`), el('p', 'comfort-split', `The spot alone: ${RATING_WORD[c.spotRating]}. For this night ${wx}.`), el('p', undefined, c.summary));
       head.append(t);
       const parts: Node[] = [];
+      if (loading.length) parts.push(el('p', 'panel-lead', `Still checking: ${loading.join(', ')}. The score updates when they arrive.`));
       if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', 'Camping is not allowed here, so this only shows what the spot would be like.'));
       parts.push(head, ...checklist(c.factors, 'comfort details'));
       if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));

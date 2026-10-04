@@ -119,7 +119,7 @@ export function parseStops(body: { results?: Feature[] }, e: number, n: number):
   return nearest(out);
 }
 
-async function identify(layer: string, e: number, n: number, tolerance: number) {
+async function identify(layer: string, e: number, n: number, tolerance: number, signal?: AbortSignal) {
   const q = new URLSearchParams({
     geometryType: 'esriGeometryPoint',
     geometry: `${e},${n}`,
@@ -132,18 +132,18 @@ async function identify(layer: string, e: number, n: number, tolerance: number) 
     geometryFormat: 'geojson',
     lang: 'en',
   });
-  const res = await fetch(`${API}?${q}`);
+  const res = await fetch(`${API}?${q}`, { signal });
   if (!res.ok) throw new Error(`${layer} ${res.status}`);
   return (await res.json()) as { results?: Feature[] };
 }
 
 /** Looks up trails, water, huts, stops and settlements around a spot. Each part fails on its own. */
-export async function fetchSurroundings(lat: number, lon: number): Promise<Partial<Surroundings>> {
+export async function fetchSurroundings(lat: number, lon: number, signal?: AbortSignal): Promise<Partial<Surroundings>> {
   const { e, n } = wgs84ToLv95(lat, lon);
   const [trails, names, stops] = await Promise.allSettled([
-    identify('ch.swisstopo.swisstlm3d-wanderwege', e, n, 300),
-    identify('ch.swisstopo.swissnames3d', e, n, 400),
-    identify('ch.bav.haltestellen-oev', e, n, 500),
+    identify('ch.swisstopo.swisstlm3d-wanderwege', e, n, 300, signal),
+    identify('ch.swisstopo.swissnames3d', e, n, 400, signal),
+    identify('ch.bav.haltestellen-oev', e, n, 500, signal),
   ]);
   const out: Partial<Surroundings> = {};
   // A successful lookup that finds nothing within the radius is Infinity; undefined means the lookup failed.
