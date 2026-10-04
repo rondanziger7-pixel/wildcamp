@@ -4,7 +4,8 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 
 ## What it checks
 1. **Protected zones** (national park, federal hunting reserves, wildlife quiet zones, floodplains, bogs, fens, dry meadows, amphibian sites; plus federal waterbird reserves and Pro Natura reserves, which only trigger a "Caution") via the geo.admin.ch `identify` API. See `src/zones.ts`.
-2. **Forest / treeline**: a forest map built from swissTLM3D forest polygons (`public/forest-mask.bin.gz`, 25 m grid, 3.7 MB, loaded by the browser at startup) combined with elevation. See `src/treeline.ts`:
+2. **Cantonal nature reserves** (only Bern and Jura so far): Bern's 244 reserves are bundled as polygons (`public/reserves-be.json.gz`, 132 KB). Each reserve's protection decree was downloaded and searched for camping or tenting clauses: 155 prohibit camping (→ "Not allowed", with the decree link), the other 89 are "Caution" because the readable text has none or the decree is a scan with no text layer (15). The scan is automated and spot-checked, not read line by line; see `docs/sources/BE/reserves_decree_scan.csv`. Jura reserves are queried live from the canton's WMS and tested against the returned polygon; the canton states overnighting outside campsites is banned in all its nature reserves. Other cantons' reserves are not covered.
+3. **Forest / treeline**: a forest map built from swissTLM3D forest polygons (`public/forest-mask.bin.gz`, 25 m grid, 3.7 MB, loaded by the browser at startup) combined with elevation. See `src/treeline.ts`:
    - in forest (closed, open, or shrub forest) → `forest`
    - otherwise compare elevation with the **local upper forest limit** (`public/treeline-surface.bin.gz`, 1 km grid, 29 KB): ≥ limit + 100 m → `above`; < limit − 100 m → `below`; within ±100 m → `unknown`
    - where there is no local estimate (no forest within 5 km): fixed bands — below 1500 m → `below`; forest within 500 m → `unknown`; ≥ 1800 m → `above`; else `unknown`
@@ -13,7 +14,9 @@ Tap a spot on the map and see whether wild camping there is likely allowed in Sw
 
    If the forest map fails to load, it falls back to an elevation-only estimate and says so.
 
-3. **Canton** (swissBOUNDARIES3D) shown for every spot, with its camping rule where one has been read from the primary text. Currently recorded: OW, NW, TI, VD, SG, AI; the others show "cantonal rules are not verified". A `banned` rule forces "Not allowed" and `restricted` caps at "Caution". Rules live in `src/cantons.ts`; tests require an official cantonal/federal source, a check date and the saved source text under `docs/sources/`. See `docs/CANTON_RESEARCH.md`.
+4. **Canton** (swissBOUNDARIES3D) shown for every spot, with its camping rule where one has been read from the primary text. Currently recorded: OW, NW, TI, VD, SG, AI; the others show "cantonal rules are not verified". A `banned` rule forces "Not allowed" and `restricted` caps at "Caution". Rules live in `src/cantons.ts`; tests require an official cantonal/federal source, a check date and the saved source text under `docs/sources/`. See `docs/CANTON_RESEARCH.md`.
+
+5. **Municipality** (swissBOUNDARIES3D) is shown for every spot. Municipal rules are verified for the City of Bern only (Campingverordnung SSSB 732.221: ban on the city's public ground outside designated areas; it cannot tell public from private ground, so it only caps at "Caution"). Everywhere else the app tells users to look up the municipality's police regulations. Entries live in `src/municipalities.ts` under the same source gate as cantonal rules.
 
 Verdicts are `Not allowed`, `Caution`, `Likely OK` or `Unknown`. The app never says "legal".
 
@@ -32,8 +35,9 @@ Also verified: the API sends `access-control-allow-origin: *`, and the built app
 
 ## To do
 - [ ] **Remaining canton rules**: 20 of 26 have no recorded rule. For GR, VS, BE, FR, JU, UR, NE, LU, SZ and ZH the cantonal texts were read and contain no general rule for a hiker's tent (municipal rules decide); GE, BS, AG, AR, BL, GL, SH, SO, TG and ZG are unresolved. See `docs/CANTON_RESEARCH.md`.
-- [ ] **Cantonal nature reserves** are still not covered. Checked and ruled out as national sources: swissTLM3D `TLM_SCHUTZGEBIET` (national park only), swissTLMRegio protected areas (coarse parks), geo.admin.ch layers (federal inventories, Pro Natura, bird reserves only). Cantons publish their own reserve geodata (e.g. Bern, Jura), so this needs per-canton integration. Jura, Bern and others ban camping in their reserves, so a spot inside one can still read "Likely OK".
-- [ ] Municipal rules and the municipality name for each spot.
+- [ ] **Cantonal nature reserves in the other 24 cantons.** Bern and Jura are done. No national dataset exists (checked: swissTLM3D `TLM_SCHUTZGEBIET` is the national park only; swissTLMRegio protected areas are coarse parks; the geo.admin.ch layers are federal inventories, Pro Natura and bird reserves). Each canton publishes its own geodata, e.g. Bern's ArcGIS service; some cantonal services block scripted access.
+- [ ] Bern reserves whose decrees are scans (15) or have no readable camping clause (74) could be read by a person or OCR'd to upgrade them from "Caution" to a definite answer.
+- [ ] Municipal rules beyond the City of Bern (about 2,100 municipalities; no national dataset).
 - [ ] Add GPS "my location" and offline caching (PWA).
 - [ ] Use quiet-zone protection season to show "restricted only 21.12.–30.04." instead of a flat no.
 

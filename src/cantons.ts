@@ -147,6 +147,12 @@ const OFFICIAL_HOST: Record<string, string> = { JU: 'jura.ch' };
 
 /** Problems that stop a rule from being accepted; an empty list means it is fine. */
 export function validateRule(canton: Canton, rule: CantonRule): string[] {
+  const own = OFFICIAL_HOST[canton.code] ?? `${canton.code.toLowerCase()}.ch`;
+  return validateRuleAt([own, 'admin.ch'], canton.name, rule);
+}
+
+/** Same checks against an explicit list of official hosts (used for municipal rules). */
+export function validateRuleAt(officialHosts: string[], label: string, rule: CantonRule): string[] {
   const problems: string[] = [];
   if (!['banned', 'restricted', 'tolerated'].includes(rule.stance)) problems.push('unknown stance');
   if (rule.summary.trim() === '') problems.push('empty summary');
@@ -154,7 +160,6 @@ export function validateRule(canton: Canton, rule: CantonRule): string[] {
     problems.push('checkedOn must be a valid YYYY-MM-DD date');
   }
   if (rule.sources.length === 0) problems.push('needs at least one source');
-  const own = OFFICIAL_HOST[canton.code] ?? `${canton.code.toLowerCase()}.ch`;
   for (const src of rule.sources) {
     let host: string;
     try {
@@ -165,8 +170,8 @@ export function validateRule(canton: Canton, rule: CantonRule): string[] {
       problems.push(`invalid source url: ${src.url}`);
       continue;
     }
-    const official = [own, 'admin.ch'].some((d) => host === d || host.endsWith(`.${d}`));
-    if (!official) problems.push(`not an official ${canton.name} or federal source: ${src.url}`);
+    const official = officialHosts.some((d) => host === d || host.endsWith(`.${d}`));
+    if (!official) problems.push(`not an official ${label} or federal source: ${src.url}`);
   }
   return problems;
 }

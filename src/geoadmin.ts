@@ -81,3 +81,47 @@ export function parseCanton(body: { results?: IdentifyResult[] }): Canton | unde
   const code = str(body.results?.[0]?.attributes?.ak);
   return findCanton(code);
 }
+
+export interface Municipality {
+  name: string;
+  /** BFS municipality number. */
+  bfs: number;
+  /** Two-letter canton code as reported by swissBOUNDARIES3D. */
+  canton: string;
+}
+
+/** Current municipality at a point. The layer holds every historical year, so a year is passed to get one result. */
+export async function fetchMunicipality(
+  lat: number,
+  lon: number,
+  year = new Date().getFullYear(),
+): Promise<Municipality | undefined> {
+  const { e, n } = wgs84ToLv95(lat, lon);
+  for (const y of [year, year - 1]) {
+    const params = new URLSearchParams({
+      geometry: `${e},${n}`,
+      geometryType: 'esriGeometryPoint',
+      sr: '2056',
+      layers: 'all:ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill',
+      timeInstant: String(y),
+      tolerance: '0',
+      mapExtent: `${e - 100},${n - 100},${e + 100},${n + 100}`,
+      imageDisplay: '200,200,96',
+      returnGeometry: 'false',
+      lang: 'en',
+    });
+    const res = await fetch(`${API}/api/MapServer/identify?${params}`);
+    if (!res.ok) throw new Error(`municipality ${res.status}`);
+    const m = parseMunicipality(await res.json());
+    if (m) return m;
+  }
+  return undefined;
+}
+
+export function parseMunicipality(body: { results?: IdentifyResult[] }): Municipality | undefined {
+  const a = body.results?.find((r) => r.attributes?.is_current_jahr !== false)?.attributes;
+  const name = str(a?.gemname);
+  const bfs = Number(a?.gde_nr);
+  const canton = str(a?.kanton);
+  return name && Number.isFinite(bfs) && canton ? { name, bfs, canton } : undefined;
+}

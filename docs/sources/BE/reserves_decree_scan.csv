@@ -1,0 +1,245 @@
+nsg_nr,name,decree_scan,app_level,decree_url
+1,Bözingenberg-Taubenlochschlucht,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/001_Sb_Boezingenberg-Taubenlochschlucht_1974.pdf
+2,Combe-Grède,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/002_Sb_Combe-Grede_1957.pdf
+3,St. Petersinsel -Heidenweg,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/003_Sb_Petersinsel_DundF_1989.pdf
+4,Meienriedloch,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/004_Sb_Meienriedloch_1934.pdf
+5,Grimsel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/005_Sb_Grimsel_1989.pdf
+6,Elfenau,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/006_Sb_Elfenau_1936.pdf
+7,Lörmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/007_Sb_Loermoos_1983.pdf
+8,Spiezberg,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/008_Sb_Spiezberg_1987.pdf
+9,Gwattlischenmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/009_Sb_Gwattlischenmoos_1980.pdf
+10,Derrière la Gruère,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/010_Sb_Derriere_laGruere_2000.pdf
+11,Weissenau-Neuhaus,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/011_Sb_Weissenau-Neuhaus_1992.pdf
+12,Chlepfibeerimoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/012_Sb_Chlepfibeerimoos_1944.pdf
+13,Hohgant-Seefeld,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/013_Sb_Hohgant-Seefeld_1974.pdf
+14,Fisi-Biberg-Fründen,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/014_Sb_Fisi-Biberg-Fruenden_1944.pdf
+15,Mürgelibrunnen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/015_Sb_Muergelibrunnen_1972.pdf
+16,Vieille Birse,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/016_Sb_Vieille_Birse_1979.pdf
+17,Rotmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/017_Sb_Rotmoos-Breitwangmoos_1987.pdf
+18,Seelhofenzopfen,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/018_Sb_Seelhofenzopfen_1953.pdf
+19,Seeliswald,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/019_Sb_Seeliswald_2004.pdf
+20,Les Pontins,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/020_Sb_Les_Pontins_2005.pdf
+21,Engstligenfälle,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/021_Sb_Engstligenfaelle_1948.pdf
+22,Lehnfluh,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/022_Sb_Lehnfluh_1950.pdf
+23,Giessbachfälle,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/023_Sb_Giessbachfaelle_1950.pdf
+24,Fanel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/024_Sb_Fanel_1967.pdf
+25,Felsenheide bei Pieterlen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/025_Sb_Felsenheide-Pieterlen_1984.pdf
+26,Gysnauflühe,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/026_Sb_Gysnaufluehe_2007.pdf
+27,Torfhölzli bei Niedermuhlern,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/027_Sb_Torfhoezli-Niedermuhlern_1952.pdf
+28,Mörigenbucht,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/028_Sb_Moerigenbucht_DundF_1979.pdf
+29,Kleiner Moossee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/029_Sb_Kl_Moossee_1979.pdf
+30,Hagneck,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/030_Sb_Hagneck_1954.pdf
+31,Lobsigensee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/031_Sb_Lobsigensee_2023.pdf
+32,Burgäschisee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/032_Sb_Burgaeschisee_1956.pdf
+33,Felseck,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/033_Sb_Felseck_1956.pdf
+35,Gelten-Iffigen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/035_Sb_Gelten-Iffigen_1969__Sb_Lauenensee_1995.pdf
+36,Burgseeli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/036_Sb_Burgseeli_1993.pdf
+37,Totes Mädli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/037_Sb_Totes_Maedli_1958.pdf
+38,Seestrand Lüscherz,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/038_Sb_Seestrand-Luescherz_1972.pdf
+39,Hinteres Lauterbrunnental,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/039_Sb_Hint_Lauterbrunnental_1960.pdf
+40,Gumi,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/040_Sb_Gumi_Auswil_1980.pdf
+41,Wengimoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/041_Sb_Wengimoos_1961.pdf
+42,"Stock, Kandersteg",silent,caution,https://oerebfiles.apps.be.ch/9986/7138/042_Sb_Stock_1961.pdf
+43,Alte Aare,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/043_Sb_Alte_Aare_2009.pdf
+44,Stauweiher Spiez,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/044_Sb_Stauweiher_Spiez_1980.pdf
+45,Amletentäli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/045_Sb_Amletentaeli_1962.pdf
+46,Gals,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/046_Sb_Gals_1963.pdf
+47,Grosser Moossee,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/047_Sb_Grosser_Moossee_2009.pdf
+48,Aarelandschaft Thun-Bern,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/048_Sb_Aarelandschaft_1977.pdf
+49,Muttli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/049_Sb_Muttli_1964.pdf
+50,Meienmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/050_Sb_Meienmoos_1964.PDF
+51,Martisberg,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/051_Sb_Martisberg_1964.PDF
+52,Gerzensee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/052_Sb_Gerzensee_1965.pdf
+53,Fräschels-Weiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/053_Sb_Fraeschelsweiher_1966.PDF
+54,Pâturage du Jorat,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/054_Sb_Paturage_duJorat_1965.PDF
+55,Sense-Schwarzwasser,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/055_Sb_Sense-Schwarzwasser_2010.pdf
+56,Niederried-Oltigenmatt,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/056_Sb_Niederried-Oltigenmatt_2013.pdf
+57,Schwanderlauene,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/057_Sb_Schwanderlauene_1980.PDF
+58,Suldtal,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/058_Sb_Suldtal_1968.PDF
+59,Bermoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/059_Sb_Bermoos_1968.PDF
+60,Jägglisglunte,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/060_Sb_Jagglisglunte_1978.PDF
+61,Wyssensee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/061_Sb_Wyssensee_1986.PDF
+62,Inser Torfstich,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/062_Sb_InserTorfstich_1975.PDF
+63,Twannbachschlucht-Sunneflue,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/063_Sb_Twannbachschlucht_1968.pdf
+64,Lyssbach,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/064_Sb_Lyssbach_1969.PDF
+65,Lindental,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/065_Sb_Lindental_2009.pdf
+66,Erlimoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/066_Sb_Erlimoos_1969.pdf
+67,Chaltenbrunnen-Wandel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/067_Sb_Chaltenbrunnen_1971.PDF
+68,Pâturage de la Côte,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/068_Sb_Paturage_delaCote_1982.PDF
+69,Ziegelmoos-Islerendüne,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/069_Sb_Ziegelmoos_1975.PDF
+70,Siehenmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/070_Sb_Siehenmoos_2005.PDF
+71,"Widi, Grächwil",banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/071_Sb_Widi_1970.PDF
+72,Vogelraupfi,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/072_Sb_Vogelraupfi_1970.PDF
+73,Grube Müntschemier,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/073_Sb_Grube_Muentschemier_2012.pdf
+75,Ronde Sagne,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/075_Sb_RondeSagne_2000.pdf
+76,Lenkerseeli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/076_Sb_Lenkerseeli_1971.PDF
+77,Bellelay,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/077_Sb_Bellelay_2000.pdf
+78,Etang de Châtillon,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/078_Sb_Etang_deChatillon_1982.PDF
+79,Gondiswilerweiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/079_Sb_Gondiswilerweiher_1972.PDF
+80,Häftli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/080_Sb_Haeftli_1982.PDF
+81,Simmegand,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/081_Sb_Simmegand_2004.pdf
+82,Schlossweiher Sumiswald,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/082_Sb_Schlossweiher_1972.PDF
+83,Kiesenbach,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/083_Sb_Kiesenbach_1972.pdf
+84,Napf,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/084_Sb_Napf_1979.pdf
+85,Aarestau Wynau,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/085_Sb_Aarestau_Wynau_1975.PDF
+86,Engstlensee-Jungibäche-Achtelsass,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/086_Sb_Engstlensee_2012.pdf
+87,Les Chaufours,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/087_Sb_LesChaufures_1974.PDF
+88,Mülau-Radelfingenau,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/088_Sb_Muehlau-Radelfingenau_2016.pdf
+89,Hurst,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/089_Sb_Hurst_1974.PDF
+90,Etang du Pâturage de Sagne,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/090_Sb_Etang_Paturage_deSagne_1974.PDF
+91,Hinterburg-Oltscheren,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/091_Sb_Hinterburg_Oltscheren_1974.PDF
+92,Tourbière de la Chaux,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/092_Sb_Tourbiere_delaChaux_2000.PDF
+93,"Bruchsee, Jaunpass",silent,caution,https://oerebfiles.apps.be.ch/9986/7138/093_Sb_Bruchsee_1974.PDF
+94,Enggisteinmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/094_Sb_Enggisteinmoos_1974.PDF
+95,Rohr Lauenen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/095_Sb_Rohr_Launene_1995.PDF
+96,Faverried,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/096_Sb_Faverried.PDF
+97,Erlen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/097_Sb_Erlen_1982.PDF
+98,Güetital,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/098_Sb_Guetital_1975.PDF
+99,Dägimoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/099_Sb_Daegimoos_1975.PDF
+100,Unterbergental,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/100_Sb_Unterbergental_1975.PDF
+101,Inser Weiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/101_Sb_Inser_Weiher_1992.pdf
+102,Leuschelz,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/102_Sb_Leuschelz_1975.PDF
+103,Bir länge Stude,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/103_Sb_Bir_laengenStude_2009.pdf
+104,Zihlbrücke,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/104_Sb_Zihlbruecke_1975.PDF
+105,Lätti Gals,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/105_Sb_Laetti_Gals_1975.PDF
+106,Treiten-Weiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/106_Sb_Treitenweiher_1975.PDF
+107,Büeltigenweiher,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/107_Sb_Bueeltigenweiher_1975.PDF
+108,Schmittmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/108_Sb_Schmittmoos_2012.pdf
+109,Etang de la Praye,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/109_Sb_Etang_de_la_Praye_D-F_1976.pdf
+110,Marfeldingenbach,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/110_Sb_Marfeldingenbach_1976.PDF
+111,Kanderdelta,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/111_Sb_Kanderdelta_2008.pdf
+112,La Chaux-d'Abel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/112_Sb_Chaux_dAbel_1997.pdf
+113,Bleiki,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/113_Sb_Bleiki_1976.PDF
+114,Spillgerten,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/114_Sb_Spillgerten_1976.PDF
+115,Wierezwilweiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/115_Sb_Wierezwilweiher_1977.PDF
+116,"Grubenseeli, Koppigen",banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/116_Sb_Grubenseeli_Koppigen_1977.PDF
+117,Gantrischseeli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/117_Sb_Gantrischseeli_1977.PDF
+118,Bleienbacher Torfsee und Sängeliweiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/118_Sb_Bl_Torfsee-Saengeliweiher_1977.PDF
+119,Chrüzflue-Brächerflue,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/119_Sb_Chruezflue-Braecherflue_1977.PDF
+120,Amsoldinger- und Übeschisee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/120_Sb_Amsoldingen-Uebeschisee_2005.PDF
+121,Hindtemösli,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/121_Sb_Hindtemoesli_1977.PDF
+122,Ägelseemoor,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/122_Sb_Aegelseemoor_1977.PDF
+123,Siselen-Weiher,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/123_Sb_Siselenweiher_1980.PDF
+124,Selenen-Rotmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/124_Sb_Selenen-Rotmoos_1996.PDF
+125,"Längmoos, Forst",banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/125_Sb_Laengmoos_Forst_1978.PDF
+126,"Waldgasse, Schwarzenburg",banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/126_Sb_Waldgasse_1978.PDF
+127,Wachseldornmoos,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/127_Sb_Wachseldornmoos_1978.pdf
+128,Brunnen,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/128_Sb_Brunnen_1985.PDF
+129,Lütscheren,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/129_Sb_Luetscheren_1982.PDF
+130,Gerlafingerweiher,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/130_Sb_Gerlafingerweiher_1983.PDF
+131,Rohr Gsteig,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/131_Sb_Rohr_Gsteig_1984.PDF
+132,Hasli-Ufer,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/132_Sb_Hasli-Ufer_1984.PDF
+133,Wohlensee-Nordufer,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/133_Sb_Wohlensee-Nordufer_1992.PDF
+134,Önztäli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/134_Sb_Oenztaeli_1985.PDF
+135,Teuftalbucht,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/135_Sb_Teuftalbucht_1983.PDF
+136,Geistsee,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/136_Sb_Geistsee_1984.PDF
+137,Farmattgiesse,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/137_Sb_Farmattgiesse_1985.PDF
+138,Laupenau-Hirsried,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/138_Sb_Laupenau_Hirsried_2006.pdf
+139,Forellensee Zweisimmen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/139_Sb_Forellensee_1992.PDF
+140,Mumenthalerweiher-Brunnmatte,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/140_Sb_Mumenthaler_Weiher-Brunnmatt_2013.pdf
+141,Büsselimoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/141_Sb_Buesselimoos_1983.PDF
+142,Schlossmatte-Schlegelholzmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/142_Sb_Schlossmatt_Schlegelmoos_1983.PDF
+143,Lütschisand,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/143_Sb_Luetschisand_1983.PDF
+144,Schinteregge,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/144_Sb_Schinteregge_1987.PDF
+145,Chnuchelhusgrube,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/145_Sb_Chnuchelhusgruebe_2000.PDF
+146,Nastel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/146_Sb_Nastel_1984.PDF
+147,Pfaffenmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/147_Sb_Pfaffenmoos_1985.PDF
+148,Port,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/148_Sb_Port_Wimmis_1985.PDF
+149,Chappelistutz,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/149_Sb_Chappelistutz_2005.PDF
+150,Hintermoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/150_Sb_Hintermoos_1991.PDF
+151,Gwattmösli,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/151_Sb_Gwattmoesli_1986.PDF
+152,Augand,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/152_Sb_Augand_2004.PDF
+153,Steinmösli,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/153_Sb_Steinmoesli_2005.PDF
+154,Paradiesli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/154_Sb_Paradiesli_1991.PDF
+155,Champs Meusel,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/155_Sb_Champ_Meusel_2007.pdf
+156,Tschingel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/156_Sb_Tschingel_2022.PDF
+157,Hoger Bremgarten,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/157_Sb_Hoger_Bremgarten.PDF
+158,Länggengraben,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/158_Sb_Laenggengraben_1988.PDF
+159,Golihuebweiher,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/159_Sb_Golihuebweiher_1991.PDF
+160,Filfalle,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/160_Sb_Filfalle_1988.PDF
+161,Seeallmend,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/161_Sb_Seeallemend_1989.PDF
+162,Rüfenachtmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/162_Sb_Ruefenachtmoos_1989.PDF
+163,Sandgrüebli,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/163_Sb_Sandgruebli_1991.PDF
+165,"Längmoos, Grossaffoltern",banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/165_Sb_Laengmoos_Grossaffoltern_2004.PDF
+166,Schnepfmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/166_Sb_Schnepfmoos_1993.PDF
+167,Balmholz,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/167_Sb_Balmholz_1993.PDF
+168,Bickigenmatte,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/168_Sb_Bickigenmatte_1993.pdf
+169,Köpflisbergmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/169_Sb_Kloepfisbergmoos_1993.pdf
+170,Gänsemoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/170_Sb_Gaensemoos_1993.pdf
+171,Wissenbach West,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/171_Sb_Wissenbach_West_1993.pdf
+172,Wissenbach Ost,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/172_Sb_Wissenbach_Ost_1993.pdf
+173,Dürrentanne,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/173_Sb_Duerrentannen_1993.pdf
+174,Archer Inseli-Widi,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/174_Sb_Arche_Inseli-Widi_1995.pdf
+175,Schalenberg,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/175_Sb_Schalenberg_1996.pdf
+176,Breitmoos,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/176_Sb_Breitmoos_1996.pdf
+177,Burstblätz,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/177_Sb_Burstblaetz_1996.pdf
+178,Im Fysteren Graben,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/178_Sb_Fysteren_Graben_1996.pdf
+179,Älbi Flue,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/179_Sb_Aelbi_Flue_1998.pdf
+180,Hohchräjen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/180_Sb_Hochraejen_1996.pdf
+181,Feldmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/181_Sb_Feldmoos_1996.pdf
+182,Mettlen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/182_Sb_Mettlen_1996.pdf
+183,Wilerau,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/183_Sb_Wilerau_2016.pdf
+184,Unterer Stauffen/Seebort,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/184_Sb_Unt_Stauffen-Seebort_2007.pdf
+185,Dälenmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/185_Sb_Daelenmoos_2006.pdf
+186,Mirrenegg,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/186_Sb_Mirrenegg_2003.pdf
+187,Lischboden,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/187_Sb_Lischboden_2011.pdf
+188,Schwändlibachgraben,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/188_Sb_Schwaendlibachgraben_2008.pdf
+189,Ladengrat,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/189_Sb_Ladengrat_1999.pdf
+190,Sortel,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/190_Sb_Sortel_2003.pdf
+191,Lengi Mettla,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/191_Sb_Lengi_Mettla_2006.pdf
+192,Schwarzbach-Möser,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/192_Sb_Schwarzbach-Moeser_2006.pdf
+193,Luegiboden,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/193_Sb_Luegiboden_2006.pdf
+196,Engstligenauen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/196_Sb_Engstligenauen_2014.pdf
+198,Oberenegg,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/198_Sb_Oberenegg_1999.pdf
+199,Chuchifang,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/199_Sb_Chuchifang_1999.pdf
+200,Tolmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/200_Sb_Tolmoos_2013.pdf
+201,Brünnlisau,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/201_Sb_Bruennlisau_2016.pdf
+202,Les Lavettes,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/202_Sb_Les_Lavattes_2004.pdf
+203,Pâturage du Droit,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/203_Sb_Paturage_duDroit_2000.pdf
+204,Horneggwald,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/204_Sb_Horneggwald_2012.pdf
+205,Höhe,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/205_Sb_Hoehe_2004.pdf
+206,Wengernalp,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/206_Sb_Wengernalp_1999.pdf
+207,In Miseren-Seeboden,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/207_Sb_InMiseren-Seeboden_2014.pdf
+209,Gastereholz,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/209_Sb_Gastereholz_2012.pdf
+211,Höhenschwandmoor,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/211_Sb_Hoehenschwandmoor_2002.pdf
+212,Hinder der Egg,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/212_Sb_Hinder_der_Egg_2002.pdf
+213,Triglisegg,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/213_Sb_Triglisegg_2002.pdf
+214,Däntschwäldli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/214_Sb_Daentschwaeldli_2002.pdf
+215,Chänelegg,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/215_Sb_Chaennelegg_2012.pdf
+216,Üssers Rüschröhrli,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/216_Sb_Uessers_Rueschroehrli_2007.pdf
+217,Le Bain,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/217_Sb_Le_Bain_2003.pdf
+218,Günsche-Witi,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/218_Sb_Guensche-Witi_2002.pdf
+219,Stouffe,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/219_Sb_Stouffe_2012.pdf
+220,Gmeine Schöriz,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/220_Sb_Gmeine_Schoeriz_2012.pdf
+221,Moorsite,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/221_Sb_Moorsite_2012.pdf
+222,Hennenmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/222_Sb_Hennemoos_2003.pdf
+223,Buhüttli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/223_Sb_Buhuettli_2003.pdf
+224,Witiwald-Dälewald,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/224_Sb_Witiwald-Daelewald_2012.pdf
+225,Flöschseeli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/225_Sb_Floeschseeli_2004.pdf
+226,Burgfeldflüe,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/226_Sb_Burgfeldfluee_2004.pdf
+227,Oberberg,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/227_Sb_Oberberg_2004.pdf
+228,Unterholz,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/228_Sb_Unterholz_2004.pdf
+229,Bärmatten,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/229_Sb_Baermatten_2007.pdf
+230,Hängst,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/230_Sb_Haengst_2005.pdf
+231,Oberburger Schachen,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/231_Sb_Oberburger_Schachen_2002.pdf
+232,Birchenmoos,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/232_Sb_Birchenmoos_2006.pdf
+233,Fischbachmoesli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/233_Sb_Fischbachmoesli_2003.pdf
+234,Chälimaad,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/234_Sb_Chaelimaad_2010.pdf
+235,Dälmoos Achseten,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/235_Sb_Daelmoos_Achseten_2007.pdf
+236,Ämmeschache-Urtenesumpf,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/236_Sb_Aemmeschache-Urtenensumpf_2008.pdf
+237,Lombach,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/237_Sb_Lombach_2006.pdf
+238,Färrich,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/238_Sb_Faerrich_2006.pdf
+239,Unders Hörndli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/239_Sb_Unders_Hoerndli_2008.pdf
+240,Obers Hörndli,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/240_Sb_Obers_Hoerndli_2008.pdf
+241,Tschätte-Rosschäle,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/241_Sb_Tschaette-Rosschaele_2016.pdf
+242,Leiterli,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/242_Sb_Leiterli_2016.pdf
+244,Engstligenalp,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/244_Sb_Engstligenalp_2008.pdf
+245,Heustrich,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/245_Sb_Heustrich_2009.pdf
+247,Kanderfirn,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/247_Sb_Kanderfirn_2008.pdf
+249,Urbachtal,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/249_Sb_Urbachtal_2013.pdf
+254,Fraubrunnenmoos ,banned,restricted,https://oerebfiles.apps.be.ch/9986/7138/254_Sb_Fraubrunnenmoos_2022.pdf
+255,Hechtenloch,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/255_Sb_Hechtenloch_2017.pdf
+256,Inkwilersee,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/256_Sb_Inkwilersee_2022.pdf
+257,First,notext,caution,https://oerebfiles.apps.be.ch/9986/7138/257_Sb_First_2015.pdf
+258,Niesen,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/258_Sb_Niesen_1972.pdf
+259,Niederhorn,silent,caution,https://oerebfiles.apps.be.ch/9986/7138/259_Sb_Niederhorn_1948.pdf

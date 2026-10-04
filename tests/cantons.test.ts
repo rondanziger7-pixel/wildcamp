@@ -2,7 +2,8 @@ import { existsSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { assess } from '../src/assess';
 import { CANTONS, findCanton, validateRule, type Canton, type CantonRule } from '../src/cantons';
-import { parseCanton } from '../src/geoadmin';
+import { parseCanton, parseMunicipality } from '../src/geoadmin';
+import { MUNICIPAL_RULES, findMunicipalRule, validateMunicipalEntry } from '../src/municipalities';
 
 const rule = (over: Partial<CantonRule> = {}): CantonRule => ({
   stance: 'tolerated',
@@ -95,5 +96,48 @@ describe('assess with a canton', () => {
   });
   it('works with no canton at all', () => {
     expect(assess(clear).verdict).toBe('likely_ok');
+  });
+});
+
+describe('municipality', () => {
+  // Attributes copied from a live identify response with timeInstant=2026.
+  const current = { layerBodId: 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill', attributes: { gemname: 'Zermatt', gde_nr: 6300, jahr: 2026, kanton: 'VS', is_current_jahr: true } };
+  const old = { layerBodId: 'x', attributes: { gemname: 'Zermatt', gde_nr: 6300, jahr: 1861, kanton: 'VS', is_current_jahr: false } };
+  it('reads the current municipality and ignores historical years', () => {
+    expect(parseMunicipality({ results: [old, current] })).toEqual({ name: 'Zermatt', bfs: 6300, canton: 'VS' });
+    expect(parseMunicipality({ results: [old] })).toBeUndefined();
+    expect(parseMunicipality({})).toBeUndefined();
+  });
+  it('is mentioned in the assessment without changing the verdict', () => {
+    const a = assess({ zones: [], treeline: 'above', municipality: 'Zermatt' });
+    expect(a.verdict).toBe('likely_ok');
+    expect(a.municipality).toBe('Zermatt');
+    expect(a.reasons.join(' ')).toMatch(/Municipality: Zermatt/);
+  });
+});
+
+describe('municipal rules', () => {
+  it('every entry passes the source gate and has its text saved', () => {
+    for (const m of MUNICIPAL_RULES) {
+      expect(validateMunicipalEntry(m), m.name).toEqual([]);
+      const dir = `docs/sources/municipal/${m.bfs}_${m.name}`;
+      expect(existsSync(dir) && readdirSync(dir).length > 0, `${m.name}: no saved source in ${dir}`).toBe(true);
+    }
+    expect(new Set(MUNICIPAL_RULES.map((m) => m.bfs)).size).toBe(MUNICIPAL_RULES.length);
+  });
+  it('rejects a municipal source that is not on the municipality\'s own site', () => {
+    const bad = { ...MUNICIPAL_RULES[0]!, rule: { ...MUNICIPAL_RULES[0]!.rule, sources: [{ title: 'x', url: 'https://hikebeast.ch/x' }] } };
+    expect(validateMunicipalEntry(bad)).not.toEqual([]);
+  });
+  it('Bern city (BFS 351) caps a clear spot at caution and cites the ordinance', () => {
+    const entry = findMunicipalRule(351)!;
+    const a = assess({ zones: [], treeline: 'above', municipality: 'Bern', municipalRule: entry.rule });
+    expect(a.verdict).toBe('caution');
+    expect(a.reasons.join(' ')).toContain('stadtrecht.bern.ch/lex-732_221');
+    expect(findMunicipalRule(6300)).toBeUndefined();
+  });
+  it('a municipal ban forces no', () => {
+    const rule = { ...MUNICIPAL_RULES[0]!.rule, stance: 'banned' as const };
+    expect(assess({ zones: [], treeline: 'above', municipality: 'X', municipalRule: rule }).verdict).toBe('no');
   });
 });

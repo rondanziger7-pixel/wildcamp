@@ -1,4 +1,4 @@
-import type { Canton } from './cantons';
+import type { Canton, CantonRule } from './cantons';
 import type { Severity, ZoneLayer } from './zones';
 
 export type TreelineStatus = 'above' | 'forest' | 'below' | 'unknown';
@@ -17,6 +17,7 @@ export interface Assessment {
   zones: ZoneHit[];
   treeline: TreelineStatus;
   canton?: Canton;
+  municipality?: string;
   /** How the treeline status was determined, shown to the user. */
   treelineNote?: string;
 }
@@ -42,8 +43,12 @@ export function assess(input: {
   treelineNote?: string;
   /** Canton at the spot, if it could be determined. */
   canton?: Canton;
+  /** Municipality at the spot, if it could be determined. */
+  municipality?: string;
+  /** A verified municipal rule for that municipality, if one is recorded. */
+  municipalRule?: CantonRule;
 }): Assessment {
-  const { zones, treeline, treelineNote, canton } = input;
+  const { zones, treeline, treelineNote, canton, municipality, municipalRule } = input;
   const reasons: string[] = [];
   const worst = zones.reduce<number>((m, z) => Math.max(m, rank[z.layer.severity]), -1);
 
@@ -86,8 +91,19 @@ export function assess(input: {
     }
   }
   if (treelineNote && !zones.some((z) => rank[z.layer.severity] >= rank.restricted)) reasons.push(treelineNote);
+  if (municipality) {
+    if (municipalRule) {
+      reasons.push(`${municipality} (municipality): ${municipalRule.summary} (source: ${municipalRule.sources.map((x) => x.url).join(', ')}, checked ${municipalRule.checkedOn})`);
+      if (municipalRule.stance === 'banned') verdict = 'no';
+      else if (municipalRule.stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
+    } else {
+      reasons.push(
+        `Municipality: ${municipality}. Municipal police regulations can add rules and are not checked here; look for the municipality's Polizeireglement / règlement de police.`,
+      );
+    }
+  }
   if (verdict === 'likely_ok' || verdict === 'caution') {
     reasons.push('Cantonal and municipal rules, and private land, are not checked.');
   }
-  return { verdict, reasons, zones, treeline, treelineNote, canton };
+  return { verdict, reasons, zones, treeline, treelineNote, canton, municipality };
 }

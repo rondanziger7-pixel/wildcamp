@@ -100,3 +100,25 @@ export const ZONE_LAYERS: ZoneLayer[] = [
     note: 'No blanket camping ban.',
   },
 ];
+
+/** Cantonal nature reserves (not geo.admin.ch layers): looked up from canton data, see src/reserves.ts. */
+export const RESERVE_ZONES = {
+  beDecreeBan: {
+    id: 'be-nsg-decree',
+    label: 'Bern nature reserve',
+    severity: 'restricted',
+    note: 'The reserve\'s protection decree prohibits camping and tenting.',
+  },
+  beOther: {
+    id: 'be-nsg-other',
+    label: 'Bern nature reserve',
+    severity: 'caution',
+    note: 'Protected nature reserve. The readable text of its protection decree has no camping or tenting clause (it may be an unreadable scan), so check the decree.',
+  },
+  ju: {
+    id: 'ju-reserve',
+    label: 'Jura nature reserve',
+    severity: 'restricted',
+    note: 'The canton states that overnighting outside official campsites is prohibited in all nature reserves.',
+  },
+} as const satisfies Record<string, ZoneLayer>;

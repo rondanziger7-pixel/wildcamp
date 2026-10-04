@@ -5,9 +5,12 @@ import { isInSwitzerland } from './coords';
 import { assess, type Assessment } from './assess';
 import { wgs84ToLv95 } from './coords';
 import { loadForestMask, type ForestMask } from './forestmask';
-import { fetchCanton, fetchElevation, fetchZoneHits } from './geoadmin';
+import { fetchCanton, fetchElevation, fetchMunicipality, fetchZoneHits } from './geoadmin';
 import { classifyTreeline } from './treeline';
 import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
+import { findMunicipalRule } from './municipalities';
+import { fetchJuraReserves } from './jura';
+import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
 import { ZONE_LAYERS } from './zones';
 
 // Optional deep link: #lat,lon,zoom
@@ -38,6 +41,11 @@ loadForestMask(`${import.meta.env.BASE_URL}forest-mask.bin.gz`)
   .then((m) => (forestMask = m))
   .catch((err) => console.warn('forest map failed to load', err));
 
+let reserveSet: ReserveSet | undefined;
+loadReserveSet(`${import.meta.env.BASE_URL}reserves-be.json.gz`)
+  .then((r) => (reserveSet = r))
+  .catch((err) => console.warn('Bern reserves failed to load', err));
+
 let treelineSurface: TreelineSurface | undefined;
 loadTreelineSurface(`${import.meta.env.BASE_URL}treeline-surface.bin.gz`)
   .then((t) => (treelineSurface = t))
@@ -60,7 +68,7 @@ function render(a: Assessment, elevation?: number) {
   h.className = `verdict ${a.verdict}`;
   h.textContent = LABEL[a.verdict];
   const meta = document.createElement('p');
-  meta.textContent = [a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · ');
+  meta.textContent = [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · ');
   const ul = document.createElement('ul');
   for (const r of a.reasons) {
     const li = document.createElement('li');
@@ -80,21 +88,26 @@ map.on('click', async (ev: L.LeafletMouseEvent) => {
     return;
   }
   result.textContent = 'Checking…';
-  const [elev, zones, canton] = await Promise.allSettled([
+  const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
+  const [elev, zones, canton, muni, jura] = await Promise.allSettled([
     fetchElevation(lat, lng),
     fetchZoneHits(lat, lng),
     fetchCanton(lat, lng),
+    fetchMunicipality(lat, lng),
+    inJura ? fetchJuraReserves(lat, lng) : Promise.resolve([]),
   ]);
   const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
   const { e, n } = wgs84ToLv95(lat, lng);
   const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
   render(
     assess({
-      zones: zones.status === 'fulfilled' ? zones.value : [],
+      zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...(reserveSet ? reserveZoneHits(reserveSet, e, n) : []), ...(jura.status === 'fulfilled' ? jura.value : [])],
       zoneLookupFailed: zones.status === 'rejected',
       treeline,
       treelineNote,
       canton: canton.status === 'fulfilled' ? canton.value : undefined,
+      municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
+      municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
     }),
     elevation,
   );
