@@ -6,10 +6,10 @@ import { tr } from './i18n';
 const tone = (v: number | undefined) => (v === undefined ? 'none' : v >= 60 ? 'good' : v >= 35 ? 'warn' : 'bad');
 
 /** The trip table: one row per night with the saved legality and the fresh weather for that spot. */
-export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, back: () => void): void {
+export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, back?: () => void): void {
   const back1 = el('button', 'linkish', '← ' + tr('Back to saved spots'));
   back1.type = 'button';
-  back1.onclick = back;
+  back1.onclick = () => back?.();
   const title = el('h2', 'finder-title', tr(plan.rows.length === 1 ? 'Trip plan: {n} night' : 'Trip plan: {n} nights', { n: plan.rows.length }));
   const list = el('ol', 'plan-list');
   plan.rows.forEach((r: PlanRow, i) => {
@@ -31,5 +31,6 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, ba
   });
   const foot = el('p', 'disclaimer');
   foot.textContent = `Legality is the saved check of each spot, not re-checked: open a spot to check it again before you go. The weather score is the forecast for that night at the spot's elevation, without the shelter of the terrain. Nights are assigned in the order you ticked the spots; the forecast covers about four nights.${plan.dropped.length ? ` Left out beyond the forecast: ${plan.dropped.map((d) => d.name).join(', ')}.` : ''}${failed ? ` ${failed} forecast${failed === 1 ? '' : 's'} could not be loaded.` : ''}`;
-  root.replaceChildren(back1, title, list, foot);
+  // inside the trip planner the page already has its own header
+  root.replaceChildren(...(back ? [back1, title] : []), list, foot);
 }

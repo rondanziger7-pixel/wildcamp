@@ -26,7 +26,12 @@ import { RESERVE_FILES, FOREST_FILE, TREELINE_FILE } from './localdata';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
 import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
-import type { FinderRow } from './finderview';
+import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './finder';
+import { combined, renderFinder, type FinderRow } from './finderview';
+import { planNights } from './planner';
+import { addToTrip, loadTrip, moveInTrip, removeFromTrip, saveTrip, tripSpots } from './trip';
+import { renderTrip } from './tripview';
+import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
@@ -434,16 +439,57 @@ function showSaved() {
       syncSavedCount();
       showSaved();
     },
-    onPlan: (picked) => void showPlan(picked),
+    onPlan: (picked) => {
+      saveTrip(store, picked.map((p) => p.id));
+      showTrip();
+    },
   });
 }
-async function showPlan(picked: SavedSpot[]) {
+// Trip planner: its own menu. The nights are saved spots in order; each gets a fresh forecast.
+const forecastCache = new Map<string, Promise<Hourly>>();
+const forecastFor = (sp: SavedSpot) => {
+  let p = forecastCache.get(sp.id);
+  if (!p) {
+    p = withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000);
+    forecastCache.set(sp.id, p);
+    p.catch(() => forecastCache.delete(sp.id)); // a failed forecast is asked for again next time
+  }
+  return p;
+};
+let tripToken = 0;
+
+function showTrip() {
+  ++checkId;
+  ++finderId;
+  finderPins.clearLayers();
+  sheet.classList.remove('closed');
+  sheet.dataset.state = 'result';
+  result.hidden = false;
+  const spots = loadSaved(store);
+  const ids = loadTrip(store);
+  const inTrip = tripSpots(ids, spots);
   const windows = nightWindows(zurichNow(new Date()));
-  result.replaceChildren(el('p', 'where', tr('Loading the forecast for each spot…')));
-  const forecasts = await Promise.allSettled(picked.map((sp) => withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000)));
-  const [{ planNights }, { renderPlan }] = await Promise.all([import('./planner'), import('./planview')]); // loaded when first used
-  const plan = planNights(picked, windows, forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined)));
-  renderPlan(result, plan, forecasts.slice(0, plan.rows.length).filter((f) => f.status === 'rejected').length, showSaved);
+  const setIds = (next: string[]) => {
+    saveTrip(store, next);
+    showTrip();
+  };
+  const host = renderTrip(result, spots, inTrip, windows.map((w) => w.label), {
+    onAdd: (id) => setIds(addToTrip(inTrip.map((s) => s.id), id)),
+    onRemove: (id) => setIds(removeFromTrip(inTrip.map((s) => s.id), id)),
+    onMove: (i, dir) => setIds(moveInTrip(inTrip.map((s) => s.id), i, dir)),
+    onOpen: (sp) => {
+      map.flyTo([sp.lat, sp.lng], Math.max(map.getZoom(), 15), { duration: 0.6 });
+      void checkSpot(sp.lat, sp.lng);
+    },
+  });
+  if (!inTrip.length) return;
+  const token = ++tripToken;
+  host.replaceChildren(el('p', 'where', tr('Loading the forecast for each spot…')));
+  void Promise.allSettled(inTrip.map(forecastFor)).then((forecasts) => {
+    if (token !== tripToken) return; // the trip was changed meanwhile
+    const plan = planNights(inTrip, windows, forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined)));
+    renderPlan(host, plan, forecasts.slice(0, plan.rows.length).filter((f) => f.status === 'rejected').length);
+  });
 }
 savedBtn.onclick = showSaved;
 document.getElementById('intro')!.append(savedBtn);
@@ -478,9 +524,6 @@ async function findBest(lat: number, lng: number) {
   sheet.dataset.state = 'result';
   result.hidden = false;
   const gone = () => id !== finderId;
-  // the finder code is loaded the first time it is used
-  const [{ fetchCoverGrid, fetchElevationGrid, rankCells, withWater }, { combined, renderFinder }] = await Promise.all([import('./finder'), import('./finderview')]);
-  if (gone()) return;
   const mount = () => renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true));
   let ui = mount();
   finderBack = undefined;
@@ -776,6 +819,20 @@ const SavedControl = L.Control.extend({
   },
 });
 new SavedControl({ position: 'topright' }).addTo(map);
+
+const TripControl = L.Control.extend({
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'map-locate map-trip') as HTMLButtonElement;
+    btn.type = 'button';
+    btn.title = tr('Trip planner');
+    btn.setAttribute('aria-label', tr('Trip planner'));
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14.5l2.5 2.5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', showTrip);
+    return btn;
+  },
+});
+new TripControl({ position: 'topright' }).addTo(map);
 
 // Stage the loading so the base map is never held up: the overlays (the heaviest requests) are added once the base tiles of
 // the first view are in, or after 2.5 s at most, and then the local data follows at low priority.

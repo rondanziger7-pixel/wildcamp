@@ -190,6 +190,16 @@ export const DE: Record<string, string> = {
   "Oct": "Okt",
   "Nov": "Nov",
   "Dec": "Dez",
+  "Trip planner": "Tourenplaner",
+  "Put saved spots in the order of your nights. The weather for each night and the saved legality of each spot appear below.": "Bringen Sie gespeicherte Plätze in die Reihenfolge Ihrer Nächte. Das Wetter jeder Nacht und die gespeicherte Rechtslage jedes Platzes erscheinen unten.",
+  "Night {n}": "Nacht {n}",
+  "Move to an earlier night": "Auf eine frühere Nacht verschieben",
+  "Move to a later night": "Auf eine spätere Nacht verschieben",
+  "Remove from the trip": "Aus der Tour entfernen",
+  "No nights yet. Add saved spots below.": "Noch keine Nächte. Fügen Sie unten gespeicherte Plätze hinzu.",
+  "Add a saved spot": "Gespeicherten Platz hinzufügen",
+  "You have no saved spots yet. Check a spot and press \"Save this spot\", then plan your nights here.": "Sie haben noch keine gespeicherten Plätze. Prüfen Sie einen Platz und drücken Sie «Diesen Platz speichern», dann planen Sie hier Ihre Nächte.",
+  "The forecast covers {n} nights, so a trip has at most {n} nights.": "Die Vorhersage deckt {n} Nächte ab, daher hat eine Tour höchstens {n} Nächte.",
 };
 
 export const FR: Record<string, string> = {
@@ -383,6 +393,16 @@ export const FR: Record<string, string> = {
   "Oct": "oct.",
   "Nov": "nov.",
   "Dec": "déc.",
+  "Trip planner": "Planificateur de séjour",
+  "Put saved spots in the order of your nights. The weather for each night and the saved legality of each spot appear below.": "Mettez les emplacements enregistrés dans l’ordre de vos nuits. La météo de chaque nuit et la légalité enregistrée de chaque emplacement apparaissent ci-dessous.",
+  "Night {n}": "Nuit {n}",
+  "Move to an earlier night": "Déplacer à une nuit plus tôt",
+  "Move to a later night": "Déplacer à une nuit plus tard",
+  "Remove from the trip": "Retirer du séjour",
+  "No nights yet. Add saved spots below.": "Pas encore de nuits. Ajoutez des emplacements enregistrés ci-dessous.",
+  "Add a saved spot": "Ajouter un emplacement enregistré",
+  "You have no saved spots yet. Check a spot and press \"Save this spot\", then plan your nights here.": "Vous n’avez pas encore d’emplacements enregistrés. Vérifiez un emplacement et appuyez sur « Enregistrer cet emplacement », puis planifiez vos nuits ici.",
+  "The forecast covers {n} nights, so a trip has at most {n} nights.": "Les prévisions couvrent {n} nuits ; un séjour compte donc au plus {n} nuits.",
 };
 
 export const IT: Record<string, string> = {
@@ -576,4 +596,14 @@ export const IT: Record<string, string> = {
   "Oct": "ott",
   "Nov": "nov",
   "Dec": "dic",
+  "Trip planner": "Pianificatore di viaggio",
+  "Put saved spots in the order of your nights. The weather for each night and the saved legality of each spot appear below.": "Metti i posti salvati nell’ordine delle tue notti. Il meteo di ogni notte e la legalità salvata di ogni posto compaiono qui sotto.",
+  "Night {n}": "Notte {n}",
+  "Move to an earlier night": "Sposta a una notte precedente",
+  "Move to a later night": "Sposta a una notte successiva",
+  "Remove from the trip": "Rimuovi dal viaggio",
+  "No nights yet. Add saved spots below.": "Ancora nessuna notte. Aggiungi qui sotto dei posti salvati.",
+  "Add a saved spot": "Aggiungi un posto salvato",
+  "You have no saved spots yet. Check a spot and press \"Save this spot\", then plan your nights here.": "Non hai ancora posti salvati. Controlla un posto e premi «Salva questo posto», poi pianifica qui le tue notti.",
+  "The forecast covers {n} nights, so a trip has at most {n} nights.": "Le previsioni coprono {n} notti, quindi un viaggio ha al massimo {n} notti.",
 };

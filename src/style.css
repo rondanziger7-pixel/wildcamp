@@ -216,3 +216,11 @@ button { font: inherit; cursor: pointer; }
 #legend { max-height: calc(100vh - 130px - 62vh); overflow-y: auto; overscroll-behavior: contain; }
 @media (min-width: 720px) { #legend { max-height: calc(100vh - 140px); } }
 @media (min-width: 720px) { #legend { left: auto; right: 62px; top: 14px; } #layers-btn { left: auto; right: 62px; top: 14px; } }
+.trip-nights { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 6px; }
+.trip-night { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 12px; padding: 6px 8px; }
+.trip-label { flex: none; min-width: 74px; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.trip-btn { border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; }
+.trip-btn:disabled { opacity: .35; cursor: default; }
+.trip-h3 { font-size: .9rem; margin: 12px 0 4px; }
+.trip-add-btn { text-align: left; margin-top: 6px; }
+.trip-plan { margin-top: 8px; }
