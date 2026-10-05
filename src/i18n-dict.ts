@@ -200,6 +200,12 @@ export const DE: Record<string, string> = {
   "Add a saved spot": "Gespeicherten Platz hinzufügen",
   "You have no saved spots yet. Check a spot and press \"Save this spot\", then plan your nights here.": "Sie haben noch keine gespeicherten Plätze. Prüfen Sie einen Platz und drücken Sie «Diesen Platz speichern», dann planen Sie hier Ihre Nächte.",
   "The forecast covers {n} nights, so a trip has at most {n} nights.": "Die Vorhersage deckt {n} Nächte ab, daher hat eine Tour höchstens {n} Nächte.",
+  "Save": "Speichern",
+  "Saved": "Gespeichert",
+  "More options": "Weitere Optionen",
+  "Best spots": "Beste Plätze",
+  "Municipal rule: {name}": "Gemeinderegel: {name}",
+  "How is this scored?": "Wie wird das bewertet?",
 };
 
 export const FR: Record<string, string> = {
@@ -403,6 +409,12 @@ export const FR: Record<string, string> = {
   "Add a saved spot": "Ajouter un emplacement enregistré",
   "You have no saved spots yet. Check a spot and press \"Save this spot\", then plan your nights here.": "Vous n’avez pas encore d’emplacements enregistrés. Vérifiez un emplacement et appuyez sur « Enregistrer cet emplacement », puis planifiez vos nuits ici.",
   "The forecast covers {n} nights, so a trip has at most {n} nights.": "Les prévisions couvrent {n} nuits ; un séjour compte donc au plus {n} nuits.",
+  "Save": "Enregistrer",
+  "Saved": "Enregistré",
+  "More options": "Plus d’options",
+  "Best spots": "Meilleurs emplacements",
+  "Municipal rule: {name}": "Règle communale : {name}",
+  "How is this scored?": "Comment est-ce évalué ?",
 };
 
 export const IT: Record<string, string> = {
@@ -606,4 +618,10 @@ export const IT: Record<string, string> = {
   "Add a saved spot": "Aggiungi un posto salvato",
   "You have no saved spots yet. Check a spot and press \"Save this spot\", then plan your nights here.": "Non hai ancora posti salvati. Controlla un posto e premi «Salva questo posto», poi pianifica qui le tue notti.",
   "The forecast covers {n} nights, so a trip has at most {n} nights.": "Le previsioni coprono {n} notti, quindi un viaggio ha al massimo {n} notti.",
+  "Save": "Salva",
+  "Saved": "Salvato",
+  "More options": "Altre opzioni",
+  "Best spots": "Posti migliori",
+  "Municipal rule: {name}": "Regola comunale: {name}",
+  "How is this scored?": "Come viene valutato?",
 };

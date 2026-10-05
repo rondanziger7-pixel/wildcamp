@@ -224,3 +224,25 @@ button { font: inherit; cursor: pointer; }
 .trip-h3 { font-size: .9rem; margin: 12px 0 4px; }
 .trip-add-btn { text-align: left; margin-top: 6px; }
 .trip-plan { margin-top: 8px; }
+
+/* result sheet: one clear answer first, details one tap away */
+.scores { position: static; grid-template-columns: 1fr 1fr; padding: 0; margin-top: 4px; }
+.score-card.primary { grid-column: 1 / -1; padding: 12px 14px; }
+.score-card.primary .sc-value { font-size: 2.3rem; }
+.score-card.primary .sc-label { font-size: 1.05rem; }
+.sc-reason { font-size: .85rem; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+.panel .chips { margin: 0 0 10px; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.actions .save-btn { margin-top: 0; }
+.more { margin-top: 8px; }
+.more summary { cursor: pointer; color: var(--muted); font-size: .88rem; padding: 6px 0; list-style: none; }
+.more summary::before { content: '▸ '; }
+.more[open] summary::before { content: '▾ '; }
+.more .save-btn, .more .linkish { display: block; width: 100%; margin-top: 8px; text-align: left; }
+.more .report-link { margin-top: 12px; }
+.scores.compact { grid-template-columns: repeat(3, 1fr); }
+.scores.compact .score-card.primary { grid-column: auto; padding: 6px 8px; }
+.scores.compact .score-card { padding: 6px 8px; }
+.scores.compact .sc-bar, .scores.compact .sc-reason, .scores.compact .sc-more { display: none; }
+.scores.compact .sc-value, .scores.compact .score-card.primary .sc-value { font-size: 1.3rem; }
+.scores.compact .sc-label, .scores.compact .score-card.primary .sc-label { font-size: .75rem; }

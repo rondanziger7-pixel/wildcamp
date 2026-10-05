@@ -11,7 +11,7 @@ import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 import { tr } from './i18n';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
-const VISIBLE = 4;
+const VISIBLE = 3;
 
 const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: string }> = {
   no: { icon: '⛔', label: tr('Not allowed'), sub: tr('A recorded rule or protected zone prohibits camping here.') },
@@ -129,6 +129,11 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const L = legalityScore(a);
   const b = BANNER[a.verdict];
   legal.set(L, `${b.icon} ${b.label}`);
+  legal.b.classList.add('primary');
+  // one line of why, so the answer needs no further tap: the most serious finding, or the verdict's own sentence
+  const why = a.items.find((i) => i.tone === 'bad') ?? a.items.find((i) => i.tone === 'warn');
+  const reason = why ? (/\(municipality\)$/.test(why.title) ? tr('Municipal rule: {name}', { name: a.municipality ?? '' }) : why.title) : b.sub;
+  legal.b.insertBefore(el('span', 'sc-reason', reason), legal.b.querySelector('.sc-bar'));
   sleep.set({ tone: 'none' }, tr('Checking…'));
   weather.set({ tone: 'none' }, tr('Checking…'));
   const scores = el('div', 'scores');
@@ -142,8 +147,10 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   shelterChip.textContent = '🏠 ' + tr('Checking for huts…');
   waterChip.textContent = '💧 ' + tr('Checking water…');
   weatherChip.textContent = '🌦️ ' + tr('Loading forecast…');
-  const chips = el('div', 'chips');
-  chips.append(waterChip, shelterChip, weatherChip, avalancheChip);
+  // water and hut sit at the top of the sleep details, the avalanche line at the top of the weather details; the weather
+  // card already says what the weather chip said, so that chip is not shown
+  const nearby = el('div', 'chips');
+  nearby.append(waterChip, shelterChip);
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
@@ -158,16 +165,12 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   weatherPanel.hidden = true;
   const weatherHost = el('div');
   const weatherFactors = el('div');
-  weatherPanel.append(weatherHost, weatherFactors);
+  weatherPanel.append(avalancheChip, weatherHost, weatherFactors);
 
   const opener: [HTMLElement, HTMLElement][] = [
     [legal.b, legalPanel],
     [sleep.b, sleepPanel],
-    [waterChip, sleepPanel],
-    [shelterChip, sleepPanel],
     [weather.b, weatherPanel],
-    [weatherChip, weatherPanel],
-    [avalancheChip, weatherPanel],
   ];
   const panels = [legalPanel, sleepPanel, weatherPanel];
   for (const [button, panel] of opener) {
@@ -176,40 +179,29 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       for (const p of panels) p.hidden = true;
       panel.hidden = !open;
       for (const [bt, pn] of opener) bt.setAttribute('aria-expanded', String(!pn.hidden));
-      if (open) panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      // while a section is open the cards shrink to a row of tabs, and the sheet returns to its top so they stay in view
+      scores.classList.toggle('compact', !panel.hidden);
+      document.getElementById('sheet')?.scrollTo({ top: 0, behavior: 'smooth' });
     };
   }
 
   // Water and hut chips jump to the place on the map when it is known.
   const jump = (btn: HTMLElement, target: () => { e: number; n: number; label: string } | undefined) => {
-    const open = btn.onclick;
-    btn.onclick = (ev) => {
+    btn.onclick = () => {
       const t = target();
       if (t && focus) focus(t.e, t.n, t.label);
-      else open?.call(btn, ev);
     };
   };
   jump(waterChip, () => waterAt);
   jump(shelterChip, () => hutAt);
 
-  const share = el('button', 'linkish', tr('Copy link'));
-  share.type = 'button';
-  share.onclick = async () => {
-    try {
-      await navigator.clipboard.writeText(location.href);
-      share.textContent = tr('Link copied');
-    } catch {
-      share.textContent = location.href;
-    }
-  };
-
-  root.replaceChildren(where, scores, chips, legalPanel, sleepPanel, weatherPanel, share);
+  root.replaceChildren(where, scores, legalPanel, sleepPanel, weatherPanel);
 
   return {
     weatherHost,
     setSleepLoading() {
       sleep.set({ tone: 'none' }, tr('Checking…'));
-      sleepPanel.replaceChildren(el('p', 'where', tr('Checking sleep comfort…')));
+      sleepPanel.replaceChildren(nearby, el('p', 'where', tr('Checking sleep comfort…')));
     },
     setSleep(c, nightLabel, loading = []) {
       const s = sleepScore(c);
@@ -234,14 +226,16 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const parts: Node[] = [];
       if (loading.length) parts.push(el('p', 'panel-lead', `Still checking: ${loading.join(', ')}. The score updates when they arrive.`));
       if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', tr('Camping is not allowed here, so this only shows what the spot would be like.')));
-      parts.push(head, ...checklist(c.spotFactors, 'comfort details', focus));
+      parts.push(head, nearby, ...checklist(c.spotFactors, 'comfort details', focus));
       if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
-      parts.push(el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees and snow are not modelled, ground cover is read from 100 m survey points, and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
+      const how = el('details', 'more how');
+      how.append(el('summary', undefined, tr('How is this scored?')), el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees and snow are not modelled, ground cover is read from 100 m survey points, and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
+      parts.push(how);
       sleepPanel.replaceChildren(...parts);
     },
     setSleepUnavailable(why) {
       sleep.set({ tone: 'none' }, tr('Unavailable'));
-      sleepPanel.replaceChildren(el('p', 'where', why));
+      sleepPanel.replaceChildren(nearby, el('p', 'where', why));
     },
     setWater(w, failed) {
       waterChip.className = 'chip water';

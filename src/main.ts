@@ -350,7 +350,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   const paintSave = () => {
     const on = isSaved(store, sid);
     save.setAttribute('aria-pressed', String(on));
-    save.textContent = on ? '★ Saved: tap to remove' : '☆ Save this spot';
+    save.textContent = on ? '★ ' + tr('Saved') : '☆ ' + tr('Save');
   };
   paintSave();
   save.onclick = () => {
@@ -371,7 +371,6 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
     paintSave();
     syncSavedCount();
   };
-  result.append(save);
   const name = defaultName(assessment.municipality, elevation, lat, lng);
   const share = el('button', 'save-btn', '↗ ' + tr('Share this spot'));
   share.type = 'button';
@@ -394,15 +393,29 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
       'wildcamp-spot.gpx',
       spotsToGpx([{ id: sid, lat, lng, name, elevation, municipality: assessment.municipality, canton: assessment.canton?.name, snapshot: { ...ui.snapshot(), savedAt: Date.now() } }]),
     );
-  result.append(share, gpx);
   const report = el('a', 'linkish report-link', tr('Report a missing or wrong rule'));
   report.href = reportUrl({ lat, lng, municipality: assessment.municipality, canton: assessment.canton?.name, verdict: assessment.verdict, link: location.href });
   report.target = '_blank';
   report.rel = 'noopener';
-  const find = el('button', 'finder-btn', '🔍 ' + tr('Find the best spots near here'));
+  const find = el('button', 'save-btn find-btn', '🔍 ' + tr('Best spots'));
   find.type = 'button';
   find.onclick = () => void findBest(lat, lng);
-  result.append(find, report);
+  const copy = el('button', 'linkish', tr('Copy link'));
+  copy.type = 'button';
+  copy.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      say(tr('Link copied'));
+    } catch {
+      say(location.href);
+    }
+  };
+  // two actions in view, the rest one tap away
+  const actions = el('div', 'actions');
+  actions.append(save, find);
+  const more = el('details', 'more');
+  more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
+  result.append(actions, more);
   sheet.scrollTop = 0;
   void loadDetails(ui, lat, lng, elevation, id, tappedAt);
 }
