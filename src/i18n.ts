@@ -1,10 +1,11 @@
 import { DE, FR, IT } from './i18n-dict';
+import { DE_RULES, FR_RULES, IT_RULES } from './i18n-rules';
 
 export type Lang = 'en' | 'de' | 'fr' | 'it';
 export const LANGS: [Lang, string][] = [['en', 'English'], ['de', 'Deutsch'], ['fr', 'Français'], ['it', 'Italiano']];
 export const LANG_KEY = 'wildcamp.lang.v1';
 
-const DICT: Record<Lang, Record<string, string>> = { en: {}, de: DE, fr: FR, it: IT };
+const DICT: Record<Lang, Record<string, string>> = { en: {}, de: { ...DE, ...DE_RULES }, fr: { ...FR, ...FR_RULES }, it: { ...IT, ...IT_RULES } };
 
 /** The stored language, else the browser's if it is one of ours, else English. */
 export function detectLang(stored: string | null | undefined, browser: string | undefined): Lang {

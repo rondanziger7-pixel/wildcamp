@@ -1,7 +1,8 @@
 import { checkLabel, type Assessment } from './assess';
+import { localCantonName } from './cantons';
 import type { Comfort } from './comfort/comfort';
 import { LEVEL_NAME, type AvalancheInfo } from './comfort/avalanche';
-import { compassName, describeCode, nightText, type Night } from './comfort/weather';
+import { RELIABLE_DAYS, addDays, compassName, describeCode, nightText, type Night, type NightWindow } from './comfort/weather';
 import { missingText } from './comfort/comfort';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
@@ -10,7 +11,7 @@ import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
 import { legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
 import { buildAlerts, type Alert } from './alerts';
-import { tr } from './i18n';
+import { dateLocale, tr } from './i18n';
 import { applyNearBuilding, type NearBuildingNote } from './comfort/nearbuilding';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
@@ -142,6 +143,8 @@ export interface ResultUi {
   setNearBuilding(n: NearBuildingNote | undefined): void;
   /** A new verdict for the same spot (another date, or bundled data that arrived late). */
   setAssessment(next: Assessment): void;
+  /** The night the result is for (legality seasons, comfort and weather follow it). */
+  setNights(p: NightPicker): void;
   /** What the first view needs to show the dangers: the comfort result (with the chosen night's weather), the fire situation, the hours before evening. */
   setHazards(h: { comfort?: Comfort; fire?: Restrictions['fire']; soon?: Night }): void;
   /** What the result shows right now, for saving the spot. */
@@ -149,9 +152,9 @@ export interface ResultUi {
 }
 
 /** Fire and drone rules sit in a tab that starts closed. */
-function fireTab(items: Parameters<typeof checklist>[0]) {
+function fireTab(items: Parameters<typeof checklist>[0], laterNote?: string) {
   const tab = el('details', 'more rules-tab');
-  tab.append(el('summary', undefined, '🔥 ' + tr('Fire and drones')), el('p', 'where', tr('Live official data. These rules do not change the camping verdict above.')), ...checklist(items, 'fire and drone details'));
+  tab.append(el('summary', undefined, '🔥 ' + tr('Fire and drones')), el('p', 'where', tr('Live official data. These rules do not change the camping verdict above.')), ...(laterNote ? [el('p', 'night-hint', laterNote)] : []), ...checklist(items, 'fire and drone details'));
   return tab;
 }
 
@@ -180,6 +183,19 @@ function chip(kind: string) {
   return b;
 }
 
+/** What the night picker needs: the nights offered, the one chosen, and how to choose another. */
+export interface NightPicker {
+  windows: NightWindow[];
+  selected: NightWindow;
+  /** The last hour the forecast covers ("YYYY-MM-DDTHH:MM"): nights after it have no weather. */
+  forecastEnd?: string;
+  /** Today (Zurich), "YYYY-MM-DD". */
+  today: string;
+  onSelect(w: NightWindow): void;
+  /** A window for any evening, for a date typed or picked far ahead. */
+  windowFor(day: string): NightWindow;
+}
+
 export interface ResultHooks {
   /** "Check again": the lookups that failed are made again. */
   onRetry?: () => void;
@@ -195,7 +211,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   let waterAt: { e: number; n: number; label: string } | undefined;
   let hutAt: { e: number; n: number; label: string } | undefined;
   const snap: { sleep?: Score; weather?: Score; night?: string; label?: string; pros: string[]; cons: string[]; complete: boolean; water?: string; hut?: string } = { pros: [], cons: [], complete: false };
-  const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`, hooks.accuracyM === undefined ? '' : tr('GPS ±{m} m', { m: Math.max(1, Math.round(hooks.accuracyM)) })].filter(Boolean).join(' · '));
+  const where = el('p', 'where', [a.municipality, a.canton ? localCantonName(a.canton) : '', elevation === undefined ? '' : `${Math.round(elevation)} m`, hooks.accuracyM === undefined ? '' : tr('GPS ±{m} m', { m: Math.max(1, Math.round(hooks.accuracyM)) })].filter(Boolean).join(' · '));
 
   const legal = scoreCard('legal', tr('Legality'));
   const sleep = scoreCard('sleep', tr('Sleep'));
@@ -290,6 +306,67 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     if (list.length > 3) rows.push(el('li', 'alert-more', tr('+{n} more in the details', { n: list.length - 3 })));
     alertsHost.replaceChildren(...rows);
   };
+  // the night the result is for: legality (seasons, firing days), comfort and weather all follow it
+  const nightHost = el('div', 'night-picker');
+  let nightsOpen = false;
+  let nightsState: NightPicker | undefined;
+  const dayText = (day: string) => new Date(`${day}T12:00:00Z`).toLocaleDateString(dateLocale(), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+  const paintNights = () => {
+    const st = nightsState;
+    if (!st) return;
+    const w = st.selected;
+    const toggle = el('button', 'night-toggle', `🌙 ${w.label === 'Tonight' || w.label === 'Tomorrow' ? `${nightText(w.label)} · ` : ''}${dayText(w.day)}`);
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', String(nightsOpen));
+    toggle.append(el('span', 'night-change', nightsOpen ? tr('Close') : tr('Change night')));
+    toggle.onclick = () => {
+      nightsOpen = !nightsOpen;
+      paintNights();
+    };
+    const parts: HTMLElement[] = [toggle];
+    const beyondReliable = w.day > addDays(st.today, RELIABLE_DAYS);
+    const noForecast = st.forecastEnd !== undefined && w.from.slice(0, 13) > st.forecastEnd.slice(0, 13);
+    if (noForecast) parts.push(el('p', 'night-hint', tr('No weather forecast reaches this far ahead. Legality, sun and moon are still worked out for this date.')));
+    else if (beyondReliable) parts.push(el('p', 'night-hint', tr('A forecast more than a week ahead is a rough guide only.')));
+    if (nightsOpen) {
+      const strip = el('div', 'night-strip');
+      strip.setAttribute('role', 'listbox');
+      for (const nw of st.windows) {
+        const b = el('button', `night-chip${nw.day === w.day ? ' on' : ''}${st.forecastEnd !== undefined && nw.from.slice(0, 13) > st.forecastEnd.slice(0, 13) ? ' far' : ''}`, nw.label === 'Tonight' || nw.label === 'Tomorrow' ? nightText(nw.label) : nw.short);
+        b.type = 'button';
+        b.setAttribute('role', 'option');
+        b.setAttribute('aria-selected', String(nw.day === w.day));
+        b.onclick = () => {
+          nightsOpen = false;
+          st.onSelect(nw);
+        };
+        strip.append(b);
+      }
+      const date = document.createElement('input');
+      date.type = 'date';
+      date.className = 'night-date';
+      date.id = 'night-date';
+      date.min = st.today;
+      date.max = addDays(st.today, 366);
+      date.value = w.day;
+      date.setAttribute('aria-label', tr('Pick any date'));
+      date.onchange = () => {
+        if (!date.value || date.value < date.min || date.value > date.max) return;
+        nightsOpen = false;
+        st.onSelect(st.windowFor(date.value));
+      };
+      parts.push(strip, el('label', 'night-date-row', tr('Or pick any date:')));
+      parts[parts.length - 1]!.append(' ', date);
+    }
+    nightHost.replaceChildren(...parts);
+  };
+  // fire and drone information is live data for today; for another night it is only a hint
+  let rulesState: Restrictions | undefined;
+  const paintRules = () => {
+    const items = rulesState ? restrictionItems(rulesState) : [];
+    const later = !!nightsState && nightsState.selected.day > nightsState.today;
+    rulesHost.replaceChildren(...(items.length ? [fireTab(items, later ? tr('This is live data for today. Fire danger, fire bans and drone notices can change before {date}.', { date: dayText(nightsState!.selected.day) }) : undefined)] : []));
+  };
   const backBtn = el('button', 'linkish back-btn', '← ' + tr('Overall score'));
   backBtn.type = 'button';
   backBtn.hidden = true;
@@ -369,7 +446,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   jump(shelterChip, () => hutAt);
 
   paintLegal();
-  root.replaceChildren(where, total.b, reasonLine, alertsHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
+  root.replaceChildren(where, nightHost, total.b, reasonLine, alertsHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
 
   const markSleepUnavailable = (why: string) => {
     sleep.set({ tone: 'none' }, tr('Unavailable'));
@@ -480,18 +557,19 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
       a = next;
       paintLegal();
     },
+    setNights(p) {
+      nightsState = p;
+      paintNights();
+      paintRules();
+    },
     setHazards(h) {
       hazardInput = h;
       paintAlerts();
       alertsHost.hidden = inDetails || alertsHost.childElementCount === 0;
     },
     setRules(r) {
-      const items = r ? restrictionItems(r) : [];
-      rulesHost.replaceChildren(
-        ...(items.length
-          ? [fireTab(items)]
-          : []),
-      );
+      rulesState = r;
+      paintRules();
     },
     setAvalanche(av, failed) {
       avalancheChip.className = 'chip avalanche';

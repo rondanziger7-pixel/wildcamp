@@ -777,6 +777,14 @@ export const DE: Record<string, string> = {
   "Back": "Zurück",
   "Emergency numbers and my position": "Notrufnummern und meine Position",
   "GPS ±{m} m": "GPS ±{m} m",
+  "The weather forecast reaches only until {date}, so there is no weather for this night. Legality, sun and moon are still worked out for it.": "Die Wettervorhersage reicht nur bis {date}, deshalb gibt es für diese Nacht kein Wetter. Rechtliches, Sonne und Mond werden trotzdem dafür berechnet.",
+  "Change night": "Nacht ändern",
+  "No weather forecast reaches this far ahead. Legality, sun and moon are still worked out for this date.": "Keine Wettervorhersage reicht so weit voraus. Rechtliches, Sonne und Mond werden für dieses Datum trotzdem berechnet.",
+  "A forecast more than a week ahead is a rough guide only.": "Eine Vorhersage von mehr als einer Woche im Voraus ist nur ein grober Anhaltspunkt.",
+  "Pick any date": "Beliebiges Datum wählen",
+  "Or pick any date:": "Oder ein beliebiges Datum wählen:",
+  "This is live data for today. Fire danger, fire bans and drone notices can change before {date}.": "Das sind Live-Daten für heute. Waldbrandgefahr, Feuerverbote und Drohnenhinweise können sich bis {date} ändern.",
+  "The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.": "Die Oberfläche und die Zusammenfassungen der kantonalen und kommunalen Regeln sind übersetzt. Zitate aus den Gesetzen bleiben in der Originalsprache.",
 };
 
 export const FR: Record<string, string> = {
@@ -1557,6 +1565,14 @@ export const FR: Record<string, string> = {
   "Back": "Retour",
   "Emergency numbers and my position": "Numéros d'urgence et ma position",
   "GPS ±{m} m": "GPS ±{m} m",
+  "The weather forecast reaches only until {date}, so there is no weather for this night. Legality, sun and moon are still worked out for it.": "La prévision météo ne va que jusqu'au {date} ; il n'y a donc pas de météo pour cette nuit. La légalité, le soleil et la lune sont tout de même calculés pour cette date.",
+  "Change night": "Changer de nuit",
+  "No weather forecast reaches this far ahead. Legality, sun and moon are still worked out for this date.": "Aucune prévision météo ne porte aussi loin. La légalité, le soleil et la lune sont tout de même calculés pour cette date.",
+  "A forecast more than a week ahead is a rough guide only.": "Une prévision à plus d'une semaine n'est qu'une indication approximative.",
+  "Pick any date": "Choisir une date",
+  "Or pick any date:": "Ou choisir une date :",
+  "This is live data for today. Fire danger, fire bans and drone notices can change before {date}.": "Ce sont des données en direct pour aujourd'hui. Le danger d'incendie, les interdictions de feu et les avis sur les drones peuvent changer d'ici le {date}.",
+  "The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.": "L'interface et les résumés des règles cantonales et communales sont traduits. Les citations des lois restent dans leur langue d'origine.",
 };
 
 export const IT: Record<string, string> = {
@@ -2337,4 +2353,12 @@ export const IT: Record<string, string> = {
   "Back": "Indietro",
   "Emergency numbers and my position": "Numeri d'emergenza e la mia posizione",
   "GPS ±{m} m": "GPS ±{m} m",
+  "The weather forecast reaches only until {date}, so there is no weather for this night. Legality, sun and moon are still worked out for it.": "Le previsioni meteo arrivano solo fino al {date}, quindi per questa notte non c'è meteo. Legalità, sole e luna vengono comunque calcolati per questa data.",
+  "Change night": "Cambia notte",
+  "No weather forecast reaches this far ahead. Legality, sun and moon are still worked out for this date.": "Nessuna previsione meteo arriva così lontano. Legalità, sole e luna vengono comunque calcolati per questa data.",
+  "A forecast more than a week ahead is a rough guide only.": "Una previsione a più di una settimana è solo un'indicazione di massima.",
+  "Pick any date": "Scegli una data qualsiasi",
+  "Or pick any date:": "Oppure scegli una data:",
+  "This is live data for today. Fire danger, fire bans and drone notices can change before {date}.": "Sono dati in tempo reale di oggi. Pericolo d'incendio, divieti di fuochi e avvisi sui droni possono cambiare entro il {date}.",
+  "The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.": "L'interfaccia e i riassunti delle regole cantonali e comunali sono tradotti. Le citazioni delle leggi restano nella lingua originale.",
 };

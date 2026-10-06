@@ -360,3 +360,16 @@ button { font: inherit; cursor: pointer; }
 .em-say ul, .em-nosignal ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; font-size: .9rem; }
 .em-note, .em-rega p { color: var(--muted); font-size: .85rem; }
 .em-sources { margin: 6px 0; padding-left: 1.2em; font-size: .85rem; }
+
+/* the night the result is for */
+.night-picker { margin: 2px 0 4px; }
+.night-toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--fg); font-size: .9rem; font-weight: 600; text-align: left; }
+.night-change { color: var(--green); font-weight: 600; font-size: .8rem; }
+@media (prefers-color-scheme: dark) { .night-change { color: #8fd1a8; } }
+.night-hint { margin: 4px 2px 0; font-size: .8rem; color: var(--muted); }
+.night-strip { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0 4px; scrollbar-width: thin; }
+.night-chip { flex: none; padding: 6px 10px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: var(--fg); font-size: .85rem; white-space: nowrap; }
+.night-chip.on { background: var(--green); color: #fff; border-color: var(--green); }
+.night-chip.far { color: var(--muted); border-style: dashed; }
+.night-date-row { display: block; margin-top: 6px; font-size: .85rem; color: var(--muted); }
+.night-date { font: inherit; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }

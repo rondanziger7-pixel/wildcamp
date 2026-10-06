@@ -12,7 +12,7 @@ function hourly(over: Partial<Record<keyof Hourly, number>> = {}): Hourly {
   const c = (v: number) => time.map(() => v);
   return { time, temperature_2m: c(over.temperature_2m ?? 10), wind_speed_10m: c(over.wind_speed_10m ?? 5), wind_gusts_10m: c(over.wind_gusts_10m ?? 12), wind_direction_10m: c(270), precipitation: c(over.precipitation ?? 0), weather_code: c(over.weather_code ?? 1), cloud_cover: c(50) };
 }
-const windows = nightWindows('2026-07-01T10:00'); // Tonight, Tomorrow, Fri, Sat
+const windows = nightWindows('2026-07-01T10:00', 4); // Tonight, Tomorrow, Fri, Sat
 
 describe('flags', () => {
   const n = (o: Partial<Night>): Night => ({ from: '', to: '', minTempC: 5, maxGustKmh: 10, meanWindKmh: 5, windFromDeg: 0, precipMm: 0, thunder: false, ...o });

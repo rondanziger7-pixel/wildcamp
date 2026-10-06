@@ -1,5 +1,5 @@
 import { hourLabel, linePath, nearestIndex, niceScale, xAt } from './chart';
-import { compassName, describeCode, nightText, type HourPoint, type Night, type NightWindow } from './comfort/weather';
+import { compassName, describeCode, type HourPoint, type Night, type NightWindow } from './comfort/weather';
 import { dateLocale, tr } from './i18n';
 
 const SVG = 'http://www.w3.org/2000/svg';
@@ -178,34 +178,25 @@ function table(hours: HourPoint[]) {
 const fmtDay = (t: string) => new Date(`${t.slice(0, 10)}T12:00:00Z`).toLocaleDateString(dateLocale(), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
 
 export interface WeatherView {
-  windows: NightWindow[];
-  selected: number;
+  /** The night shown (chosen with the night picker above the cards). */
+  window: NightWindow;
   night?: Night;
   hours: HourPoint[];
   /** Comfort verdict text for the chosen night, if comfort is shown (English; translated here). */
   note?: string;
-  onSelect: (i: number) => void;
+  /** Why there is no forecast for this night, when that is known (the date lies beyond the forecast). */
+  noForecastWhy?: string;
 }
 
-/** Renders the weather card: night picker, headline tiles, hourly charts, table. */
+/** Renders the weather card: headline tiles, hourly charts, table. The night is chosen with the picker above the cards. */
 export function renderWeather(host: HTMLElement, v: WeatherView) {
-  const w = v.windows[v.selected]!;
-  const picker = el('div', 'wx-picker');
-  picker.setAttribute('role', 'tablist');
-  v.windows.forEach((nw, i) => {
-    const b = el('button', i === v.selected ? 'on' : '', nightText(nw.label));
-    b.type = 'button';
-    b.setAttribute('role', 'tab');
-    b.setAttribute('aria-selected', String(i === v.selected));
-    b.onclick = () => v.onSelect(i);
-    picker.append(b);
-  });
+  const w = v.window;
   const span = el('p', 'where', tr('{a} to {b}', { a: `${fmtDay(w.from)} ${w.from.slice(11, 16)}`, b: `${fmtDay(w.to)} ${w.to.slice(11, 16)}` }));
 
-  const parts: Node[] = [el('h2', 'wx-title', tr('Weather')), picker, span];
+  const parts: Node[] = [el('h2', 'wx-title', tr('Weather')), span];
   const n = v.night;
   if (!n) {
-    parts.push(el('p', 'where', tr('No forecast for this night.')));
+    parts.push(el('p', 'where', v.noForecastWhy ?? tr('No forecast for this night.')));
     host.replaceChildren(...parts);
     return;
   }

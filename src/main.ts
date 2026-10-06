@@ -13,7 +13,7 @@ import { spotIcon } from './markers';
 import { RetryTileLayer, RetryWmsLayer } from './tilelayer';
 import { fetchJuraReserves } from './jura';
 import { LocalData } from './localstore';
-import { assessInputs, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS } from './spotcheck';
+import { assessInputs, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS, type DetailsRun } from './spotcheck';
 import { searchPlaces, type Place } from './search';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
@@ -42,7 +42,7 @@ import { fetchNoise, type NoiseInfo } from './comfort/noise';
 import { moonNight } from './comfort/moon';
 import { sunTimes } from './comfort/sun';
 import { analyseTerrain, fetchProfiles, FAR, NEAR, type Profiles, type TerrainMetrics } from './comfort/terrain';
-import { fetchForecast, nightWindows, soonWindow, summariseNight, windowHours, zurichNow, type Hourly } from './comfort/weather';
+import { addDays, fetchForecast, forecastEnd, nightDate, nightWindowFor, nightWindows, soonWindow, summariseNight, windowHours, zurichNow, type Hourly, type NightWindow } from './comfort/weather';
 import { renderWeather } from './weatherview';
 import { forestAt } from './forestmask';
 import { ZONE_LAYERS } from './zones';
@@ -138,22 +138,42 @@ function showLoading() {
  * (about 10 s from the tap): the sleep score appears as soon as the main parts are in, refreshes as the rest
  * arrives, and anything still missing at the deadline is dropped and listed as not checked.
  */
-async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number, tappedAt: number) {
+async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number, tappedAt: number, opts: { onNight?: (w: NightWindow) => void } = {}) {
   ui.setSleepLoading();
   ui.weatherHost.replaceChildren(el('p', 'where', tr('Loading the forecast…')));
   const { e, n } = wgs84ToLv95(lat, lng);
-  const windows = nightWindows(zurichNow(new Date()));
+  const now = zurichNow(new Date());
+  const today = now.slice(0, 10);
+  const windows = nightWindows(now);
   const abort = new AbortController();
   const budget = Math.max(3000, tappedAt + CHECK_BUDGET_MS - Date.now());
   const deadline = window.setTimeout(() => abort.abort(), budget);
-  let selected = 0;
+  let current: NightWindow = windows[0]!;
+  let run: DetailsRun | undefined;
+
+  const announce = () =>
+    ui.setNights({
+      windows,
+      selected: current,
+      forecastEnd: run?.got.hourly ? forecastEnd(run.got.hourly) : undefined,
+      today,
+      onSelect: choose,
+      windowFor: (day) => nightWindowFor(day, now),
+    });
+  const choose = (w: NightWindow) => {
+    current = w;
+    announce();
+    paint();
+    opts.onNight?.(w);
+  };
 
   const paint = () => {
-    if (id !== checkId) return;
+    if (id !== checkId || !run) return;
     const { got, done, failed } = run;
-    const w = windows[selected]!;
+    const w = current;
+    const isToday = w.day <= today;
     const night = got.hourly ? summariseNight(got.hourly, w) : undefined;
-    const nightName = w.label === 'Tonight' ? 'tonight' : w.label === 'Tomorrow' ? 'tomorrow night' : `${w.label} night`;
+    const nightName = w.label === 'Tonight' ? 'tonight' : w.label === 'Tomorrow' ? 'tomorrow night' : `${w.short} night`;
     const terrain = terrainOf(got);
     const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
     // the far profile only refines the sun times, so the score does not wait for it
@@ -165,7 +185,8 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       water: got.water,
       shelters: got.shelters,
       ground: got.ground,
-      avalanche: got.avalanche,
+      // the bulletin and the snow cover are today's: they say nothing about a night weeks away
+      avalanche: isToday || w.day <= addDays(today, 1) ? got.avalanche : undefined,
       avalancheFailed: failed.avalanche,
       noise: got.noise,
       noiseFailed: failed.noise,
@@ -178,38 +199,38 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     });
     if (waiting.length < 9 || done.near) ui.setSleep(comfort, nightName, waiting);
     // dangers for the first view: the spot's, the chosen night's and the hours before evening (a storm at 16:00 matters at 15:30)
-    const soonW = soonWindow(zurichNow(new Date()));
-    ui.setHazards({ comfort, fire: got.rules?.fire, soon: got.hourly && soonW ? summariseNight(got.hourly, soonW) : undefined });
-    ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, done.forecast && !got.hourly);
+    const soonW = soonWindow(now);
+    ui.setHazards({ comfort, fire: isToday ? got.rules?.fire : undefined, soon: isToday && got.hourly && soonW ? summariseNight(got.hourly, soonW) : undefined });
+    ui.setWeatherChip(night, nightName, done.forecast && !got.hourly);
     if (!done.forecast) return;
     if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', tr('Weather')), el('p', 'where', tr('The forecast could not be loaded.')));
-    else
+    else {
+      const end = forecastEnd(got.hourly);
       renderWeather(ui.weatherHost, {
-        windows,
-        selected,
+        window: w,
         night,
         hours: windowHours(got.hourly, w),
         note: comfort.weatherStop ? 'This weather rules the night out, however good the spot is.' : undefined,
-        onSelect: (i) => {
-          selected = i;
-          paint();
-        },
+        noForecastWhy: end ? tr('The weather forecast reaches only until {date}, so there is no weather for this night. Legality, sun and moon are still worked out for it.', { date: end.slice(0, 10) }) : undefined,
       });
+    }
   };
 
-  const run = collectDetails(lat, lng, elevation, {
+  run = collectDetails(lat, lng, elevation, {
     signal: abort.signal,
     onPart: (key) => {
-      const { got, failed } = run;
+      const { got, failed } = run!;
       if (key === 'water') ui.setWater(failed.water ? undefined : got.water, failed.water);
       else if (key === 'shelter') {
         ui.setShelter(failed.shelter ? undefined : got.shelters, failed.shelter);
         if (got.shelters) ui.setNearBuilding(nearBuildingNote(got.shelters));
       } else if (key === 'avalanche') ui.setAvalanche(failed.avalanche ? undefined : got.avalanche, failed.avalanche);
       else if (key === 'rules') ui.setRules(failed.rules ? { failed: ['fire', 'drones'] } : got.rules);
+      else if (key === 'forecast') announce();
       paint();
     },
   });
+  announce();
   await run.finished;
   window.clearTimeout(deadline);
 }
@@ -276,10 +297,17 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     void checkSpot(lat, lng, fromFinder, accuracyM);
   };
   const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry(), accuracyM });
+  // another night: the legality of the same spot is judged again for its date (zone seasons, firing days), without new requests
+  const nowStr = zurichNow(new Date());
+  let judgedFor = new Date();
+  const onNight = (w: NightWindow) => {
+    judgedFor = nightDate(w, nowStr);
+    ui.setAssessment(assessInputs(inputs, data, judgedFor));
+  };
   // bundled data that was still loading when the check went ahead: judge the same spot again as soon as it is in
   if (assessment.incomplete?.includes('local rule data') && data.loading) {
     void data.load().then(() => {
-      if (id === checkId) ui.setAssessment(assessInputs(inputs, data));
+      if (id === checkId) ui.setAssessment(assessInputs(inputs, data, judgedFor));
     });
   }
   if (fromFinder && finderBack) {
@@ -361,7 +389,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
   result.append(actions, more, sosLink());
   sheet.scrollTop = 0;
-  void loadDetails(ui, lat, lng, elevation, id, tappedAt).then(() => {
+  void loadDetails(ui, lat, lng, elevation, id, tappedAt, { onNight }).then(() => {
     // a spot saved while the checks were still running keeps the final scores, not the early ones
     if (id === checkId && isSaved(store, sid)) updateSnapshot(store, sid, ui.snapshot());
   });

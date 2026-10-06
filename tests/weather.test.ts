@@ -36,7 +36,7 @@ function forecast(from: string, hours: number, f: (i: number, t: string) => Part
 
 describe('night windows', () => {
   it('four nights from now, labelled Tonight, Tomorrow, then weekdays', () => {
-    const w = nightWindows('2026-10-04T10:00');
+    const w = nightWindows('2026-10-04T10:00', 4);
     expect(w.map((x) => x.label)).toEqual(['Tonight', 'Tomorrow', 'Tue', 'Wed']);
     expect(w[0]).toMatchObject({ from: '2026-10-04T18:00', to: '2026-10-05T08:00', day: '2026-10-04' });
     expect(w[1]).toMatchObject({ from: '2026-10-05T18:00', to: '2026-10-06T08:00' });

@@ -1,3 +1,5 @@
+import { getLang } from './i18n';
+
 export type CantonStance = 'banned' | 'restricted' | 'tolerated';
 
 export interface Source {
@@ -177,4 +179,41 @@ export function validateRuleAt(officialHosts: string[], label: string, rule: Can
     if (!official) problems.push(`not an official ${label} or federal source: ${src.url}`);
   }
   return problems;
+}
+
+/** The official German, French and Italian names of the cantons (the English name stays `Canton.name`). */
+const LOCAL_NAMES: Record<string, [de: string, fr: string, it: string]> = {
+  AG: ['Aargau', 'Argovie', 'Argovia'],
+  AI: ['Appenzell Innerrhoden', 'Appenzell Rhodes-Intérieures', 'Appenzello Interno'],
+  AR: ['Appenzell Ausserrhoden', 'Appenzell Rhodes-Extérieures', 'Appenzello Esterno'],
+  BE: ['Bern', 'Berne', 'Berna'],
+  BL: ['Basel-Landschaft', 'Bâle-Campagne', 'Basilea Campagna'],
+  BS: ['Basel-Stadt', 'Bâle-Ville', 'Basilea Città'],
+  FR: ['Freiburg', 'Fribourg', 'Friburgo'],
+  GE: ['Genf', 'Genève', 'Ginevra'],
+  GL: ['Glarus', 'Glaris', 'Glarona'],
+  GR: ['Graubünden', 'Grisons', 'Grigioni'],
+  JU: ['Jura', 'Jura', 'Giura'],
+  LU: ['Luzern', 'Lucerne', 'Lucerna'],
+  NE: ['Neuenburg', 'Neuchâtel', 'Neuchâtel'],
+  NW: ['Nidwalden', 'Nidwald', 'Nidvaldo'],
+  OW: ['Obwalden', 'Obwald', 'Obvaldo'],
+  SG: ['St. Gallen', 'Saint-Gall', 'San Gallo'],
+  SH: ['Schaffhausen', 'Schaffhouse', 'Sciaffusa'],
+  SO: ['Solothurn', 'Soleure', 'Soletta'],
+  SZ: ['Schwyz', 'Schwytz', 'Svitto'],
+  TG: ['Thurgau', 'Thurgovie', 'Turgovia'],
+  TI: ['Tessin', 'Tessin', 'Ticino'],
+  UR: ['Uri', 'Uri', 'Uri'],
+  VD: ['Waadt', 'Vaud', 'Vaud'],
+  VS: ['Wallis', 'Valais', 'Vallese'],
+  ZG: ['Zug', 'Zoug', 'Zugo'],
+  ZH: ['Zürich', 'Zurich', 'Zurigo'],
+};
+
+/** The canton's name in the language in force (English is the name in `Canton.name`). */
+export function localCantonName(c: { code: string; name: string }): string {
+  const lang = getLang();
+  const n = LOCAL_NAMES[c.code];
+  return lang === 'en' || !n ? c.name : n[lang === 'de' ? 0 : lang === 'fr' ? 1 : 2];
 }

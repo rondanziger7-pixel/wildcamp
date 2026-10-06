@@ -2,7 +2,8 @@ import { wgs84ToLv95 } from './coords';
 import { ZONE_LAYERS, type ZoneLayer } from './zones';
 import type { ZoneHit } from './assess';
 import { findCanton, type Canton } from './cantons';
-import { tr } from './i18n';
+import { getLang, tr } from './i18n';
+import { explainWrzRule } from './wrzrules';
 import { seasonState } from './wrzseason';
 
 const API = 'https://api3.geo.admin.ch/rest/services';
@@ -113,7 +114,8 @@ function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { la
   const statutory = str(a.schutzs_de) === 'rechtsverbindlich';
   const entryRule = !!rule && /Zutritt|Betretungsverbot|Wegegebot|Betreten oder befahren nur/i.test(rule);
   const winterSportsOnly = !!rule && /Wintersport/i.test(rule) && !/Zutritt|Wegegebot/i.test(rule);
-  const bits = [rule, season && `(${season})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
+  // the data's rule text is German: shown in plain language in the language in force
+  const bits = [rule && explainWrzRule(rule, getLang()), season && `(${season})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
   const ban = campingBanSentence(str(a.zusatzinformation));
   if (ban) {
     const st = seasonState(ban.season, today);

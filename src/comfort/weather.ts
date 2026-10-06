@@ -21,7 +21,10 @@ export interface Hourly {
 
 const CORE = ['temperature_2m', 'wind_speed_10m', 'wind_gusts_10m', 'wind_direction_10m', 'precipitation'];
 const EXTRA = ['precipitation_probability', 'weather_code', 'cloud_cover', 'snowfall', 'freezing_level_height', 'dew_point_2m', 'snow_depth'];
-export const FORECAST_DAYS = 5;
+/** Days requested from the forecast service (it offers 16); the nights after the first 7 are rough guides, and the app says so. */
+export const FORECAST_DAYS = 16;
+/** Days of the forecast that are reasonably reliable. */
+export const RELIABLE_DAYS = 7;
 
 function forecastUrl(lat: number, lon: number, hourly: string[], elevation?: number) {
   const q = new URLSearchParams({
@@ -83,9 +86,12 @@ export interface NightWindow {
   label: string;
   /** The calendar day the evening falls on. */
   day: string;
+  /** "Sat 10": weekday and day of the month, to tell two Saturdays apart in the picker. */
+  short: string;
 }
 
 const weekday = (d: Date) => new Intl.DateTimeFormat(dateLocale(), { weekday: 'short', timeZone: 'UTC' }).format(d);
+const shortDay = (day: string) => `${weekday(new Date(`${day}T12:00:00Z`))} ${Number(day.slice(8, 10))}`;
 
 /** The nights to plan for, from the evening (18:00) to the next morning (08:00). Before 08:00 the first is the night in progress. */
 export function nightWindows(now: string, count = FORECAST_DAYS - 1): NightWindow[] {
@@ -100,9 +106,31 @@ export function nightWindows(now: string, count = FORECAST_DAYS - 1): NightWindo
       to: `${addDays(day, 1)}T${pad(MORNING_HOUR)}:00`,
       label: i === 0 ? 'Tonight' : i === 1 ? 'Tomorrow' : weekday(new Date(`${day}T12:00:00Z`)),
       day,
+      short: shortDay(day),
     };
   });
 }
+
+/** The night that begins on any evening `day` (a date picked far ahead, beyond the nights listed). */
+export function nightWindowFor(day: string, now: string): NightWindow {
+  const first = nightWindows(now, 1)[0]!;
+  if (day === first.day) return first;
+  return {
+    from: `${day}T${pad(EVENING_HOUR)}:00`,
+    to: `${addDays(day, 1)}T${pad(MORNING_HOUR)}:00`,
+    label: day === addDays(first.day, 1) ? 'Tomorrow' : weekday(new Date(`${day}T12:00:00Z`)),
+    day,
+    short: shortDay(day),
+  };
+}
+
+/** The date a night's legality is judged for: the real moment for the night in progress, otherwise noon of its evening. */
+export function nightDate(w: NightWindow, now: string): Date {
+  return w.from === now ? new Date() : new Date(`${w.day}T12:00:00`);
+}
+
+/** The last hour the forecast covers ("YYYY-MM-DDTHH:MM"), if there is one. */
+export const forecastEnd = (h: Hourly): string | undefined => h.time[h.time.length - 1];
 
 /**
  * A night label in the current language: "Tonight" / "Tomorrow" (a window's label), "tonight" / "tomorrow night" and "Sat night"
