@@ -1,4 +1,4 @@
-import type { Assessment } from './assess';
+import { checkLabel, type Assessment } from './assess';
 import type { Comfort } from './comfort/comfort';
 import { LEVEL_NAME, type AvalancheInfo } from './comfort/avalanche';
 import { compassName, describeCode, nightText, type Night } from './comfort/weather';
@@ -10,7 +10,7 @@ import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
 import { legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
 import { tr } from './i18n';
-import type { NearBuildingNote } from './comfort/nearbuilding';
+import { applyNearBuilding, type NearBuildingNote } from './comfort/nearbuilding';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
 const VISIBLE = 3;
@@ -139,6 +139,8 @@ export interface ResultUi {
   setRules(r: Restrictions | undefined): void;
   /** A hut, inn or alp right next to the spot: a note in the legality details (and "likely OK" becomes "caution"). */
   setNearBuilding(n: NearBuildingNote | undefined): void;
+  /** A new verdict for the same spot (another date, or bundled data that arrived late). */
+  setAssessment(next: Assessment): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
@@ -175,8 +177,16 @@ function chip(kind: string) {
   return b;
 }
 
-/** Draws the result: two score cards (legality, sleep) that open into details, plus water and weather chips. */
-export function renderResult(root: HTMLElement, a: Assessment, elevation: number | undefined, focus?: Focus): ResultUi {
+export interface ResultHooks {
+  /** "Check again": the lookups that failed are made again. */
+  onRetry?: () => void;
+}
+
+/** Draws the result: an overall score first, then the legality, sleep and weather cards that open into details. */
+export function renderResult(root: HTMLElement, a0: Assessment, elevation: number | undefined, focus?: Focus, hooks: ResultHooks = {}): ResultUi {
+  let a = a0;
+  /** A hut, inn or alp right next to the spot: arrives with the hut lookup, after the first paint. */
+  let near: NearBuildingNote | undefined;
   let waterAt: { e: number; n: number; label: string } | undefined;
   let hutAt: { e: number; n: number; label: string } | undefined;
   const snap: { sleep?: Score; weather?: Score; night?: string; label?: string; pros: string[]; cons: string[]; complete: boolean; water?: string; hut?: string } = { pros: [], cons: [], complete: false };
@@ -185,14 +195,29 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const legal = scoreCard('legal', tr('Legality'));
   const sleep = scoreCard('sleep', tr('Sleep'));
   const weather = scoreCard('weather', tr('Weather'));
-  let L = legalityScore(a);
-  const b = BANNER[a.verdict];
-  legal.set(L, `${b.icon} ${b.label}`);
+  /** The assessment as shown: with the hut note, which turns "likely OK" into "caution". */
+  const shown = (): Assessment => applyNearBuilding(a, near);
+  let L = legalityScore(shown());
   legal.b.classList.add('primary');
-  // one line of why, so the answer needs no further tap: the most serious finding, or the verdict's own sentence
-  const why = a.items.find((i) => i.tone === 'bad') ?? a.items.find((i) => i.tone === 'warn');
-  const reason = why ? (a.municipality && why.title === tr('{name} (municipality)', { name: a.municipality }) ? tr('Municipal rule: {name}', { name: a.municipality }) : why.title) : b.sub;
-  const reasonLine = el('p', 'scores-reason', reason);
+  const reasonLine = el('p', 'scores-reason');
+  const makeRetry = () => {
+    const btn = el('button', 'save-btn retry-btn', '↻ ' + tr('Check again'));
+    btn.type = 'button';
+    btn.hidden = true;
+    btn.onclick = () => hooks.onRetry?.();
+    return btn;
+  };
+  const retryBtn = makeRetry(); // in the legality details
+  const retryTop = makeRetry(); // under the overall score
+  let uncheckedNow = false;
+  let inDetails = false;
+  const syncRetry = () => {
+    retryTop.hidden = !uncheckedNow || inDetails;
+    retryBtn.hidden = !uncheckedNow;
+  };
+  const lead = el('p', 'panel-lead');
+  const legalList = el('div', 'legal-list');
+  const seasonsHost = el('div', 'seasons-host');
   sleep.set({ tone: 'none' }, tr('Checking…'));
   weather.set({ tone: 'none' }, tr('Checking…'));
   const scores = el('div', 'scores');
@@ -205,11 +230,42 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   let spotComfort: number | undefined;
   let comfortUnavailable = false;
   const paintTotal = () => {
-    const t = overallScore(a, L, spotComfort, comfortUnavailable);
-    const word = a.verdict === 'no' ? '⛔ ' + tr('Not allowed') : t.value === undefined ? tr('Checking…') : t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 45 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
+    const s = shown();
+    const unchecked = !!a.incomplete?.length && s.verdict !== 'no';
+    const t = overallScore(s, L, spotComfort, comfortUnavailable);
+    let word: string;
+    if (s.verdict === 'no') word = '⛔ ' + tr('Not allowed');
+    else if (unchecked) word = '❔ ' + tr('Unchecked');
+    else if (t.value === undefined) word = tr('Checking…');
+    else {
+      word = t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 50 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
+      if (comfortUnavailable && spotComfort === undefined) word += ' · ' + tr('comfort not checked');
+    }
     total.set(t, word);
   };
-  paintTotal();
+  const paintLegal = () => {
+    const s = shown();
+    const b = BANNER[s.verdict];
+    L = legalityScore(s);
+    const unchecked = !!a.incomplete?.length && s.verdict !== 'no';
+    legal.set(L, unchecked ? '❔ ' + tr('Unchecked') : `${b.icon} ${b.label}`);
+    // one line of why, so the answer needs no further tap: the most serious finding, or the verdict's own sentence
+    const why = s.items.find((i) => i.tone === 'bad') ?? s.items.find((i) => i.tone === 'warn');
+    reasonLine.textContent = unchecked
+      ? tr('Could not check: {list}', { list: a.incomplete!.map(checkLabel).join(', ') })
+      : why
+        ? a.municipality && why.title === tr('{name} (municipality)', { name: a.municipality })
+          ? tr('Municipal rule: {name}', { name: a.municipality })
+          : why.title
+        : b.sub;
+    uncheckedNow = unchecked;
+    syncRetry();
+    lead.textContent = unchecked ? tr('Some checks could not be made. Check again, or do not rely on this result.') : b.sub;
+    legalList.replaceChildren(...checklist(s.items, 'details', focus));
+    const seasons = renderSeasons(s.zones);
+    seasonsHost.replaceChildren(...(seasons ? [seasons] : []));
+    paintTotal();
+  };
   const backBtn = el('button', 'linkish back-btn', '← ' + tr('Overall score'));
   backBtn.type = 'button';
   backBtn.hidden = true;
@@ -229,11 +285,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
-  const legalList = el('div', 'legal-list');
-  legalList.append(...checklist(a.items, 'details'));
-  legalPanel.append(el('p', 'panel-lead', b.sub), legalList);
-  const seasons = renderSeasons(a.zones);
-  if (seasons) legalPanel.append(seasons);
+  legalPanel.append(lead, retryBtn, legalList, seasonsHost);
   const rulesHost = el('section', 'rules');
   legalPanel.append(rulesHost);
   const sleepPanel = el('section', 'panel sleep');
@@ -253,6 +305,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const showDetails = (on: boolean) => {
     total.b.hidden = reasonLine.hidden = on;
     scores.hidden = backBtn.hidden = !on;
+    inDetails = on;
+    syncRetry();
     if (!on) {
       for (const p of panels) p.hidden = true;
       for (const [bt] of opener) bt.setAttribute('aria-expanded', 'false');
@@ -284,7 +338,17 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   jump(waterChip, () => waterAt);
   jump(shelterChip, () => hutAt);
 
-  root.replaceChildren(where, total.b, reasonLine, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
+  paintLegal();
+  root.replaceChildren(where, total.b, reasonLine, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
+
+  const markSleepUnavailable = (why: string) => {
+    sleep.set({ tone: 'none' }, tr('Unavailable'));
+    spotComfort = undefined;
+    comfortUnavailable = true;
+    snap.sleep = undefined;
+    paintTotal();
+    sleepPanel.replaceChildren(nearby, el('p', 'where', why));
+  };
 
   return {
     weatherHost,
@@ -293,6 +357,12 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       sleepPanel.replaceChildren(nearby, el('p', 'where', tr('Checking sleep comfort…')));
     },
     setSleep(c, nightLabel, loading = []) {
+      if (c.insufficient) {
+        // no terrain: nothing says how the spot is, so it is not rated (and never called "okay")
+        if (!loading.includes('terrain')) markSleepUnavailable(tr('The terrain could not be loaded, so the spot cannot be rated. Check again when you have a connection.'));
+        return;
+      }
+      comfortUnavailable = false;
       const s = sleepScore(c);
       spotComfort = spotComfortValue(c.spotScore);
       paintTotal();
@@ -325,10 +395,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       sleepPanel.replaceChildren(...parts);
     },
     setSleepUnavailable(why) {
-      sleep.set({ tone: 'none' }, tr('Unavailable'));
-      comfortUnavailable = true;
-      paintTotal();
-      sleepPanel.replaceChildren(nearby, el('p', 'where', why));
+      markSleepUnavailable(why);
     },
     setWater(w, failed) {
       waterChip.className = 'chip water';
@@ -376,13 +443,12 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       }
     },
     setNearBuilding(note) {
-      if (!note) return;
-      const verdict = a.verdict === 'likely_ok' ? 'caution' : a.verdict;
-      L = legalityScore({ ...a, verdict, items: [...a.items, note] });
-      legal.set(L, `${BANNER[verdict].icon} ${BANNER[verdict].label}`);
-      paintTotal();
-      if (a.verdict === 'likely_ok') reasonLine.textContent = note.title;
-      legalList.replaceChildren(...checklist([...a.items, note], 'details', focus));
+      near = note;
+      paintLegal();
+    },
+    setAssessment(next) {
+      a = next;
+      paintLegal();
     },
     setRules(r) {
       const items = r ? restrictionItems(r) : [];
@@ -420,6 +486,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         pros: snap.pros,
         cons: snap.cons,
         complete: snap.complete,
+        unchecked: a.incomplete?.length && a.verdict !== 'no' ? [...a.incomplete] : undefined,
       };
     },
     setWeatherChip(night, nightLabel, failed) {

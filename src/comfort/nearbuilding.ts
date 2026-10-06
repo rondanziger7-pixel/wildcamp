@@ -1,3 +1,4 @@
+import type { Assessment } from '../assess';
 import type { Shelter, ShelterResult } from './shelters';
 import { tr } from '../i18n';
 
@@ -31,4 +32,10 @@ export function nearBuildingNote(r: ShelterResult | undefined): NearBuildingNote
   if (s.kind === 'inn')
     return { ...common, title: tr('Close to a mountain inn'), text: tr('{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.', { name: s.name, dist }) };
   return { ...common, title: tr('Close to a mountain hut'), text: tr('{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club\'s guidance, not a law.', { name: s.name, dist }) };
+}
+
+/** The assessment with the hut/inn/alp note added: "likely OK" becomes "caution" (the owner's or hut team's permission is asked for). */
+export function applyNearBuilding(a: Assessment, note: NearBuildingNote | undefined): Assessment {
+  if (!note) return a;
+  return { ...a, verdict: a.verdict === 'likely_ok' ? 'caution' : a.verdict, items: [...a.items, note] };
 }

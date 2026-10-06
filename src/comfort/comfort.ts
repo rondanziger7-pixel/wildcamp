@@ -37,6 +37,8 @@ export interface Comfort {
   spotFactors: Item[];
   /** Which checks could not be made, shown so a missing check is not read as a good one. */
   missing: string[];
+  /** True when the terrain could not be read: nothing here says how the spot is, so it is not rated. */
+  insufficient: boolean;
 }
 
 export interface ComfortInput {
@@ -243,7 +245,9 @@ export function comfortFor(input: ComfortInput): Comfort {
     const stop = s.stops?.[0];
     if (stop && stop.meters <= 500) {
       busy++;
-      found.push(tr('{kind} stop “{name}” {dist} away', { kind: stop.kind.toLowerCase(), name: stop.name, dist: m(stop.meters) }));
+      const kind = stop.kind.toLowerCase();
+      // a stop without a name is described without one, and the layer's generic kind is not repeated ("stop stop")
+      found.push(stop.name ? (kind === 'stop' ? tr('Stop “{name}” {dist} away', { name: stop.name, dist: m(stop.meters) }) : tr('{kind} stop “{name}” {dist} away', { kind, name: stop.name, dist: m(stop.meters) })) : tr('a public transport stop {dist} away', { dist: m(stop.meters) }));
     }
     if (s.parkingM !== undefined && s.parkingM <= 400) {
       busy++;
@@ -453,5 +457,6 @@ export function comfortFor(input: ComfortInput): Comfort {
     weatherFactors: f.filter((x) => x.wx).map(({ score: _s, wx: _w, ...item }) => item),
     spotFactors: f.filter((x) => !x.wx).map(({ score: _s, wx: _w, ...item }) => item),
     missing,
+    insufficient: !t,
   };
 }

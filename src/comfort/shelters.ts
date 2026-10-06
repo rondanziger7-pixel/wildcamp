@@ -5,6 +5,8 @@ import { closestPoint } from './water';
 const API = 'https://api3.geo.admin.ch/rest/services/api/MapServer';
 const LAYER = 'ch.swisstopo.swissnames3d';
 export const SHELTER_RADIUS_M = 5000;
+/** The small search that cannot miss anything close (see fetchNearShelters). */
+export const NEAR_LOOKUP_M = 350;
 const MAX_LOOKUPS = 14;
 
 export type ShelterKind = 'hut' | 'biwak' | 'inn' | 'alp';
@@ -82,9 +84,9 @@ export interface ShelterResult {
   incomplete: boolean;
 }
 
-export async function fetchShelters(lat: number, lon: number, signal?: AbortSignal): Promise<ShelterResult> {
-  const { e, n } = wgs84ToLv95(lat, lon);
-  const mPerPx = SHELTER_RADIUS_M / 400;
+/** Candidates within `radiusM` of the spot (identify), with their geometries, placed and measured. */
+async function lookup(e: number, n: number, radiusM: number, signal?: AbortSignal): Promise<ShelterResult & { candidates: number }> {
+  const mPerPx = radiusM / 400;
   const half = 500 * mPerPx;
   const q = new URLSearchParams({
     geometryType: 'esriGeometryPoint',
@@ -111,5 +113,28 @@ export async function fetchShelters(lat: number, lon: number, signal?: AbortSign
       }
     }),
   );
-  return { shelters: placeShelters(candidates, geoms, e, n), incomplete: geoms.some((g) => g === undefined) };
+  return { shelters: placeShelters(candidates, geoms, e, n), incomplete: geoms.some((g) => g === undefined), candidates: candidates.length };
+}
+
+/**
+ * Huts, inns and alps within `NEAR_LOOKUP_M` only: a small search, so nothing close can be crowded out by the many huts
+ * within 5 km (the wide search keeps only the first `MAX_LOOKUPS` by kind, not by distance). Used for the "close to a hut"
+ * note and for the finder's candidates.
+ */
+export async function fetchNearShelters(lat: number, lon: number, signal?: AbortSignal): Promise<ShelterResult> {
+  const { e, n } = wgs84ToLv95(lat, lon);
+  const r = await lookup(e, n, NEAR_LOOKUP_M, signal);
+  return { shelters: r.shelters, incomplete: r.incomplete };
+}
+
+export async function fetchShelters(lat: number, lon: number, signal?: AbortSignal): Promise<ShelterResult> {
+  const { e, n } = wgs84ToLv95(lat, lon);
+  const [wide, near] = await Promise.allSettled([lookup(e, n, SHELTER_RADIUS_M, signal), lookup(e, n, NEAR_LOOKUP_M, signal)]);
+  if (wide.status === 'rejected') throw wide.reason;
+  // the near search is complete within its radius, so its entries replace the wide search's: both name the same objects
+  const nearList = near.status === 'fulfilled' ? near.value.shelters : [];
+  const key = (s: Shelter) => `${s.kind}:${s.name}`;
+  const seen = new Set(nearList.map(key));
+  const shelters = [...nearList, ...wide.value.shelters.filter((s) => !seen.has(key(s)))].sort((a, b) => a.meters - b.meters);
+  return { shelters, incomplete: wide.value.incomplete || near.status === 'rejected' || (near.status === 'fulfilled' && near.value.incomplete) };
 }

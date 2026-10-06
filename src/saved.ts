@@ -21,6 +21,8 @@ export interface SpotSnapshot {
   cons: string[];
   /** True when every sleep input had arrived, so the sleep score is the final one. */
   complete: boolean;
+  /** Legality lookups that had failed when the spot was saved (names, English): the verdict was never complete. */
+  unchecked?: string[];
   savedAt: number;
 }
 
@@ -71,6 +73,15 @@ function write(store: Store | undefined, list: SavedSpot[]): boolean {
 export function saveSpot(store: Store | undefined, spot: SavedSpot): { list: SavedSpot[]; stored: boolean } {
   const list = [spot, ...loadSaved(store).filter((s) => s.id !== spot.id)].slice(0, MAX_SAVED);
   return { list, stored: write(store, list) };
+}
+
+/** Replace a saved spot's snapshot in place (same position and name), e.g. once the checks that were still running have finished. */
+export function updateSnapshot(store: Store | undefined, id: string, snapshot: Omit<SpotSnapshot, 'savedAt'>): boolean {
+  const list = loadSaved(store);
+  const i = list.findIndex((s) => s.id === id);
+  if (i < 0) return false;
+  list[i] = { ...list[i]!, snapshot: { ...snapshot, savedAt: list[i]!.snapshot.savedAt } };
+  return write(store, list);
 }
 
 export function removeSpot(store: Store | undefined, id: string): SavedSpot[] {

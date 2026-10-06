@@ -14,6 +14,8 @@ export interface FinderRow {
   note: string;
   /** True when the water lookup has finished (or failed). */
   waterDone: boolean;
+  /** True when the 20 m profile showed the spot to be too steep to pitch on (the 100 m grid under-reads slope). */
+  steep?: boolean;
 }
 
 const VERDICT_ICON = { no: '⛔', caution: '⚠️', likely_ok: '✅', unknown: '❔' } as const;

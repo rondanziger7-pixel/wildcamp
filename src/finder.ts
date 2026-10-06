@@ -160,6 +160,22 @@ export function rankCells(
   return kept;
 }
 
+/** On the 20 m profile a slope of this many degrees (or more) is "too steep to pitch" (see comfort.ts). */
+export const FINE_MAX_SLOPE_DEG = 15;
+
+/**
+ * The 100 m grid under-reads slope by about half (it averages 100 m steps), so a shortlisted spot is measured again on the
+ * 20 m profile. Returns true when it is too steep to pitch on; otherwise the candidate's terrain and comfort are replaced.
+ */
+export function refineCandidate(c: Candidate, fine: TerrainMetrics, water?: WaterInfo): { steep: boolean } {
+  if (Number.isFinite(fine.slopeDeg) && fine.slopeDeg >= FINE_MAX_SLOPE_DEG) return { steep: true };
+  if (Number.isFinite(fine.slopeDeg)) {
+    c.terrain = fine;
+    c.comfort = comfortFor({ terrain: fine, ground: groundInfo(c.cover, c.coverLabel), water });
+  }
+  return { steep: false };
+}
+
 /** Rescore a candidate once its water is known. */
 export function withWater(c: Candidate, water: WaterInfo | undefined): Comfort {
   return comfortFor({ terrain: c.terrain, ground: groundInfo(c.cover, c.coverLabel), water });

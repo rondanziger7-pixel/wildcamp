@@ -4,10 +4,6 @@ import './style.css';
 import { isInSwitzerland } from './coords';
 import { assess, type Assessment } from './assess';
 import { lv95ToWgs84, wgs84ToLv95 } from './coords';
-import { loadForestMask, type ForestMask } from './forestmask';
-import { fetchCanton, fetchElevation, fetchMunicipality, fetchZoneHits } from './geoadmin';
-import { classifyTreeline } from './treeline';
-import { loadTreelineSurface, type TreelineSurface } from './treelinesurface';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import { downloadText, shareText, spotsToGpx } from './gpx';
 import { LANGS, applyStatic, getLang, setLang, tr, type Lang } from './i18n';
@@ -16,25 +12,25 @@ import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
 import { RetryTileLayer, RetryWmsLayer } from './tilelayer';
 import { fetchJuraReserves } from './jura';
-import { loadReserveSet, reserveZoneHits, type ReserveSet } from './reserves';
+import { LocalData } from './localstore';
+import { assessInputs, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS } from './spotcheck';
 import { searchPlaces, type Place } from './search';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
 import { bulletinAt, fetchBulletin, type AvalancheInfo } from './comfort/avalanche';
 import { fetchGround, type GroundInfo } from './comfort/ground';
-import { RESERVE_FILES, FOREST_FILE, TREELINE_FILE } from './localdata';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
-import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, type SavedSpot } from './saved';
+import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateSnapshot, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
-import { fetchCoverGrid, fetchElevationGrid, rankCells, withWater } from './finder';
+import { fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, withWater } from './finder';
 import { combined, renderFinder, type FinderRow } from './finderview';
 import { planNights } from './planner';
 import { addToTrip, loadTrip, moveInTrip, removeFromTrip, saveTrip, tripSpots } from './trip';
 import { renderTrip } from './tripview';
 import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
-import { fetchShelters, type ShelterResult } from './comfort/shelters';
-import { nearBuildingNote } from './comfort/nearbuilding';
+import { fetchNearShelters } from './comfort/shelters';
+import { applyNearBuilding, nearBuildingNote } from './comfort/nearbuilding';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
 import { fetchBuildingZone } from './buildingzone';
@@ -109,34 +105,10 @@ const slopeOverlay = new RetryWmsLayer('https://wms.geo.admin.ch/', {
 });
 
 // Local data (forest map 3.7 MB, reserves, treeline surface) is fetched after the map has drawn its first view, so it does
-// not compete with the map tiles, or at once when a check needs it. A check waits for it (up to DATA_WAIT_MS), so a deep
-// link or an early tap is not judged without the forest map or the reserve polygons.
-const DATA_WAIT_MS = 6000;
-let forestMask: ForestMask | undefined;
-const reserveSets: ReserveSet[] = [];
-let treelineSurface: TreelineSurface | undefined;
-let dataLoaded = false;
-let dataPromise: Promise<unknown> | undefined;
-
-/** Start fetching the local data once; later calls return the same promise. */
-function ensureData(urgent = true): Promise<unknown> {
-  // a background fetch yields to the map tiles; one a check is waiting for does not
-  const init: RequestInit = urgent ? {} : ({ priority: 'low' } as RequestInit);
-  dataPromise ??= Promise.all([
-    loadForestMask(`${import.meta.env.BASE_URL}${FOREST_FILE}`, init)
-      .then((m) => (forestMask = m))
-      .catch((err) => console.warn('forest map failed to load', err)),
-    ...RESERVE_FILES.map((file) =>
-      loadReserveSet(`${import.meta.env.BASE_URL}${file}`, init)
-        .then((r) => reserveSets.push(r))
-        .catch((err) => console.warn(`${file} failed to load`, err)),
-    ),
-    loadTreelineSurface(`${import.meta.env.BASE_URL}${TREELINE_FILE}`, init)
-      .then((t) => (treelineSurface = t))
-      .catch((err) => console.warn('treeline surface failed to load', err)),
-  ]).then(() => (dataLoaded = true));
-  return dataPromise;
-}
+// not compete with the map tiles, or at once when a check needs it. A check waits for it (up to DATA_WAIT_MS); one that
+// went ahead without it is marked incomplete and judged again when the data is in (see checkSpot).
+const data = new LocalData(import.meta.env.BASE_URL);
+const ensureData = (urgent = true) => data.load(urgent);
 
 const sheet = document.getElementById('sheet')!;
 document.getElementById('sheet-close')!.onclick = () => sheet.classList.add('closed');
@@ -154,18 +126,9 @@ function showLoading() {
   result.hidden = false;
   result.replaceChildren();
   const p = el('p', 'where');
-  p.append(el('span', 'spinner'), dataLoaded ? tr('Checking this spot…') : tr('Checking this spot (loading the map data for the first time)…'));
+  p.append(el('span', 'spinner'), data.complete ? tr('Checking this spot…') : tr('Checking this spot (loading the map data for the first time)…'));
   result.append(p);
 }
-
-/** Rejects after `ms`, so one stalled request cannot hold up a whole check. */
-function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
-  return Promise.race([p, new Promise<never>((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
-}
-
-const CHECK_BUDGET_MS = 10000;
-/** Longest any one part may take; a slow forecast service should not hold the final score for the whole budget. */
-const PART_MS = 6000;
 
 /**
  * Terrain, surroundings, water and forecast for a spot. Every part is requested at once with a shared deadline
@@ -180,18 +143,15 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
   const abort = new AbortController();
   const budget = Math.max(3000, tappedAt + CHECK_BUDGET_MS - Date.now());
   const deadline = window.setTimeout(() => abort.abort(), budget);
-
-  const got: { terrain?: TerrainMetrics; far?: Profiles; near?: Profiles; around?: Partial<Surroundings>; water?: WaterInfo; shelters?: ShelterResult; ground?: GroundInfo; avalanche?: AvalancheInfo; noise?: NoiseInfo; hazards?: HazardInfo; hourly?: Hourly } = {};
-  const done = { near: false, far: false, around: false, water: false, shelter: false, ground: false, avalanche: false, rules: false, noise: false, hazards: false, forecast: false };
-  const failed = { water: false, avalanche: false, noise: false, hazards: false, forecast: false };
   let selected = 0;
 
   const paint = () => {
     if (id !== checkId) return;
+    const { got, done, failed } = run;
     const w = windows[selected]!;
     const night = got.hourly ? summariseNight(got.hourly, w) : undefined;
     const nightName = w.label === 'Tonight' ? 'tonight' : w.label === 'Tomorrow' ? 'tomorrow night' : `${w.label} night`;
-    const terrain = got.near ? analyseTerrain(got.near, got.far) : undefined;
+    const terrain = terrainOf(got);
     const horizon = terrain && (terrain.farHorizon ? terrain.horizon.map((h, i) => Math.max(h, terrain.farHorizon![i]!)) : terrain.horizon);
     // the far profile only refines the sun times, so the score does not wait for it
     const waiting = [!done.near && 'terrain', !done.around && 'trails and roads', !done.water && 'water', !done.shelter && 'huts', !done.ground && 'ground cover', !done.avalanche && 'avalanche bulletin', !done.noise && 'noise', !done.hazards && 'natural hazards', !done.forecast && 'forecast'].filter(Boolean) as string[];
@@ -211,7 +171,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       sun: sunTimes(new Date(`${w.to.slice(0, 10)}T12:00:00Z`), lat, lng, horizon),
       eveningSun: sunTimes(new Date(`${w.day}T12:00:00Z`), lat, lng, horizon),
       moon: moonNight(lat, lng, w),
-      inForest: forestMask ? forestAt(forestMask, e, n) !== 0 : undefined,
+      inForest: data.forestMask ? forestAt(data.forestMask, e, n) !== 0 : undefined,
     });
     if (waiting.length < 9 || done.near) ui.setSleep(comfort, nightName, waiting);
     ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, done.forecast && !got.hourly);
@@ -231,29 +191,20 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       });
   };
 
-  const track = <T,>(key: keyof typeof done, p: Promise<T>, onValue: (v: T) => void, onFail?: () => void) =>
-    p
-      .then(onValue)
-      .catch(() => onFail?.())
-      .finally(() => {
-        done[key] = true;
-        paint();
-      });
-
-  const parts = [
-    track('near', withTimeout(fetchProfiles(lat, lng, NEAR, abort.signal), PART_MS), (v) => (got.near = v)),
-    track('far', withTimeout(fetchProfiles(lat, lng, FAR, abort.signal), PART_MS + 2000), (v) => (got.far = v)),
-    track('around', withTimeout(fetchSurroundings(lat, lng, abort.signal), PART_MS), (v) => (got.around = v)),
-    track('water', withTimeout(fetchWater(lat, lng, abort.signal), PART_MS), (v) => { got.water = v; ui.setWater(v); }, () => { failed.water = true; ui.setWater(undefined, true); }),
-    track('shelter', withTimeout(fetchShelters(lat, lng, abort.signal), PART_MS), (v) => { got.shelters = v; ui.setShelter(v); ui.setNearBuilding(nearBuildingNote(v)); }, () => ui.setShelter(undefined, true)),
-    track('ground', withTimeout(fetchGround(lat, lng, abort.signal), PART_MS), (v) => (got.ground = v)),
-    track('avalanche', withTimeout(fetchBulletin(abort.signal), PART_MS).then((fc) => bulletinAt(fc, lat, lng, new Date())), (v) => { got.avalanche = v; ui.setAvalanche(v); }, () => { failed.avalanche = true; ui.setAvalanche(undefined, true); }),
-    track('rules', withTimeout(fetchRestrictions(lat, lng, abort.signal), PART_MS), (v) => ui.setRules(v), () => ui.setRules({ failed: ['fire', 'drones'] })),
-    track('noise', withTimeout(fetchNoise(lat, lng, abort.signal), PART_MS), (v) => (got.noise = v), () => (failed.noise = true)),
-    track('hazards', withTimeout(fetchHazards(lat, lng, abort.signal), PART_MS), (v) => (got.hazards = v), () => (failed.hazards = true)),
-    track('forecast', withTimeout(fetchForecast(lat, lng, elevation, abort.signal), PART_MS), (v) => (got.hourly = v), () => (failed.forecast = true)),
-  ];
-  await Promise.allSettled(parts);
+  const run = collectDetails(lat, lng, elevation, {
+    signal: abort.signal,
+    onPart: (key) => {
+      const { got, failed } = run;
+      if (key === 'water') ui.setWater(failed.water ? undefined : got.water, failed.water);
+      else if (key === 'shelter') {
+        ui.setShelter(failed.shelter ? undefined : got.shelters, failed.shelter);
+        if (got.shelters) ui.setNearBuilding(nearBuildingNote(got.shelters));
+      } else if (key === 'avalanche') ui.setAvalanche(failed.avalanche ? undefined : got.avalanche, failed.avalanche);
+      else if (key === 'rules') ui.setRules(failed.rules ? { failed: ['fire', 'drones'] } : got.rules);
+      paint();
+    },
+  });
+  await run.finished;
   window.clearTimeout(deadline);
 }
 
@@ -277,38 +228,8 @@ function focusOn(e: number, n: number, label: string) {
   map.flyToBounds(bounds, { ...pad, maxZoom: 16, duration: 0.8 });
 }
 
-/** Legality assessment of a spot: the zone, canton, municipality and reserve lookups plus the local data. */
-async function assessSpot(lat: number, lng: number, knownElevation?: number) {
-  const inJura = lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
-  const LOOKUP_MS = 7000;
-  const dataWait = Promise.race([ensureData(), new Promise((r) => setTimeout(r, DATA_WAIT_MS))]); // runs alongside the lookups
-  const [elev, zones, canton, muni, jura, bzone] = await Promise.allSettled([
-    knownElevation !== undefined ? Promise.resolve(knownElevation) : withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
-    withTimeout(fetchZoneHits(lat, lng), LOOKUP_MS),
-    withTimeout(fetchCanton(lat, lng), LOOKUP_MS),
-    withTimeout(fetchMunicipality(lat, lng), LOOKUP_MS),
-    inJura ? withTimeout(fetchJuraReserves(lat, lng), LOOKUP_MS) : Promise.resolve([]),
-    withTimeout(fetchBuildingZone(lat, lng), LOOKUP_MS),
-  ]);
-  await dataWait;
-  const elevation = elev.status === 'fulfilled' ? elev.value : undefined;
-  const { e, n } = wgs84ToLv95(lat, lng);
-  const { status: treeline, note: treelineNote } = classifyTreeline(forestMask, treelineSurface, e, n, elevation);
-  const assessment = assess({
-    zones: [...(zones.status === 'fulfilled' ? zones.value : []), ...reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...(jura.status === 'fulfilled' ? jura.value : [])],
-    zoneLookupFailed: zones.status === 'rejected',
-    treeline,
-    treelineNote,
-    elevationKnown: elevation !== undefined,
-    canton: canton.status === 'fulfilled' ? canton.value : undefined,
-    municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
-    municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,
-    municipalNote: muni.status === 'fulfilled' ? findUnverifiedNote(muni.value?.bfs) : undefined,
-    buildingZone: bzone.status === 'fulfilled' ? bzone.value : { near: false, failed: true },
-    outsideSwitzerland: canton.status === 'fulfilled' && canton.value === undefined,
-  });
-  return { assessment, elevation };
-}
+/** The legality check of a spot (the lookups plus the bundled data). `inputs` is kept to judge the same spot again, for another date or once late data is in. */
+const assessSpot = (lat: number, lng: number, knownElevation?: number) => checkLegality(lat, lng, data, { knownElevation });
 
 async function checkSpot(lat: number, lng: number, fromFinder = false) {
   const id = ++checkId;
@@ -332,14 +253,25 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   showLoading();
   const assessed = await assessSpot(lat, lng);
   if (id !== checkId) return; // a newer tap superseded this one
-  const { assessment, elevation } = assessed;
+  const { assessment, elevation, inputs } = assessed;
   if (assessment.outside) {
     sheet.dataset.state = 'result';
     renderOutside(result);
     return;
   }
   sheet.dataset.state = 'result';
-  const ui = renderResult(result, assessment, elevation, focusOn);
+  // "Check again": the failed lookups are made again, the bundled data that failed is asked for again first
+  const retry = async () => {
+    if (!data.complete) await data.retry();
+    void checkSpot(lat, lng, fromFinder);
+  };
+  const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry() });
+  // bundled data that was still loading when the check went ahead: judge the same spot again as soon as it is in
+  if (assessment.incomplete?.includes('local rule data') && data.loading) {
+    void data.load().then(() => {
+      if (id === checkId) ui.setAssessment(assessInputs(inputs, data));
+    });
+  }
   if (fromFinder && finderBack) {
     const back = el('button', 'linkish', '← ' + tr('Back to best spots'));
     back.type = 'button';
@@ -419,7 +351,10 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
   result.append(actions, more);
   sheet.scrollTop = 0;
-  void loadDetails(ui, lat, lng, elevation, id, tappedAt);
+  void loadDetails(ui, lat, lng, elevation, id, tappedAt).then(() => {
+    // a spot saved while the checks were still running keeps the final scores, not the early ones
+    if (id === checkId && isSaved(store, sid)) updateSnapshot(store, sid, ui.snapshot());
+  });
 }
 
 
@@ -557,16 +492,19 @@ async function findBest(lat: number, lng: number) {
 
     const rows: FinderRow[] = cands.map((c) => ({ candidate: c, sleep: sleepScore(c.comfort), note: finderNote(c, undefined, false), waterDone: false }));
     let hidden = 0;
+    let steep = 0;
     const shown = () => {
-      const open = rows.filter((r) => r.legal?.verdict !== 'no');
-      hidden = rows.length - open.length;
+      const level = rows.filter((r) => !r.steep);
+      const open = level.filter((r) => r.legal?.verdict !== 'no');
+      steep = rows.length - level.length;
+      hidden = level.length - open.length;
       return open.sort((a, b) => combined(b) - combined(a));
     };
     const draw = (done: boolean) => {
       if (gone()) return;
       const list = done ? shown().slice(0, FINDER_SHOWN) : shown();
       const checked = rows.filter((r) => r.legal && r.waterDone).length;
-      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about 700 m' : '{n} spots within about 700 m', { n: list.length }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + '.' : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done);
+      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about 700 m' : '{n} spots within about 700 m', { n: list.length }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + (steep ? '; ' + tr('{n} more skipped because they are too steep to pitch on', { n: steep }) : '') + '.' : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done);
       finderPins.clearLayers();
       list.forEach((r, i) =>
         L.marker([r.candidate.lat, r.candidate.lon], { icon: L.divIcon({ className: '', html: `<div class="finder-pin">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) })
@@ -590,18 +528,25 @@ async function findBest(lat: number, lng: number) {
       while (!gone() && next < rows.length) {
         const r = rows[next++]!;
         const c = r.candidate;
-        const [a, w] = await Promise.allSettled([withTimeout(assessSpot(c.lat, c.lon, c.elevation), 12000), withTimeout(fetchWater(c.lat, c.lon, abort.signal), 8000)]);
+        const [a, w, sh, fine] = await Promise.allSettled([
+          withTimeout(assessSpot(c.lat, c.lon, c.elevation), 12000),
+          withTimeout(fetchWater(c.lat, c.lon, abort.signal), 8000),
+          withTimeout(fetchNearShelters(c.lat, c.lon, abort.signal), 8000),
+          withTimeout(fetchProfiles(c.lat, c.lon, NEAR, abort.signal), 8000),
+        ]);
         if (gone()) return;
-        const water = w.status === 'fulfilled' ? w.value : undefined;
+        const water = w.status === 'fulfilled' && !w.value.failed.includes('water') ? w.value : undefined;
         r.waterDone = true;
-        if (water && !water.failed.includes('water')) {
-          c.comfort = withWater(c, water);
-          r.sleep = sleepScore(c.comfort);
-        }
-        r.note = finderNote(c, water, true);
+        // the 100 m grid under-reads slope: the shortlisted spot is measured again on the 20 m profile
+        if (fine.status === 'fulfilled') r.steep = refineCandidate(c, analyseTerrain(fine.value), water).steep;
+        else if (water) c.comfort = withWater(c, water);
+        r.sleep = sleepScore(c.comfort);
+        r.note = finderNote(c, w.status === 'fulfilled' ? w.value : undefined, true);
         if (a.status === 'fulfilled') {
-          const L0 = legalityScore(a.value.assessment);
-          r.legal = { ...L0, verdict: a.value.assessment.verdict, label: a.value.assessment.verdict };
+          // a hut, inn or alp right beside the spot makes "likely OK" a "caution", as in the full check
+          const note = sh.status === 'fulfilled' ? nearBuildingNote(sh.value) : undefined;
+          const shownAssessment = applyNearBuilding(a.value.assessment, note);
+          r.legal = { ...legalityScore(shownAssessment), verdict: shownAssessment.verdict, label: shownAssessment.verdict };
         } else r.legal = { tone: 'warn', value: 40, verdict: 'unknown', label: 'unknown' };
         draw(false);
       }

@@ -46,13 +46,20 @@ describe('legality score', () => {
   });
 });
 
+// comfortFor without terrain says "insufficient"; these tests are about the arithmetic, so they mark it as rated
+const rated = (input: Parameters<typeof comfortFor>[0]) => ({ ...comfortFor(input), insufficient: false });
+
 describe('sleep score', () => {
   const water = { kind: 'stream' as const, meters: 80, upstreamPlants: [], failed: [] };
   it('has no score without comfort data', () => {
     expect(sleepScore(undefined)).toEqual({ tone: 'none' });
   });
+  it('has no score when the terrain could not be read: nothing says how the spot is', () => {
+    expect(sleepScore(comfortFor({}))).toEqual({ tone: 'none' });
+    expect(comfortFor({}).insufficient).toBe(true);
+  });
   it('is 50 at a net score of zero and moves 6.25 per point, within 0 to 100', () => {
-    const c = comfortFor({});
+    const c = rated({});
     expect(c.score).toBe(0);
     expect(sleepScore(c).value).toBe(50);
     expect(sleepScore({ ...c, score: 4 }).value).toBe(75);
@@ -61,13 +68,13 @@ describe('sleep score', () => {
     expect(sleepScore({ ...c, score: -100 }).value).toBe(0);
   });
   it('a storm caps it at 25 whatever the spot is like', () => {
-    const c = comfortFor({ water, night: { from: 'a', to: 'b', minTempC: 8, maxGustKmh: 20, meanWindKmh: 10, windFromDeg: 0, precipMm: 0, thunder: true } });
+    const c = rated({ water, night: { from: 'a', to: 'b', minTempC: 8, maxGustKmh: 20, meanWindKmh: 10, windFromDeg: 0, precipMm: 0, thunder: true } });
     expect(c.weatherStop).toBe(true);
     expect(sleepScore({ ...c, score: 10 }).value).toBe(25);
     expect(sleepScore(c).tone).toBe('bad');
   });
   it('its tone follows the rating', () => {
-    const c = comfortFor({});
+    const c = rated({});
     expect(sleepScore({ ...c, rating: 'great' }).tone).toBe('good');
     expect(sleepScore({ ...c, rating: 'fair' }).tone).toBe('warn');
     expect(sleepScore({ ...c, rating: 'poor' }).tone).toBe('bad');

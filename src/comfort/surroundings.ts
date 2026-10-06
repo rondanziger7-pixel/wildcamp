@@ -114,7 +114,9 @@ export function parseStops(body: { results?: Feature[] }, e: number, n: number):
   for (const f of body.results ?? []) {
     const p = f.properties ?? {};
     const m = distanceTo(f.geometry, e, n);
-    if (Number.isFinite(m)) out.push({ name: String(p.name ?? ''), kind: String(p.verkehrsmittel_de ?? p.betriebspunkttyp_de ?? 'Stop'), meters: m });
+    // the stop layer names a stop in `haltestelle` (and `label`); older fixtures use `name`
+    const name = [p.haltestelle, p.label, p.name].find((v) => typeof v === 'string' && v.trim() !== '');
+    if (Number.isFinite(m)) out.push({ name: typeof name === 'string' ? name.trim() : '', kind: String(p.verkehrsmittel_de ?? p.betriebspunkttyp_de ?? 'Stop'), meters: m });
   }
   return nearest(out);
 }

@@ -34,9 +34,19 @@ export const ZONE_LAYERS: ZoneLayer[] = [
   },
   {
     id: 'ch.bafu.bundesinventare-jagdbanngebiete',
+    // the layer also holds the "Wildschadenperimeter" polygons, which lie OUTSIDE the reserve (VEJ Art. 2 para. 2 let. d); see below
+    accept: (a) => a.typ_de !== 'Wildschadenperimeter',
     get label() { return tr('Federal wildlife reserve (Jagdbanngebiet)'); },
     severity: 'restricted',
     get note() { return tr('Free tenting and camping is prohibited (VEJ Art. 5 para. 1 let. e); only official campsites are allowed, and cantons can grant exceptions.'); },
+  },
+  {
+    id: 'ch.bafu.bundesinventare-jagdbanngebiete',
+    // Not a ban: the perimeters beside a reserve in which the canton pays for wildlife damage. Shown so the pink on the map is explained.
+    accept: (a) => a.typ_de === 'Wildschadenperimeter',
+    get label() { return tr('Wildlife-damage perimeter next to a federal hunting reserve'); },
+    severity: 'info',
+    get note() { return tr('This polygon lies outside the hunting reserve (VEJ Art. 2 para. 2 let. d), so the reserve\'s camping ban does not apply here. Other rules, such as wildlife quiet zones or cantonal rules, still can.'); },
   },
   {
     id: 'ch.bafu.wrz-wildruhezonen_portal',

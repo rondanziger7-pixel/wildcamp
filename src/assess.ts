@@ -39,6 +39,8 @@ export interface Assessment {
   outside?: boolean;
   /** How the treeline status was determined, shown to the user. */
   treelineNote?: string;
+  /** Lookups that failed or are missing (zones, municipality, bundled data ...): the result may miss a ban. Empty or absent when everything was checked. */
+  incomplete?: string[];
 }
 
 /**
@@ -62,6 +64,8 @@ export function assess(input: {
   treelineNote?: string;
   /** False when the elevation could not be read (the treeline cannot be judged at all). Default true. */
   elevationKnown?: boolean;
+  /** Lookups that failed or ran out of time, by name. A result made without them is never "likely OK". */
+  incomplete?: string[];
   /** Canton at the spot, if it could be determined. */
   canton?: Canton;
   /** Municipality at the spot, if it could be determined. */
@@ -186,5 +190,35 @@ export function assess(input: {
     reasons.push(tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).'));
     items.push({ tone: 'info', title: tr('Not checked'), text: tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).') });
   }
-  return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality };
+  const incomplete = input.incomplete ?? [];
+  if (incomplete.length) {
+    const text = tr('These checks could not be made: {list}. A ban or restriction may be missing from this result, so do not rely on it.', { list: incomplete.map(checkLabel).join(', ') });
+    reasons.push(text);
+    items.push({ tone: 'warn', title: tr('Not fully checked'), text });
+    // a ban that was found stays a ban; anything softer cannot be called "likely OK" with a check missing
+    if (verdict === 'likely_ok') verdict = 'unknown';
+  }
+  return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality, incomplete: incomplete.length ? [...incomplete] : undefined };
+}
+
+/** A lookup's name as shown to the user. */
+export function checkLabel(name: string): string {
+  switch (name) {
+    case 'zones':
+      return tr('protected zones');
+    case 'canton':
+      return tr('canton');
+    case 'municipality':
+      return tr('municipality');
+    case 'elevation':
+      return tr('elevation');
+    case 'building zones':
+      return tr('building zones');
+    case 'Jura reserves':
+      return tr('Jura reserves');
+    case 'local rule data':
+      return tr('the rule data bundled with the app');
+    default:
+      return name;
+  }
 }

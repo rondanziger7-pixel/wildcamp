@@ -1,0 +1,322 @@
+[
+{
+"value": "01.01. - 31.12.",
+"count": 325
+},
+{
+"value": "01.12. - 15.04.",
+"count": 139
+},
+{
+"value": "20.12. - 30.04.",
+"count": 107
+},
+{
+"value": "01.12. - 30.04.",
+"count": 85
+},
+{
+"value": "01.12. - 31.03.",
+"count": 58
+},
+{
+"value": "20.12. - 20.04.",
+"count": 36
+},
+{
+"value": "15.12. - 30.04.",
+"count": 30
+},
+{
+"value": "20.12. - 15.04.",
+"count": 28
+},
+{
+"value": "21.12. - 30.04.",
+"count": 27
+},
+{
+"value": "En cas de neige",
+"count": 26
+},
+{
+"value": "24.12. - 31.03.",
+"count": 18
+},
+{
+"value": "ganzjährig/Wintersport: während Betriebszeiten der Bahn",
+"count": 15
+},
+{
+"value": "01.02. - 30.04.",
+"count": 13
+},
+{
+"value": "01.11. - 30.06.",
+"count": 12
+},
+{
+"value": "Betretungsverbot vom 1. Januar bis 31. März",
+"count": 12
+},
+{
+"value": "Betretungsverbot vom 15. Dezember bis 15. April",
+"count": 11
+},
+{
+"value": "16.12. bis Ende Skisaison",
+"count": 10
+},
+{
+"value": "21.12. - 30.06.",
+"count": 10
+},
+{
+"value": "21.12. - 31.03.",
+"count": 10
+},
+{
+"value": "01.12. - 01.07.",
+"count": 7
+},
+{
+"value": "01.12. - 15.07.",
+"count": 7
+},
+{
+"value": "15.12. - 15.04.",
+"count": 7
+},
+{
+"value": "20.12. - 31.03.",
+"count": 7
+},
+{
+"value": "keine definierte Periode",
+"count": 7
+},
+{
+"value": "01.01. - 30.04.",
+"count": 6
+},
+{
+"value": "01.12. - 20.04.",
+"count": 6
+},
+{
+"value": "Betriebszeiten der Bahn",
+"count": 6
+},
+{
+"value": "01.01. - 15.04.",
+"count": 5
+},
+{
+"value": "01.11. - 15.05.",
+"count": 5
+},
+{
+"value": "01.11. - 31.03.",
+"count": 5
+},
+{
+"value": "15.11. - 31.07.",
+"count": 5
+},
+{
+"value": "20.12. - 20.05.",
+"count": 5
+},
+{
+"value": "01.01. - 31.03.",
+"count": 4
+},
+{
+"value": "01.02. - 15.04.",
+"count": 3
+},
+{
+"value": "01.03. - 31.07.",
+"count": 3
+},
+{
+"value": "01.09. - 31.10.",
+"count": 3
+},
+{
+"value": "01.12. - 07.08.",
+"count": 3
+},
+{
+"value": "15.01. - 31.03.",
+"count": 3
+},
+{
+"value": "15.12. - 15.06.",
+"count": 3
+},
+{
+"value": "15.12. - 31.03.",
+"count": 3
+},
+{
+"value": "15.12. bis Ende Skisaison",
+"count": 3
+},
+{
+"value": "20.11. - 15.04.",
+"count": 3
+},
+{
+"value": "31.12. - 30.04.",
+"count": 3
+},
+{
+"value": "De début mai à fin juillet",
+"count": 3
+},
+{
+"value": "En cas de neige et de Pâques (depuis l'arrêt des installations de remontées mécaniques) à fin mai",
+"count": 3
+},
+{
+"value": "01.01. - 01.06.",
+"count": 2
+},
+{
+"value": "01.01. - 20.04.",
+"count": 2
+},
+{
+"value": "01.01. - 30.06.",
+"count": 2
+},
+{
+"value": "01.04. - 30.06.",
+"count": 2
+},
+{
+"value": "01.09. - 15.10.",
+"count": 2
+},
+{
+"value": "01.12. - 31.05.",
+"count": 2
+},
+{
+"value": "15.11. - 15.04.",
+"count": 2
+},
+{
+"value": "15.11. - 30.04.",
+"count": 2
+},
+{
+"value": "16.12. - 31.03.",
+"count": 2
+},
+{
+"value": "20.12. - 30.03.",
+"count": 2
+},
+{
+"value": "27.12. - 15.04.",
+"count": 2
+},
+{
+"value": "Skisaison",
+"count": 2
+},
+{
+"value": "-",
+"count": 1
+},
+{
+"value": "01.01. - 15.09.",
+"count": 1
+},
+{
+"value": "01.02. - 30.06.",
+"count": 1
+},
+{
+"value": "01.02. - 31.03.",
+"count": 1
+},
+{
+"value": "01.02. - 31.07.",
+"count": 1
+},
+{
+"value": "01.03. - 15.08.",
+"count": 1
+},
+{
+"value": "01.09. - 30.11.",
+"count": 1
+},
+{
+"value": "01.12. - 01.04.",
+"count": 1
+},
+{
+"value": "01.12. - 15.05.",
+"count": 1
+},
+{
+"value": "01.12. - 30.06.",
+"count": 1
+},
+{
+"value": "01.12. bis Ostern",
+"count": 1
+},
+{
+"value": "10.01. - 31.07.",
+"count": 1
+},
+{
+"value": "15.02. - 15.06.",
+"count": 1
+},
+{
+"value": "15.04. - 15.08.",
+"count": 1
+},
+{
+"value": "16.12. - 15.05. resp. bis zur Öffnung der Strasse zur Alp Sardona",
+"count": 1
+},
+{
+"value": "16.12. bis Ende Skisaison, Rundweg Holzlagerplatz Tschennerwald-Geissegg-Lavadiel bis 13.12. und ab 15.03. erlaubt",
+"count": 1
+},
+{
+"value": "20.12. - 01.05.",
+"count": 1
+},
+{
+"value": "20.12. - 30.06.",
+"count": 1
+},
+{
+"value": "20.12. - 31.05.",
+"count": 1
+},
+{
+"value": "21.12. - 20.04.",
+"count": 1
+},
+{
+"value": "24 dicembre - 31 marzo / 15 aprile - 15 agosto",
+"count": 1
+},
+{
+"value": "De février à mi-juillet",
+"count": 1
+},
+{
+"value": "De Pâques (depuis l'arrêt des installations de remontées mécaniques) à fin mai",
+"count": 1
+}
+]

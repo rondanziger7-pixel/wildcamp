@@ -18,6 +18,8 @@ const clamp = (x: number) => Math.max(0, Math.min(100, Math.round(x)));
  */
 export function legalityScore(a: Assessment): Score {
   if (a.outside) return { tone: 'none' };
+  // a lookup is missing: no number (a ban found anyway is still a ban)
+  if (a.incomplete?.length && a.verdict !== 'no') return { tone: 'none' };
   switch (a.verdict) {
     case 'no':
       return { value: 0, tone: 'bad' };
@@ -34,7 +36,7 @@ export function legalityScore(a: Assessment): Score {
 
 /** Sleep quality: the comfort factor sum mapped to 0..100 (50 at zero, 6.25 per point); a storm caps it at 25. */
 export function sleepScore(c: Comfort | undefined): Score {
-  if (!c) return { tone: 'none' };
+  if (!c || c.insufficient) return { tone: 'none' };
   let value = clamp(50 + 6.25 * c.score);
   if (c.weatherStop) value = Math.min(value, 25);
   return { value, tone: c.rating === 'great' || c.rating === 'good' ? 'good' : c.rating === 'fair' ? 'warn' : 'bad' };
@@ -52,17 +54,19 @@ export function weatherScore(c: Comfort | undefined, forecastKnown: boolean): Sc
 }
 
 /**
- * One number for "is this a good place to sleep": half legality, half the spot's comfort. The weather is left out, so a
- * place can be judged in advance. A ban makes it 0, and a spot whose legality is only "caution" is never called good.
- * Without a comfort score yet it is undefined; with the comfort check unavailable it is the legality alone.
+ * One number for "is this a good place to sleep": half legality, half the spot's comfort, held down by the weaker of the two
+ * (never more than 10 above it), so a legal spot that cannot be slept on is not "okay". The weather is left out, so a place can be
+ * judged in advance. A ban makes it 0. Without a comfort score yet it is undefined; with the comfort check unavailable it is the
+ * legality alone. A check that could not be made (a missing lookup) gives no number at all: the result is "unchecked".
  */
 export function overallScore(a: Assessment, legal: Score, spotComfort: number | undefined, comfortUnavailable = false): Score {
   if (a.outside) return { tone: 'none' };
   if (a.verdict === 'no') return { value: 0, tone: 'bad' };
+  if (a.incomplete?.length) return { tone: 'none' };
   if (legal.value === undefined) return { tone: 'none' };
   if (spotComfort === undefined && !comfortUnavailable) return { tone: 'none' };
-  const value = clamp(spotComfort === undefined ? legal.value : 0.5 * legal.value + 0.5 * spotComfort);
-  const tone: ScoreTone = value >= 70 && a.verdict === 'likely_ok' ? 'good' : value >= 45 ? 'warn' : 'bad';
+  const value = clamp(spotComfort === undefined ? legal.value : Math.min(0.5 * legal.value + 0.5 * spotComfort, Math.min(legal.value, spotComfort) + 10));
+  const tone: ScoreTone = value >= 70 && a.verdict === 'likely_ok' ? 'good' : value >= 50 ? 'warn' : 'bad';
   return { value, tone };
 }
 

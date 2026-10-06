@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { inSeason, parseZoneHits } from '../src/geoadmin';
+import { campingBanSentence, inSeason, parseZoneHits } from '../src/geoadmin';
 import { assess } from '../src/assess';
 
 // Attribute shapes copied from live geo.admin.ch identify responses.
@@ -83,12 +83,63 @@ describe('parseZoneHits', () => {
     it('path-only rules count as entry rules', () => {
       expect(sev(wrz({ best_de: 'Wegegebot, Leinenpflicht' }), winter)).toBe('restricted');
     });
+    it('a ski-season zone is not "Not allowed" in July (Murgtal showed 0/100 all summer)', () => {
+      const skiZone = wrz({ best_de: 'Zutrittsverbot', schutzzeit: '15.12. bis Ende Skisaison', kanton: 'SG' });
+      const july = new Date(2026, 6, 15);
+      expect(sev(skiZone, july)).toBe('caution');
+      expect(assess({ zones: parseZoneHits({ results: [skiZone] }, july), treeline: 'above' }).verdict).not.toBe('no');
+      expect(sev(skiZone, new Date(2027, 1, 10))).toBe('restricted'); // in the middle of the ski season it still is
+      expect(sev(skiZone, new Date(2027, 4, 1))).toBe('caution'); // season end is unknown: not a ban we can claim
+      expect(parseZoneHits({ results: [skiZone] }, new Date(2027, 4, 1))[0]!.layer.note).toMatch(/cannot be placed exactly/);
+    });
+    it('"En cas de neige" and lift-operation texts are caution, not a year-round ban', () => {
+      expect(sev(wrz({ schutzzeit: 'En cas de neige' }), summer)).toBe('caution');
+      expect(sev(wrz({ schutzzeit: 'Betriebszeiten der Bahn' }), summer)).toBe('caution');
+      expect(sev(wrz({ schutzzeit: 'keine definierte Periode' }), summer)).toBe('restricted');
+    });
+    it('a statutory zone whose own text forbids camping is restricted for that reason, in the zone\'s own words', () => {
+      const bern = wrz({ best_de: 'Wintersportverbot abseits eingezeichneter Routen', schutzzeit: 'ganzjährig/Wintersport: während Betriebszeiten der Bahn', zusatzinformation: 'Wintersport und Winterwandern sind ausserhalb der bezeichneten Routen verboten. Freies/wildes Campieren und Biwakieren sind verboten. Der Betrieb von zivilen, unbemannten Luftfahrzeugen (z.B. Drohnen, Modellflugzeuge) ist verboten.' });
+      const [h] = parseZoneHits({ results: [bern] }, summer);
+      expect(h!.layer.severity).toBe('restricted');
+      expect(h!.detail).toContain('Freies/wildes Campieren und Biwakieren sind verboten.');
+      expect(h!.detail).not.toContain('Drohnen');
+    });
+    it('a camping ban with its own dates follows them', () => {
+      const justi = wrz({ best_de: 'Andere Bestimmung', zusatzinformation: 'Das Gebiet darf vom 1. September bis 30. November nur auf den bezeichneten Wegen betreten werden. Hunde sind an der Leine zu führen. Das freie Campieren ist vom 1. September bis zum 30. November verboten.' });
+      expect(sev(justi, new Date(2026, 9, 15))).toBe('restricted');
+      expect(sev(justi, new Date(2026, 6, 15))).toBe('caution');
+    });
+    it('a recommended zone that asks for no camping stays caution', () => {
+      expect(sev(wrz({ schutzs_de: 'empfohlen', zusatzinformation: 'Freies/wildes Campieren und Biwakieren sind verboten.' }), winter)).toBe('caution');
+    });
+    it('does not mistake other bans for a camping ban', () => {
+      expect(campingBanSentence('Der Betrieb von zivilen, unbemannten Luftfahrzeugen (z.B. Drohnen, Modellflugzeuge) ist verboten.')).toBeUndefined();
+      expect(campingBanSentence('Wintersport ist verboten. Hunde an die Leine.')).toBeUndefined();
+      expect(campingBanSentence(undefined)).toBeUndefined();
+    });
     it('season matching handles year wrap and junk', () => {
       expect(inSeason('21.12. - 30.04.', new Date(2027, 1, 1))).toBe(true);
       expect(inSeason('21.12. - 30.04.', new Date(2026, 9, 4))).toBe(false);
       expect(inSeason('15.06. - 15.09.', new Date(2026, 6, 1))).toBe(true);
       expect(inSeason('ganzjährig', new Date(2026, 9, 4))).toBe(true);
       expect(inSeason(undefined, new Date())).toBe(true);
+    });
+  });
+
+  describe('federal hunting reserves', () => {
+    const vej = (typ: string) => ({ layerBodId: 'ch.bafu.bundesinventare-jagdbanngebiete', attributes: { label: 'Piz Ela', typ_de: typ } });
+    it('integral and partial areas are the reserve: camping is banned (VEJ Art. 5 para. 1 let. e)', () => {
+      for (const t of ['Gebiet mit integralen Schutzbestimmungen', 'Gebiet mit partiellen Schutzbestimmungen']) {
+        const [h] = parseZoneHits({ results: [vej(t)] });
+        expect(h!.layer.severity, t).toBe('restricted');
+        expect(assess({ zones: [h!], treeline: 'above' }).verdict).toBe('no');
+      }
+    });
+    it('a Wildschadenperimeter lies outside the reserve (VEJ Art. 2 para. 2 let. d): no ban, only a note', () => {
+      const [h] = parseZoneHits({ results: [vej('Wildschadenperimeter')] });
+      expect(h!.layer.severity).toBe('info');
+      expect(h!.layer.label).toMatch(/perimeter/i);
+      expect(assess({ zones: [h!], treeline: 'above' }).verdict).not.toBe('no');
     });
   });
 
