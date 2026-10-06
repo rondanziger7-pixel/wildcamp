@@ -3,7 +3,7 @@ import { wgs84ToLv95 } from '../coords';
 const API = 'https://api3.geo.admin.ch/rest/services/api/MapServer';
 const LAYER = 'ch.bfs.arealstatistik-bodenbedeckung';
 
-export type Cover = 'grass' | 'shrub' | 'rock' | 'loose' | 'wet' | 'forest' | 'glacier' | 'water' | 'built' | 'other';
+export type Cover = 'grass' | 'shrub' | 'rock' | 'loose' | 'wet' | 'forest' | 'glacier' | 'water' | 'built' | 'farmland' | 'other';
 
 export interface GroundInfo {
   cover: Cover;
@@ -19,14 +19,17 @@ export interface GroundInfo {
 export function classifyCover(desc: string): Cover {
   const d = desc.toLowerCase();
   if (/glacier|perpetual snow|firn/.test(d)) return 'glacier';
-  if (/solid rock/.test(d)) return 'rock';
+  if (/solid rock|rocky areas/.test(d)) return 'rock';
   if (/granular|scree|gravel|sand|debris/.test(d)) return 'loose';
+  // settlement land comes before forest and grass: "Trees in artificial areas" and "Lawns" are town, not woods and meadows
+  if (/lawns|mix of small structures|artificial|gardens with|build|consolidated|road|rail|urban|paved|hard|sport|industrial|construction|dump|mine|greenhouse/.test(d)) return 'built';
+  // vineyards, orchards and crop land are private and in use (before "brush": "garden plants and brush crops")
+  if (/vines|fruit trees|garden plants|orchard|crops/.test(d)) return 'farmland';
   if (/shrub|brush/.test(d)) return 'shrub';
   if (/wetland|reed|bog|marsh|mire/.test(d)) return 'wet';
   if (/forest|wood|tree|hedge/.test(d)) return 'forest';
   if (/^grass|meadow|pasture|alp|herb/.test(d)) return 'grass';
   if (/lake|river|stream|water/.test(d)) return 'water';
-  if (/build|consolidated|road|rail|urban|paved|hard|garden|park|sport|industrial|construction|dump|mine/.test(d)) return 'built';
   return 'other';
 }
 

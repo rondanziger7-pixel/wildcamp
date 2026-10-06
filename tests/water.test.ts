@@ -75,7 +75,29 @@ describe('what each kind of water does to the comfort result', () => {
     expect(score(water({ meters: 300 }))).toBe(1);
     expect(score(water({ meters: 600 }))).toBe(0);
     expect(score(water({ kind: 'none', meters: Infinity }))).toBe(-1);
-    expect(score(water({ meters: 10 }))).toBe(1); // right beside: handy but noisy and damp
+    expect(score(water({ meters: 10 }))).toBe(0); // right beside: handy, but noisy, damp and flooding: no better than none
+  });
+  it('a stream beside the tent is a risk, not a plus, when heavy rain or a storm is forecast', () => {
+    const night = (extra: object) => ({ from: 'a', to: 'b', minTempC: 8, maxGustKmh: 20, meanWindKmh: 10, windFromDeg: 0, precipMm: 0, thunder: false, ...extra });
+    const dry = comfortFor({ water: water({ meters: 30 }), night: night({}) });
+    const wet = comfortFor({ water: water({ meters: 30 }), night: night({ precipMm: 12 }) });
+    expect(wet.score).toBeLessThan(dry.score);
+    expect(wet.alerts.map((a) => a.title)).toContain('Stream beside the spot may rise tonight');
+    expect(dry.alerts.map((a) => a.title)).not.toContain('Stream beside the spot may rise tonight');
+    // moderate rain: a warning in the details, not an alert on the first view
+    const some = comfortFor({ water: water({ meters: 30 }), night: night({ precipMm: 6 }) });
+    expect(some.factors.map((f) => f.title)).toContain('Stream beside the spot may rise tonight');
+    expect(some.alerts.map((a) => a.title)).not.toContain('Stream beside the spot may rise tonight');
+    // far from the stream, or a lake: no such risk
+    expect(comfortFor({ water: water({ meters: 200 }), night: night({ precipMm: 12 }) }).factors.map((f) => f.title)).not.toContain('Stream beside the spot may rise tonight');
+    expect(comfortFor({ water: water({ meters: 30, kind: 'lake' }), night: night({ precipMm: 12 }) }).factors.map((f) => f.title)).not.toContain('Stream beside the spot may rise tonight');
+  });
+  it('glacier water right beside the spot counts against it (it rises in the evening); further away it does not', () => {
+    const near = comfortFor({ water: water({ meters: 30, glacierM: 400 }) });
+    const far = comfortFor({ water: water({ meters: 120, glacierM: 400 }) });
+    expect(near.factors.find((f) => f.title === 'Glacier water')).toBeDefined();
+    expect(near.score).toBeLessThan(comfortFor({ water: water({ meters: 30 }) }).score);
+    expect(far.score).toBe(comfortFor({ water: water({ meters: 120 }) }).score);
   });
   it('titles by distance', () => {
     expect(titles(water({ meters: 10 }))).toContain('Water right beside the spot');

@@ -284,14 +284,19 @@ export function comfortFor(input: ComfortInput): Comfort {
     const wAt = w.at ? { ...w.at, label: w.name ? `${what} ${w.name}` : w.kind === 'lake' ? tr('Nearest lake') : tr('Nearest stream') } : undefined;
     if (w.failed.includes('water')) missing.push('water');
     else if (w.kind === 'none') f.push({ tone: 'warn', score: -1, title: tr('No water found nearby'), text: tr('No stream or lake within 800 m in the hydrography map. Carry all the water you need, and check for springs.') });
-    else if (w.meters <= 20) f.push({ tone: 'warn', score: 1, at: wAt, title: tr('Water right beside the spot'), text: tr('A {label} is about {dist} away. Handy, but noisy, damp and prone to flooding in heavy rain; camp a bit higher if you can.', { label, dist: m(w.meters) }) + treat });
+    else if (w.meters <= 20) f.push({ tone: 'warn', score: 0, at: wAt, title: tr('Water right beside the spot'), text: tr('A {label} is about {dist} away. Handy, but noisy, damp and prone to flooding in heavy rain; camp a bit higher if you can.', { label, dist: m(w.meters) }) + treat });
     else if (w.meters <= 150) f.push({ tone: 'ok', score: 2, at: wAt, title: tr('Water close by'), text: tr('A {label} about {dist} away.', { label, dist: m(w.meters) }) + treat });
     else if (w.meters <= 400) f.push({ tone: 'ok', score: 1, at: wAt, title: tr('Water within 400 m'), text: tr('A {label} about {dist} away.', { label, dist: m(w.meters) }) + treat });
     else f.push({ tone: 'info', score: 0, at: wAt, title: tr('Water 400 to 800 m away'), text: tr('A {label} about {dist} away: a walk to fetch water.', { label, dist: m(w.meters) }) + treat });
 
+    if (w.kind === 'stream' && w.meters <= 50 && night && (night.precipMm >= 5 || night.thunder)) {
+      // a stream beside the tent rises fast in heavy rain: the water that was a plus in dry weather is now the risk
+      const heavy = night.precipMm >= 10 || night.thunder;
+      f.push({ wx: true, alert: heavy, tone: heavy ? 'bad' : 'warn', score: heavy ? -2 : -1, title: tr('Stream beside the spot may rise tonight'), text: tr('Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.', { mm: night.precipMm.toFixed(0), dist: m(w.meters) }) });
+    }
     if (w.kind !== 'none') {
       if (w.glacierM !== undefined && w.glacierM <= 1000)
-        f.push({ tone: 'warn', score: 0, title: tr('Glacier water'), text: tr('Glacier ice lies within 1 km of this water, so it probably carries meltwater: very cold and milky with rock flour, and its level rises in the afternoon and evening on warm days. Let it settle or filter it, and do not camp beside it.') });
+        f.push({ tone: 'warn', score: w.meters <= 50 ? -1 : 0, title: tr('Glacier water'), text: tr('Glacier ice lies within 1 km of this water, so it probably carries meltwater: very cold and milky with rock flour, and its level rises in the afternoon and evening on warm days. Let it settle or filter it, and do not camp beside it.') });
       else if (w.glacierM !== undefined)
         f.push({ tone: 'info', score: 0, title: tr('Possibly glacier water'), text: tr('Glacier ice lies within 3 km of this water, so it may carry meltwater (cold, milky). Judged from distance only: the map does not say where the water comes from.') });
       const plant = w.upstreamPlants[0];
@@ -406,6 +411,7 @@ export function comfortFor(input: ComfortInput): Comfort {
     else if (g.cover === 'glacier') f.push({ tone: 'bad', score: -4, alert: true, title: tr('On snow or ice'), text: tr('{label}: ice and firn. Cold from below, crevasses are possible and the surface moves. Not a place to pitch a tent.', { label: g.label }) + src });
     else if (g.cover === 'wet') f.push({ tone: 'warn', score: -2, title: tr('Wet ground'), text: tr('{label}: wetland, soft and damp, and easily damaged. Camp on drier ground.', { label: g.label }) + src });
     else if (g.cover === 'forest') f.push({ tone: 'info', score: 0, title: tr('Forest ground'), text: tr('{label}: needles and roots, usually soft but with roots and dead branches to check for.', { label: g.label }) + src });
+    else if (g.cover === 'farmland') f.push({ tone: 'warn', score: -2, title: tr('Farmland'), text: tr('{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.', { label: g.label }) + src });
     else if (g.cover === 'built') f.push({ tone: 'info', score: 0, title: tr('Built-up or paved ground'), text: tr('{label}: settled or paved land, not a pitch.', { label: g.label }) + src });
     else if (g.cover === 'water') f.push({ tone: 'warn', score: -2, alert: true, title: tr('Open water'), text: tr('{label}: the nearest survey point is water.', { label: g.label }) + src });
   } else missing.push('ground cover (rock or grass)');
@@ -453,7 +459,7 @@ export function comfortFor(input: ComfortInput): Comfort {
   const FAIR = 1;
   const cover = input.ground?.cover;
   const sl = t?.slopeDeg ?? 0;
-  const cap = cover === 'water' || cover === 'glacier' || sl >= 25 ? POOR : cover === 'built' || sl >= 15 ? FAIR : Infinity;
+  const cap = cover === 'water' || cover === 'glacier' || sl >= 25 ? POOR : cover === 'built' || cover === 'farmland' || sl >= 15 ? FAIR : Infinity;
   const score = Math.min(raw, cap);
   const weatherScore = f.filter((x) => x.wx).reduce((a, x) => a + x.score, 0);
   const good = f.filter((x) => x.score > 0).map((x) => lower(x.title));

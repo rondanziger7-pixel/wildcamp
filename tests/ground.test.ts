@@ -15,6 +15,12 @@ describe('ground cover', () => {
     expect(classifyCover('Buildings')).toBe('built');
     expect(classifyCover('Something new')).toBe('other');
   });
+  it('knows the settlement and farm classes that used to pass for grass, forest or "other" (found by the 1000-spot audit)', () => {
+    for (const t of ['Lawns', 'Mix of small structures', 'Trees in artificial areas', 'Gardens with border and patch structures']) expect(classifyCover(t), t).toBe('built');
+    for (const t of ['Vines', 'Short-stem fruit trees', 'Permanent garden plants and brush crops']) expect(classifyCover(t), t).toBe('farmland');
+    expect(classifyCover('Rocky areas')).toBe('rock');
+    for (const [t, c] of [['Closed forest', 'forest'], ['Open forest', 'forest'], ['Linear woods', 'forest'], ['Brush forest', 'shrub'], ['Brush meadows', 'shrub'], ['Wetlands', 'wet'], ['Water', 'water']] as const) expect(classifyCover(t), t).toBe(c);
+  });
   it('uses the latest survey record of a point (real responses, trimmed to four years)', () => {
     expect(parseGround(fx.grass, 30)).toMatchObject({ cover: 'grass', year: 2023 });
     expect(parseGround(fx.rock, 30)).toMatchObject({ cover: 'rock', label: 'Solid rock' });

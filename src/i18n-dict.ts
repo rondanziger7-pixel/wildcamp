@@ -785,6 +785,10 @@ export const DE: Record<string, string> = {
   "Or pick any date:": "Oder ein beliebiges Datum wählen:",
   "This is live data for today. Fire danger, fire bans and drone notices can change before {date}.": "Das sind Live-Daten für heute. Waldbrandgefahr, Feuerverbote und Drohnenhinweise können sich bis {date} ändern.",
   "The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.": "Die Oberfläche und die Zusammenfassungen der kantonalen und kommunalen Regeln sind übersetzt. Zitate aus den Gesetzen bleiben in der Originalsprache.",
+  "Farmland": "Kulturland",
+  "{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.": "{label}: Rebberg, Obstgarten oder Ackerland. Das ist genutztes Privatland, und das öffentliche Zutrittsrecht gilt nur für Wald und Weide (Art. 699 ZGB): Frage die Eigentümer.",
+  "Stream beside the spot may rise tonight": "Der Bach neben dem Platz kann heute Nacht steigen",
+  "Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.": "Es ist Regen vorhergesagt ({mm} mm), und der Bach ist etwa {dist} entfernt. Bergbäche können innert einer Stunde steigen und das Zelt mitreissen: Campiere höher und weit vom Ufer entfernt.",
 };
 
 export const FR: Record<string, string> = {
@@ -1573,6 +1577,10 @@ export const FR: Record<string, string> = {
   "Or pick any date:": "Ou choisir une date :",
   "This is live data for today. Fire danger, fire bans and drone notices can change before {date}.": "Ce sont des données en direct pour aujourd'hui. Le danger d'incendie, les interdictions de feu et les avis sur les drones peuvent changer d'ici le {date}.",
   "The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.": "L'interface et les résumés des règles cantonales et communales sont traduits. Les citations des lois restent dans leur langue d'origine.",
+  "Farmland": "Terres agricoles",
+  "{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.": "{label} : vigne, verger ou terre cultivée. C'est un terrain privé en exploitation, et le droit d'accès public ne vaut que pour la forêt et les pâturages (art. 699 CC) : demandez au propriétaire.",
+  "Stream beside the spot may rise tonight": "Le ruisseau à côté de l'endroit peut monter cette nuit",
+  "Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.": "De la pluie est prévue ({mm} mm) et le ruisseau est à environ {dist}. Les ruisseaux de montagne peuvent monter en une heure et emporter la tente : campez plus haut et loin de la rive.",
 };
 
 export const IT: Record<string, string> = {
@@ -2361,4 +2369,8 @@ export const IT: Record<string, string> = {
   "Or pick any date:": "Oppure scegli una data:",
   "This is live data for today. Fire danger, fire bans and drone notices can change before {date}.": "Sono dati in tempo reale di oggi. Pericolo d'incendio, divieti di fuochi e avvisi sui droni possono cambiare entro il {date}.",
   "The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.": "L'interfaccia e i riassunti delle regole cantonali e comunali sono tradotti. Le citazioni delle leggi restano nella lingua originale.",
+  "Farmland": "Terreno agricolo",
+  "{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.": "{label}: vigneto, frutteto o campo coltivato. È terreno privato in uso, e il diritto di accesso pubblico vale solo per bosco e pascolo (art. 699 CC): chiedi al proprietario.",
+  "Stream beside the spot may rise tonight": "Il torrente accanto al posto può crescere stanotte",
+  "Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.": "È prevista pioggia ({mm} mm) e il torrente è a circa {dist}. I torrenti di montagna possono crescere in un'ora e portare via la tenda: campeggia più in alto e ben lontano dalla riva.",
 };

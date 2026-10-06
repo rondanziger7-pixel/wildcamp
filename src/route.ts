@@ -350,7 +350,9 @@ export function parseGpx(xml: string): ParsedGpx {
       top.text += cdata ? raw : decodeEntities(raw);
     },
   });
-  while (stack.length > 0) finish(stack.pop()!); // truncated file
+  // A file cut off mid-way: a half-read value (say '10' of an elevation '1000') is dropped, the rest is kept.
+  while (stack.length > 0 && stack[stack.length - 1]!.collect) stack.pop();
+  while (stack.length > 0) finish(stack.pop()!);
 
   if (!sawRoot) throw new Error('not a GPX file');
   const out: ParsedGpx = { tracks, routes, waypoints };
@@ -552,10 +554,12 @@ export interface Stage {
 }
 
 /**
- * Splits a line into stages of about `targetKm` by distance. The stage count is the target rounded so that
- * no stage is more than about 30 % over the target or 35 % under it, and the stages are of equal length
- * (so the last one is never tiny). Stages start and end at points of the line (nearest to the ideal cut),
- * share their boundary point and add up to the length of the line. A sparse line may give fewer stages.
+ * Splits a line into stages of about `targetKm` by distance. The stage count is chosen so that no stage is
+ * more than about 30 % over the target or 35 % under it (unless the whole line is shorter than that), and
+ * the stages are of equal length, so the last one is never tiny: 52 km at 20 km gives 3 x 17.3 km, 29 km
+ * gives 2 x 14.5 km, 45 km gives 2 x 22.5 km. Stages start and end at points of the line (nearest to the
+ * ideal cut), share their boundary point and add up to the length of the line. A sparse line (few points
+ * far apart) may give fewer stages than asked. A target of 0 or less gives a single stage.
  */
 export function splitStages(points: readonly RoutePoint[], targetKm: number): Stage[] {
   const n = points.length;
@@ -566,7 +570,7 @@ export function splitStages(points: readonly RoutePoint[], targetKm: number): St
   let count = 1;
   if (targetM > 0 && Number.isFinite(targetM)) {
     const whole = Math.floor(total / targetM);
-    count = Math.max(1, total - whole * targetM >= 0.3 * targetM ? whole + 1 : whole);
+    count = Math.max(1, total - whole * targetM >= 0.3 * targetM - 1 ? whole + 1 : whole); // 1 m slack: 66.000 km at 20 gives 4
   }
   const cuts: number[] = [0];
   for (let j = 1; j < count; j++) {

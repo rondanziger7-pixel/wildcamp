@@ -20,7 +20,7 @@ export const MIN_SEPARATION_M = 250;
 /** Survey year requested from the land-cover statistics (one record per point instead of one per year). */
 export const COVER_YEAR = 2023;
 /** Cover classes a tent cannot go on, or that make no sense as a recommendation. */
-const EXCLUDED: Cover[] = ['glacier', 'water', 'built', 'wet'];
+const EXCLUDED: Cover[] = ['glacier', 'water', 'built', 'wet', 'farmland'];
 /** Slopes at or above this (degrees, over 200 m) are not offered. */
 export const MAX_SLOPE_DEG = 18;
 
