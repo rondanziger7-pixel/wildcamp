@@ -140,7 +140,7 @@ function ensureData(urgent = true): Promise<unknown> {
 const sheet = document.getElementById('sheet')!;
 document.getElementById('sheet-close')!.onclick = () => sheet.classList.add('closed');
 const result = document.getElementById('result')!;
-const introFind = el('button', 'finder-btn', '🔍 ' + tr('Find the best spots around the map centre'));
+const introFind = el('button', 'finder-btn', '🔍 ' + tr('Best spots in this area'));
 introFind.type = 'button';
 introFind.onclick = () => {
   const c = map.getCenter();
@@ -505,7 +505,7 @@ function showTrip() {
   });
 }
 savedBtn.onclick = showSaved;
-document.getElementById('intro')!.append(savedBtn);
+// (the saved list is opened with the star button on the map, so the start panel does not repeat it)
 
 // Best spots nearby
 const finderPins = L.layerGroup().addTo(map);

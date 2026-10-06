@@ -246,3 +246,12 @@ button { font: inherit; cursor: pointer; }
 .scores.compact .sc-bar, .scores.compact .sc-reason, .scores.compact .sc-more { display: none; }
 .scores.compact .sc-value, .scores.compact .score-card.primary .sc-value { font-size: 1.3rem; }
 .scores.compact .sc-label, .scores.compact .score-card.primary .sc-label { font-size: .75rem; }
+
+/* start panel: heading, one line, one action */
+#intro p { margin: 0 0 12px; }
+#intro .finder-btn { margin-top: 0; }
+.about { margin: 10px 0 0; font-size: .78rem; color: var(--muted); }
+.about summary { cursor: pointer; list-style: none; }
+.about summary::after { content: ' ▸'; }
+.about[open] summary::after { content: ' ▾'; }
+.about p { margin: 6px 0 0; line-height: 1.4; }

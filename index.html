@@ -74,12 +74,13 @@
       <button id="sheet-close" type="button" aria-label="Close panel" data-i18n-attr="aria-label">✕</button>
       <div id="intro">
         <h1 data-i18n>Can I camp here?</h1>
-        <p data-i18n>Tap anywhere on the map to check a spot, or search for a place. You get a legality score and a sleep score, then tap either one for the details.</p>
+        <p data-i18n>Tap the map to check a spot, or search for a place.</p>
       </div>
       <div id="result" hidden></div>
-      <p class="disclaimer" data-i18n>
-        Guidance only, not legal advice. Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.
-      </p>
+      <details class="about">
+        <summary data-i18n>Guidance only, not legal advice.</summary>
+        <p data-i18n>Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.</p>
+      </details>
     </aside>
     <script type="module" src="/src/main.ts"></script>
   </body>

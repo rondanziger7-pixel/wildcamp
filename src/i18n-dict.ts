@@ -206,6 +206,10 @@ export const DE: Record<string, string> = {
   "Best spots": "Beste Plätze",
   "Municipal rule: {name}": "Gemeinderegel: {name}",
   "How is this scored?": "Wie wird das bewertet?",
+  "Tap the map to check a spot, or search for a place.": "Tippen Sie auf die Karte, um einen Platz zu prüfen, oder suchen Sie einen Ort.",
+  "Guidance only, not legal advice.": "Nur zur Orientierung, keine Rechtsberatung.",
+  "Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.": "Die Regeln zum Wildcampen setzen Kantone und Gemeinden fest und sie ändern sich. Prüfen Sie die lokalen Regeln und respektieren Sie Privatland.",
+  "Best spots in this area": "Beste Plätze in diesem Gebiet",
 };
 
 export const FR: Record<string, string> = {
@@ -415,6 +419,10 @@ export const FR: Record<string, string> = {
   "Best spots": "Meilleurs emplacements",
   "Municipal rule: {name}": "Règle communale : {name}",
   "How is this scored?": "Comment est-ce évalué ?",
+  "Tap the map to check a spot, or search for a place.": "Touchez la carte pour vérifier un emplacement, ou recherchez un lieu.",
+  "Guidance only, not legal advice.": "À titre indicatif uniquement, pas un avis juridique.",
+  "Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.": "Les règles du camping sauvage sont fixées par les cantons et les communes et changent. Vérifiez les règles locales et respectez les terrains privés.",
+  "Best spots in this area": "Meilleurs emplacements dans cette zone",
 };
 
 export const IT: Record<string, string> = {
@@ -624,4 +632,8 @@ export const IT: Record<string, string> = {
   "Best spots": "Posti migliori",
   "Municipal rule: {name}": "Regola comunale: {name}",
   "How is this scored?": "Come viene valutato?",
+  "Tap the map to check a spot, or search for a place.": "Tocca la mappa per controllare un posto, oppure cerca un luogo.",
+  "Guidance only, not legal advice.": "Solo a titolo indicativo, non è una consulenza legale.",
+  "Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.": "Le regole sul campeggio libero sono stabilite da cantoni e comuni e cambiano. Controlla le regole locali e rispetta i terreni privati.",
+  "Best spots in this area": "Posti migliori in questa zona",
 };
