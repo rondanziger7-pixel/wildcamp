@@ -310,3 +310,15 @@ button { font: inherit; cursor: pointer; }
 /* one row, every card as tall as the tallest (a verdict that wraps to two lines must not make its card taller than the others) */
 .scores { grid-auto-rows: 1fr; align-items: stretch; }
 .score-card { align-self: stretch; }
+
+/* first view: one overall score */
+.scores[hidden], .score-card[hidden], .back-btn[hidden] { display: none !important; }
+.score-card.total { width: 100%; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto auto auto; column-gap: 16px; align-items: center; padding: 12px 14px; margin-top: 6px; }
+.score-card.total .sc-title { grid-column: 2; grid-row: 1; }
+.score-card.total .sc-value { grid-column: 1; grid-row: 1 / 3; font-size: 2.8rem; }
+.score-card.total .sc-label { grid-column: 2; grid-row: 2; font-size: 1.1rem; }
+.score-card.total .sc-bar { grid-column: 1 / -1; grid-row: 3; }
+.score-card.total .sc-more { grid-column: 1 / -1; grid-row: 4; justify-self: end; font-size: .85rem; color: var(--green); font-weight: 600; margin-top: 6px; }
+@media (prefers-color-scheme: dark) { .score-card.total .sc-more { color: #8fd1a8; } }
+.score-card.total[aria-expanded]::after { content: none; }
+.back-btn { margin: 6px 0 2px; }

@@ -50,3 +50,21 @@ export function weatherScore(c: Comfort | undefined, forecastKnown: boolean): Sc
   if (c.weatherStop) value = Math.min(value, 10);
   return { value, tone: c.weatherStop || c.weatherScore <= -3 ? 'bad' : c.weatherScore < 0 ? 'warn' : 'good' };
 }
+
+/**
+ * One number for "is this a good place to sleep": half legality, half the spot's comfort. The weather is left out, so a
+ * place can be judged in advance. A ban makes it 0, and a spot whose legality is only "caution" is never called good.
+ * Without a comfort score yet it is undefined; with the comfort check unavailable it is the legality alone.
+ */
+export function overallScore(a: Assessment, legal: Score, spotComfort: number | undefined, comfortUnavailable = false): Score {
+  if (a.outside) return { tone: 'none' };
+  if (a.verdict === 'no') return { value: 0, tone: 'bad' };
+  if (legal.value === undefined) return { tone: 'none' };
+  if (spotComfort === undefined && !comfortUnavailable) return { tone: 'none' };
+  const value = clamp(spotComfort === undefined ? legal.value : 0.5 * legal.value + 0.5 * spotComfort);
+  const tone: ScoreTone = value >= 70 && a.verdict === 'likely_ok' ? 'good' : value >= 45 ? 'warn' : 'bad';
+  return { value, tone };
+}
+
+/** The spot's comfort (0..100) from `Comfort.spotScore`: 50 at zero, 6.25 per point, like the sleep score. */
+export const spotComfortValue = (spotScore: number) => clamp(50 + 6.25 * spotScore);

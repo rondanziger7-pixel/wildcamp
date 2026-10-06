@@ -25,6 +25,8 @@ export interface Comfort {
   weatherStop: boolean;
   /** Sum of the factor scores; the thresholds for the rating are in `rate`. */
   score: number;
+  /** The same for the spot alone (no weather), with the same caps. */
+  spotScore: number;
   /** One line naming the strongest points for and against. */
   summary: string;
   /** Every factor, spot and weather together. */
@@ -445,6 +447,7 @@ export function comfortFor(input: ComfortInput): Comfort {
     weatherScore,
     weatherStop,
     score,
+    spotScore: Math.min(raw - weatherScore, cap),
     summary,
     factors: f.map(({ score: _s, wx: _w, ...item }) => item),
     weatherFactors: f.filter((x) => x.wx).map(({ score: _s, wx: _w, ...item }) => item),

@@ -689,6 +689,13 @@ export const DE: Record<string, string> = {
   "{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.": "{name} ist etwa {dist} entfernt. Das Land rund um ein Berggasthaus oder Restaurant ist meist Privatland: Frage vor dem Campieren die Besitzer oder Wirtsleute. Der Schweizer Alpen-Club gibt denselben Rat für Hütten. Das ist eine Empfehlung, kein Gesetz.",
   "Close to a mountain hut": "In der Nähe einer Berghütte",
   "{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club's guidance, not a law.": "{name} ist etwa {dist} entfernt. Der Schweizer Alpen-Club bittet darum, nicht nahe bei Hütten zu übernachten. Wenn du trotzdem in der Nähe campierst, frage das Hüttenteam und biete an, die Toilette zu bezahlen oder in der Hütte etwas zu konsumieren. Das ist eine Empfehlung des Clubs, kein Gesetz.",
+  "Overall": "Gesamt",
+  "View details": "Details ansehen",
+  "Good spot": "Guter Platz",
+  "Okay spot": "Ordentlicher Platz",
+  "Poor spot": "Schlechter Platz",
+  "Not recommended": "Nicht empfohlen",
+  "Overall score": "Gesamtbewertung",
 };
 
 export const FR: Record<string, string> = {
@@ -1381,6 +1388,13 @@ export const FR: Record<string, string> = {
   "{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.": "{name} se trouve à environ {dist}. Le terrain autour d'un restaurant ou d'une auberge de montagne est généralement privé : demandez au propriétaire ou à l'aubergiste avant de camper. Le Club Alpin Suisse donne le même conseil pour les cabanes. C'est une recommandation, pas une loi.",
   "Close to a mountain hut": "Près d'une cabane de montagne",
   "{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club's guidance, not a law.": "{name} se trouve à environ {dist}. Le Club Alpin Suisse demande de ne pas dormir trop près des cabanes. Si vous campez quand même à proximité, contactez l'équipe de la cabane et proposez de payer l'utilisation des toilettes ou consommez quelque chose à la cabane. C'est une recommandation du club, pas une loi.",
+  "Overall": "Global",
+  "View details": "Voir les détails",
+  "Good spot": "Bon endroit",
+  "Okay spot": "Endroit correct",
+  "Poor spot": "Mauvais endroit",
+  "Not recommended": "Déconseillé",
+  "Overall score": "Note globale",
 };
 
 export const IT: Record<string, string> = {
@@ -2073,4 +2087,11 @@ export const IT: Record<string, string> = {
   "{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.": "{name} si trova a circa {dist}. Il terreno attorno a un ristorante o a un albergo di montagna è di solito privato: chiedi al proprietario o al gestore prima di campeggiare. Il Club Alpino Svizzero dà lo stesso consiglio per le capanne. È una raccomandazione, non una legge.",
   "Close to a mountain hut": "Vicino a una capanna di montagna",
   "{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club's guidance, not a law.": "{name} si trova a circa {dist}. Il Club Alpino Svizzero chiede di non dormire troppo vicino alle capanne. Se campeggi comunque nelle vicinanze, contatta il team della capanna e offri di pagare l'uso dei servizi o consuma qualcosa in capanna. È una raccomandazione del club, non una legge.",
+  "Overall": "Totale",
+  "View details": "Mostra i dettagli",
+  "Good spot": "Buon posto",
+  "Okay spot": "Posto discreto",
+  "Poor spot": "Posto scadente",
+  "Not recommended": "Sconsigliato",
+  "Overall score": "Punteggio totale",
 };

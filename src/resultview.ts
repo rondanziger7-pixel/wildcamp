@@ -8,7 +8,7 @@ import type { ShelterResult } from './comfort/shelters';
 import type { SpotSnapshot } from './saved';
 import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
-import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
+import { legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
 import { tr } from './i18n';
 import type { NearBuildingNote } from './comfort/nearbuilding';
 
@@ -197,6 +197,22 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   weather.set({ tone: 'none' }, tr('Checking…'));
   const scores = el('div', 'scores');
   scores.append(legal.b, sleep.b, weather.b);
+  scores.hidden = true;
+
+  // The first view is one overall score (legality and the spot's comfort, no weather) and a way to the three details.
+  const total = scoreCard('total', tr('Overall'));
+  total.b.querySelector('.sc-more')!.textContent = tr('View details');
+  let spotComfort: number | undefined;
+  let comfortUnavailable = false;
+  const paintTotal = () => {
+    const t = overallScore(a, L, spotComfort, comfortUnavailable);
+    const word = a.verdict === 'no' ? '⛔ ' + tr('Not allowed') : t.value === undefined ? tr('Checking…') : t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 45 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
+    total.set(t, word);
+  };
+  paintTotal();
+  const backBtn = el('button', 'linkish back-btn', '← ' + tr('Overall score'));
+  backBtn.type = 'button';
+  backBtn.hidden = true;
 
   const waterChip = chip('water');
   const shelterChip = chip('shelter');
@@ -234,6 +250,18 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     [weather.b, weatherPanel],
   ];
   const panels = [legalPanel, sleepPanel, weatherPanel];
+  const showDetails = (on: boolean) => {
+    total.b.hidden = reasonLine.hidden = on;
+    scores.hidden = backBtn.hidden = !on;
+    if (!on) {
+      for (const p of panels) p.hidden = true;
+      for (const [bt] of opener) bt.setAttribute('aria-expanded', 'false');
+      scores.classList.remove('compact');
+    }
+    document.getElementById('sheet')?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  total.b.onclick = () => showDetails(true);
+  backBtn.onclick = () => showDetails(false);
   for (const [button, panel] of opener) {
     button.onclick = () => {
       const open = panel.hidden;
@@ -242,7 +270,6 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       for (const [bt, pn] of opener) bt.setAttribute('aria-expanded', String(!pn.hidden));
       // while a section is open the cards shrink to a row of tabs, and the sheet returns to its top so they stay in view
       scores.classList.toggle('compact', !panel.hidden);
-      reasonLine.hidden = !panel.hidden;
       document.getElementById('sheet')?.scrollTo({ top: 0, behavior: 'smooth' });
     };
   }
@@ -257,7 +284,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   jump(waterChip, () => waterAt);
   jump(shelterChip, () => hutAt);
 
-  root.replaceChildren(where, scores, reasonLine, legalPanel, sleepPanel, weatherPanel);
+  root.replaceChildren(where, total.b, reasonLine, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
 
   return {
     weatherHost,
@@ -267,6 +294,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     },
     setSleep(c, nightLabel, loading = []) {
       const s = sleepScore(c);
+      spotComfort = spotComfortValue(c.spotScore);
+      paintTotal();
       sleep.set(s, loading.length ? `${RATING_SHORT[c.rating]} …` : RATING_SHORT[c.rating]);
       const w = weatherScore(c, !c.missing.includes('overnight forecast'));
       Object.assign(snap, {
@@ -297,6 +326,8 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     },
     setSleepUnavailable(why) {
       sleep.set({ tone: 'none' }, tr('Unavailable'));
+      comfortUnavailable = true;
+      paintTotal();
       sleepPanel.replaceChildren(nearby, el('p', 'where', why));
     },
     setWater(w, failed) {
@@ -349,6 +380,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const verdict = a.verdict === 'likely_ok' ? 'caution' : a.verdict;
       L = legalityScore({ ...a, verdict, items: [...a.items, note] });
       legal.set(L, `${BANNER[verdict].icon} ${BANNER[verdict].label}`);
+      paintTotal();
       if (a.verdict === 'likely_ok') reasonLine.textContent = note.title;
       legalList.replaceChildren(...checklist([...a.items, note], 'details', focus));
     },

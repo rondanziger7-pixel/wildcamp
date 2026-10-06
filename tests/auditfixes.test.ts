@@ -37,3 +37,20 @@ describe('a spot at the treeline gets a cautious answer, not "unknown"', () => {
     expect(assess({ zones: [], treeline: 'unknown', elevationKnown: false }).verdict).toBe('unknown');
   });
 });
+
+import { overallScore, spotComfortValue } from '../src/scores';
+describe('overall score: legality and the spot, no weather', () => {
+  const ok = assess({ zones: [], treeline: 'above' });
+  const L = { value: 85, tone: 'good' as const };
+  it('averages legality and comfort', () => expect(overallScore(ok, L, 75)).toEqual({ value: 80, tone: 'good' }));
+  it('a ban is 0 whatever the spot is like', () => expect(overallScore({ ...ok, verdict: 'no' }, { value: 0, tone: 'bad' }, 90).value).toBe(0));
+  it('caution is never called good', () => expect(overallScore({ ...ok, verdict: 'caution' }, { value: 45, tone: 'warn' }, 100).tone).toBe('warn'));
+  it('waits for the comfort score, or uses legality alone when it is unavailable', () => {
+    expect(overallScore(ok, L, undefined).value).toBeUndefined();
+    expect(overallScore(ok, L, undefined, true).value).toBe(85);
+  });
+  it('the comfort value ignores the weather: it comes from spotScore', () => {
+    const c = comfortFor({ terrain: terrain(2), ground: grass });
+    expect(spotComfortValue(c.spotScore)).toBeGreaterThanOrEqual(sleepScore(c).value! - 0.01);
+  });
+});
