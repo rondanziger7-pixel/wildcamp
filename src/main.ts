@@ -29,11 +29,14 @@ import { renderSaved } from './savedview';
 import { fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, withWater } from './finder';
 import { combined, renderFinder, type FinderRow } from './finderview';
 import { beyondForecast, firstEvening, planTrip } from './planner';
-import { addNight, loadTrip, moveNight, nightsFor, removeNight, saveTrip, setNightSpot, tripNights, type TripNight } from './trip';
+import { MAX_NIGHTS, addNight, loadTrip, moveNight, nightsFor, removeNight, saveTrip, setNightSpot, tripNights, type TripNight } from './trip';
 import { InputsCache, legalForNight, recheckSpots } from './recheck';
 import { MAX_SHARE_SPOTS, decodeShare, isShareHash, shareLink, type DecodedShare, type SharePayload } from './share';
 import { renderShared } from './sharedview';
-import { parseGpx } from './route';
+import { cumulativeM, parseGpx, routeToGpx, type ParsedGpx, type RoutePoint } from './route';
+import { gatherRouteInputs, reportForDates, type RouteInputs, type RouteReport } from './routecheck';
+import { ROUTE_KEY, packRoute, pointAt, routeLine, routeStats, slicePoints, stageInfos, thin, unpackRoute, type StageInfo } from './routeplan';
+import { STAGE_KM, renderRoute, runsOf, type RouteViewState } from './routeview';
 import { renderTrip } from './tripview';
 import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
@@ -268,6 +271,7 @@ let lastSpot: Position | undefined;
 
 async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM?: number) {
   const id = ++checkId;
+  delete result.dataset.page;
   if (!fromFinder) {
     ++finderId;
     finderPins.clearLayers();
@@ -429,6 +433,7 @@ const store = (() => {
 function openPage() {
   ++checkId;
   ++finderId;
+  delete result.dataset.page;
   finderPins.clearLayers();
   sheet.classList.remove('closed');
   sheet.dataset.state = 'result';
@@ -437,9 +442,10 @@ function openPage() {
 }
 
 /** Fit the map to some bounds inside the part of it the sheet leaves free (above it on a phone, beside it on a wide screen). */
-function fitBoundsClear(bounds: L.LatLngBounds, maxZoom = 14) {
+function fitBoundsClear(bounds: L.LatLngBounds, maxZoom = 14, sheetWillFill = false) {
   const wide = window.matchMedia('(min-width: 720px)').matches;
-  const covered = sheet.classList.contains('closed') ? 0 : wide ? sheet.offsetWidth + 24 : Math.min(sheet.offsetHeight, window.innerHeight * 0.62);
+  // `sheetWillFill`: the page about to be drawn is long, so the sheet will be at its tallest by the time the map has moved
+  const covered = sheet.classList.contains('closed') ? 0 : wide ? sheet.offsetWidth + 24 : sheetWillFill ? window.innerHeight * 0.62 : Math.min(sheet.offsetHeight, window.innerHeight * 0.62);
   map.fitBounds(bounds, { paddingTopLeft: [wide ? covered + 30 : 30, 70], paddingBottomRight: [30, wide ? 30 : covered + 20], maxZoom });
 }
 
@@ -710,6 +716,262 @@ function showTrip() {
 }
 // (the saved list is opened with the star button on the map, so the start panel does not repeat it)
 
+// Route: a GPX file drawn on the map, checked for zones and rules along it, cut into days with a place to sleep each night
+interface LiveRoute {
+  name: string;
+  points: RoutePoint[];
+  stageKm: number;
+  /** The first day of the walk, "YYYY-MM-DD". */
+  date: string;
+  status: RouteViewState['status'];
+  progress?: { done: number; total: number };
+  inputs?: RouteInputs;
+  report?: RouteReport;
+  abort?: AbortController;
+}
+let route: LiveRoute | undefined;
+const routeLayer = L.layerGroup().addTo(map);
+let routeFocus: L.CircleMarker | undefined;
+const STRIP_COLOURS = { ok: '#2e7d32', caution: '#f2a900', ban: '#c62828', unknown: '#8a8f8c' } as const;
+const noon = (day: string) => new Date(`${day}T12:00:00`);
+const inRoutePage = () => result.dataset.page === 'route';
+
+/** Move the map so a place lies in the part the sheet leaves free. */
+function flyToClear(at: L.LatLngExpression, zoom: number) {
+  const wide = window.matchMedia('(min-width: 720px)').matches;
+  const covered = sheet.classList.contains('closed') ? 0 : wide ? sheet.offsetWidth + 24 : Math.min(sheet.offsetHeight, window.innerHeight * 0.62);
+  const p = map.project(L.latLng(at), zoom);
+  const centre = map.unproject(wide ? p.subtract([covered / 2, 0]) : p.add([0, covered / 2]), zoom);
+  map.flyTo(centre, zoom, { duration: 0.6 });
+}
+
+function persistRoute() {
+  try {
+    if (!route) store?.removeItem(ROUTE_KEY);
+    else store?.setItem(ROUTE_KEY, JSON.stringify(packRoute(route.name, route.points, route.stageKm, route.date)));
+  } catch {
+    /* storage blocked: the route lasts until the page is reloaded */
+  }
+}
+
+/** Judge the route again from the lookups already made: another first day or stage length needs no new request. */
+function reassessRoute() {
+  const r = route;
+  if (!r?.inputs) return;
+  const base = stageInfos(r.points, r.stageKm);
+  r.report = reportForDates(r.inputs, data, base.map((s) => ({ fromM: s.fromM, toM: s.toM, date: noon(addDays(r.date, s.n - 1)) })));
+}
+
+function routeState(): RouteViewState | undefined {
+  const r = route;
+  if (!r) return undefined;
+  return {
+    name: r.name,
+    stats: routeStats(r.points, r.inputs?.samples),
+    stageKm: r.stageKm,
+    date: r.date,
+    today: firstEvening(zurichNow(new Date())),
+    status: r.status,
+    progress: r.progress,
+    report: r.report,
+    stages: stageInfos(r.points, r.stageKm, r.report, r.inputs?.samples),
+  };
+}
+
+const routeCum = (r: LiveRoute) => cumulativeM(r.points);
+
+/** The route on the map: a white casing, the coloured stretches (or one blue line before the check), a numbered pin at each night's camp. */
+function drawRoute() {
+  routeLayer.clearLayers();
+  const r = route;
+  if (!r) return;
+  const ll = (p: { lat: number; lon: number }) => [p.lat, p.lon] as [number, number];
+  L.polyline(r.points.map(ll), { color: '#fff', weight: 9, opacity: 0.9, interactive: false, lineCap: 'round' }).addTo(routeLayer);
+  const cum = routeCum(r);
+  if (r.report) {
+    for (const run of runsOf(r.report.cells, r.report.lengthM)) {
+      L.polyline(slicePoints(r.points, cum, run.fromM, run.toM).map(ll), { color: STRIP_COLOURS[run.cls], weight: 5, opacity: 1, interactive: false, lineCap: 'butt' }).addTo(routeLayer);
+    }
+  } else L.polyline(r.points.map(ll), { color: '#1a73e8', weight: 5, interactive: false }).addTo(routeLayer);
+  for (const s of stageInfos(r.points, r.stageKm, r.report, r.inputs?.samples)) {
+    L.marker([s.camp.lat, s.camp.lon], {
+      icon: L.divIcon({ className: '', html: `<div class="stage-pin${s.camp.blocked ? ' blocked' : ''}">${s.n}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }),
+      title: tr('Day {n}', { n: s.n }),
+      keyboard: false,
+    })
+      .on('click', () => void checkSpot(s.camp.lat, s.camp.lon))
+      .addTo(routeLayer);
+  }
+}
+
+function renderRouteNow() {
+  if (!inRoutePage()) return;
+  const st = routeState();
+  const keep = sheet.scrollTop;
+  renderRoute(result, st, {
+    onFile: loadRoute,
+    onStageKm: (km) => {
+      if (!route) return;
+      route.stageKm = km;
+      reassessRoute();
+      persistRoute();
+      drawRoute();
+      renderRouteNow();
+    },
+    onDate: (day) => {
+      if (!route) return;
+      route.date = day;
+      reassessRoute();
+      persistRoute();
+      drawRoute();
+      renderRouteNow();
+    },
+    onFocus: (distM) => {
+      if (!route) return;
+      const p = pointAt(route.points, routeCum(route), distM);
+      if (!p) return;
+      routeFocus?.remove();
+      routeFocus = L.circleMarker([p.lat, p.lon], { radius: 9, color: '#fff', weight: 3, fillColor: '#e8710a', fillOpacity: 1, interactive: false }).addTo(map);
+      flyToClear([p.lat, p.lon], Math.max(map.getZoom(), 14));
+    },
+    onStage: (s) => {
+      if (!route) return;
+      fitBoundsClear(L.latLngBounds(slicePoints(route.points, routeCum(route), s.fromM, s.toM).map((p) => [p.lat, p.lon] as [number, number])), 15, true);
+    },
+    onFind: (s) => void findBest(s.camp.lat, s.camp.lon, { back: { label: tr('Back to the route'), run: showRoute } }),
+    onPlan: planRouteNights,
+    onExport: exportRoute,
+    onRetry: () => void checkRoute(),
+    onClear: () => {
+      route?.abort?.abort();
+      route = undefined;
+      routeFocus?.remove();
+      persistRoute();
+      drawRoute();
+      renderRouteNow();
+    },
+  });
+  sheet.scrollTop = keep;
+}
+
+function showRoute() {
+  openPage();
+  result.dataset.page = 'route';
+  if (!route) restoreRoute(true);
+  else if (!route.inputs && !route.abort) void checkRoute(); // restored at start, not checked yet
+  renderRouteNow();
+}
+
+/** The route kept from the last visit (the line only; the check is made again). */
+function restoreRoute(check: boolean) {
+  if (route) return;
+  try {
+    const raw = store?.getItem(ROUTE_KEY);
+    const got = raw ? unpackRoute(JSON.parse(raw)) : undefined;
+    if (!got) return;
+    const today = firstEvening(zurichNow(new Date()));
+    route = { name: got.name, points: got.points, stageKm: got.stageKm, date: got.date >= today ? got.date : today, status: 'checking' };
+    drawRoute();
+    if (check) void checkRoute();
+  } catch {
+    /* an unreadable stored route is ignored */
+  }
+}
+
+function loadRoute(text: string, fileName: string) {
+  let g: ParsedGpx;
+  try {
+    g = parseGpx(text);
+  } catch {
+    return say(tr('This file could not be read as GPX.'));
+  }
+  const { points: raw, joined } = routeLine(g);
+  if (raw.length < 2) return say(g.waypoints.length ? tr('This file holds spots, not a route. Import it under "Saved spots".') : tr('No route found in {file}.', { file: fileName }));
+  const step = Math.max(1, Math.ceil(raw.length / 300));
+  if (!raw.some((p, i) => i % step === 0 && isInSwitzerland(p.lat, p.lon))) return say(tr('This route is outside Switzerland, so the rules checked here do not apply.'));
+  route?.abort?.abort();
+  const points = thin(raw, 6000);
+  const today = firstEvening(zurichNow(new Date()));
+  route = { name: (g.name ?? g.tracks[0]?.name ?? fileName.replace(/\.gpx$/i, '')).trim().slice(0, 120) || tr('Route'), points, stageKm: STAGE_KM.initial, date: today, status: 'checking' };
+  if (joined > 1) say(tr('{n} tracks in the file were joined into one route.', { n: joined }));
+  persistRoute();
+  routeFocus?.remove();
+  drawRoute();
+  fitBoundsClear(L.latLngBounds(points.map((p) => [p.lat, p.lon] as [number, number])), 13, true);
+  void checkRoute();
+  renderRouteNow();
+}
+
+async function checkRoute() {
+  const r = route;
+  if (!r) return;
+  r.abort?.abort();
+  const ctl = (r.abort = new AbortController());
+  r.status = 'checking';
+  r.progress = { done: 0, total: 1 };
+  r.report = undefined;
+  r.inputs = undefined;
+  renderRouteNow();
+  const live = () => route === r && !ctl.signal.aborted;
+  try {
+    const inputs = await gatherRouteInputs(r.points, {
+      signal: ctl.signal,
+      onProgress: (done, total) => {
+        if (!live()) return;
+        r.progress = { done, total };
+        if (inRoutePage()) renderRouteNow();
+      },
+    });
+    if (!live()) return;
+    await withTimeout(data.load(), 8000).catch(() => undefined);
+    if (!live()) return;
+    r.inputs = inputs;
+    reassessRoute();
+    r.status = 'done';
+  } catch (err) {
+    if (!live()) return;
+    console.warn('route check failed', err);
+    r.status = 'failed';
+  }
+  drawRoute();
+  renderRouteNow();
+}
+
+let planArmed: number | undefined;
+/** Save each day's camp as a spot and plan the nights from the first day; asks once before it replaces a trip that is there. */
+function planRouteNights() {
+  const r = route;
+  if (!r) return;
+  const stages = stageInfos(r.points, r.stageKm, r.report, r.inputs?.samples);
+  const today = firstEvening(zurichNow(new Date()));
+  const existing = tripNights(loadTrip(store, today), loadSaved(store), today);
+  if (existing.length && planArmed === undefined) {
+    say(tr('This replaces the trip you have now. Tap again to continue.'));
+    planArmed = window.setTimeout(() => (planArmed = undefined), 5000);
+    return;
+  }
+  window.clearTimeout(planArmed);
+  planArmed = undefined;
+  const used = stages.slice(0, MAX_NIGHTS);
+  const note = (s: StageInfo) => [tr('Day {n} of the route "{name}", about {km} km from its start.', { n: s.n, name: r.name, km: Math.round(s.camp.distM / 100) / 10 }), s.camp.moved ? tr('Moved from the end of the stage, which is not allowed or not clear.') : ''].filter(Boolean).join(' ');
+  const got = importSpots(store, used.map((s) => ({ lat: s.camp.lat, lng: s.camp.lon, elevation: s.camp.ele, name: `${r.name} · ${tr('Day {n}', { n: s.n })}`, note: note(s) })));
+  if (got.refused) say(tr('The list is full: {n} were left out.', { n: got.refused }));
+  const nights = used.map((s) => ({ spot: spotId(s.camp.lat, s.camp.lon), date: addDays(r.date, s.n - 1) })).filter((n) => n.date >= today);
+  saveTrip(store, nights);
+  syncSaved();
+  if (stages.length > MAX_NIGHTS) say(tr('A trip has at most {n} nights; the first {n} days were planned.', { n: MAX_NIGHTS }));
+  showTrip();
+}
+
+function exportRoute() {
+  const r = route;
+  if (!r) return;
+  const stages = stageInfos(r.points, r.stageKm, r.report, r.inputs?.samples);
+  const camps = stages.map((s) => ({ lat: s.camp.lat, lon: s.camp.lon, ele: s.camp.ele, name: `${tr('Day {n}', { n: s.n })} · ${tr('camp')}`, desc: s.camp.moved ? tr('Moved from the end of the stage, which is not allowed or not clear.') : undefined }));
+  const slug = r.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'route';
+  downloadText(`${slug}-with-camps.gpx`, routeToGpx(r.name, r.points, camps));
+}
+
 // Best spots nearby
 const finderPins = L.layerGroup().addTo(map);
 let finderId = 0;
@@ -729,9 +991,10 @@ function finderNote(c: { coverLabel?: string; elevation: number }, water: WaterI
   return `${parts.join(' · ') || 'ground not classified'}.`;
 }
 
-async function findBest(lat: number, lng: number) {
+async function findBest(lat: number, lng: number, opts: { back?: { label: string; run: () => void } } = {}) {
   const id = ++finderId;
   ++checkId; // stops a running spot check from painting over the list
+  delete result.dataset.page;
   marker?.remove();
   marker = L.marker([lat, lng], { icon: spotIcon(), keyboard: false }).addTo(map);
   focusMarker?.remove();
@@ -740,7 +1003,16 @@ async function findBest(lat: number, lng: number) {
   sheet.dataset.state = 'result';
   result.hidden = false;
   const gone = () => id !== finderId;
-  const mount = () => renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true));
+  const mount = () => {
+    const ui = renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true));
+    if (opts.back) {
+      const back = el('button', 'linkish', '← ' + opts.back.label);
+      back.type = 'button';
+      back.onclick = opts.back.run;
+      result.prepend(back);
+    }
+    return ui;
+  };
   let ui = mount();
   finderBack = undefined;
   ui.update([], tr('Reading the terrain and ground around here…'), false);
@@ -1074,6 +1346,7 @@ const ICONS: Record<string, string> = {
   menu: '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
   locate: '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
   saved: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+  route: '<circle cx="6" cy="18" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="6" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 17.5c7 0 1-11 8-11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
   trip: '<rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14.5l2.5 2.5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
   save: '<path d="M12 3v11m0 0l-4-4m4 4l4-4M5 18v2h14v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
   layers: '<path d="M12 3l9 5-9 5-9-5 9-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
@@ -1102,6 +1375,7 @@ const MenuControl = L.Control.extend({
       ['locate', tr('My location'), locateMe],
       ['saved', tr('Saved spots'), showSaved],
       ['trip', tr('Trip planner'), showTrip],
+      ['route', tr('Route'), showRoute],
       ['save', tr('Save map for offline'), () => void saveArea()],
       ['layers', tr('Map layers'), () => togglePanel(layersPanel)],
       ['settings', tr('Settings'), () => togglePanel(settingsPanel)],
@@ -1160,6 +1434,8 @@ new MenuControl({ position: 'topright' }).addTo(map);
   }
 }
 
+// the route of the last visit is drawn again (the line only; the check is made when the Route page is opened)
+restoreRoute(false);
 // a link that carries a list of places (and maybe a trip) opens it
 openShareHash();
 

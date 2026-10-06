@@ -4,7 +4,7 @@ import { LocalData } from '../src/localstore';
 import { legalityScore, overallScore } from '../src/scores';
 import { RESERVE_FILES } from '../src/localdata';
 
-// Kandersteg: its police regulation bans camping outside designated places (a recorded municipal rule, BFS 566)
+// Krattigen (BFS 566) has no recorded municipal rule, so the verdicts below come from the zones, the treeline and the lookups alone
 const LAT = 46.4986;
 const LNG = 7.7285;
 
@@ -14,7 +14,7 @@ function mockNetwork(over: Partial<Record<'height' | 'zones' | 'canton' | 'munic
     height: { height: '1780' },
     zones: { results: [] },
     canton: { results: [{ layerBodId: 'k', attributes: { ak: 'BE' } }] },
-    municipality: { results: [{ layerBodId: 'g', attributes: { gemname: 'Kandersteg', gde_nr: 566, kanton: 'BE', is_current_jahr: true } }] },
+    municipality: { results: [{ layerBodId: 'g', attributes: { gemname: 'Krattigen', gde_nr: 566, kanton: 'BE', is_current_jahr: true } }] },
     bauzonen: { results: [] },
     ...over,
   };

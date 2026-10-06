@@ -15,7 +15,7 @@ function mockNetwork(over: Partial<Record<'height' | 'zones' | 'canton' | 'munic
     height: { height: '1350' },
     zones: { results: [ZONE] },
     canton: { results: [{ layerBodId: 'k', attributes: { ak: 'BE' } }] },
-    municipality: { results: [{ layerBodId: 'g', attributes: { gemname: 'Adelboden', gde_nr: 566, kanton: 'BE', is_current_jahr: true } }] },
+    municipality: { results: [{ layerBodId: 'g', attributes: { gemname: 'Adelboden', gde_nr: 561, kanton: 'BE', is_current_jahr: true } }] },
     bauzonen: { results: [] },
     ...over,
   };
