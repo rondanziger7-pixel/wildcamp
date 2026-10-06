@@ -300,9 +300,13 @@ button { font: inherit; cursor: pointer; }
 /* the three cards are one size: three equal squares side by side */
 .scores, .scores:not(.compact) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .score-card { min-width: 0; overflow-wrap: anywhere; }
-.scores:not(.compact) .score-card { grid-column: auto; aspect-ratio: 1 / 1; height: auto; display: flex; flex-direction: column; justify-content: space-between; padding: 9px 10px; }
+.scores:not(.compact) .score-card { grid-column: auto; height: auto; min-height: 104px; display: flex; flex-direction: column; justify-content: space-between; padding: 9px 10px; }
 .scores:not(.compact) .sc-value { font-size: 1.8rem; }
 .scores:not(.compact) .sc-label { font-size: .8rem; line-height: 1.2; }
 .scores:not(.compact) .score-card { padding: 8px; }
 .scores-reason { margin: 8px 2px 0; font-size: .85rem; color: var(--muted); }
 .scores-reason[hidden] { display: none; }
+
+/* one row, every card as tall as the tallest (a verdict that wraps to two lines must not make its card taller than the others) */
+.scores { grid-auto-rows: 1fr; align-items: stretch; }
+.score-card { align-self: stretch; }
