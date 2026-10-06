@@ -377,4 +377,358 @@ export function mainLine(g: ParsedGpx): RoutePoint[] {
   return longest(g.tracks) ?? longest(g.routes) ?? [];
 }
 
-// __PART2__
+// ---------------------------------------------------------------------------------------------
+// Geometry
+// ---------------------------------------------------------------------------------------------
+
+const EARTH_R = 6371008.8; // mean earth radius in metres (IUGG)
+const RAD = Math.PI / 180;
+
+/** Great-circle distance in metres. */
+export function haversineM(a: LatLon, b: LatLon): number {
+  const dLat = (b.lat - a.lat) * RAD;
+  const dLon = (b.lon - a.lon) * RAD;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * RAD) * Math.cos(b.lat * RAD) * Math.sin(dLon / 2) ** 2;
+  return 2 * EARTH_R * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+/** Distance along the line in metres from the first point to each point (first entry 0). */
+export function cumulativeM(points: readonly LatLon[]): number[] {
+  const out: number[] = new Array<number>(points.length);
+  let sum = 0;
+  for (let i = 0; i < points.length; i++) {
+    if (i > 0) sum += haversineM(points[i - 1]!, points[i]!);
+    out[i] = sum;
+  }
+  return out;
+}
+
+/** Length of the line in metres. */
+export function lengthM(points: readonly LatLon[]): number {
+  let sum = 0;
+  for (let i = 1; i < points.length; i++) sum += haversineM(points[i - 1]!, points[i]!);
+  return sum;
+}
+
+/**
+ * Total climb and descent in metres from the points that carry an elevation, or undefined when fewer than
+ * two do. GPS and barometer noise would otherwise add hundreds of metres to a flat track, so the
+ * elevations are smoothed with a 3-point moving average (the first and last stay as they are) and then run
+ * through a dead band: a change only counts once it is `minStepM` (default 3 m) away from the last counted
+ * level. Values are not rounded.
+ */
+export function ascentDescent(points: readonly { ele?: number }[], minStepM = 3): { ascentM: number; descentM: number } | undefined {
+  const e: number[] = [];
+  for (const p of points) if (p.ele !== undefined && Number.isFinite(p.ele)) e.push(p.ele);
+  if (e.length < 2) return undefined;
+  const last = e.length - 1;
+  const s = e.map((v, i) => (i === 0 || i === last ? v : (e[i - 1]! + v + e[i + 1]!) / 3));
+  let ref = s[0]!;
+  let ascentM = 0;
+  let descentM = 0;
+  for (let i = 1; i < s.length; i++) {
+    const d = s[i]! - ref;
+    if (d >= minStepM) {
+      ascentM += d;
+      ref = s[i]!;
+    } else if (d <= -minStepM) {
+      descentM -= d;
+      ref = s[i]!;
+    }
+  }
+  return { ascentM, descentM };
+}
+
+/** Local metric (equirectangular) projection around a reference latitude/longitude. */
+function projector(lat0: number, lon0: number): (p: LatLon) => [number, number] {
+  const ky = EARTH_R * RAD;
+  const kx = ky * Math.cos(lat0 * RAD);
+  return (p) => [(p.lon - lon0) * kx, (p.lat - lat0) * ky];
+}
+
+/** Squared distance from (px, py) to the segment (ax, ay)-(bx, by); a zero-length segment is a point. */
+function distToSegmentSq(px: number, py: number, ax: number, ay: number, bx: number, by: number): number {
+  const dx = bx - ax;
+  const dy = by - ay;
+  const len2 = dx * dx + dy * dy;
+  let t = len2 > 0 ? ((px - ax) * dx + (py - ay) * dy) / len2 : 0;
+  t = Math.max(0, Math.min(1, t));
+  const cx = ax + t * dx - px;
+  const cy = ay + t * dy - py;
+  return cx * cx + cy * cy;
+}
+
+/**
+ * Douglas-Peucker in a local metric projection: keeps the first and last point and every point that
+ * deviates more than `toleranceM` from the simplified line. Returns the original point objects (so `ele`
+ * and `time` survive), never mutates the input; a tolerance of 0 or less keeps everything.
+ */
+export function simplify<T extends LatLon>(points: readonly T[], toleranceM: number): T[] {
+  const n = points.length;
+  if (n <= 2 || !(toleranceM > 0)) return points.slice();
+  const first = points[0]!;
+  const project = projector(first.lat, first.lon);
+  const xs = new Float64Array(n);
+  const ys = new Float64Array(n);
+  for (let i = 0; i < n; i++) {
+    const [x, y] = project(points[i]!);
+    xs[i] = x;
+    ys[i] = y;
+  }
+  const tol2 = toleranceM * toleranceM;
+  const keep = new Uint8Array(n);
+  keep[0] = 1;
+  keep[n - 1] = 1;
+  const work: number[] = [0, n - 1];
+  while (work.length > 0) {
+    const hi = work.pop()!;
+    const lo = work.pop()!;
+    let worst = -1;
+    let at = -1;
+    for (let i = lo + 1; i < hi; i++) {
+      const d = distToSegmentSq(xs[i]!, ys[i]!, xs[lo]!, ys[lo]!, xs[hi]!, ys[hi]!);
+      if (d > worst) {
+        worst = d;
+        at = i;
+      }
+    }
+    if (at >= 0 && worst > tol2) {
+      keep[at] = 1;
+      work.push(lo, at, at, hi);
+    }
+  }
+  const out: T[] = [];
+  for (let i = 0; i < n; i++) if (keep[i]) out.push(points[i]!);
+  return out;
+}
+
+export interface SamplePoint extends RoutePoint {
+  /** Distance along the line from the first point, in metres. */
+  distM: number;
+  /** Index of the source point at or before this position (the sample lies on the segment index..index+1). */
+  index: number;
+}
+
+/**
+ * Points at equal distances along the line: 0, everyM, 2*everyM, ... and finally the last point (so the
+ * last gap is shorter). Positions between two source points are interpolated linearly, elevation too when
+ * both have one. A line of one point gives that point; an invalid `everyM` gives only the first and last.
+ */
+export function sampleEvery(points: readonly RoutePoint[], everyM: number): SamplePoint[] {
+  const n = points.length;
+  if (n === 0) return [];
+  const first = points[0]!;
+  if (n === 1) return [{ ...first, distM: 0, index: 0 }];
+  const cum = cumulativeM(points);
+  const total = cum[n - 1]!;
+  const out: SamplePoint[] = [{ ...first, distM: 0, index: 0 }];
+  if (everyM > 0 && Number.isFinite(everyM)) {
+    let seg = 0;
+    for (let k = 1; k * everyM < total - 1e-6; k++) {
+      const t = k * everyM;
+      while (seg < n - 2 && cum[seg + 1]! <= t) seg++;
+      const a = points[seg]!;
+      const b = points[seg + 1]!;
+      const span = cum[seg + 1]! - cum[seg]!;
+      const f = span > 0 ? (t - cum[seg]!) / span : 0;
+      const p: SamplePoint = { lat: a.lat + (b.lat - a.lat) * f, lon: a.lon + (b.lon - a.lon) * f, distM: t, index: seg };
+      if (a.ele !== undefined && b.ele !== undefined) p.ele = a.ele + (b.ele - a.ele) * f;
+      out.push(p);
+    }
+  }
+  out.push({ ...points[n - 1]!, distM: total, index: n - 1 });
+  return out;
+}
+
+export interface Stage {
+  from: RoutePoint;
+  to: RoutePoint;
+  /** Length of the stage in metres. */
+  distM: number;
+  /** Distance along the whole line at which the stage starts, in metres. */
+  startDistM: number;
+  startIndex: number;
+  endIndex: number;
+}
+
+/**
+ * Splits a line into stages of about `targetKm` by distance. The stage count is the target rounded so that
+ * no stage is more than about 30 % over the target or 35 % under it, and the stages are of equal length
+ * (so the last one is never tiny). Stages start and end at points of the line (nearest to the ideal cut),
+ * share their boundary point and add up to the length of the line. A sparse line may give fewer stages.
+ */
+export function splitStages(points: readonly RoutePoint[], targetKm: number): Stage[] {
+  const n = points.length;
+  if (n < 2) return [];
+  const cum = cumulativeM(points);
+  const total = cum[n - 1]!;
+  const targetM = targetKm * 1000;
+  let count = 1;
+  if (targetM > 0 && Number.isFinite(targetM)) {
+    const whole = Math.floor(total / targetM);
+    count = Math.max(1, total - whole * targetM >= 0.3 * targetM ? whole + 1 : whole);
+  }
+  const cuts: number[] = [0];
+  for (let j = 1; j < count; j++) {
+    const ideal = (total * j) / count;
+    // nearest point by distance along the line (binary search)
+    let lo = 0;
+    let hi = n - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (cum[mid]! < ideal) lo = mid + 1;
+      else hi = mid;
+    }
+    const idx = lo > 0 && ideal - cum[lo - 1]! < cum[lo]! - ideal ? lo - 1 : lo;
+    if (idx > cuts[cuts.length - 1]! && idx < n - 1) cuts.push(idx);
+  }
+  cuts.push(n - 1);
+  const stages: Stage[] = [];
+  for (let s = 0; s + 1 < cuts.length; s++) {
+    const a = cuts[s]!;
+    const b = cuts[s + 1]!;
+    stages.push({ from: points[a]!, to: points[b]!, distM: cum[b]! - cum[a]!, startDistM: cum[a]!, startIndex: a, endIndex: b });
+  }
+  return stages;
+}
+
+export interface NearestOnLine extends LatLon {
+  /** Distance from the query to the line, in metres. */
+  distM: number;
+  /** Index of the line point before the nearest position (it lies on the segment index..index+1). */
+  index: number;
+  /** Distance along the line from its first point to the nearest position, in metres. */
+  distAlongM: number;
+}
+
+/**
+ * The closest position on the line (projected onto its segments, not just its vertices) to a point, or
+ * undefined for an empty line. `lat`/`lon` are the position found.
+ */
+export function nearestOnLine(points: readonly RoutePoint[], lat: number, lon: number): NearestOnLine | undefined {
+  const n = points.length;
+  if (n === 0) return undefined;
+  const q: LatLon = { lat, lon };
+  if (n === 1) {
+    const p = points[0]!;
+    return { lat: p.lat, lon: p.lon, distM: haversineM(q, p), index: 0, distAlongM: 0 };
+  }
+  const project = projector(lat, lon);
+  let bestSq = Infinity;
+  let bestIndex = 0;
+  let bestT = 0;
+  let [ax, ay] = project(points[0]!);
+  for (let i = 0; i + 1 < n; i++) {
+    const [bx, by] = project(points[i + 1]!);
+    const dx = bx - ax;
+    const dy = by - ay;
+    const len2 = dx * dx + dy * dy;
+    const t = len2 > 0 ? Math.max(0, Math.min(1, (-ax * dx - ay * dy) / len2)) : 0;
+    const cx = ax + t * dx;
+    const cy = ay + t * dy;
+    const d = cx * cx + cy * cy;
+    if (d < bestSq) {
+      bestSq = d;
+      bestIndex = i;
+      bestT = t;
+    }
+    ax = bx;
+    ay = by;
+  }
+  const a = points[bestIndex]!;
+  const b = points[bestIndex + 1]!;
+  const at: LatLon = { lat: a.lat + (b.lat - a.lat) * bestT, lon: a.lon + (b.lon - a.lon) * bestT };
+  let along = 0;
+  for (let i = 1; i <= bestIndex; i++) along += haversineM(points[i - 1]!, points[i]!);
+  along += haversineM(a, b) * bestT;
+  return { lat: at.lat, lon: at.lon, distM: haversineM(q, at), index: bestIndex, distAlongM: along };
+}
+
+export interface Bounds {
+  south: number;
+  west: number;
+  north: number;
+  east: number;
+}
+
+/** Bounding box of the points, or undefined for none. */
+export function bounds(points: readonly LatLon[]): Bounds | undefined {
+  if (points.length === 0) return undefined;
+  let south = Infinity;
+  let west = Infinity;
+  let north = -Infinity;
+  let east = -Infinity;
+  for (const p of points) {
+    if (p.lat < south) south = p.lat;
+    if (p.lat > north) north = p.lat;
+    if (p.lon < west) west = p.lon;
+    if (p.lon > east) east = p.lon;
+  }
+  return { south, west, north, east };
+}
+
+// ---------------------------------------------------------------------------------------------
+// Time
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * Walking time in minutes by Naismith's rule: 4 km/h on the flat plus 10 minutes for every 100 m of ascent
+ * (not rounded; negative or non-finite inputs count as 0). `descentM` is accepted for callers that have it
+ * but does not change the result: Langmuir's correction (a credit on gentle descents, a penalty on steep
+ * ones) needs the slope of each stretch, and over mixed terrain the two roughly cancel. Naismith is
+ * optimistic on rough or very steep ground, so plan with a margin.
+ */
+export function naismithMinutes(distM: number, ascentM: number, descentM = 0): number {
+  const flat = Number.isFinite(distM) && distM > 0 ? (distM / 4000) * 60 : 0;
+  const climb = Number.isFinite(ascentM) && ascentM > 0 ? (ascentM / 100) * 10 : 0;
+  return flat + climb;
+}
+
+/** `80` -> '1 h 20 min', `45` -> '45 min', `120` -> '2 h'. Rounded to whole minutes; below 0 gives '0 min'. */
+export function formatDuration(minutes: number): string {
+  const total = Number.isFinite(minutes) && minutes > 0 ? Math.round(minutes) : 0;
+  const h = Math.floor(total / 60);
+  const m = total % 60;
+  if (h === 0) return `${m} min`;
+  return m === 0 ? `${h} h` : `${h} h ${m} min`;
+}
+
+// ---------------------------------------------------------------------------------------------
+// GPX writer
+// ---------------------------------------------------------------------------------------------
+
+const XML_ILLEGAL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g;
+const esc = (s: string) => s.replace(XML_ILLEGAL, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+const validLatLon = (p: LatLon) => Number.isFinite(p.lat) && Number.isFinite(p.lon) && Math.abs(p.lat) <= 90 && Math.abs(p.lon) <= 180;
+const eleText = (v: number) => String(Math.round(v * 10) / 10 + 0); // 1602.4 -> '1602.4', no '-0'
+
+/**
+ * GPX 1.1 with the waypoints first (as the schema wants) and then one `<trk>` with one `<trkseg>`; the
+ * track is left out when there are no points. Names and descriptions are XML-escaped, points with a
+ * non-finite or out-of-range coordinate are skipped, elevations are written to 0.1 m, positions to 6
+ * decimals. Waypoint names such as 'Night 2: Alp Grüm' are the caller's.
+ */
+export function routeToGpx(name: string, points: readonly RoutePoint[], waypoints: readonly Waypoint[] = []): string {
+  const out: string[] = ['<?xml version="1.0" encoding="UTF-8"?>', '<gpx version="1.1" creator="Wildcamp CH" xmlns="http://www.topografix.com/GPX/1/1">', `  <metadata><name>${esc(name)}</name></metadata>`];
+  for (const w of waypoints) {
+    if (!validLatLon(w)) continue;
+    out.push(`  <wpt lat="${w.lat.toFixed(6)}" lon="${w.lon.toFixed(6)}">`);
+    if (w.ele !== undefined && Number.isFinite(w.ele)) out.push(`    <ele>${eleText(w.ele)}</ele>`);
+    if (w.name) out.push(`    <name>${esc(w.name)}</name>`);
+    if (w.desc) out.push(`    <desc>${esc(w.desc)}</desc>`);
+    out.push('  </wpt>');
+  }
+  const line = points.filter(validLatLon);
+  if (line.length > 0) {
+    out.push('  <trk>', `    <name>${esc(name)}</name>`, '    <trkseg>');
+    for (const p of line) {
+      const open = `      <trkpt lat="${p.lat.toFixed(6)}" lon="${p.lon.toFixed(6)}"`;
+      const ele = p.ele !== undefined && Number.isFinite(p.ele) ? `<ele>${eleText(p.ele)}</ele>` : '';
+      const time = p.time ? `<time>${esc(p.time)}</time>` : '';
+      out.push(ele || time ? `${open}>${ele}${time}</trkpt>` : `${open}/>`);
+    }
+    out.push('    </trkseg>', '  </trk>');
+  }
+  out.push('</gpx>', '');
+  return out.join('\n');
+}
