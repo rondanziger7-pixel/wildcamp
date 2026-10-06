@@ -1,10 +1,10 @@
-import { assess, type Assessment, type ZoneHit } from './assess';
+import { assess, type Assessment, type NearZone, type ZoneHit } from './assess';
 import { wgs84ToLv95 } from './coords';
-import { fetchCanton, fetchElevation, fetchMunicipality, fetchZoneBody, parseZoneHits, type Municipality, type ZoneBody } from './geoadmin';
+import { fetchCanton, fetchElevation, fetchMunicipality, fetchNearZoneBody, fetchZoneBody, parseZoneHits, type Municipality, type ZoneBody } from './geoadmin';
 import type { Canton } from './cantons';
 import { fetchBuildingZone, type BuildingZoneInfo } from './buildingzone';
 import { fetchJuraReserves } from './jura';
-import { reserveZoneHits } from './reserves';
+import { reserveZoneHits, reserveZonesNear } from './reserves';
 import { classifyTreeline } from './treeline';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import type { LocalData } from './localstore';
@@ -34,6 +34,9 @@ export interface LegalityInputs {
   elevation?: number;
   /** The zone layers' identify response (seasons and firing days are evaluated per date). */
   zones?: ZoneBody;
+  /** The ban-zone layers within `nearRadiusM` (the zones that begin close by); a failed search only means no warning. */
+  nearZones?: ZoneBody;
+  nearRadiusM: number;
   /** Set when the lookup worked: undefined means the point lies outside every canton. */
   canton?: Canton;
   cantonKnown: boolean;
@@ -50,17 +53,23 @@ export const CHECK_BUDGET_MS = 10000;
 /** Longest a check waits for the bundled data before it goes ahead (and calls itself incomplete). */
 export const DATA_WAIT_MS = 6000;
 
+/** How close a ban zone must begin for the spot to be called "close to it": about what a GPS fix can be off by in a valley. */
+export const NEAR_ZONE_M = 150;
+
 const inJura = (lat: number, lng: number) => lat > 47.1 && lat < 47.55 && lng > 6.85 && lng < 7.6;
 
 /** Run every legality lookup at once. `knownElevation` skips the elevation request (the finder already has it). */
-export async function fetchLegalityInputs(lat: number, lng: number, knownElevation?: number): Promise<LegalityInputs> {
-  const [elev, zones, canton, muni, jura, bzone] = await Promise.allSettled([
+export async function fetchLegalityInputs(lat: number, lng: number, knownElevation?: number, accuracyM?: number): Promise<LegalityInputs> {
+  // a GPS fix that is worse than the default radius widens the search (up to 500 m)
+  const nearRadiusM = Math.min(500, Math.max(NEAR_ZONE_M, Math.round(accuracyM ?? 0)));
+  const [elev, zones, canton, muni, jura, bzone, nearZones] = await Promise.allSettled([
     knownElevation !== undefined ? Promise.resolve(knownElevation) : withTimeout(fetchElevation(lat, lng), LOOKUP_MS),
     withTimeout(fetchZoneBody(lat, lng), LOOKUP_MS),
     withTimeout(fetchCanton(lat, lng), LOOKUP_MS),
     withTimeout(fetchMunicipality(lat, lng), LOOKUP_MS),
     inJura(lat, lng) ? withTimeout(fetchJuraReserves(lat, lng), LOOKUP_MS) : Promise.resolve([] as ZoneHit[]),
     withTimeout(fetchBuildingZone(lat, lng), LOOKUP_MS),
+    withTimeout(fetchNearZoneBody(lat, lng, nearRadiusM), LOOKUP_MS),
   ]);
   const failed: CheckName[] = [];
   if (elev.status === 'rejected' || elev.value === undefined) failed.push('elevation');
@@ -74,6 +83,8 @@ export async function fetchLegalityInputs(lat: number, lng: number, knownElevati
     lng,
     elevation: elev.status === 'fulfilled' ? elev.value : undefined,
     zones: zones.status === 'fulfilled' ? zones.value : undefined,
+    nearZones: nearZones.status === 'fulfilled' ? nearZones.value : undefined,
+    nearRadiusM,
     canton: canton.status === 'fulfilled' ? canton.value : undefined,
     cantonKnown: canton.status === 'fulfilled',
     municipality: muni.status === 'fulfilled' ? muni.value : undefined,
@@ -90,8 +101,10 @@ export function assessInputs(inp: LegalityInputs, data: LocalData, date: Date = 
   const incomplete: CheckName[] = [...inp.failed];
   if (!data.complete) incomplete.push('local rule data');
   const muni = inp.municipality;
+  const hits = [...(inp.zones ? parseZoneHits(inp.zones, date) : []), ...data.reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...inp.jura];
   return assess({
-    zones: [...(inp.zones ? parseZoneHits(inp.zones, date) : []), ...data.reserveSets.flatMap((set) => reserveZoneHits(set, e, n)), ...inp.jura],
+    zones: hits,
+    nearZones: nearBanZones(inp, data, hits, date, e, n),
     zoneLookupFailed: inp.failed.includes('zones'),
     treeline,
     treelineNote,
@@ -106,6 +119,23 @@ export function assessInputs(inp: LegalityInputs, data: LocalData, date: Date = 
   });
 }
 
+/** Ban zones that begin close to the spot but do not contain it: the federal layers within the search radius, the bundled polygons with their exact distance. */
+export function nearBanZones(inp: LegalityInputs, data: LocalData, hits: ZoneHit[], date: Date, e: number, n: number): NearZone[] {
+  const key = (z: { layer: { id: string }; name?: string }) => `${z.layer.id}|${z.name ?? ''}`;
+  const have = new Set(hits.map(key));
+  const out: NearZone[] = [];
+  if (inp.nearZones) {
+    for (const z of parseZoneHits(inp.nearZones, date)) {
+      if ((z.layer.severity === 'prohibited' || z.layer.severity === 'restricted') && !have.has(key(z))) {
+        have.add(key(z));
+        out.push({ layer: z.layer, name: z.name, withinM: inp.nearRadiusM });
+      }
+    }
+  }
+  for (const set of data.reserveSets) for (const z of reserveZonesNear(set, e, n, inp.nearRadiusM)) if (!have.has(key(z))) out.push(z);
+  return out.sort((a, b) => (a.distanceM ?? Infinity) - (b.distanceM ?? Infinity)).slice(0, 3);
+}
+
 export interface SpotCheck {
   inputs: LegalityInputs;
   assessment: Assessment;
@@ -116,9 +146,9 @@ export interface SpotCheck {
  * The legality check of a spot: lookups, then the bundled data (waited for up to `DATA_WAIT_MS`), then the verdict.
  * Data that is still loading is reported as an incomplete check; the caller can re-assess when `data.load()` resolves.
  */
-export async function checkLegality(lat: number, lng: number, data: LocalData, opts: { knownElevation?: number; date?: Date; waitMs?: number } = {}): Promise<SpotCheck> {
+export async function checkLegality(lat: number, lng: number, data: LocalData, opts: { knownElevation?: number; date?: Date; waitMs?: number; accuracyM?: number } = {}): Promise<SpotCheck> {
   const ready = Promise.race([data.load(), new Promise<void>((r) => setTimeout(r, opts.waitMs ?? DATA_WAIT_MS))]); // runs alongside the lookups
-  const inputs = await fetchLegalityInputs(lat, lng, opts.knownElevation);
+  const inputs = await fetchLegalityInputs(lat, lng, opts.knownElevation, opts.accuracyM);
   await ready;
   return { inputs, assessment: assessInputs(inputs, data, opts.date), elevation: inputs.elevation };
 }

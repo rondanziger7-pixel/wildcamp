@@ -39,6 +39,8 @@ export interface Comfort {
   missing: string[];
   /** True when the terrain could not be read: nothing here says how the spot is, so it is not rated. */
   insufficient: boolean;
+  /** The dangers among the factors, worst first: what the first view must not leave out although the overall score ignores the weather. */
+  alerts: HazardAlert[];
 }
 
 export interface ComfortInput {
@@ -76,6 +78,17 @@ interface Factor extends Item {
   score: number;
   /** Comes from the forecast, so it changes with the chosen night. */
   wx?: boolean;
+  /** A danger worth a line on the first view (steep ground, a storm, a flood area ...), not just a comfort point. */
+  alert?: boolean;
+}
+
+/** A danger shown on the first view. */
+export interface HazardAlert {
+  tone: 'bad' | 'warn';
+  title: string;
+  text: string;
+  /** From the forecast (changes with the night) rather than from the spot itself. */
+  weather: boolean;
 }
 
 const m = (x: number) => `${Math.round(x / 10) * 10} m`;
@@ -137,7 +150,7 @@ export function comfortFor(input: ComfortInput): Comfort {
     if (sl < 5) f.push({ tone: 'ok', score: 1, title: tr('Flat ground'), text: tr('Slope about {deg}° over 20 m. Small bumps and rocks are not in the elevation data.', { deg }) });
     else if (sl < 10) f.push({ tone: 'info', score: 0, title: tr('Slightly sloping'), text: tr('Slope about {deg}° over 20 m. Look for a flatter patch close by.', { deg }) });
     else if (sl < 15) f.push({ tone: 'warn', score: -1, title: tr('Sloping ground'), text: tr('Slope about {deg}° over 20 m. You will slide in the tent; find a flatter spot.', { deg }) });
-    else f.push({ tone: 'bad', score: sl >= 25 ? -4 : -2, title: tr('Too steep to pitch'), text: tr('Slope about {deg}° over 20 m.', { deg }) });
+    else f.push({ tone: 'bad', score: sl >= 25 ? -4 : -2, alert: true, title: tr('Too steep to pitch'), text: tr('Slope about {deg}° over 20 m.', { deg }) });
 
     // wind shelter from terrain
     const ridge = t.tpi >= 15 && t.meanHorizon < 3;
@@ -151,9 +164,9 @@ export function comfortFor(input: ComfortInput): Comfort {
     if (hollow) f.push({ tone: 'warn', score: -1, title: tr('In a hollow'), text: tr('About {depth} m lower than the ground around it. Cold air and damp collect in hollows on clear nights, so frost and condensation are likely.', { depth: Math.round(-t.tpi) }) });
 
     // hazards from slope
-    if (t.dropNearM !== undefined) f.push({ tone: 'bad', score: -2, title: tr('Steep drop close by'), text: tr('The ground falls away steeply about {dist} away. Dangerous in the dark.', { dist: m(t.dropNearM) }) });
+    if (t.dropNearM !== undefined) f.push({ tone: 'bad', score: -2, alert: true, title: tr('Steep drop close by'), text: tr('The ground falls away steeply about {dist} away. Dangerous in the dark.', { dist: m(t.dropNearM) }) });
     if (t.steepAboveM !== undefined)
-      f.push({ tone: 'warn', score: -1, title: tr('Steep slope above'), text: tr('A slope of 30° or more rises about {dist} away. Possible rockfall, and avalanche runout if there is snow.', { dist: m(t.steepAboveM) }) });
+      f.push({ tone: 'warn', score: -1, alert: true, title: tr('Steep slope above'), text: tr('A slope of 30° or more rises about {dist} away. Possible rockfall, and avalanche runout if there is snow.', { dist: m(t.steepAboveM) }) });
   } else missing.push('terrain (slope, wind shelter, hazards)');
 
   // the weather for the chosen night
@@ -166,14 +179,14 @@ export function comfortFor(input: ComfortInput): Comfort {
 
     if (night.thunder) {
       weatherStop = true;
-      wx({ tone: 'bad', score: exposed ? -4 : -3, title: tr('Thunderstorm forecast'), text: (exposed ? tr('Thunderstorms are forecast and the spot is exposed. Lightning makes this unsafe: do not camp on a ridge, top or open slope.') : tr('Thunderstorms are forecast. Avoid camping on exposed ground or under isolated trees, and keep away from the tallest point around.')) + nearestHutNote(input.shelters) });
+      wx({ tone: 'bad', score: exposed ? -4 : -3, alert: true, title: tr('Thunderstorm forecast'), text: (exposed ? tr('Thunderstorms are forecast and the spot is exposed. Lightning makes this unsafe: do not camp on a ridge, top or open slope.') : tr('Thunderstorms are forecast. Avoid camping on exposed ground or under isolated trees, and keep away from the tallest point around.')) + nearestHutNote(input.shelters) });
     }
     if (night.maxGustKmh >= 80) {
       weatherStop = true;
-      wx({ tone: 'bad', score: -3, title: tr('Storm-force gusts'), text: `${wind}. ${tr('A tent will not hold at this strength.')}${nearestHutNote(input.shelters)}` });
+      wx({ tone: 'bad', score: -3, alert: true, title: tr('Storm-force gusts'), text: `${wind}. ${tr('A tent will not hold at this strength.')}${nearestHutNote(input.shelters)}` });
     } else if (t) {
       const upwind = horizonToward(t.horizon, night.windFromDeg);
-      if (night.maxGustKmh >= 50 && upwind < 5) wx({ tone: 'bad', score: -2, title: tr('Strong wind forecast, open to it'), text: tr('{wind} tonight, and the terrain to the {dir} is open (horizon {deg}°).', { wind, dir: dirName, deg: upwind.toFixed(0) }) });
+      if (night.maxGustKmh >= 50 && upwind < 5) wx({ tone: 'bad', score: -2, alert: true, title: tr('Strong wind forecast, open to it'), text: tr('{wind} tonight, and the terrain to the {dir} is open (horizon {deg}°).', { wind, dir: dirName, deg: upwind.toFixed(0) }) });
       else if (night.maxGustKmh >= 50 && upwind >= 10) wx({ tone: 'warn', score: 0, title: tr('Strong wind forecast, sheltered from it'), text: tr('{wind}, but the ground to the {dir} rises {deg}°, which should shelter the tent.', { wind, dir: dirName, deg: upwind.toFixed(0) }) });
       else if (night.maxGustKmh >= 50) wx({ tone: 'warn', score: -1, title: tr('Strong wind forecast'), text: tr('{wind}. Only partial shelter to the {dir}.', { wind, dir: dirName }) });
       else if (night.maxGustKmh >= 30 && upwind < 5) wx({ tone: 'warn', score: -1, title: tr('Breezy and open to it'), text: tr('{wind}, and the terrain to the {dir} is open.', { wind, dir: dirName }) });
@@ -185,18 +198,19 @@ export function comfortFor(input: ComfortInput): Comfort {
     // cold, frost, snow
     const cold = night.minTempC;
     wx({
+      alert: cold <= -10,
       tone: cold <= -10 ? 'bad' : cold <= -3 ? 'warn' : 'info',
       score: cold <= -10 ? -2 : cold <= -5 ? -1 : cold >= 8 ? 1 : 0,
       title: tr('Low of {t} °C', { t: Math.round(cold) }),
       text: cold <= -10 ? tr('Severe cold: only for a winter or expedition setup.') : cold <= 0 ? tr('Freezing overnight: bring a winter sleeping bag, expect frost on the tent, and keep water bottles inside.') : cold >= 8 ? tr('A mild night.') : tr('Forecast low at the spot’s elevation.'),
     });
-    if (night.snowCm !== undefined && night.snowCm >= 1) wx({ tone: 'warn', score: night.snowCm >= 5 ? -2 : -1, title: tr('Snow forecast'), text: tr('About {cm} cm of new snow. It loads the tent, hides the ground and raises avalanche danger on steep slopes.', { cm: night.snowCm.toFixed(0) }) });
+    if (night.snowCm !== undefined && night.snowCm >= 1) wx({ tone: 'warn', score: night.snowCm >= 5 ? -2 : -1, alert: true, title: tr('Snow forecast'), text: tr('About {cm} cm of new snow. It loads the tent, hides the ground and raises avalanche danger on steep slopes.', { cm: night.snowCm.toFixed(0) }) });
     else if (night.freezingLevelM !== undefined && t && night.freezingLevelM < t.elevation && night.precipMm >= 1) wx({ tone: 'warn', score: -1, title: tr('Wet snow or ice possible'), text: tr('The freezing level drops to about {level} m, below the spot ({elev} m), and precipitation is forecast.', { level: Math.round(night.freezingLevelM / 10) * 10, elev: Math.round(t.elevation / 10) * 10 }) });
 
     // rain
     if (night.precipMm >= 1) {
       const p = night.maxPrecipProb !== undefined ? ' ' + tr('(up to {p} % chance)', { p: Math.round(night.maxPrecipProb) }) : '';
-      wx({ tone: 'warn', score: night.precipMm >= 10 ? -3 : night.precipMm >= 5 ? -2 : -1, title: night.precipMm >= 10 ? tr('Heavy rain forecast') : tr('Rain forecast'), text: tr('About {mm} mm overnight{chance}. Avoid hollows, stream beds and slopes that drain across the spot.', { mm: night.precipMm.toFixed(1), chance: p }) });
+      wx({ tone: 'warn', score: night.precipMm >= 10 ? -3 : night.precipMm >= 5 ? -2 : -1, alert: night.precipMm >= 10, title: night.precipMm >= 10 ? tr('Heavy rain forecast') : tr('Rain forecast'), text: tr('About {mm} mm overnight{chance}. Avoid hollows, stream beds and slopes that drain across the spot.', { mm: night.precipMm.toFixed(1), chance: p }) });
     } else if (night.maxPrecipProb !== undefined && night.maxPrecipProb >= 50) {
       wx({ tone: 'info', score: 0, title: tr('Showers possible'), text: tr('Up to {p} % chance of rain, but little expected ({mm} mm).', { p: Math.round(night.maxPrecipProb), mm: night.precipMm.toFixed(1) }) });
     } else if (night.precipMm < 0.2) {
@@ -317,7 +331,7 @@ export function comfortFor(input: ComfortInput): Comfort {
   // snow on the ground and the avalanche bulletin: conditions of the season, counted with the weather
   if (night?.snowDepthM !== undefined && night.snowDepthM >= 0.05) {
     const cm = Math.round(night.snowDepthM * 100);
-    f.push({ wx: true, tone: 'warn', score: cm >= 30 ? -2 : -1, title: tr('Snow on the ground: about {cm} cm', { cm }), text: tr('The forecast model has about {cm} cm of snow at this elevation. Pitching on snow is cold and slow, it hides the ground and its hazards, and pegs do not hold. This is a model value for the spot\'s elevation, not a measurement: slopes and wind-blown ridges differ a lot.', { cm }) });
+    f.push({ wx: true, alert: cm >= 30, tone: 'warn', score: cm >= 30 ? -2 : -1, title: tr('Snow on the ground: about {cm} cm', { cm }), text: tr('The forecast model has about {cm} cm of snow at this elevation. Pitching on snow is cold and slow, it hides the ground and its hazards, and pegs do not hold. This is a model value for the spot\'s elevation, not a measurement: slopes and wind-blown ridges differ a lot.', { cm }) });
   }
   const av = input.avalanche;
   if (av?.status === 'ok' && av.level !== undefined) {
@@ -333,8 +347,8 @@ export function comfortFor(input: ComfortInput): Comfort {
     const steepNote = steep ? ' ' + tr('Steep terrain is close to this spot.') : '';
     const detail = `${probs.length ? ' ' + tr('Problems: {list}.', { list: probs.join('; ') }) : ''} ${tr('Valid until {time}. The level is for the most dangerous slopes of the region; flat ground away from steep slopes is much safer, but a slope of 30 degrees or more above or near the tent, and runout zones below one, are not.', { time: until })}`;
     if (later) f.push({ wx: true, tone: 'info', score: 0, title: tr('Avalanche bulletin ends before this night'), text: tr('The current bulletin{where} ends {time}, before this night begins. Read the new bulletin on the day (slf.ch).', { where, time: until }) });
-    else if (av.level >= 4) f.push({ wx: true, tone: 'bad', score: steep ? -4 : -2, title: tr('Avalanche danger {name}', { name }), text: tr('High avalanche danger{where}.{steep}{detail} Stay out of avalanche terrain altogether.', { where, steep: steepNote, detail }) });
-    else if (av.level === 3) f.push({ wx: true, tone: 'warn', score: steep ? -2 : -1, title: tr('Avalanche danger {name}', { name }), text: tr('Considerable avalanche danger{where}.{steep}{detail}', { where, steep: steepNote, detail }) });
+    else if (av.level >= 4) f.push({ wx: true, alert: true, tone: 'bad', score: steep ? -4 : -2, title: tr('Avalanche danger {name}', { name }), text: tr('High avalanche danger{where}.{steep}{detail} Stay out of avalanche terrain altogether.', { where, steep: steepNote, detail }) });
+    else if (av.level === 3) f.push({ wx: true, alert: true, tone: 'warn', score: steep ? -2 : -1, title: tr('Avalanche danger {name}', { name }), text: tr('Considerable avalanche danger{where}.{steep}{detail}', { where, steep: steepNote, detail }) });
     else f.push({ wx: true, tone: 'info', score: 0, title: tr('Avalanche danger {name}', { name }), text: av.level === 2 ? tr('Moderate avalanche danger{where}.{detail}', { where, detail }) : tr('Low avalanche danger{where}.{detail}', { where, detail }) });
   } else if (av?.status === 'none' && (t?.elevation ?? 0) >= 1800) {
     f.push({ wx: true, tone: 'info', score: 0, title: tr('No avalanche bulletin'), text: tr('The SLF publishes its avalanche bulletin only in the winter season. None is current now, so avalanche danger is not rated; if there is snow on steep slopes, judge it yourself.') });
@@ -369,11 +383,11 @@ export function comfortFor(input: ComfortInput): Comfort {
   if (hz) {
     const has = (k: HazardInfo['inside'][number]) => hz.inside.includes(k);
     const src = ' ' + tr('Source: FOEN national hazard indication; a coarse model, not the cantonal hazard map, and a spot outside it is not guaranteed safe.');
-    if (has('flood50')) f.push({ tone: 'bad', score: -2, title: tr('In a frequent flood area'), text: tr('The spot lies in the area flooded by a 50-year flood (Aquaprotect model). A summer thunderstorm or snowmelt can put it under water or bring debris. Camp on higher ground away from the stream.') + src });
-    else if (has('flood100')) f.push({ tone: 'warn', score: -1, title: tr('In a flood area'), text: tr('The spot lies in the area flooded by a 100-year flood (Aquaprotect model). Rare, but a night of heavy rain or a thunderstorm upstream makes it worth camping higher.') + src });
+    if (has('flood50')) f.push({ tone: 'bad', score: -2, alert: true, title: tr('In a frequent flood area'), text: tr('The spot lies in the area flooded by a 50-year flood (Aquaprotect model). A summer thunderstorm or snowmelt can put it under water or bring debris. Camp on higher ground away from the stream.') + src });
+    else if (has('flood100')) f.push({ tone: 'warn', score: -1, alert: true, title: tr('In a flood area'), text: tr('The spot lies in the area flooded by a 100-year flood (Aquaprotect model). Rare, but a night of heavy rain or a thunderstorm upstream makes it worth camping higher.') + src });
     if (has('rockfall')) {
       const steep = !!t && (t.steepAboveM !== undefined || t.slopeDeg >= 25);
-      f.push({ tone: steep ? 'warn' : 'info', score: steep ? -1 : 0, title: tr('In a rockfall area'), text: tr('A national indication map marks this spot inside a rockfall process area (release, fall or run-out).{steep} Do not pitch directly below cliffs, steep scree or gullies; look for fresh rock debris on the ground.', { steep: steep ? ' ' + tr('A steep slope rises close to the spot.') : '' }) + src });
+      f.push({ alert: steep, tone: steep ? 'warn' : 'info', score: steep ? -1 : 0, title: tr('In a rockfall area'), text: tr('A national indication map marks this spot inside a rockfall process area (release, fall or run-out).{steep} Do not pitch directly below cliffs, steep scree or gullies; look for fresh rock debris on the ground.', { steep: steep ? ' ' + tr('A steep slope rises close to the spot.') : '' }) + src });
     }
     if (has('landslide')) f.push({ tone: 'info', score: 0, title: tr('In a landslide-prone area'), text: tr('A national indication map marks this area as prone to shallow landslides, mainly after long rain or snowmelt on steep slopes. Avoid camping on or under steep wet slopes in bad weather.') + src });
     if (has('debris')) f.push({ tone: 'info', score: 0, title: tr('In a debris-flow area'), text: tr('A national indication map marks this area as reachable by debris flows (mud and rock surging down a gully after heavy rain). Do not camp in or at the mouth of a gully or stream channel when heavy rain is forecast.') + src });
@@ -389,11 +403,11 @@ export function comfortFor(input: ComfortInput): Comfort {
     else if (g.cover === 'shrub') f.push({ tone: 'info', score: 0, title: tr('Shrubs and brush'), text: tr('{label}: uneven ground with bushes and tussocks. Look for a clear grassy patch.', { label: g.label }) + src });
     else if (g.cover === 'loose') f.push({ tone: 'warn', score: -2, title: tr('Stony ground'), text: tr('{label}: loose stones, scree or gravel. Hard to sleep on, pegs do not hold (weigh them down with rocks) and stones roll when it is steep. Clear a patch and use a good mat.', { label: g.label }) + src });
     else if (g.cover === 'rock') f.push({ tone: 'bad', score: -3, title: tr('Rocky ground'), text: tr('{label}: bare rock. Pegs will not go in and it is hard and cold to sleep on; you need a freestanding tent and a thick mat, or a grassy patch nearby.', { label: g.label }) + src });
-    else if (g.cover === 'glacier') f.push({ tone: 'bad', score: -4, title: tr('On snow or ice'), text: tr('{label}: ice and firn. Cold from below, crevasses are possible and the surface moves. Not a place to pitch a tent.', { label: g.label }) + src });
+    else if (g.cover === 'glacier') f.push({ tone: 'bad', score: -4, alert: true, title: tr('On snow or ice'), text: tr('{label}: ice and firn. Cold from below, crevasses are possible and the surface moves. Not a place to pitch a tent.', { label: g.label }) + src });
     else if (g.cover === 'wet') f.push({ tone: 'warn', score: -2, title: tr('Wet ground'), text: tr('{label}: wetland, soft and damp, and easily damaged. Camp on drier ground.', { label: g.label }) + src });
     else if (g.cover === 'forest') f.push({ tone: 'info', score: 0, title: tr('Forest ground'), text: tr('{label}: needles and roots, usually soft but with roots and dead branches to check for.', { label: g.label }) + src });
     else if (g.cover === 'built') f.push({ tone: 'info', score: 0, title: tr('Built-up or paved ground'), text: tr('{label}: settled or paved land, not a pitch.', { label: g.label }) + src });
-    else if (g.cover === 'water') f.push({ tone: 'warn', score: -2, title: tr('Open water'), text: tr('{label}: the nearest survey point is water.', { label: g.label }) + src });
+    else if (g.cover === 'water') f.push({ tone: 'warn', score: -2, alert: true, title: tr('Open water'), text: tr('{label}: the nearest survey point is water.', { label: g.label }) + src });
   } else missing.push('ground cover (rock or grass)');
 
   // sun
@@ -453,9 +467,13 @@ export function comfortFor(input: ComfortInput): Comfort {
     score,
     spotScore: Math.min(raw - weatherScore, cap),
     summary,
-    factors: f.map(({ score: _s, wx: _w, ...item }) => item),
-    weatherFactors: f.filter((x) => x.wx).map(({ score: _s, wx: _w, ...item }) => item),
-    spotFactors: f.filter((x) => !x.wx).map(({ score: _s, wx: _w, ...item }) => item),
+    factors: f.map(({ score: _s, wx: _w, alert: _a, ...item }) => item),
+    weatherFactors: f.filter((x) => x.wx).map(({ score: _s, wx: _w, alert: _a, ...item }) => item),
+    spotFactors: f.filter((x) => !x.wx).map(({ score: _s, wx: _w, alert: _a, ...item }) => item),
+    alerts: f
+      .filter((x) => x.alert && (x.tone === 'bad' || x.tone === 'warn'))
+      .map((x) => ({ tone: x.tone as 'bad' | 'warn', title: x.title, text: x.text, weather: !!x.wx }))
+      .sort((a, b) => (a.tone === b.tone ? 0 : a.tone === 'bad' ? -1 : 1)),
     missing,
     insufficient: !t,
   };

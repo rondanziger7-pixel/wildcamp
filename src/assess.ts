@@ -15,6 +15,16 @@ export interface ZoneHit {
   season?: string;
 }
 
+/** A ban zone that begins close to the spot without containing it. */
+export interface NearZone {
+  layer: ZoneLayer;
+  name?: string;
+  /** Distance to its boundary in metres, when the boundary is known exactly (the bundled polygons). */
+  distanceM?: number;
+  /** Otherwise: it lies within this many metres (the federal layers are searched within a radius, not measured). */
+  withinM?: number;
+}
+
 /** One line of the result checklist shown to the user. */
 export interface Item {
   tone: 'bad' | 'warn' | 'ok' | 'info';
@@ -41,6 +51,8 @@ export interface Assessment {
   treelineNote?: string;
   /** Lookups that failed or are missing (zones, municipality, bundled data ...): the result may miss a ban. Empty or absent when everything was checked. */
   incomplete?: string[];
+  /** Ban zones that begin close to the spot (GPS and the map can be off by that much). */
+  nearZones?: NearZone[];
 }
 
 /**
@@ -66,6 +78,8 @@ export function assess(input: {
   elevationKnown?: boolean;
   /** Lookups that failed or ran out of time, by name. A result made without them is never "likely OK". */
   incomplete?: string[];
+  /** Ban zones that begin within reach of the spot but do not contain it. */
+  nearZones?: NearZone[];
   /** Canton at the spot, if it could be determined. */
   canton?: Canton;
   /** Municipality at the spot, if it could be determined. */
@@ -190,6 +204,17 @@ export function assess(input: {
     reasons.push(tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).'));
     items.push({ tone: 'info', title: tr('Not checked'), text: tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).') });
   }
+  const nearZones = input.nearZones ?? [];
+  for (const z of nearZones) {
+    const where = z.name ? `${z.layer.label}: ${z.name}` : z.layer.label;
+    const m = z.distanceM !== undefined ? Math.max(10, Math.round(z.distanceM / 10) * 10) : (z.withinM ?? 150);
+    const text = z.distanceM !== undefined
+      ? tr('Its boundary is about {m} m away. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.', { m })
+      : tr('Its boundary is within about {m} m. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.', { m });
+    reasons.push(`${where}. ${text}`);
+    items.push({ tone: 'warn', title: tr('{zone} begins close by', { zone: where }), text });
+    if (verdict === 'likely_ok') verdict = 'caution';
+  }
   const incomplete = input.incomplete ?? [];
   if (incomplete.length) {
     const text = tr('These checks could not be made: {list}. A ban or restriction may be missing from this result, so do not rely on it.', { list: incomplete.map(checkLabel).join(', ') });
@@ -198,7 +223,7 @@ export function assess(input: {
     // a ban that was found stays a ban; anything softer cannot be called "likely OK" with a check missing
     if (verdict === 'likely_ok') verdict = 'unknown';
   }
-  return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality, incomplete: incomplete.length ? [...incomplete] : undefined };
+  return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality, incomplete: incomplete.length ? [...incomplete] : undefined, nearZones: nearZones.length ? nearZones : undefined };
 }
 
 /** A lookup's name as shown to the user. */

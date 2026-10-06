@@ -721,6 +721,17 @@ export const DE: Record<string, string> = {
   "{n} more skipped because they are too steep to pitch on": "{n} weitere übersprungen, weil sie zu steil zum Zelten sind",
   "Wildlife-damage perimeter next to a federal hunting reserve": "Wildschadenperimeter neben einem eidgenössischen Jagdbanngebiet",
   "This polygon lies outside the hunting reserve (VEJ Art. 2 para. 2 let. d), so the reserve's camping ban does not apply here. Other rules, such as wildlife quiet zones or cantonal rules, still can.": "Dieses Gebiet liegt ausserhalb des Banngebiets (VEJ Art. 2 Abs. 2 Bst. d), das Campierverbot des Banngebiets gilt hier also nicht. Andere Regeln, etwa Wildruhezonen oder kantonale Vorschriften, können trotzdem gelten.",
+  "Thunderstorm forecast before this evening": "Gewitter vor dem Abend vorhergesagt",
+  "Storm-force gusts forecast before this evening": "Sturmböen vor dem Abend vorhergesagt",
+  "Fire ban in force here": "Hier gilt ein Feuerverbot",
+  "High forest fire danger: no open fires": "Hohe Waldbrandgefahr: keine offenen Feuer",
+  "Army shooting is scheduled here today": "Hier ist heute Armeeschiessen angesagt",
+  "A ban zone begins about {m} m away": "Eine Verbotszone beginnt etwa {m} m entfernt",
+  "A ban zone begins within about {m} m": "Eine Verbotszone beginnt innerhalb von etwa {m} m",
+  "Its boundary is about {m} m away. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.": "Ihre Grenze ist etwa {m} m entfernt. Ein GPS-Standort und eine Karte können so stark abweichen: Schau dir die Grenze auf der Karte an, bevor du aufbaust.",
+  "Its boundary is within about {m} m. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.": "Ihre Grenze liegt innerhalb von etwa {m} m. Ein GPS-Standort und eine Karte können so stark abweichen: Schau dir die Grenze auf der Karte an, bevor du aufbaust.",
+  "{zone} begins close by": "{zone} beginnt in der Nähe",
+  "+{n} more in the details": "+{n} weitere in den Details",
 };
 
 export const FR: Record<string, string> = {
@@ -1445,6 +1456,17 @@ export const FR: Record<string, string> = {
   "{n} more skipped because they are too steep to pitch on": "{n} autres ignorés car trop raides pour y planter une tente",
   "Wildlife-damage perimeter next to a federal hunting reserve": "Périmètre de dégâts de gibier à côté d'un district franc fédéral",
   "This polygon lies outside the hunting reserve (VEJ Art. 2 para. 2 let. d), so the reserve's camping ban does not apply here. Other rules, such as wildlife quiet zones or cantonal rules, still can.": "Ce périmètre se trouve en dehors du district franc (ODF art. 2 al. 2 let. d) ; l'interdiction de camper du district franc ne s'y applique donc pas. D'autres règles, comme les zones de tranquillité pour la faune ou les règles cantonales, peuvent toutefois s'appliquer.",
+  "Thunderstorm forecast before this evening": "Orage prévu avant ce soir",
+  "Storm-force gusts forecast before this evening": "Rafales de tempête prévues avant ce soir",
+  "Fire ban in force here": "Interdiction de feu en vigueur ici",
+  "High forest fire danger: no open fires": "Danger d'incendie de forêt élevé : pas de feu ouvert",
+  "Army shooting is scheduled here today": "Des tirs de l'armée sont prévus ici aujourd'hui",
+  "A ban zone begins about {m} m away": "Une zone interdite commence à environ {m} m",
+  "A ban zone begins within about {m} m": "Une zone interdite commence à moins de {m} m environ",
+  "Its boundary is about {m} m away. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.": "Sa limite est à environ {m} m. Un point GPS et une carte peuvent être décalés d'autant : regardez la limite sur la carte avant d'installer la tente.",
+  "Its boundary is within about {m} m. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.": "Sa limite est à moins de {m} m environ. Un point GPS et une carte peuvent être décalés d'autant : regardez la limite sur la carte avant d'installer la tente.",
+  "{zone} begins close by": "{zone} commence tout près",
+  "+{n} more in the details": "+{n} autres dans les détails",
 };
 
 export const IT: Record<string, string> = {
@@ -2169,4 +2191,15 @@ export const IT: Record<string, string> = {
   "{n} more skipped because they are too steep to pitch on": "{n} altri esclusi perché troppo ripidi per montare la tenda",
   "Wildlife-damage perimeter next to a federal hunting reserve": "Perimetro dei danni della selvaggina accanto a una bandita federale",
   "This polygon lies outside the hunting reserve (VEJ Art. 2 para. 2 let. d), so the reserve's camping ban does not apply here. Other rules, such as wildlife quiet zones or cantonal rules, still can.": "Questo perimetro si trova fuori dalla bandita (OBF art. 2 cpv. 2 lett. d), quindi il divieto di campeggio della bandita qui non vale. Altre regole, come le zone di tranquillità per la fauna o le norme cantonali, possono comunque valere.",
+  "Thunderstorm forecast before this evening": "Temporale previsto prima di sera",
+  "Storm-force gusts forecast before this evening": "Raffiche di tempesta previste prima di sera",
+  "Fire ban in force here": "Qui vige il divieto di accendere fuochi",
+  "High forest fire danger: no open fires": "Pericolo elevato di incendio boschivo: niente fuochi all'aperto",
+  "Army shooting is scheduled here today": "Oggi qui sono previsti tiri dell'esercito",
+  "A ban zone begins about {m} m away": "Una zona vietata inizia a circa {m} m",
+  "A ban zone begins within about {m} m": "Una zona vietata inizia entro circa {m} m",
+  "Its boundary is about {m} m away. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.": "Il suo confine è a circa {m} m. Un punto GPS e una mappa possono sbagliare di tanto: guarda il confine sulla mappa prima di montare la tenda.",
+  "Its boundary is within about {m} m. A GPS fix and a map can be off by that much, so look at the boundary on the map before you pitch.": "Il suo confine è entro circa {m} m. Un punto GPS e una mappa possono sbagliare di tanto: guarda il confine sulla mappa prima di montare la tenda.",
+  "{zone} begins close by": "{zone} inizia qui vicino",
+  "+{n} more in the details": "+{n} altri nei dettagli",
 };

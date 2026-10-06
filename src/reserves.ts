@@ -1,6 +1,6 @@
 import { tr } from './i18n';
 import { gunzipIfNeeded } from './binary';
-import type { ZoneHit } from './assess';
+import type { NearZone, ZoneHit } from './assess';
 import { RESERVE_ZONES, type ZoneLayer } from './zones';
 
 export type ReserveLevel = 'restricted' | 'caution';
@@ -111,6 +111,35 @@ function layerFor(set: ReserveSet, r: Reserve): ZoneLayer {
   if (canton === 'TI') return r.level === 'restricted' ? RESERVE_ZONES.tiDecreeBan : RESERVE_ZONES.tiOther;
   if (r.level !== 'restricted') return RESERVE_ZONES.beOther;
   return r.scan === 'entry' ? RESERVE_ZONES.beDecreeEntry : RESERVE_ZONES.beDecreeBan;
+}
+
+/** Distance in metres from a point to the nearest edge of a reserve's rings. */
+function distanceToRings(rings: number[][], x: number, y: number): number {
+  let best = Infinity;
+  for (const ring of rings) {
+    const n = ring.length / 2;
+    for (let i = 0, j = n - 1; i < n; j = i++) {
+      const ax = ring[2 * j]!, ay = ring[2 * j + 1]!, bx = ring[2 * i]!, by = ring[2 * i + 1]!;
+      const dx = bx - ax, dy = by - ay;
+      const len2 = dx * dx + dy * dy;
+      const t = len2 === 0 ? 0 : Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / len2));
+      best = Math.min(best, Math.hypot(x - (ax + t * dx), y - (ay + t * dy)));
+    }
+  }
+  return best;
+}
+
+/** Reserves with a ban that begin within `radiusM` of an LV95 point without containing it, with the exact distance to their edge. */
+export function reserveZonesNear(set: ReserveSet, e: number, n: number, radiusM: number): NearZone[] {
+  const out: NearZone[] = [];
+  for (const r of set.reserves) {
+    if (r.level !== 'restricted') continue;
+    if (e < r.bbox[0] - radiusM || e > r.bbox[2] + radiusM || n < r.bbox[1] - radiusM || n > r.bbox[3] + radiusM) continue;
+    if (inside(r.rings, e, n)) continue;
+    const d = distanceToRings(r.rings, e, n);
+    if (d <= radiusM) out.push({ layer: layerFor(set, r), name: r.name, distanceM: d });
+  }
+  return out;
 }
 
 export function reserveZoneHits(set: ReserveSet, e: number, n: number): ZoneHit[] {

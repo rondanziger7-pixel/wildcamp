@@ -38,6 +38,30 @@ export async function fetchZoneBody(lat: number, lon: number): Promise<ZoneBody>
   return (await res.json()) as ZoneBody;
 }
 
+/**
+ * The zone layers within `radiusM` of a point (a small search around it, same layers as `fetchZoneBody`): the zones the spot is
+ * in and the ones that begin close by. The service takes the tolerance in screen pixels, so a virtual 1000 px map is scaled.
+ */
+export async function fetchNearZoneBody(lat: number, lon: number, radiusM: number): Promise<ZoneBody> {
+  const { e, n } = wgs84ToLv95(lat, lon);
+  const mPerPx = radiusM / 400;
+  const half = 500 * mPerPx;
+  const params = new URLSearchParams({
+    geometry: `${e},${n}`,
+    geometryType: 'esriGeometryPoint',
+    sr: '2056',
+    layers: 'all:' + ZONE_LAYERS.filter((l) => l.severity === 'prohibited' || l.severity === 'restricted').map((l) => l.id).filter((id, i, all) => all.indexOf(id) === i).join(','),
+    tolerance: '400',
+    mapExtent: `${e - half},${n - half},${e + half},${n + half}`,
+    imageDisplay: '1000,1000,96',
+    returnGeometry: 'false',
+    lang: 'en',
+  });
+  const res = await fetch(`${API}/api/MapServer/identify?${params}`);
+  if (!res.ok) throw new Error(`identify ${res.status}`);
+  return (await res.json()) as ZoneBody;
+}
+
 /** The zones at a point for a date (default today). Throws if the request fails. */
 export async function fetchZoneHits(lat: number, lon: number, date: Date = new Date()): Promise<ZoneHit[]> {
   return parseZoneHits(await fetchZoneBody(lat, lon), date);

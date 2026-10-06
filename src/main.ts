@@ -39,7 +39,7 @@ import { fetchNoise, type NoiseInfo } from './comfort/noise';
 import { moonNight } from './comfort/moon';
 import { sunTimes } from './comfort/sun';
 import { analyseTerrain, fetchProfiles, FAR, NEAR, type Profiles, type TerrainMetrics } from './comfort/terrain';
-import { fetchForecast, nightWindows, summariseNight, windowHours, zurichNow, type Hourly } from './comfort/weather';
+import { fetchForecast, nightWindows, soonWindow, summariseNight, windowHours, zurichNow, type Hourly } from './comfort/weather';
 import { renderWeather } from './weatherview';
 import { forestAt } from './forestmask';
 import { ZONE_LAYERS } from './zones';
@@ -174,6 +174,9 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       inForest: data.forestMask ? forestAt(data.forestMask, e, n) !== 0 : undefined,
     });
     if (waiting.length < 9 || done.near) ui.setSleep(comfort, nightName, waiting);
+    // dangers for the first view: the spot's, the chosen night's and the hours before evening (a storm at 16:00 matters at 15:30)
+    const soonW = soonWindow(zurichNow(new Date()));
+    ui.setHazards({ comfort, fire: got.rules?.fire, soon: got.hourly && soonW ? summariseNight(got.hourly, soonW) : undefined });
     ui.setWeatherChip(night, w.label === 'Tonight' ? 'Tonight' : w.label === 'Tomorrow' ? 'Tomorrow' : w.label, done.forecast && !got.hourly);
     if (!done.forecast) return;
     if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', tr('Weather')), el('p', 'where', tr('The forecast could not be loaded.')));

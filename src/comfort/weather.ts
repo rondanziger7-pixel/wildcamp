@@ -125,6 +125,13 @@ export function nightText(label: string): string {
   }
 }
 
+/** The hours from now until the evening window begins, in the daytime; undefined at night. A storm at 16:00 matters to someone already out at 15:30. */
+export function soonWindow(now: string): { from: string; to: string } | undefined {
+  const hour = Number(now.slice(11, 13));
+  if (hour < MORNING_HOUR || hour >= EVENING_HOUR) return undefined;
+  return { from: now, to: `${now.slice(0, 10)}T${pad(EVENING_HOUR)}:00` };
+}
+
 /** First window of `nightWindows`. */
 export const nightWindow = (now: string) => nightWindows(now, 1)[0]!;
 

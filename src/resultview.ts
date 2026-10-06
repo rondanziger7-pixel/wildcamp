@@ -9,6 +9,7 @@ import type { SpotSnapshot } from './saved';
 import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
 import { legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
+import { buildAlerts, type Alert } from './alerts';
 import { tr } from './i18n';
 import { applyNearBuilding, type NearBuildingNote } from './comfort/nearbuilding';
 
@@ -141,6 +142,8 @@ export interface ResultUi {
   setNearBuilding(n: NearBuildingNote | undefined): void;
   /** A new verdict for the same spot (another date, or bundled data that arrived late). */
   setAssessment(next: Assessment): void;
+  /** What the first view needs to show the dangers: the comfort result (with the chosen night's weather), the fire situation, the hours before evening. */
+  setHazards(h: { comfort?: Comfort; fire?: Restrictions['fire']; soon?: Night }): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
@@ -265,6 +268,25 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     const seasons = renderSeasons(s.zones);
     seasonsHost.replaceChildren(...(seasons ? [seasons] : []));
     paintTotal();
+    paintAlerts();
+  };
+  // dangers on the first view: steep ground, a storm tonight, avalanche danger, a fire ban, a ban zone a few metres away ...
+  const alertsHost = el('ul', 'alerts');
+  let hazardInput: { comfort?: Comfort; fire?: Restrictions['fire']; soon?: Night } = {};
+  let openFromAlert: (alert: Alert) => void = () => undefined;
+  const paintAlerts = () => {
+    const list = buildAlerts({ ...hazardInput, assessment: shown() });
+    alertsHost.hidden = list.length === 0;
+    const rows = list.slice(0, 3).map((al) => {
+      const li = el('li');
+      const b = el('button', `alert ${al.tone}`, `${al.tone === 'bad' ? '⛔' : '⚠️'} ${al.text}`);
+      b.type = 'button';
+      b.onclick = () => openFromAlert(al);
+      li.append(b);
+      return li;
+    });
+    if (list.length > 3) rows.push(el('li', 'alert-more', tr('+{n} more in the details', { n: list.length - 3 })));
+    alertsHost.replaceChildren(...rows);
   };
   const backBtn = el('button', 'linkish back-btn', '← ' + tr('Overall score'));
   backBtn.type = 'button';
@@ -304,6 +326,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   const panels = [legalPanel, sleepPanel, weatherPanel];
   const showDetails = (on: boolean) => {
     total.b.hidden = reasonLine.hidden = on;
+    alertsHost.hidden = on || alertsHost.childElementCount === 0;
     scores.hidden = backBtn.hidden = !on;
     inDetails = on;
     syncRetry();
@@ -316,6 +339,11 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   };
   total.b.onclick = () => showDetails(true);
   backBtn.onclick = () => showDetails(false);
+  openFromAlert = (al) => {
+    showDetails(true);
+    const target = al.panel === 'legal' ? 0 : al.panel === 'sleep' ? 1 : 2;
+    if (opener[target]![1].hidden) opener[target]![0].click();
+  };
   for (const [button, panel] of opener) {
     button.onclick = () => {
       const open = panel.hidden;
@@ -339,7 +367,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   jump(shelterChip, () => hutAt);
 
   paintLegal();
-  root.replaceChildren(where, total.b, reasonLine, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
+  root.replaceChildren(where, total.b, reasonLine, alertsHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
 
   const markSleepUnavailable = (why: string) => {
     sleep.set({ tone: 'none' }, tr('Unavailable'));
@@ -449,6 +477,11 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     setAssessment(next) {
       a = next;
       paintLegal();
+    },
+    setHazards(h) {
+      hazardInput = h;
+      paintAlerts();
+      alertsHost.hidden = inDetails || alertsHost.childElementCount === 0;
     },
     setRules(r) {
       const items = r ? restrictionItems(r) : [];
