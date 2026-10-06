@@ -325,3 +325,6 @@ button { font: inherit; cursor: pointer; }
 
 /* the three opened panels (legality, sleep, weather) have one height, so the sheet does not jump when switching; longer content scrolls inside */
 .panel:not([hidden]) { height: clamp(240px, 36vh, 400px); overflow-y: auto; overscroll-behavior: contain; padding-right: 2px; }
+/* a visible box, so equal heights read as equal even when a panel has little to show */
+.panel:not([hidden]) { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-top: 10px; }
+.panel.weather:not([hidden]) { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 10px; }
