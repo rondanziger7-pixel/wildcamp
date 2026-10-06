@@ -183,6 +183,8 @@ function chip(kind: string) {
 export interface ResultHooks {
   /** "Check again": the lookups that failed are made again. */
   onRetry?: () => void;
+  /** The spot is where a GPS fix put it: how far off that may be, in metres. */
+  accuracyM?: number;
 }
 
 /** Draws the result: an overall score first, then the legality, sleep and weather cards that open into details. */
@@ -193,7 +195,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   let waterAt: { e: number; n: number; label: string } | undefined;
   let hutAt: { e: number; n: number; label: string } | undefined;
   const snap: { sleep?: Score; weather?: Score; night?: string; label?: string; pros: string[]; cons: string[]; complete: boolean; water?: string; hut?: string } = { pros: [], cons: [], complete: false };
-  const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`].filter(Boolean).join(' · '));
+  const where = el('p', 'where', [a.municipality, a.canton?.name, elevation === undefined ? '' : `${Math.round(elevation)} m`, hooks.accuracyM === undefined ? '' : tr('GPS ±{m} m', { m: Math.max(1, Math.round(hooks.accuracyM)) })].filter(Boolean).join(' · '));
 
   const legal = scoreCard('legal', tr('Legality'));
   const sleep = scoreCard('sleep', tr('Sleep'));

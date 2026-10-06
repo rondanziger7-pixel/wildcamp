@@ -17,6 +17,9 @@ import { assessInputs, checkLegality, collectDetails, terrainOf, withTimeout, CH
 import { searchPlaces, type Place } from './search';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
+import { renderEmergency } from './emergencyview';
+import type { Position } from './emergency';
+import { fetchElevation } from './geoadmin';
 import { bulletinAt, fetchBulletin, type AvalancheInfo } from './comfort/avalanche';
 import { fetchGround, type GroundInfo } from './comfort/ground';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
@@ -232,9 +235,12 @@ function focusOn(e: number, n: number, label: string) {
 }
 
 /** The legality check of a spot (the lookups plus the bundled data). `inputs` is kept to judge the same spot again, for another date or once late data is in. */
-const assessSpot = (lat: number, lng: number, knownElevation?: number) => checkLegality(lat, lng, data, { knownElevation });
+const assessSpot = (lat: number, lng: number, knownElevation?: number, accuracyM?: number) => checkLegality(lat, lng, data, { knownElevation, accuracyM });
 
-async function checkSpot(lat: number, lng: number, fromFinder = false) {
+/** The spot checked last, for the emergency page. */
+let lastSpot: Position | undefined;
+
+async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM?: number) {
   const id = ++checkId;
   if (!fromFinder) {
     ++finderId;
@@ -254,9 +260,10 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
     return;
   }
   showLoading();
-  const assessed = await assessSpot(lat, lng);
+  const assessed = await assessSpot(lat, lng, undefined, accuracyM);
   if (id !== checkId) return; // a newer tap superseded this one
   const { assessment, elevation, inputs } = assessed;
+  lastSpot = { lat, lng, elevation, accuracyM };
   if (assessment.outside) {
     sheet.dataset.state = 'result';
     renderOutside(result);
@@ -266,9 +273,9 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   // "Check again": the failed lookups are made again, the bundled data that failed is asked for again first
   const retry = async () => {
     if (!data.complete) await data.retry();
-    void checkSpot(lat, lng, fromFinder);
+    void checkSpot(lat, lng, fromFinder, accuracyM);
   };
-  const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry() });
+  const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry(), accuracyM });
   // bundled data that was still loading when the check went ahead: judge the same spot again as soon as it is in
   if (assessment.incomplete?.includes('local rule data') && data.loading) {
     void data.load().then(() => {
@@ -352,7 +359,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   actions.append(save, find);
   const more = el('details', 'more');
   more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
-  result.append(actions, more);
+  result.append(actions, more, sosLink());
   sheet.scrollTop = 0;
   void loadDetails(ui, lat, lng, elevation, id, tappedAt).then(() => {
     // a spot saved while the checks were still running keeps the final scores, not the early ones
@@ -398,6 +405,44 @@ function showSaved() {
     },
   });
 }
+/** The emergency page: numbers to tap, the position to read out, what to say. */
+function showEmergency() {
+  ++checkId;
+  ++finderId;
+  finderPins.clearLayers();
+  sheet.classList.remove('closed');
+  sheet.dataset.state = 'result';
+  result.hidden = false;
+  const spot = lastSpot;
+  sheet.scrollTop = 0;
+  renderEmergency(result, {
+    spot,
+    say,
+    locate: async () => {
+      const pos = await bestFix(12000, 20);
+      showMe(pos, false);
+      const here: Position = { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracyM: pos.coords.accuracy };
+      // the height above sea level from the federal model when there is a connection (the phone's own altitude is not reliable)
+      here.elevation = await withTimeout(fetchElevation(here.lat, here.lng), 2500).catch(() => undefined);
+      return here;
+    },
+    onBack: () => {
+      if (spot) void checkSpot(spot.lat, spot.lng);
+      else {
+        sheet.dataset.state = 'intro';
+        result.hidden = true;
+      }
+    },
+  });
+}
+const sosLink = () => {
+  const b = el('button', 'linkish sos-link', '🆘 ' + tr('Emergency numbers and my position'));
+  b.type = 'button';
+  b.onclick = showEmergency;
+  return b;
+};
+document.getElementById('intro')!.append(sosLink());
+
 // Trip planner: its own menu. The nights are saved spots in order; each gets a fresh forecast.
 const forecastCache = new Map<string, Promise<Hourly>>();
 const forecastFor = (sp: SavedSpot) => {
@@ -623,21 +668,57 @@ document.getElementById('search')!.addEventListener('submit', async (ev) => {
   }
 });
 
-// Locate me
+// Locate me. One fix is taken (the best of the few seconds a GPS needs to settle) and the receiver is switched off again:
+// a position watch left running drains the battery of someone who may need it for hours.
+function bestFix(maxMs = 9000, goodM = 15): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error('unsupported'));
+    let best: GeolocationPosition | undefined;
+    let id: number | undefined;
+    let over = false;
+    const stop = () => {
+      over = true;
+      if (id !== undefined) navigator.geolocation.clearWatch(id);
+      window.clearTimeout(timer);
+    };
+    const timer = window.setTimeout(() => {
+      if (over) return;
+      stop();
+      if (best) resolve(best);
+      else reject(new Error('timeout'));
+    }, maxMs);
+    id = navigator.geolocation.watchPosition(
+      (pos) => {
+        if (over) return;
+        if (!best || pos.coords.accuracy < best.coords.accuracy) best = pos;
+        if (pos.coords.accuracy <= goodM) {
+          stop();
+          resolve(best);
+        }
+      },
+      (err) => {
+        if (over) return;
+        stop();
+        if (best) resolve(best);
+        else reject(err);
+      },
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: maxMs },
+    );
+  });
+}
+const locateFailed = (err: unknown) =>
+  say((err as GeolocationPositionError)?.code === 1 ? tr('Location is blocked. Allow it for this site in your browser settings, then try again.') : tr('Could not get your location. Try again outdoors or with a better signal.'));
+
 document.getElementById('locate')!.addEventListener('click', () => {
-  if (!navigator.geolocation) return;
-  navigator.geolocation.getCurrentPosition(
+  if (!navigator.geolocation) return say(tr('This browser cannot share your location.'));
+  say(tr('Finding your location…'));
+  bestFix().then(
     (pos) => {
-      map.setView([pos.coords.latitude, pos.coords.longitude], 15);
-      void checkSpot(pos.coords.latitude, pos.coords.longitude);
+      toast.hidden = true;
+      showMe(pos, true);
+      void checkSpot(pos.coords.latitude, pos.coords.longitude, false, pos.coords.accuracy);
     },
-    () => {
-      sheet.classList.remove('closed');
-      sheet.dataset.state = 'result';
-      result.hidden = false;
-      result.replaceChildren(el('p', 'where', tr('Location unavailable. Allow location access, or tap the map instead.')));
-    },
-    { enableHighAccuracy: true, timeout: 10000 },
+    locateFailed,
   );
 });
 
@@ -675,7 +756,6 @@ function say(text: string) {
   toastTimer = window.setTimeout(() => (toast.hidden = true), 5000);
 }
 let me: { dot: L.CircleMarker; ring: L.Circle; at: L.LatLng } | undefined;
-let watchId: number | undefined;
 const MY_ZOOM = 15;
 
 function showMe(pos: GeolocationPosition, recentre: boolean) {
@@ -695,22 +775,11 @@ function showMe(pos: GeolocationPosition, recentre: boolean) {
 
 function locateMe() {
   if (!navigator.geolocation) return say(tr('This browser cannot share your location.'));
-  if (me) return void map.flyTo(me.at, Math.max(map.getZoom(), MY_ZOOM), { duration: 0.6 }); // already tracking: just come back
   say(tr('Finding your location…'));
-  let first = true;
-  watchId = navigator.geolocation.watchPosition(
-    (pos) => {
-      showMe(pos, first);
-      if (first) toast.hidden = true;
-      first = false;
-    },
-    (err) => {
-      if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
-      watchId = undefined;
-      say(err.code === err.PERMISSION_DENIED ? tr('Location is blocked. Allow it for this site in your browser settings, then try again.') : tr('Could not get your location. Try again outdoors or with a better signal.'));
-    },
-    { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 },
-  );
+  bestFix().then((pos) => {
+    toast.hidden = true;
+    showMe(pos, true);
+  }, locateFailed);
 }
 
 // Offline: a service worker keeps the app, its data and viewed map tiles; a button saves the visible area on purpose.
@@ -746,6 +815,7 @@ async function saveArea() {
 
 // One menu button tucks the map's actions away; zoom stays beside it.
 const ICONS: Record<string, string> = {
+  sos: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.6 5.6l3.7 3.7M14.7 14.7l3.7 3.7M18.4 5.6l-3.7 3.7M9.3 14.7l-3.7 3.7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>',
   menu: '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
   locate: '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
   saved: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
@@ -773,6 +843,7 @@ const MenuControl = L.Control.extend({
       btn.setAttribute('aria-expanded', 'false');
     };
     const items: [string, string, () => void][] = [
+      ['sos', tr('Emergency'), showEmergency],
       ['locate', tr('My location'), locateMe],
       ['saved', tr('Saved spots'), showSaved],
       ['trip', tr('Trip planner'), showTrip],

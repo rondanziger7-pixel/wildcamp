@@ -337,3 +337,26 @@ button { font: inherit; cursor: pointer; }
 .alert.warn { color: var(--warn); background: var(--warn-bg); }
 .alert-more { color: var(--muted); font-size: .8rem; padding: 0 4px; }
 .retry-btn { margin-top: 8px; }
+
+/* emergency page */
+.sos-link { display: block; margin-top: 10px; color: var(--bad); font-weight: 600; }
+.menu-item[data-menu="sos"] { color: var(--bad); font-weight: 600; }
+.menu-item[data-menu="sos"] svg { color: var(--bad); }
+.em-title { margin: 6px 0 4px; font-size: 1.2rem; }
+.em-lead { margin: 0 0 10px; color: var(--muted); font-size: .9rem; }
+.em-numbers { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.em-call { display: flex; align-items: baseline; gap: 12px; padding: 12px 14px; border-radius: 12px; background: var(--bad-bg); color: var(--bad); text-decoration: none; border: 1px solid currentColor; }
+.em-call strong { font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.em-call span { font-weight: 600; }
+.em-when { margin: 4px 2px 0; color: var(--muted); font-size: .82rem; line-height: 1.35; }
+.em-pos, .em-say, .em-rega, .em-nosignal { margin-top: 14px; }
+.em-pos h3, .em-say h3, .em-rega h3, .em-nosignal h3 { margin: 0 0 6px; font-size: 1rem; }
+.em-pos-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.em-dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 8px 0; }
+.em-dl dt { color: var(--muted); font-size: .82rem; } .em-dl dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; word-break: break-word; }
+.em-source { color: var(--muted); font-size: .82rem; margin: 8px 0 0; }
+.em-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.em-actions a.save-btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.em-say ul, .em-nosignal ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; font-size: .9rem; }
+.em-note, .em-rega p { color: var(--muted); font-size: .85rem; }
+.em-sources { margin: 6px 0; padding-left: 1.2em; font-size: .85rem; }
