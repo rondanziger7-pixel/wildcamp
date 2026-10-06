@@ -192,7 +192,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   // one line of why, so the answer needs no further tap: the most serious finding, or the verdict's own sentence
   const why = a.items.find((i) => i.tone === 'bad') ?? a.items.find((i) => i.tone === 'warn');
   const reason = why ? (a.municipality && why.title === tr('{name} (municipality)', { name: a.municipality }) ? tr('Municipal rule: {name}', { name: a.municipality }) : why.title) : b.sub;
-  legal.b.insertBefore(el('span', 'sc-reason', reason), legal.b.querySelector('.sc-bar'));
+  const reasonLine = el('p', 'scores-reason', reason);
   sleep.set({ tone: 'none' }, tr('Checking…'));
   weather.set({ tone: 'none' }, tr('Checking…'));
   const scores = el('div', 'scores');
@@ -242,6 +242,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       for (const [bt, pn] of opener) bt.setAttribute('aria-expanded', String(!pn.hidden));
       // while a section is open the cards shrink to a row of tabs, and the sheet returns to its top so they stay in view
       scores.classList.toggle('compact', !panel.hidden);
+      reasonLine.hidden = !panel.hidden;
       document.getElementById('sheet')?.scrollTo({ top: 0, behavior: 'smooth' });
     };
   }
@@ -256,7 +257,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   jump(waterChip, () => waterAt);
   jump(shelterChip, () => hutAt);
 
-  root.replaceChildren(where, scores, legalPanel, sleepPanel, weatherPanel);
+  root.replaceChildren(where, scores, reasonLine, legalPanel, sleepPanel, weatherPanel);
 
   return {
     weatherHost,
@@ -348,7 +349,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const verdict = a.verdict === 'likely_ok' ? 'caution' : a.verdict;
       L = legalityScore({ ...a, verdict, items: [...a.items, note] });
       legal.set(L, `${BANNER[verdict].icon} ${BANNER[verdict].label}`);
-      if (a.verdict === 'likely_ok') legal.b.querySelector('.sc-reason')!.textContent = note.title;
+      if (a.verdict === 'likely_ok') reasonLine.textContent = note.title;
       legalList.replaceChildren(...checklist([...a.items, note], 'details', focus));
     },
     setRules(r) {

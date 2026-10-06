@@ -226,9 +226,7 @@ button { font: inherit; cursor: pointer; }
 
 /* result sheet: one clear answer first, details one tap away */
 .scores { position: static; grid-template-columns: 1fr 1fr; padding: 0; margin-top: 4px; }
-.score-card { grid-column: 1 / -1; padding: 12px 14px; }
-.score-card .sc-value { font-size: 2.3rem; }
-.score-card .sc-label { font-size: 1.05rem; }
+.score-card { padding: 10px 12px; }
 .sc-reason { font-size: .85rem; color: var(--muted); line-height: 1.35; margin-top: 2px; }
 .panel .chips { margin: 0 0 10px; }
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
@@ -240,7 +238,8 @@ button { font: inherit; cursor: pointer; }
 .more .save-btn, .more .linkish { display: block; width: 100%; margin-top: 8px; text-align: left; }
 .more .report-link { margin-top: 12px; }
 .scores.compact { grid-template-columns: repeat(3, 1fr); }
-.scores.compact .score-card.primary { grid-column: auto; padding: 6px 8px; }
+.scores.compact .score-card { grid-column: auto; }
+.scores.compact .score-card.primary { padding: 6px 8px; }
 .scores.compact .score-card { padding: 6px 8px; }
 .scores.compact .sc-bar, .scores.compact .sc-reason, .scores.compact .sc-more { display: none; }
 .scores.compact .sc-value, .scores.compact .score-card.primary .sc-value { font-size: 1.3rem; }
@@ -297,15 +296,13 @@ button { font: inherit; cursor: pointer; }
 #sheet { scroll-padding-top: 8px; }
 
 /* the three cards have one size: the reason is one line, shorter cards are padded to the same height */
-.score-card .sc-reason { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* the three cards are one size: wide strips, number on the left, title / verdict / one line of reason on the right */
-.scores:not(.compact) .score-card { display: grid; grid-template-columns: auto 1fr; grid-template-rows: 14px 24px 18px 8px; column-gap: 14px; row-gap: 2px; align-items: center; height: 98px; padding-block: 9px; }
-.scores:not(.compact) .sc-title { grid-column: 2; grid-row: 1; }
-.scores:not(.compact) .sc-value { grid-column: 1; grid-row: 1 / 4; align-self: center; font-size: 2.4rem; min-width: 4.2rem; }
-.scores:not(.compact) .sc-value small { display: block; font-size: .75rem; margin: 0; }
-.scores:not(.compact) .sc-label { grid-column: 2; grid-row: 2; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.scores:not(.compact) .sc-reason { grid-column: 2; grid-row: 3; margin: 0; }
-.scores:not(.compact) .sc-bar { grid-column: 1 / -1; grid-row: 4; margin: 0; }
-.scores:not(.compact) .sc-more { grid-column: 2; grid-row: 1; justify-self: end; margin: 0; }
-.scores.compact .score-card { display: flex; height: auto; }
+/* the three cards are one size: three equal squares side by side */
+.scores, .scores:not(.compact) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.score-card { min-width: 0; overflow-wrap: anywhere; }
+.scores:not(.compact) .score-card { grid-column: auto; aspect-ratio: 1 / 1; height: auto; display: flex; flex-direction: column; justify-content: space-between; padding: 9px 10px; }
+.scores:not(.compact) .sc-value { font-size: 1.8rem; }
+.scores:not(.compact) .sc-label { font-size: .8rem; line-height: 1.2; }
+.scores:not(.compact) .score-card { padding: 8px; }
+.scores-reason { margin: 8px 2px 0; font-size: .85rem; color: var(--muted); }
+.scores-reason[hidden] { display: none; }
