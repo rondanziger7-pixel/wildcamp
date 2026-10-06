@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import fx from './fixtures/restrictions.json';
-import { fireLevel, parseDrones, parseFire, restrictionItems, type Restrictions } from '../src/restrictions';
+import { fireKind, fireLevel, parseDrones, parseFire, restrictionItems, type Restrictions } from '../src/restrictions';
 
 describe('fire (real BAFU responses)', () => {
   it('reads danger and measure for a region', () => {
@@ -29,6 +29,83 @@ describe('fire (real BAFU responses)', () => {
     expect(calm[0]!.text).toMatch(/Moderate danger/);
     const high = restrictionItems({ failed: [], fire: { danger: { title: 'Considerable danger', level: 3, region: 'Visp (VS)', validFrom: '01.07.2026' } } });
     expect(high[0]).toMatchObject({ tone: 'warn' });
+  });
+});
+
+describe('the five measure types of the federal map, each worded for what it means', () => {
+  const measure = (title_en: string, description_en: string, canton = 'GR') => ({ results: [{ attributes: { title_en, description_en, valid_from: '26.06.2026', canton } }] });
+  const TYPES = {
+    none: ['No measures in force', 'Fire possible, due caution to be exercised in all cases'],
+    warning: ['Warning that care should be taken when lighting fires in the forest and in the proximity of the forest/in the open', 'The lighting of fires should be avoided in the forest and in the proximity of the forest'],
+    conditional: ['Conditional ban on fires in the forest and in the proximity of the forest / in the open', 'Fires only allowed in permanent campfire sites, due caution to be exercised in all cases'],
+    forest: ['Absolute ban on fires in the forest and in the proximity of the forest', 'Fires allowed elsewhere in the open, due caution to be exercised in all cases'],
+    open: ['Absolute ban on fires in the open', 'No fires allowed in the open'],
+  } as const;
+  const item = (kind: keyof typeof TYPES, danger = fx.fire_danger_kandersteg) => restrictionItems({ failed: [], fire: parseFire(danger, measure(TYPES[kind][0], TYPES[kind][1])) })[0]!;
+  it('tells the type from the title the map publishes', () => {
+    for (const k of Object.keys(TYPES) as (keyof typeof TYPES)[]) expect(fireKind(TYPES[k][0]), k).toBe(k);
+    expect(fireKind('Something new')).toBeUndefined();
+    expect(fireKind(undefined)).toBeUndefined();
+  });
+  it('an absolute ban in the open: red, gas and electric grills named only where a canton allows them, camping stoves never assumed', () => {
+    const i = item('open');
+    expect(i).toMatchObject({ tone: 'bad', title: 'Fire ban: no fires in the open' });
+    expect(i.text).toMatch(/Graubünden/);
+    expect(i.text).toMatch(/Camping stoves are not named.*do not use one/);
+    expect(i.text).not.toMatch(/lower risk/);
+  });
+  it('a ban in and near forest: red, with the distances the cantons name, elsewhere possible, Bern bans stoves in the zone', () => {
+    const i = item('forest');
+    expect(i).toMatchObject({ tone: 'bad', title: 'Fire ban in and near forest' });
+    expect(i.text).toMatch(/50 m in Bern, 100 m in Valais/);
+    expect(i.text).toMatch(/Elsewhere in the open, fires are possible/);
+    expect(i.text).toMatch(/camping stoves are banned inside the ban zone/);
+  });
+  it('a conditional ban is amber: fire places only, the stove question left to the canton and not assumed', () => {
+    const i = item('conditional');
+    expect(i).toMatchObject({ tone: 'warn', title: 'Conditional fire ban' });
+    expect(i.text).toMatch(/permanently installed fire places/);
+    expect(i.text).toMatch(/do not assume it is/);
+  });
+  it('a warning is an appeal, not a ban, and says so', () => {
+    const i = item('warning');
+    expect(i.tone).toBe('info');
+    expect(i.text).toMatch(/appeal, not a ban/);
+    expect(i.text).not.toMatch(/Do not light/);
+  });
+  it('no measure: fires possible with caution, forest rules all year, communes can ban', () => {
+    const i = item('none');
+    expect(i.tone).toBe('info');
+    expect(i.text).toMatch(/No cantonal fire measure is listed/);
+    expect(i.text).toMatch(/Vaud.*10 m/);
+  });
+  it('every fire message says who sets the rules and links the cantonal offices; the old unsupported sentences are gone', () => {
+    for (const k of Object.keys(TYPES) as (keyof typeof TYPES)[]) {
+      const i = item(k);
+      expect(i.text, k).toMatch(/set by the canton, and in some cantons by the commune/);
+      expect(i.sources, k).toContain('https://www.waldbrandgefahr.ch/de/kantonale-fachstellen');
+      expect(i.text, k).not.toMatch(/stove on bare ground|cantons often ban|in force since/);
+    }
+  });
+  it('a high danger level with no ban says that a level alone is not a ban', () => {
+    const i = restrictionItems({ failed: [], fire: { danger: { title: 'High danger', level: 4, region: 'Visp (VS)', validFrom: '01.07.2026' } } })[0]!;
+    expect(i.tone).toBe('warn');
+    expect(i.text).toMatch(/a level alone is not a ban/);
+    expect(i.text).not.toMatch(/cantons often ban/);
+  });
+  it('a warning type at a high danger level is amber and repeats that the level is not a ban', () => {
+    const f = parseFire({ results: [{ attributes: { title_en: 'High danger', valid_from: '10.09.2026', name_en: 'Chur (GR)' } }] }, measure(TYPES.warning[0], TYPES.warning[1]));
+    const i = restrictionItems({ failed: [], fire: f })[0]!;
+    expect(i.tone).toBe('warn');
+    expect(i.text).toMatch(/danger level alone is not a ban/);
+  });
+  it('a ban type this version does not know is still a ban, in the map\'s own words', () => {
+    const f = parseFire({}, measure('Total ban on fires everywhere', 'No fire of any kind'));
+    const i = restrictionItems({ failed: [], fire: f })[0]!;
+    expect(f.measure?.kind).toBeUndefined();
+    expect(i).toMatchObject({ tone: 'bad' });
+    expect(i.text).toMatch(/No fire of any kind/);
+    expect(i.text).toMatch(/do not assume it is/);
   });
 });
 

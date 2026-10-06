@@ -3,6 +3,7 @@ import type { Comfort } from './comfort/comfort';
 import type { Night } from './comfort/weather';
 import type { Restrictions } from './restrictions';
 import { tr } from './i18n';
+import { DOG_ALERT_TEXT, dogAlert, type DogArea } from './wildlife';
 
 /** One danger on the first view. Tapping it opens the part of the details it comes from. */
 export interface Alert {
@@ -14,9 +15,9 @@ export interface Alert {
 /**
  * The dangers that must be on the first view although the overall score ignores the weather: steep ground and drops, flood and
  * rockfall areas, a storm or strong wind for the chosen night (or the hours before it), avalanche danger, deep cold and snow,
- * a fire ban or high fire danger, army shooting today, and a ban zone that begins close by.
+ * a fire ban or high fire danger, a pasture with working herd-protection dogs, army shooting today, and a ban zone that begins close by.
  */
-export function buildAlerts(i: { comfort?: Comfort; assessment?: Assessment; fire?: Restrictions['fire']; soon?: Night }): Alert[] {
+export function buildAlerts(i: { comfort?: Comfort; assessment?: Assessment; fire?: Restrictions['fire']; dogs?: DogArea[]; date?: Date; soon?: Night }): Alert[] {
   const out: Alert[] = [];
   for (const a of i.comfort?.alerts ?? []) out.push({ tone: a.tone, text: a.title, panel: a.weather ? 'weather' : 'sleep' });
   const soon = i.soon;
@@ -25,6 +26,7 @@ export function buildAlerts(i: { comfort?: Comfort; assessment?: Assessment; fir
   const fire = i.fire;
   if (fire?.measure?.ban) out.push({ tone: 'warn', text: tr('Fire ban in force here'), panel: 'legal' });
   else if (fire?.danger?.level !== undefined && fire.danger.level >= 4) out.push({ tone: 'warn', text: tr('High forest fire danger: no open fires'), panel: 'legal' });
+  if (dogAlert(i.dogs, i.date ?? new Date())) out.push({ tone: 'warn', text: DOG_ALERT_TEXT(), panel: 'legal' });
   for (const z of i.assessment?.zones ?? []) {
     if (z.layer.id === 'ch.vbs.schiessanzeigen' && z.layer.severity === 'caution') out.push({ tone: 'warn', text: tr('Army shooting is scheduled here today'), panel: 'legal' });
   }

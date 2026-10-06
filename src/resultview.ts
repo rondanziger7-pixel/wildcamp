@@ -8,6 +8,7 @@ import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
 import type { SpotSnapshot } from './saved';
 import { restrictionItems, type Restrictions } from './restrictions';
+import { wildlifeItems, type DogArea } from './wildlife';
 import { renderSeasons } from './seasonview';
 import { legalWhy, legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
 import { buildAlerts, type Alert } from './alerts';
@@ -63,7 +64,7 @@ export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, 
 
 export type Focus = (e: number, n: number, label: string) => void;
 
-type More = 'details' | 'weather details' | 'comfort details' | 'fire and drone details';
+type More = 'details' | 'weather details' | 'comfort details' | 'fire and drone details' | 'animal details';
 
 function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: string; sources?: string[]; at?: { e: number; n: number; label: string } }[], more: More, focus?: Focus) {
   const list = el('ul', 'checks');
@@ -114,7 +115,7 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
   const parts: Node[] = [list];
   if (sorted.length > VISIBLE) {
     const n = sorted.length;
-    const btn = el('button', 'linkish', more === 'details' ? tr('Show all {n} details', { n }) : more === 'weather details' ? tr('Show all {n} weather details', { n }) : more === 'comfort details' ? tr('Show all {n} comfort details', { n }) : tr('Show all {n} fire and drone details', { n }));
+    const btn = el('button', 'linkish', more === 'details' ? tr('Show all {n} details', { n }) : more === 'weather details' ? tr('Show all {n} weather details', { n }) : more === 'comfort details' ? tr('Show all {n} comfort details', { n }) : more === 'animal details' ? tr('Show all {n} hunting and animal details', { n }) : tr('Show all {n} fire and drone details', { n }));
     btn.type = 'button';
     btn.onclick = () => {
       const open = list.classList.toggle('expanded');
@@ -146,7 +147,7 @@ export interface ResultUi {
   /** The night the result is for (legality seasons, comfort and weather follow it). */
   setNights(p: NightPicker): void;
   /** What the first view needs to show the dangers: the comfort result (with the chosen night's weather), the fire situation, the hours before evening. */
-  setHazards(h: { comfort?: Comfort; fire?: Restrictions['fire']; soon?: Night }): void;
+  setHazards(h: { comfort?: Comfort; fire?: Restrictions['fire']; dogs?: DogArea[]; date?: Date; soon?: Night }): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
@@ -155,6 +156,13 @@ export interface ResultUi {
 function fireTab(items: Parameters<typeof checklist>[0], laterNote?: string) {
   const tab = el('details', 'more rules-tab');
   tab.append(el('summary', undefined, '🔥 ' + tr('Fire and drones')), el('p', 'where', tr('Live official data. These rules do not change the camping verdict above.')), ...(laterNote ? [el('p', 'night-hint', laterNote)] : []), ...checklist(items, 'fire and drone details'));
+  return tab;
+}
+
+/** Hunting and animals (herd-protection dogs, wolves and bears, cattle) sit in a tab that starts closed, beside the fire tab. */
+function animalTab(items: Parameters<typeof checklist>[0]) {
+  const tab = el('details', 'more rules-tab animals-tab');
+  tab.append(el('summary', undefined, '🐾 ' + tr('Hunting and animals')), el('p', 'where', tr('Official guidance and reported areas. This does not change the camping verdict above.')), ...checklist(items, 'animal details'));
   return tab;
 }
 
@@ -284,7 +292,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   };
   // dangers on the first view: steep ground, a storm tonight, avalanche danger, a fire ban, a ban zone a few metres away ...
   const alertsHost = el('ul', 'alerts');
-  let hazardInput: { comfort?: Comfort; fire?: Restrictions['fire']; soon?: Night } = {};
+  let hazardInput: { comfort?: Comfort; fire?: Restrictions['fire']; dogs?: DogArea[]; date?: Date; soon?: Night } = {};
   let openFromAlert: (alert: Alert) => void = () => undefined;
   const paintAlerts = () => {
     const list = buildAlerts({ ...hazardInput, assessment: shown() });
@@ -359,7 +367,13 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   const paintRules = () => {
     const items = rulesState ? restrictionItems(rulesState) : [];
     const later = !!nightsState && nightsState.selected.day > nightsState.today;
-    rulesHost.replaceChildren(...(items.length ? [fireTab(items, later ? tr('This is live data for today. Fire danger, fire bans and drone notices can change before {date}.', { date: dayText(nightsState!.selected.day) }) : undefined)] : []));
+    const when = nightsState ? new Date(`${nightsState.selected.day}T12:00:00`) : new Date();
+    // hunting and the general advice on animals need no lookup; the reported dog pastures arrive with the rules
+    const animals = wildlifeItems({ dogs: rulesState?.dogs, dogsFailed: rulesState?.failed.includes('dogs'), canton: a.canton?.code, date: when });
+    rulesHost.replaceChildren(
+      ...(items.length ? [fireTab(items, later ? tr('This is live data for today. Fire danger, fire bans and drone notices can change before {date}.', { date: dayText(nightsState!.selected.day) }) : undefined)] : []),
+      animalTab(animals),
+    );
   };
   const backBtn = el('button', 'linkish back-btn', '← ' + tr('Overall score'));
   backBtn.type = 'button';

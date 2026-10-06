@@ -208,7 +208,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     if (waiting.length < 9 || done.near) ui.setSleep(comfort, nightName, waiting);
     // dangers for the first view: the spot's, the chosen night's and the hours before evening (a storm at 16:00 matters at 15:30)
     const soonW = soonWindow(now);
-    ui.setHazards({ comfort, fire: isToday ? got.rules?.fire : undefined, soon: isToday && got.hourly && soonW ? summariseNight(got.hourly, soonW) : undefined });
+    ui.setHazards({ comfort, fire: isToday ? got.rules?.fire : undefined, dogs: got.rules?.dogs, date: new Date(`${w.day}T12:00:00`), soon: isToday && got.hourly && soonW ? summariseNight(got.hourly, soonW) : undefined });
     ui.setWeatherChip(night, nightName, done.forecast && !got.hourly);
     if (!done.forecast) return;
     if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', tr('Weather')), el('p', 'where', tr('The forecast could not be loaded.')));
