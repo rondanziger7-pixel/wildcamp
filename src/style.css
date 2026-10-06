@@ -23,7 +23,6 @@ button { font: inherit; cursor: pointer; }
 #suggest li { padding: 11px 14px; cursor: pointer; font-size: .95rem; }
 #suggest li:hover, #suggest li[aria-selected="true"] { background: var(--unk-bg); }
 
-#layers-btn { position: absolute; z-index: 1000; top: calc(max(10px, env(safe-area-inset-top)) + 58px); left: 10px; background: var(--bg); color: var(--fg); border: 0; border-radius: 10px; padding: 8px 12px; box-shadow: 0 2px 8px #0004; font-size: .85rem; }
 #legend { position: absolute; z-index: 1000; top: calc(max(10px, env(safe-area-inset-top)) + 100px); left: 10px; width: min(300px, calc(100vw - 20px)); background: var(--bg); border-radius: 12px; padding: 12px 14px; box-shadow: 0 4px 14px #0005; font-size: .85rem; }
 #legend h2 { margin: 0 0 8px; font-size: .95rem; }
 #legend p { color: var(--muted); margin: 8px 0 0; }
@@ -213,9 +212,9 @@ button { font: inherit; cursor: pointer; }
 .lang-row select { flex: 1; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
 .lang-note { font-size: .78rem; color: var(--muted); margin: 4px 0 0; }
 /* the layers panel scrolls instead of running under the result sheet */
-#legend { max-height: calc(100vh - 130px - 62vh); overflow-y: auto; overscroll-behavior: contain; }
+#legend { max-height: calc(100vh - 130px - 36vh); overflow-y: auto; overscroll-behavior: contain; }
 @media (min-width: 720px) { #legend { max-height: calc(100vh - 140px); } }
-@media (min-width: 720px) { #legend { left: auto; right: 62px; top: 14px; } #layers-btn { left: auto; right: 62px; top: 14px; } }
+@media (min-width: 720px) { #legend { left: auto; right: 62px; top: 14px; }  }
 .trip-nights { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 6px; }
 .trip-night { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 12px; padding: 6px 8px; }
 .trip-label { flex: none; min-width: 74px; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
@@ -255,3 +254,28 @@ button { font: inherit; cursor: pointer; }
 .about summary::after { content: ' ▸'; }
 .about[open] summary::after { content: ' ▾'; }
 .about p { margin: 6px 0 0; line-height: 1.4; }
+
+/* map menu */
+.map-menu { position: relative; }
+.menu-list { position: absolute; top: 8px; right: 42px; min-width: 200px; background: var(--bg); color: var(--fg); border-radius: 14px; box-shadow: 0 4px 18px #0005; padding: 6px; }
+.menu-list[hidden] { display: none; }
+.menu-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; background: none; color: var(--fg); border-radius: 10px; text-align: left; font-size: .95rem; }
+.menu-item svg { color: var(--green); flex: none; }
+.menu-item:hover, .menu-item:focus-visible { background: var(--line); }
+@media (prefers-color-scheme: dark) { .menu-item svg { color: #8fd1a8; } }
+.panel-head { display: flex; align-items: center; justify-content: space-between; }
+.panel-head h2 { margin: 0; }
+#settings-close { width: 28px; height: 28px; border: 0; border-radius: 50%; background: var(--line); color: var(--fg); }
+#legend h3 { margin: 14px 0 6px; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+#legend .lang-row { margin-top: 12px; }
+
+/* start panel */
+#intro { text-align: center; padding: 2px 4px 4px; }
+.intro-icon { width: 56px; height: 56px; margin: 0 auto 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--ok-bg); color: var(--green); }
+@media (prefers-color-scheme: dark) { .intro-icon { color: #8fd1a8; } }
+#intro h1 { font-size: 1.4rem; margin: 0 0 6px; letter-spacing: -.01em; }
+#intro p { font-size: .98rem; margin: 0 0 16px; }
+#intro .finder-btn { width: 100%; border-radius: 12px; padding: 13px 16px; font-size: 1rem; box-shadow: 0 2px 8px #1f4d3640; }
+.about { text-align: center; }
+#intro .finder-btn { background: var(--green); color: #fff; border-color: var(--green); }
+@media (prefers-color-scheme: dark) { #intro .finder-btn { background: #2f7a54; border-color: #2f7a54; } }

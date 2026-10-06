@@ -691,13 +691,8 @@ document.getElementById('locate')!.addEventListener('click', () => {
   );
 });
 
-// Layer legend
-const legend = document.getElementById('legend')!;
-const layersBtn = document.getElementById('layers-btn')!;
-layersBtn.addEventListener('click', () => {
-  legend.hidden = !legend.hidden;
-  layersBtn.setAttribute('aria-expanded', String(!legend.hidden));
-});
+// Settings panel (opened from the map menu)
+document.getElementById('settings-close')!.addEventListener('click', () => (document.getElementById('legend')!.hidden = true));
 document.getElementById('toggle-trails')!.addEventListener('change', (ev) => {
   if ((ev.target as HTMLInputElement).checked) trailOverlay.addTo(map);
   else trailOverlay.remove();
@@ -759,21 +754,6 @@ function locateMe() {
   );
 }
 
-const LocateControl = L.Control.extend({
-  onAdd() {
-    const btn = L.DomUtil.create('button', 'map-locate') as HTMLButtonElement;
-    btn.type = 'button';
-    btn.title = tr('Center the map on my location');
-    btn.setAttribute('aria-label', tr('Center the map on my location'));
-    btn.innerHTML =
-      '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-    L.DomEvent.disableClickPropagation(btn);
-    L.DomEvent.on(btn, 'click', locateMe);
-    return btn;
-  },
-});
-new LocateControl({ position: 'topright' }).addTo(map);
-
 // Offline: a service worker keeps the app, its data and viewed map tiles; a button saves the visible area on purpose.
 if (import.meta.env.PROD) registerOffline(import.meta.env.BASE_URL);
 const banner = document.getElementById('offline-banner')!;
@@ -805,47 +785,65 @@ async function saveArea() {
   }
 }
 
-const SaveControl = L.Control.extend({
-  onAdd() {
-    const btn = L.DomUtil.create('button', 'map-locate') as HTMLButtonElement;
-    btn.type = 'button';
-    btn.title = tr('Save this map area for offline use');
-    btn.setAttribute('aria-label', tr('Save this map area for offline use'));
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 18v2h14v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    L.DomEvent.disableClickPropagation(btn);
-    L.DomEvent.on(btn, 'click', () => void saveArea());
-    return btn;
-  },
-});
-new SaveControl({ position: 'topright' }).addTo(map);
+// One menu button tucks the map's actions away; zoom stays beside it.
+const ICONS: Record<string, string> = {
+  menu: '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  locate: '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  saved: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+  trip: '<rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14.5l2.5 2.5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  save: '<path d="M12 3v11m0 0l-4-4m4 4l4-4M5 18v2h14v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  settings: '<circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+};
+const icon = (name: string) => `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${ICONS[name]}</svg>`;
 
-const SavedControl = L.Control.extend({
+const settingsPanel = document.getElementById('legend')!;
+const MenuControl = L.Control.extend({
   onAdd() {
-    const btn = L.DomUtil.create('button', 'map-locate map-saved') as HTMLButtonElement;
+    const box = L.DomUtil.create('div', 'map-menu');
+    const btn = L.DomUtil.create('button', 'map-locate', box) as HTMLButtonElement;
     btn.type = 'button';
-    btn.title = tr('Saved spots');
-    btn.setAttribute('aria-label', tr('Saved spots'));
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
-    L.DomEvent.disableClickPropagation(btn);
-    L.DomEvent.on(btn, 'click', showSaved);
-    return btn;
+    btn.title = tr('Menu');
+    btn.setAttribute('aria-label', tr('Menu'));
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = icon('menu');
+    const list = L.DomUtil.create('div', 'menu-list', box);
+    list.hidden = true;
+    list.setAttribute('role', 'menu');
+    const close = () => {
+      list.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    };
+    const items: [string, string, () => void][] = [
+      ['locate', tr('My location'), locateMe],
+      ['saved', tr('Saved spots'), showSaved],
+      ['trip', tr('Trip planner'), showTrip],
+      ['save', tr('Save map for offline'), () => void saveArea()],
+      ['settings', tr('Settings'), () => {
+        settingsPanel.hidden = !settingsPanel.hidden;
+      }],
+    ];
+    for (const [name, label, run] of items) {
+      const it = L.DomUtil.create('button', 'menu-item', list) as HTMLButtonElement;
+      it.type = 'button';
+      it.setAttribute('role', 'menuitem');
+      it.dataset.menu = name;
+      it.innerHTML = `${icon(name)}<span></span>`;
+      it.lastElementChild!.textContent = label;
+      it.onclick = () => {
+        close();
+        run();
+      };
+    }
+    btn.onclick = () => {
+      list.hidden = !list.hidden;
+      btn.setAttribute('aria-expanded', String(!list.hidden));
+    };
+    map.on('click movestart', close);
+    L.DomEvent.disableClickPropagation(box);
+    return box;
   },
 });
-new SavedControl({ position: 'topright' }).addTo(map);
-
-const TripControl = L.Control.extend({
-  onAdd() {
-    const btn = L.DomUtil.create('button', 'map-locate map-trip') as HTMLButtonElement;
-    btn.type = 'button';
-    btn.title = tr('Trip planner');
-    btn.setAttribute('aria-label', tr('Trip planner'));
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14.5l2.5 2.5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    L.DomEvent.disableClickPropagation(btn);
-    L.DomEvent.on(btn, 'click', showTrip);
-    return btn;
-  },
-});
-new TripControl({ position: 'topright' }).addTo(map);
+new MenuControl({ position: 'topright' }).addTo(map);
 
 // Stage the loading so the base map is never held up: the overlays (the heaviest requests) are added once the base tiles of
 // the first view are in, or after 2.5 s at most, and then the local data follows at low priority.
