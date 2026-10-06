@@ -77,10 +77,11 @@ describe('parseCanton', () => {
 
 describe('assess with a canton', () => {
   const clear = { zones: [], treeline: 'above' as const };
-  it('without a verified rule, says so and leaves the verdict alone', () => {
+  it('without a verified rule, adds no per-spot notice and leaves the verdict alone', () => {
     const a = assess({ ...clear, canton: VS });
     expect(a.verdict).toBe('likely_ok');
-    expect(a.reasons.join(' ')).toMatch(/Valais: cantonal rules are not verified/);
+    expect(a.reasons.join(' ')).not.toMatch(/not verified/);
+    expect(a.items.some((i) => i.title === 'Valais rules')).toBe(false);
   });
   it('a verified ban overrides an otherwise clear spot and cites its source', () => {
     const a = assess({ ...clear, canton: withRule(rule({ stance: 'banned' })) });

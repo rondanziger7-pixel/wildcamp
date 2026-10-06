@@ -120,10 +120,9 @@ export function assess(input: {
 
   const rule = canton?.rule;
   if (canton) {
-    if (!rule) {
-      reasons.push(`${canton.name}: cantonal rules are not verified in this app. Check with the canton or municipality.`);
-      items.push({ tone: 'info', title: `${canton.name} rules`, text: 'Cantonal rules are not verified in this app. Check with the canton or municipality.' });
-    } else {
+    // No recorded cantonal rule: nothing is shown per spot. The footer disclaimer already says that cantons and
+    // municipalities set the rules, and a notice repeated on every spot in 20 cantons drowned out the real ones.
+    if (rule) {
       const stance = treeline === 'above' && rule.aboveTreeline ? rule.aboveTreeline : rule.stance;
       const note = stance !== rule.stance ? ' Above the treeline is treated as "in the mountains", which the law does not define.' : '';
       reasons.push(`${canton.name}: ${rule.summary}${note} (source: ${rule.sources.map((x) => x.url).join(', ')}, checked ${rule.checkedOn})`);
