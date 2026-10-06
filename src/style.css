@@ -322,3 +322,6 @@ button { font: inherit; cursor: pointer; }
 @media (prefers-color-scheme: dark) { .score-card.total .sc-more { color: #8fd1a8; } }
 .score-card.total[aria-expanded]::after { content: none; }
 .back-btn { margin: 6px 0 2px; }
+
+/* the three opened panels (legality, sleep, weather) have one height, so the sheet does not jump when switching; longer content scrolls inside */
+.panel:not([hidden]) { height: clamp(240px, 36vh, 400px); overflow-y: auto; overscroll-behavior: contain; padding-right: 2px; }
