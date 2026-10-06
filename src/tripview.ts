@@ -1,69 +1,88 @@
 import { el } from './resultview';
 import { tr } from './i18n';
 import type { SavedSpot } from './saved';
-import { MAX_NIGHTS } from './trip';
-import { nightText } from './comfort/weather';
+import { MAX_AHEAD_DAYS, MAX_NIGHTS, type PlannedNight } from './trip';
+import { addDays, nightText, nightWindowFor } from './comfort/weather';
 
 export interface TripHandlers {
-  onAdd(id: string): void;
-  onRemove(id: string): void;
-  onMove(index: number, dir: -1 | 1): void;
+  /** Add a night after the last one, with the spot of the last night (or the first saved spot). */
+  onAdd(spot: string): void;
+  onRemove(date: string): void;
+  onSpot(date: string, spot: string): void;
+  /** A night moved to another evening; the page puts it back when that is refused. */
+  onDate(date: string, to: string): void;
   onOpen(spot: SavedSpot): void;
+  onShare(): void;
+  onPrint(): void;
 }
 
 /**
- * The trip planner's page: the nights in order (with their labels), buttons to reorder or drop a night, saved spots to add,
- * and a host element the weather and legality plan is drawn into.
+ * The trip planner's page: the nights in date order (each with its date and its saved spot), a button to add a night, and a host
+ * element the legality and weather plan is drawn into. `today` is the first evening that can be planned.
  */
-export function renderTrip(root: HTMLElement, spots: SavedSpot[], inTrip: SavedSpot[], nightLabels: string[], h: TripHandlers): HTMLElement {
+export function renderTrip(root: HTMLElement, spots: SavedSpot[], nights: PlannedNight[], today: string, now: string, h: TripHandlers): HTMLElement {
   const title = el('h2', 'finder-title', tr('Trip planner'));
-  const intro = el('p', 'where', tr('Put saved spots in the order of your nights. The weather for each night and the saved legality of each spot appear below.'));
-  const nights = el('ol', 'trip-nights');
-  inTrip.forEach((s, i) => {
+  const intro = el('p', 'where', tr('Plan your nights: a date and a saved spot for each. The legality is judged for each date, and the forecast for each night appears below.'));
+  const list = el('ol', 'trip-nights');
+  const max = addDays(today, MAX_AHEAD_DAYS);
+  nights.forEach(({ night, spot }, i) => {
     const li = el('li', 'trip-night');
-    const label = el('span', 'trip-label', nightLabels[i] ? nightText(nightLabels[i]!) : tr('Night {n}', { n: i + 1 }));
-    const open = el('button', 'saved-open');
-    open.type = 'button';
-    open.append(el('strong', undefined, s.name));
-    open.onclick = () => h.onOpen(s);
-    const btn = (text: string, aria: string, disabled: boolean, fn: () => void) => {
-      const b = el('button', 'trip-btn', text);
-      b.type = 'button';
-      b.title = aria;
-      b.setAttribute('aria-label', aria);
-      b.disabled = disabled;
-      b.onclick = fn;
-      return b;
+    const w = nightWindowFor(night.date, now);
+    const date = el('input', 'trip-date');
+    date.type = 'date';
+    date.min = today;
+    date.max = max;
+    date.value = night.date;
+    date.setAttribute('aria-label', tr('Date of night {n}', { n: i + 1 }));
+    date.onchange = () => {
+      if (date.value) h.onDate(night.date, date.value);
+      else date.value = night.date;
     };
-    li.append(
-      label,
-      open,
-      btn('↑', tr('Move to an earlier night'), i === 0, () => h.onMove(i, -1)),
-      btn('↓', tr('Move to a later night'), i === inTrip.length - 1, () => h.onMove(i, 1)),
-      btn('✕', tr('Remove from the trip'), false, () => h.onRemove(s.id)),
-    );
-    nights.append(li);
+    const label = el('span', 'trip-label', `${nightText(w.label)}`);
+    const pick = el('select', 'trip-spot');
+    pick.setAttribute('aria-label', tr('Spot for night {n}', { n: i + 1 }));
+    for (const s of spots) pick.append(Object.assign(document.createElement('option'), { value: s.id, textContent: s.name, selected: s.id === night.spot }));
+    pick.onchange = () => h.onSpot(night.date, pick.value);
+    const open = el('button', 'trip-btn', '🔍');
+    open.type = 'button';
+    open.title = tr('Open this spot on the map');
+    open.setAttribute('aria-label', tr('Open this spot on the map'));
+    open.onclick = () => h.onOpen(spot);
+    const del = el('button', 'trip-btn', '✕');
+    del.type = 'button';
+    del.title = tr('Remove from the trip');
+    del.setAttribute('aria-label', tr('Remove from the trip'));
+    del.onclick = () => h.onRemove(night.date);
+    li.append(date, label, del, pick, open);
+    list.append(li);
   });
   const parts: Node[] = [title, intro];
-  if (inTrip.length) parts.push(nights);
-  else parts.push(el('p', 'where', tr('No nights yet. Add saved spots below.')));
+  if (nights.length) parts.push(list);
+  else parts.push(el('p', 'where', tr('No nights yet.')));
 
-  const free = spots.filter((s) => !inTrip.includes(s));
   const add = el('div', 'trip-add');
   if (!spots.length) {
     add.append(el('p', 'where', tr('You have no saved spots yet. Check a spot and press "Save this spot", then plan your nights here.')));
-  } else if (inTrip.length >= MAX_NIGHTS) {
-    add.append(el('p', 'where', tr('The forecast covers {n} nights, so a trip has at most {n} nights.', { n: MAX_NIGHTS })));
-  } else if (free.length) {
-    add.append(el('h3', 'trip-h3', tr('Add a saved spot')));
-    for (const s of free) {
-      const b = el('button', 'finder-btn trip-add-btn', `+ ${s.name}`);
-      b.type = 'button';
-      b.onclick = () => h.onAdd(s.id);
-      add.append(b);
-    }
+  } else if (nights.length >= MAX_NIGHTS) {
+    add.append(el('p', 'where', tr('A trip has at most {n} nights.', { n: MAX_NIGHTS })));
+  } else {
+    const b = el('button', 'finder-btn trip-add-btn', '＋ ' + tr('Add a night'));
+    b.type = 'button';
+    b.onclick = () => h.onAdd(nights.length ? nights[nights.length - 1]!.spot.id : spots[0]!.id);
+    add.append(b);
   }
   parts.push(add);
+  if (nights.length) {
+    const tools = el('div', 'trip-tools');
+    const share = el('button', 'save-btn', '↗ ' + tr('Share the trip'));
+    share.type = 'button';
+    share.onclick = h.onShare;
+    const print = el('button', 'save-btn', '🖨 ' + tr('Print'));
+    print.type = 'button';
+    print.onclick = h.onPrint;
+    tools.append(share, print);
+    parts.push(tools);
+  }
   const planHost = el('div', 'trip-plan');
   parts.push(planHost);
   root.replaceChildren(...parts);

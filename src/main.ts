@@ -24,12 +24,16 @@ import { fetchElevation } from './geoadmin';
 import { bulletinAt, fetchBulletin, type AvalancheInfo } from './comfort/avalanche';
 import { fetchGround, type GroundInfo } from './comfort/ground';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
-import { defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateSnapshot, type SavedSpot } from './saved';
+import { MAX_SAVED, defaultName, importSpots, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateLegality, updateSnapshot, updateSpot, verdictLabel, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
 import { fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, withWater } from './finder';
 import { combined, renderFinder, type FinderRow } from './finderview';
-import { planNights } from './planner';
-import { addToTrip, loadTrip, moveInTrip, removeFromTrip, saveTrip, tripSpots } from './trip';
+import { beyondForecast, firstEvening, planTrip } from './planner';
+import { addNight, loadTrip, moveNight, nightsFor, removeNight, saveTrip, setNightSpot, tripNights, type TripNight } from './trip';
+import { InputsCache, legalForNight, recheckSpots } from './recheck';
+import { MAX_SHARE_SPOTS, decodeShare, isShareHash, shareLink, type DecodedShare, type SharePayload } from './share';
+import { renderShared } from './sharedview';
+import { parseGpx } from './route';
 import { renderTrip } from './tripview';
 import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
@@ -326,9 +330,22 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     save.textContent = on ? '★ ' + tr('Saved') : '☆ ' + tr('Save');
   };
   paintSave();
+  // saving is one tap; taking a spot off the list asks once (a stray tap must not lose a spot with its notes)
+  let confirming: number | undefined;
   save.onclick = () => {
-    if (isSaved(store, sid)) removeSpot(store, sid);
-    else {
+    if (isSaved(store, sid)) {
+      if (confirming === undefined) {
+        save.textContent = '✕ ' + tr('Tap again to remove');
+        confirming = window.setTimeout(() => {
+          confirming = undefined;
+          paintSave();
+        }, 3500);
+        return;
+      }
+      window.clearTimeout(confirming);
+      confirming = undefined;
+      removeSpot(store, sid);
+    } else {
       const spot: SavedSpot = {
         id: sid,
         lat,
@@ -339,10 +356,12 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
         canton: assessment.canton?.name,
         snapshot: { ...ui.snapshot(), savedAt: Date.now() },
       };
-      if (!saveSpot(store, spot).stored) say(tr('This browser would not keep the spot (private mode or storage blocked).'));
+      const r = saveSpot(store, spot);
+      if (r.full) say(tr('The list of saved spots is full ({n}). Remove some to save more.', { n: MAX_SAVED }));
+      else if (!r.stored) say(tr('This browser would not keep the spot (private mode or storage blocked).'));
     }
     paintSave();
-    syncSavedCount();
+    syncSaved();
   };
   const name = defaultName(assessment.municipality, elevation, lat, lng);
   const share = el('button', 'save-btn', '↗ ' + tr('Share this spot'));
@@ -405,19 +424,92 @@ const store = (() => {
     return undefined;
   }
 })();
-const savedBtn = el('button', 'finder-btn');
-savedBtn.type = 'button';
-function syncSavedCount() {
-  savedBtn.textContent = `★ ${tr('Saved spots ({n})', { n: loadSaved(store).length })}`;
-}
-syncSavedCount();
-function showSaved() {
+
+/** A page in the sheet (saved spots, trip, emergency, a shared list): the sheet opens, any running check is let go. */
+function openPage() {
   ++checkId;
   ++finderId;
   finderPins.clearLayers();
   sheet.classList.remove('closed');
   sheet.dataset.state = 'result';
   result.hidden = false;
+  sheet.scrollTop = 0;
+}
+
+/** Fit the map to some bounds inside the part of it the sheet leaves free (above it on a phone, beside it on a wide screen). */
+function fitBoundsClear(bounds: L.LatLngBounds, maxZoom = 14) {
+  const wide = window.matchMedia('(min-width: 720px)').matches;
+  const covered = sheet.classList.contains('closed') ? 0 : wide ? sheet.offsetWidth + 24 : Math.min(sheet.offsetHeight, window.innerHeight * 0.62);
+  map.fitBounds(bounds, { paddingTopLeft: [wide ? covered + 30 : 30, 70], paddingBottomRight: [30, wide ? 30 : covered + 20], maxZoom });
+}
+
+/** Saved spots on the map: a small star at each, opening that spot's check. Shown unless switched off in the layers panel. */
+const savedPins = L.layerGroup();
+const savedStar = L.divIcon({ className: '', html: '<div class="saved-pin">★</div>', iconSize: [22, 22], iconAnchor: [11, 11] });
+function syncSaved() {
+  savedPins.clearLayers();
+  for (const sp of loadSaved(store)) {
+    L.marker([sp.lat, sp.lng], { icon: savedStar, title: sp.name, alt: sp.name, riseOnHover: true })
+      .on('click', () => void checkSpot(sp.lat, sp.lng))
+      .addTo(savedPins);
+  }
+}
+syncSaved();
+const savedToggle = document.getElementById('toggle-saved') as HTMLInputElement;
+const showSavedPins = (on: boolean) => {
+  savedToggle.checked = on;
+  if (on) savedPins.addTo(map);
+  else savedPins.remove();
+};
+showSavedPins(true);
+savedToggle.addEventListener('change', () => showSavedPins(savedToggle.checked));
+
+/** A link to a list of places (and maybe a trip): the share sheet of the phone, or the clipboard. */
+async function shareLinkOf(payload: SharePayload, title: string) {
+  const link = shareLink(location.href, payload);
+  if (link.trimmed) say(tr('A link carries at most {n} spots; the first {n} are in it.', { n: MAX_SHARE_SPOTS }));
+  else if (link.long) say(tr('This link is long; some apps may cut it. Share fewer spots.'));
+  try {
+    if (navigator.share) await navigator.share({ title, url: link.url });
+    else {
+      await navigator.clipboard.writeText(link.url);
+      if (!link.trimmed && !link.long) say(tr('Link copied'));
+    }
+  } catch (err) {
+    if ((err as Error).name !== 'AbortError') say(link.url);
+  }
+}
+const shareSpots = (spots: SavedSpot[]) => shareLinkOf({ spots: spots.map((s) => ({ lat: s.lat, lng: s.lng, name: s.name, note: s.note })) }, tr('Wild camping spots'));
+
+/** Waypoints of a GPX file become saved spots, unchecked. A route or track is not a list of spots and is said to be one. */
+function importGpx(text: string, fileName: string) {
+  const g = parseGpx(text);
+  if (!g.waypoints.length) {
+    say(g.tracks.length || g.routes.length ? tr('This file holds a route, not spots. Open "Route" in the menu to use it.') : tr('No spots found in {file}.', { file: fileName }));
+    return;
+  }
+  const inside = g.waypoints.filter((w) => isInSwitzerland(w.lat, w.lon));
+  const r = importSpots(store, inside.map((w) => ({ lat: w.lat, lng: w.lon, name: w.name, elevation: w.ele, note: w.desc })));
+  const bits = [r.added === 1 ? tr('Added {n} spot.', { n: r.added }) : tr('Added {n} spots.', { n: r.added })];
+  if (r.existing) bits.push(tr('{n} were saved already.', { n: r.existing }));
+  if (g.waypoints.length > inside.length) bits.push(tr('{n} outside Switzerland were left out.', { n: g.waypoints.length - inside.length }));
+  if (r.refused) bits.push(tr('The list is full: {n} were left out.', { n: r.refused }));
+  if (!r.stored) bits.push(tr('This browser would not keep the spots (private mode or storage blocked).'));
+  say(bits.join(' '));
+  syncSaved();
+  showSaved();
+}
+
+/** Every saved spot on the map, the view fitted to them. */
+function showAllSaved() {
+  const list = loadSaved(store);
+  if (!list.length) return;
+  showSavedPins(true);
+  fitBoundsClear(L.latLngBounds(list.map((s) => [s.lat, s.lng] as [number, number])));
+}
+
+function showSaved() {
+  openPage();
   renderSaved(result, loadSaved(store), {
     onOpen: (sp) => {
       map.flyTo([sp.lat, sp.lng], Math.max(map.getZoom(), 15), { duration: 0.6 });
@@ -425,25 +517,90 @@ function showSaved() {
     },
     onRemove: (id) => {
       removeSpot(store, id);
-      syncSavedCount();
+      syncSaved();
       showSaved();
     },
     onPlan: (picked) => {
-      saveTrip(store, picked.map((p) => p.id));
+      saveTrip(store, nightsFor(picked.map((p) => p.id), firstEvening(zurichNow(new Date()))));
       showTrip();
     },
+    onEdit: (id, patch) => {
+      if (!updateSpot(store, id, patch)) say(tr('This browser would not keep the change (private mode or storage blocked).'));
+      syncSaved();
+      showSaved();
+    },
+    onShowAll: showAllSaved,
+    onRefresh: async (progress) => {
+      const outcomes = await recheckSpots(loadSaved(store), data, { onProgress: progress });
+      for (const o of outcomes) if (o.patch) updateLegality(store, o.spot.id, o.patch);
+      return {
+        changes: outcomes.map((o) => ({ spot: o.spot, before: verdictLabel(o.before), after: o.after ? verdictLabel(o.after) : undefined, failed: o.failed, changed: o.changed })),
+        spots: loadSaved(store),
+      };
+    },
+    onShare: (spots) => void shareSpots(spots),
+    onImport: (text, name) => importGpx(text, name),
+    origin: () => map.getCenter(),
   });
 }
+
+/** A list of places that came in a link: look at them, add them to the saved spots (and the trip), or leave them. */
+function showShared(d: DecodedShare) {
+  openPage();
+  const pin = (i: number) => L.divIcon({ className: '', html: `<div class="finder-pin">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] });
+  d.payload.spots.forEach((s, i) => L.marker([s.lat, s.lng], { icon: pin(i), keyboard: false }).on('click', () => void checkSpot(s.lat, s.lng)).addTo(finderPins));
+  const leave = () => {
+    finderPins.clearLayers();
+    sheet.dataset.state = 'intro';
+    result.hidden = true;
+  };
+  const today = firstEvening(zurichNow(new Date()));
+  const addSpots = () => {
+    const r = importSpots(store, d.payload.spots);
+    syncSaved();
+    return r;
+  };
+  renderShared(result, d, loadSaved(store).length, loadTrip(store, today).length > 0, {
+    onOpen: (i) => {
+      const s = d.payload.spots[i]!;
+      map.flyTo([s.lat, s.lng], Math.max(map.getZoom(), 15), { duration: 0.6 });
+      void checkSpot(s.lat, s.lng);
+    },
+    onAddSpots: () => {
+      const r = addSpots();
+      say(r.added === 1 ? tr('Added {n} spot.', { n: r.added }) : tr('Added {n} spots.', { n: r.added }));
+      showSaved();
+    },
+    onAddTrip: () => {
+      addSpots();
+      const nights = (d.payload.trip ?? [])
+        .map((n) => ({ spot: spotId(d.payload.spots[n.spot]!.lat, d.payload.spots[n.spot]!.lng), date: n.date }))
+        .filter((n) => n.date >= today);
+      saveTrip(store, nights);
+      if (nights.length < (d.payload.trip?.length ?? 0)) say(tr('Nights that are already past were left out.'));
+      showTrip();
+    },
+    onClose: leave,
+  });
+  fitBoundsClear(L.latLngBounds(d.payload.spots.map((s) => [s.lat, s.lng] as [number, number]))); // once the list is drawn, so the sheet's height is known
+}
+/** A share link in the address (on load, or pasted into an open tab). */
+function openShareHash(): boolean {
+  if (!isShareHash(location.hash)) return false;
+  const d = decodeShare(location.hash);
+  history.replaceState(null, '', location.pathname + location.search);
+  if (!d) {
+    say(tr('This link could not be read. Ask for it again.'));
+    return true;
+  }
+  showShared(d);
+  return true;
+}
+
 /** The emergency page: numbers to tap, the position to read out, what to say. */
 function showEmergency() {
-  ++checkId;
-  ++finderId;
-  finderPins.clearLayers();
-  sheet.classList.remove('closed');
-  sheet.dataset.state = 'result';
-  result.hidden = false;
+  openPage();
   const spot = lastSpot;
-  sheet.scrollTop = 0;
   renderEmergency(result, {
     spot,
     say,
@@ -472,53 +629,85 @@ const sosLink = () => {
 };
 document.getElementById('intro')!.append(sosLink());
 
-// Trip planner: its own menu. The nights are saved spots in order; each gets a fresh forecast.
-const forecastCache = new Map<string, Promise<Hourly>>();
+// Trip planner: its own menu. Nights with a date and a saved spot each; the legality is judged for each date and each night gets a fresh forecast.
+const FORECAST_TTL_MS = 20 * 60 * 1000;
+const forecastCache = new Map<string, { at: number; p: Promise<Hourly> }>();
 const forecastFor = (sp: SavedSpot) => {
-  let p = forecastCache.get(sp.id);
-  if (!p) {
-    p = withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000);
-    forecastCache.set(sp.id, p);
-    p.catch(() => forecastCache.delete(sp.id)); // a failed forecast is asked for again next time
-  }
+  const hit = forecastCache.get(sp.id);
+  if (hit && Date.now() - hit.at < FORECAST_TTL_MS) return hit.p;
+  const p = withTimeout(fetchForecast(sp.lat, sp.lng, sp.elevation), 9000);
+  forecastCache.set(sp.id, { at: Date.now(), p });
+  p.catch(() => forecastCache.delete(sp.id)); // a failed forecast is asked for again next time
   return p;
 };
+const legalInputs = new InputsCache();
 let tripToken = 0;
 
 function showTrip() {
-  ++checkId;
-  ++finderId;
-  finderPins.clearLayers();
-  sheet.classList.remove('closed');
-  sheet.dataset.state = 'result';
-  result.hidden = false;
+  openPage();
+  const now = zurichNow(new Date());
+  const today = firstEvening(now);
   const spots = loadSaved(store);
-  const ids = loadTrip(store);
-  const inTrip = tripSpots(ids, spots);
-  const windows = nightWindows(zurichNow(new Date()));
-  const setIds = (next: string[]) => {
+  const nights = tripNights(loadTrip(store, today), spots, today);
+  const plain = () => nights.map((n) => n.night);
+  const set = (next: TripNight[]) => {
     saveTrip(store, next);
     showTrip();
   };
-  const host = renderTrip(result, spots, inTrip, windows.map((w) => w.label), {
-    onAdd: (id) => setIds(addToTrip(inTrip.map((s) => s.id), id)),
-    onRemove: (id) => setIds(removeFromTrip(inTrip.map((s) => s.id), id)),
-    onMove: (i, dir) => setIds(moveInTrip(inTrip.map((s) => s.id), i, dir)),
+  const host = renderTrip(result, spots, nights, today, now, {
+    onAdd: (spot) => {
+      const next = addNight(plain(), spot, today);
+      if (next === plain() || next.length === nights.length) say(tr('No free night to add.'));
+      set(next);
+    },
+    onRemove: (date) => set(removeNight(plain(), date)),
+    onSpot: (date, spot) => set(setNightSpot(plain(), date, spot)),
+    onDate: (date, to) => {
+      const next = moveNight(plain(), date, to, today);
+      if (!next) say(tr('Another night is already planned for that date, or the date is out of range.'));
+      set(next ?? plain());
+    },
     onOpen: (sp) => {
       map.flyTo([sp.lat, sp.lng], Math.max(map.getZoom(), 15), { duration: 0.6 });
       void checkSpot(sp.lat, sp.lng);
     },
+    onShare: () => {
+      const ids = [...new Set(nights.map((n) => n.spot.id))];
+      const used = ids.map((id) => spots.find((s) => s.id === id)!);
+      void shareLinkOf(
+        { spots: used.map((s) => ({ lat: s.lat, lng: s.lng, name: s.name, note: s.note })), trip: nights.map((n) => ({ spot: ids.indexOf(n.spot.id), date: n.night.date })) },
+        tr('Wild camping trip'),
+      );
+    },
+    onPrint: () => window.print(),
   });
-  if (!inTrip.length) return;
+  if (!nights.length) return;
   const token = ++tripToken;
-  host.replaceChildren(el('p', 'where', tr('Loading the forecast for each spot…')));
-  void Promise.allSettled(inTrip.map(forecastFor)).then((forecasts) => {
+  host.replaceChildren(el('p', 'where', tr('Checking the legality and the forecast for each night…')));
+  const ready = withTimeout(data.load(), 8000).catch(() => undefined);
+  const legalAll = Promise.all(
+    nights.map(async ({ night, spot }) => {
+      try {
+        const inp = await legalInputs.get(spot);
+        await ready;
+        const sum = legalForNight(inp, data, night.date, now);
+        return sum.unchecked || sum.outside ? undefined : sum; // a check that could not be made falls back to the saved score, marked as such
+      } catch {
+        return undefined;
+      }
+    }),
+  );
+  const forecastAll = Promise.allSettled(nights.map(({ night, spot }) => (beyondForecast(night.date, now) ? Promise.resolve(undefined) : forecastFor(spot))));
+  void Promise.all([legalAll, forecastAll]).then(([legal, forecasts]) => {
     if (token !== tripToken) return; // the trip was changed meanwhile
-    const plan = planNights(inTrip, windows, forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined)));
-    renderPlan(host, plan, forecasts.slice(0, plan.rows.length).filter((f) => f.status === 'rejected').length);
+    const hourly = forecasts.map((f) => (f.status === 'fulfilled' ? f.value : undefined));
+    const plan = planTrip(nights.map((n) => ({ spot: n.spot, date: n.night.date })), hourly, legal, now);
+    renderPlan(host, plan, {
+      forecasts: forecasts.filter((f, i) => f.status === 'rejected' && !beyondForecast(nights[i]!.night.date, now)).length,
+      legality: legal.filter((l) => l === undefined).length,
+    });
   });
 }
-savedBtn.onclick = showSaved;
 // (the saved list is opened with the star button on the map, so the start panel does not repeat it)
 
 // Best spots nearby
@@ -646,6 +835,7 @@ map.on('click', (ev: L.LeafletMouseEvent) => {
 if (hashView) void checkSpot(hLat!, hLon!);
 // a link pasted into an open tab (or a changed address) opens that place
 window.addEventListener('hashchange', () => {
+  if (openShareHash()) return;
   const [la, lo, z] = location.hash.slice(1).split(',').map(Number);
   if (!Number.isFinite(la) || !Number.isFinite(lo)) return;
   if (lastSpot && spotId(lastSpot.lat, lastSpot.lng) === spotId(la!, lo!)) return;
@@ -969,6 +1159,9 @@ new MenuControl({ position: 'topright' }).addTo(map);
     setTimeout(go, 4000);
   }
 }
+
+// a link that carries a list of places (and maybe a trip) opens it
+openShareHash();
 
 // Handle for browser tests in the dev server only.
 if (import.meta.env.DEV) (window as unknown as { __wildcamp: { map: L.Map; focusOn: typeof focusOn } }).__wildcamp = { map, focusOn };

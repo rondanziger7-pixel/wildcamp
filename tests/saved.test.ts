@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MAX_SAVED, SAVED_KEY, ageLabel, compareRows, defaultName, isSaved, loadSaved, removeSpot, saveSpot, spotId, type SavedSpot, type SpotSnapshot, type Store } from '../src/saved';
+import { MAX_NAME, MAX_NOTE, MAX_SAVED, SAVED_KEY, ageLabel, compareRows, defaultName, importSpots, isSaved, loadSaved, overallOf, removeSpot, saveSpot, sortSpots, spotId, updateLegality, updateSpot, type SavedSpot, type SpotSnapshot, type Store } from '../src/saved';
 
 const mem = (): Store & { data: Record<string, string> } => {
   const data: Record<string, string> = {};
@@ -17,14 +17,25 @@ describe('saved spots store', () => {
     expect(removeSpot(s, spotId(46.5, 7.5))).toEqual([]);
     expect(isSaved(s, spotId(46.5, 7.5))).toBe(false);
   });
-  it('keeps one entry per place, newest first, and caps the list', () => {
+  it('keeps one entry per place, newest first', () => {
     const s = mem();
     saveSpot(s, spot(46.1, 7.1));
     saveSpot(s, spot(46.2, 7.2));
     saveSpot(s, spot(46.1, 7.1, { name: 'again' }));
-    expect(loadSaved(s).map((x) => x.name)).toEqual(['again', 'S46.2']);
-    for (let i = 0; i < MAX_SAVED + 5; i++) saveSpot(s, spot(46 + i / 1000, 7));
+    // a fresh check of a place already saved updates its scores but keeps the name the person gave it
+    expect(loadSaved(s).map((x) => x.name)).toEqual(['S46.1', 'S46.2']);
+  });
+  it('a full list refuses a new spot instead of silently dropping an old one', () => {
+    const s = mem();
+    for (let i = 0; i < MAX_SAVED; i++) expect(saveSpot(s, spot(45.8 + i / 1000, 7)).full).toBeUndefined();
+    const r = saveSpot(s, spot(47.5, 8));
+    expect(r).toMatchObject({ full: true, stored: false });
     expect(loadSaved(s)).toHaveLength(MAX_SAVED);
+    expect(isSaved(s, spotId(47.5, 8))).toBe(false);
+    expect(isSaved(s, spotId(45.8, 7))).toBe(true); // the oldest is still there
+    // a place that is already saved can still be updated when the list is full
+    expect(saveSpot(s, spot(45.8, 7, { snapshot: snap({ legal: 10 }) })).stored).toBe(true);
+    expect(loadSaved(s).find((x) => x.id === spotId(45.8, 7))!.snapshot.legal).toBe(10);
   });
   it('survives missing, broken or foreign storage', () => {
     expect(loadSaved(undefined)).toEqual([]);
@@ -58,8 +69,9 @@ describe('comparison', () => {
     expect(row('Legality').best).toBe(0);
     expect(row('Sleep').best).toBe(1);
     expect(row('Weather').best).toBeUndefined();
-    expect(row('Both (half and half)').cells).toEqual(['78/100', '63/100']);
-    expect(row('Both (half and half)').best).toBe(0);
+    // the overall score as the result sheet works it out: half and half, held down by the weaker part (never more than 10 above it)
+    expect(row('Overall').cells).toEqual(['78/100', '55/100']);
+    expect(row('Overall').best).toBe(0);
   });
   it('shows verdicts, partial scores and missing values honestly', () => {
     expect(row('Legality').cells[1]).toBe('45/100 Be careful');
@@ -68,6 +80,121 @@ describe('comparison', () => {
     expect(row('Place').cells).toEqual(['Adelboden, Bern', '–']);
     expect(row('For').cells[0]).toBe('Grassy ground; Flat ground');
     expect(row('Against').cells).toEqual(['–', 'Open to wind']);
-    expect(compareRows([a, spot(46.3, 7.3, { snapshot: snap({ legal: undefined, sleep: undefined }) })]).find((r) => r.label === 'Both (half and half)')!.cells[1]).toBe('–');
+    expect(compareRows([a, spot(46.3, 7.3, { snapshot: snap({ legal: undefined, sleep: undefined }) })]).find((r) => r.label === 'Overall')!.cells[1]).toBe('–');
+  });
+});
+
+describe('names and notes', () => {
+  it('renames and annotates a saved spot, cleaning the text', () => {
+    const s = mem();
+    saveSpot(s, spot(46.5, 7.5));
+    const id = spotId(46.5, 7.5);
+    expect(updateSpot(s, id, { name: '  Hut\nmeadow  ', note: 'Water at the hut.\nAsk the farmer.' })).toBe(true);
+    const got = loadSaved(s)[0]!;
+    expect(got.name).toBe('Hut meadow');
+    expect(got.note).toBe('Water at the hut.\nAsk the farmer.');
+    expect(got.snapshot.legal).toBe(85); // scores untouched
+  });
+  it('an empty name is ignored, an empty note removes the note, long text is cut', () => {
+    const s = mem();
+    saveSpot(s, spot(46.5, 7.5, { note: 'old' }));
+    const id = spotId(46.5, 7.5);
+    updateSpot(s, id, { name: '   ', note: '' });
+    expect(loadSaved(s)[0]!.name).toBe('S46.5');
+    expect(loadSaved(s)[0]!.note).toBeUndefined();
+    updateSpot(s, id, { name: 'x'.repeat(500), note: 'y'.repeat(5000) });
+    expect(loadSaved(s)[0]!.name).toHaveLength(MAX_NAME);
+    expect(loadSaved(s)[0]!.note).toHaveLength(MAX_NOTE);
+  });
+  it('reports a spot that is gone or storage that failed', () => {
+    const s = mem();
+    expect(updateSpot(s, 'nope', { name: 'x' })).toBe(false);
+    saveSpot(s, spot(46.5, 7.5));
+    const full: Store = { getItem: s.getItem, setItem: () => { throw new Error('quota'); } };
+    expect(updateSpot(full, spotId(46.5, 7.5), { name: 'x' })).toBe(false);
+  });
+  it('a fresh check keeps the person\'s own name and note', () => {
+    const s = mem();
+    saveSpot(s, spot(46.5, 7.5));
+    updateSpot(s, spotId(46.5, 7.5), { name: 'Base camp', note: 'flat, quiet' });
+    saveSpot(s, spot(46.5, 7.5, { name: 'Kandersteg · 1600 m', snapshot: snap({ legal: 40 }) }));
+    const got = loadSaved(s)[0]!;
+    expect([got.name, got.note, got.snapshot.legal]).toEqual(['Base camp', 'flat, quiet', 40]);
+  });
+});
+
+describe('importing spots', () => {
+  it('adds places unchecked, with names, and leaves places already saved alone', () => {
+    const s = mem();
+    saveSpot(s, spot(46.5, 7.5));
+    const r = importSpots(s, [{ lat: 46.5, lng: 7.5, name: 'dup' }, { lat: 46.6, lng: 7.6, name: ' Camp A ', note: 'good', elevation: 1500 }, { lat: 46.7, lng: 7.7 }, { lat: NaN, lng: 7 }], 5);
+    expect(r).toMatchObject({ added: 2, existing: 1, refused: 0, stored: true });
+    const list = loadSaved(s);
+    expect(list).toHaveLength(3);
+    const a = list.find((x) => x.id === spotId(46.6, 7.6))!;
+    expect([a.name, a.note, a.elevation]).toEqual(['Camp A', 'good', 1500]);
+    expect(a.snapshot).toMatchObject({ unrated: true, verdict: 'unknown', savedAt: 5 });
+    expect(list.find((x) => x.id === spotId(46.7, 7.7))!.name).toBe('46.700, 7.700');
+    expect(list.find((x) => x.id === spotId(46.5, 7.5))!.name).toBe('S46.5');
+  });
+  it('turns away what does not fit once the list is full', () => {
+    const s = mem();
+    const many = Array.from({ length: MAX_SAVED + 10 }, (_, i) => ({ lat: 45.8 + i / 1000, lng: 7 }));
+    expect(importSpots(s, many)).toMatchObject({ added: MAX_SAVED, refused: 10 });
+    expect(loadSaved(s)).toHaveLength(MAX_SAVED);
+  });
+  it('an unrated spot has no overall score and sorts last by score', () => {
+    const s = mem();
+    saveSpot(s, spot(46.1, 7.1));
+    importSpots(s, [{ lat: 46.9, lng: 8.9 }]);
+    const list = loadSaved(s);
+    expect(overallOf(list.find((x) => x.snapshot.unrated)!.snapshot)).toBeUndefined();
+    expect(sortSpots(list, 'score').map((x) => x.snapshot.unrated ?? false)).toEqual([false, true]);
+  });
+});
+
+describe('overall score of a saved spot', () => {
+  it('a ban is 0, an unchecked or half-known spot has none, an old save is worked out like the sheet does', () => {
+    expect(overallOf(snap({ verdict: 'no', legal: 0 }))).toBe(0);
+    expect(overallOf(snap({ unchecked: ['zones'] }))).toBeUndefined();
+    expect(overallOf(snap({ sleep: undefined }))).toBeUndefined();
+    expect(overallOf(snap({ legal: 85, sleep: 70 }))).toBe(78);
+    expect(overallOf(snap({ legal: 85, sleep: 20 }))).toBe(30); // the weaker part holds it down
+    expect(overallOf(snap({ overall: 61, legal: 85, sleep: 70 }))).toBe(61); // the number the sheet showed wins
+  });
+});
+
+describe('sorting', () => {
+  const a = spot(46.0, 7.0, { name: 'beta', snapshot: snap({ savedAt: 100, overall: 40 }) });
+  const b = spot(47.0, 8.0, { name: 'Alpha', snapshot: snap({ savedAt: 300, overall: 90 }) });
+  const c = spot(46.1, 7.1, { name: 'gamma 10', snapshot: snap({ savedAt: 200, overall: 70 }) });
+  const d = spot(46.2, 7.2, { name: 'gamma 2', snapshot: snap({ savedAt: 50, overall: 70 }) });
+  const names = (l: SavedSpot[]) => l.map((x) => x.name);
+  it('by newest save, name (numbers in order), score and distance', () => {
+    expect(names(sortSpots([a, b, c, d], 'recent'))).toEqual(['Alpha', 'gamma 10', 'beta', 'gamma 2']);
+    expect(names(sortSpots([a, b, c, d], 'name'))).toEqual(['Alpha', 'beta', 'gamma 2', 'gamma 10']);
+    expect(names(sortSpots([a, b, c, d], 'score'))).toEqual(['Alpha', 'gamma 10', 'gamma 2', 'beta']);
+    expect(names(sortSpots([a, b, c, d], 'distance', { lat: 46.0, lng: 7.0 }))).toEqual(['beta', 'gamma 10', 'gamma 2', 'Alpha']);
+  });
+  it('does not change the list it is given, and distance without a point keeps the order', () => {
+    const list = [a, b];
+    sortSpots(list, 'name');
+    expect(list).toEqual([a, b]);
+    expect(names(sortSpots(list, 'distance'))).toEqual(['beta', 'Alpha']);
+  });
+});
+
+describe('legality written back after a re-check', () => {
+  it('replaces the verdict and legal score, keeps the rest, and clears the unrated mark', () => {
+    const s = mem();
+    saveSpot(s, spot(46.5, 7.5, { snapshot: snap({ sleep: 70, comfort: 60, pros: ['flat'] }) }));
+    importSpots(s, [{ lat: 46.9, lng: 8.9 }]);
+    expect(updateLegality(s, spotId(46.5, 7.5), { verdict: 'no', legal: 0, overall: 0, municipality: 'Adelboden', canton: 'Bern' }, 999)).toBe(true);
+    const a = loadSaved(s).find((x) => x.id === spotId(46.5, 7.5))!;
+    expect(a.snapshot).toMatchObject({ verdict: 'no', legal: 0, overall: 0, sleep: 70, comfort: 60, pros: ['flat'], legalAt: 999 });
+    expect([a.municipality, a.canton]).toEqual(['Adelboden', 'Bern']);
+    updateLegality(s, spotId(46.9, 8.9), { verdict: 'likely_ok', legal: 85 });
+    expect(loadSaved(s).find((x) => x.id === spotId(46.9, 8.9))!.snapshot.unrated).toBeUndefined();
+    expect(updateLegality(s, 'nope', { verdict: 'no' })).toBe(false);
   });
 });

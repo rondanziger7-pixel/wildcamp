@@ -1,5 +1,6 @@
 import type { Assessment } from './assess';
 import type { Comfort } from './comfort/comfort';
+import { tr } from './i18n';
 
 export type ScoreTone = 'bad' | 'warn' | 'ok' | 'good' | 'none';
 
@@ -72,3 +73,44 @@ export function overallScore(a: Assessment, legal: Score, spotComfort: number | 
 
 /** The spot's comfort (0..100) from `Comfort.spotScore`: 50 at zero, 6.25 per point, like the sleep score. */
 export const spotComfortValue = (spotScore: number) => clamp(50 + 6.25 * spotScore);
+
+export interface LegalSummary {
+  /** The legality score, undefined when nothing can be scored (outside Switzerland, or a lookup is missing and no ban was found). */
+  value?: number;
+  /** As the result sheet words it: a "likely OK" with a warning in it is "caution". */
+  verdict: Assessment['verdict'];
+  /** The most serious finding in a few words (the same line the result sheet shows under the score). */
+  why?: string;
+  /** A lookup could not be made, so there is no verdict to rely on. */
+  unchecked: boolean;
+  outside: boolean;
+}
+
+/** The most serious finding in a few words, as the result sheet puts it under the score ("Municipal rule: Kandersteg"); undefined when nothing stands out. */
+export function legalWhy(a: Assessment): string | undefined {
+  const why = a.items.find((i) => i.tone === 'bad') ?? a.items.find((i) => i.tone === 'warn');
+  if (!why) return undefined;
+  return a.municipality && why.title === tr('{name} (municipality)', { name: a.municipality }) ? tr('Municipal rule: {name}', { name: a.municipality }) : why.title;
+}
+
+/** A legality verdict in one line, for places that list many spots (the trip plan, a refreshed list). */
+export function legalSummary(a: Assessment): LegalSummary {
+  const L = legalityScore(a);
+  return {
+    value: L.value,
+    verdict: a.verdict === 'likely_ok' && L.tone === 'warn' ? 'caution' : a.verdict,
+    why: legalWhy(a),
+    unchecked: !!a.incomplete?.length && a.verdict !== 'no',
+    outside: !!a.outside,
+  };
+}
+
+/**
+ * The overall score from numbers already at hand: a ban is 0; a missing comfort (or legality) gives no number. This is
+ * `overallScore` for places that hold a saved legality and comfort instead of an `Assessment`.
+ */
+export function overallFrom(verdict: Assessment['verdict'], legal: number | undefined, comfort: number | undefined): number | undefined {
+  if (verdict === 'no') return 0;
+  if (legal === undefined || comfort === undefined) return undefined;
+  return clamp(Math.min(0.5 * legal + 0.5 * comfort, Math.min(legal, comfort) + 10));
+}

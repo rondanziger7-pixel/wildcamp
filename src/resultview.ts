@@ -9,7 +9,7 @@ import type { ShelterResult } from './comfort/shelters';
 import type { SpotSnapshot } from './saved';
 import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
-import { legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
+import { legalWhy, legalityScore, overallScore, sleepScore, spotComfortValue, weatherScore, type Score } from './scores';
 import { buildAlerts, type Alert } from './alerts';
 import { dateLocale, tr } from './i18n';
 import { applyNearBuilding, type NearBuildingNote } from './comfort/nearbuilding';
@@ -54,10 +54,10 @@ function loadingText(x: string): string {
   }
 }
 
-export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) {
+export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, ...kids: (string | Node | undefined)[]) {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
-  if (text !== undefined) e.textContent = text;
+  for (const k of kids) if (k !== undefined) e.append(k);
   return e;
 }
 
@@ -271,14 +271,8 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     const unchecked = !!a.incomplete?.length && s.verdict !== 'no';
     legal.set(L, unchecked ? '❔ ' + tr('Unchecked') : `${b.icon} ${b.label}`);
     // one line of why, so the answer needs no further tap: the most serious finding, or the verdict's own sentence
-    const why = s.items.find((i) => i.tone === 'bad') ?? s.items.find((i) => i.tone === 'warn');
-    reasonLine.textContent = unchecked
-      ? tr('Could not check: {list}', { list: a.incomplete!.map(checkLabel).join(', ') })
-      : why
-        ? a.municipality && why.title === tr('{name} (municipality)', { name: a.municipality })
-          ? tr('Municipal rule: {name}', { name: a.municipality })
-          : why.title
-        : b.sub;
+    const why = legalWhy(s);
+    reasonLine.textContent = unchecked ? tr('Could not check: {list}', { list: a.incomplete!.map(checkLabel).join(', ') }) : why ?? b.sub;
     uncheckedNow = unchecked;
     syncRetry();
     lead.textContent = unchecked ? tr('Some checks could not be made. Check again, or do not rely on this result.') : b.sub;
@@ -592,6 +586,8 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
         legal: L.value,
         sleep: snap.sleep?.value,
         weather: snap.weather?.value,
+        overall: overallScore(shown(), L, spotComfort, comfortUnavailable).value,
+        comfort: spotComfort,
         night: snap.night,
         sleepLabel: snap.label,
         water: snap.water,
