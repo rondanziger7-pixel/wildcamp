@@ -12,7 +12,7 @@ import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 import { tr } from './i18n';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
-const VISIBLE = 3;
+const VISIBLE = 2;
 
 const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: string }> = {
   no: { icon: '⛔', label: tr('Not allowed'), sub: tr('A recorded rule or protected zone prohibits camping here.') },
