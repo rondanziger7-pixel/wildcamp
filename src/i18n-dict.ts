@@ -683,6 +683,12 @@ export const DE: Record<string, string> = {
   "Wild camping: {name}": "Wildcampen: {name}",
   "It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.": "Es ist unklar, ob dieser Platz oberhalb der Waldgrenze liegt. Behandle ihn als unterhalb, wo die meisten Kantone das Campieren einschränken.",
   "Close to the treeline": "Nahe der Waldgrenze",
+  "Close to an alp": "In der Nähe einer Alp",
+  "{name} is about {dist} away. The Swiss Alpine Club asks you to ask the farmer for permission before sleeping near alp huts. This is the club's guidance, not a law.": "{name} ist etwa {dist} entfernt. Der Schweizer Alpen-Club bittet darum, vor dem Übernachten in der Nähe von Alphütten die Bauern um Erlaubnis zu fragen. Das ist eine Empfehlung des Clubs, kein Gesetz.",
+  "Close to a mountain inn": "In der Nähe eines Berggasthauses",
+  "{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.": "{name} ist etwa {dist} entfernt. Das Land rund um ein Berggasthaus oder Restaurant ist meist Privatland: Frage vor dem Campieren die Besitzer oder Wirtsleute. Der Schweizer Alpen-Club gibt denselben Rat für Hütten. Das ist eine Empfehlung, kein Gesetz.",
+  "Close to a mountain hut": "In der Nähe einer Berghütte",
+  "{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club's guidance, not a law.": "{name} ist etwa {dist} entfernt. Der Schweizer Alpen-Club bittet darum, nicht nahe bei Hütten zu übernachten. Wenn du trotzdem in der Nähe campierst, frage das Hüttenteam und biete an, die Toilette zu bezahlen oder in der Hütte etwas zu konsumieren. Das ist eine Empfehlung des Clubs, kein Gesetz.",
 };
 
 export const FR: Record<string, string> = {
@@ -1369,6 +1375,12 @@ export const FR: Record<string, string> = {
   "Wild camping: {name}": "Bivouac sauvage : {name}",
   "It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.": "On ne sait pas si cet endroit se trouve au-dessus de la limite de la forêt. Considérez-le comme en dessous, où la plupart des cantons restreignent le camping.",
   "Close to the treeline": "Près de la limite de la forêt",
+  "Close to an alp": "Près d'un alpage",
+  "{name} is about {dist} away. The Swiss Alpine Club asks you to ask the farmer for permission before sleeping near alp huts. This is the club's guidance, not a law.": "{name} se trouve à environ {dist}. Le Club Alpin Suisse demande de solliciter l'accord de l'exploitant avant de dormir près des chalets d'alpage. C'est une recommandation du club, pas une loi.",
+  "Close to a mountain inn": "Près d'un restaurant de montagne",
+  "{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.": "{name} se trouve à environ {dist}. Le terrain autour d'un restaurant ou d'une auberge de montagne est généralement privé : demandez au propriétaire ou à l'aubergiste avant de camper. Le Club Alpin Suisse donne le même conseil pour les cabanes. C'est une recommandation, pas une loi.",
+  "Close to a mountain hut": "Près d'une cabane de montagne",
+  "{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club's guidance, not a law.": "{name} se trouve à environ {dist}. Le Club Alpin Suisse demande de ne pas dormir trop près des cabanes. Si vous campez quand même à proximité, contactez l'équipe de la cabane et proposez de payer l'utilisation des toilettes ou consommez quelque chose à la cabane. C'est une recommandation du club, pas une loi.",
 };
 
 export const IT: Record<string, string> = {
@@ -2055,4 +2067,10 @@ export const IT: Record<string, string> = {
   "Wild camping: {name}": "Campeggio libero: {name}",
   "It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.": "Non è chiaro se questo posto si trovi sopra il limite del bosco. Consideralo sotto, dove la maggior parte dei cantoni limita il campeggio.",
   "Close to the treeline": "Vicino al limite del bosco",
+  "Close to an alp": "Vicino a un alpeggio",
+  "{name} is about {dist} away. The Swiss Alpine Club asks you to ask the farmer for permission before sleeping near alp huts. This is the club's guidance, not a law.": "{name} si trova a circa {dist}. Il Club Alpino Svizzero chiede di domandare il permesso al contadino prima di dormire vicino alle capanne d'alpeggio. È una raccomandazione del club, non una legge.",
+  "Close to a mountain inn": "Vicino a un ristorante di montagna",
+  "{name} is about {dist} away. The land around an inn or restaurant is usually private: ask the owner or host before you camp. The Swiss Alpine Club gives the same advice for huts. This is guidance, not a law.": "{name} si trova a circa {dist}. Il terreno attorno a un ristorante o a un albergo di montagna è di solito privato: chiedi al proprietario o al gestore prima di campeggiare. Il Club Alpino Svizzero dà lo stesso consiglio per le capanne. È una raccomandazione, non una legge.",
+  "Close to a mountain hut": "Vicino a una capanna di montagna",
+  "{name} is about {dist} away. The Swiss Alpine Club asks you not to sleep close to huts. If you still camp nearby, ask the hut team and offer to pay for the toilet or buy something in the hut. This is the club's guidance, not a law.": "{name} si trova a circa {dist}. Il Club Alpino Svizzero chiede di non dormire troppo vicino alle capanne. Se campeggi comunque nelle vicinanze, contatta il team della capanna e offri di pagare l'uso dei servizi o consuma qualcosa in capanna. È una raccomandazione del club, non una legge.",
 };

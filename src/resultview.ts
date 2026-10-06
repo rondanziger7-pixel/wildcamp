@@ -10,9 +10,10 @@ import { restrictionItems, type Restrictions } from './restrictions';
 import { renderSeasons } from './seasonview';
 import { legalityScore, sleepScore, weatherScore, type Score } from './scores';
 import { tr } from './i18n';
+import type { NearBuildingNote } from './comfort/nearbuilding';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
-const VISIBLE = 2;
+const VISIBLE = 3;
 
 const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: string }> = {
   no: { icon: '⛔', label: tr('Not allowed'), sub: tr('A recorded rule or protected zone prohibits camping here.') },
@@ -136,6 +137,8 @@ export interface ResultUi {
   setAvalanche(a: AvalancheInfo | undefined, failed?: boolean): void;
   /** Fire and drone rules, shown under the legality details; they do not change the camping verdict. */
   setRules(r: Restrictions | undefined): void;
+  /** A hut, inn or alp right next to the spot: a note in the legality details (and "likely OK" becomes "caution"). */
+  setNearBuilding(n: NearBuildingNote | undefined): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
 }
@@ -182,7 +185,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   const legal = scoreCard('legal', tr('Legality'));
   const sleep = scoreCard('sleep', tr('Sleep'));
   const weather = scoreCard('weather', tr('Weather'));
-  const L = legalityScore(a);
+  let L = legalityScore(a);
   const b = BANNER[a.verdict];
   legal.set(L, `${b.icon} ${b.label}`);
   legal.b.classList.add('primary');
@@ -210,7 +213,9 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
-  legalPanel.append(el('p', 'panel-lead', b.sub), ...checklist(a.items, 'details'));
+  const legalList = el('div', 'legal-list');
+  legalList.append(...checklist(a.items, 'details'));
+  legalPanel.append(el('p', 'panel-lead', b.sub), legalList);
   const seasons = renderSeasons(a.zones);
   if (seasons) legalPanel.append(seasons);
   const rulesHost = el('section', 'rules');
@@ -338,6 +343,14 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         shelterChip.classList.add('far');
       }
     },
+    setNearBuilding(note) {
+      if (!note) return;
+      const verdict = a.verdict === 'likely_ok' ? 'caution' : a.verdict;
+      L = legalityScore({ ...a, verdict, items: [...a.items, note] });
+      legal.set(L, `${BANNER[verdict].icon} ${BANNER[verdict].label}`);
+      if (a.verdict === 'likely_ok') legal.b.querySelector('.sc-reason')!.textContent = note.title;
+      legalList.replaceChildren(...checklist([...a.items, note], 'details', focus));
+    },
     setRules(r) {
       const items = r ? restrictionItems(r) : [];
       rulesHost.replaceChildren(
@@ -363,7 +376,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
     },
     snapshot() {
       return {
-        verdict: a.verdict,
+        verdict: a.verdict === 'likely_ok' && L.tone === 'warn' ? 'caution' : a.verdict,
         legal: L.value,
         sleep: snap.sleep?.value,
         weather: snap.weather?.value,

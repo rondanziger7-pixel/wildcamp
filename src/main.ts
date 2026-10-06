@@ -34,6 +34,7 @@ import { renderTrip } from './tripview';
 import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
 import { fetchShelters, type ShelterResult } from './comfort/shelters';
+import { nearBuildingNote } from './comfort/nearbuilding';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
 import { fetchBuildingZone } from './buildingzone';
@@ -244,7 +245,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     track('far', withTimeout(fetchProfiles(lat, lng, FAR, abort.signal), PART_MS + 2000), (v) => (got.far = v)),
     track('around', withTimeout(fetchSurroundings(lat, lng, abort.signal), PART_MS), (v) => (got.around = v)),
     track('water', withTimeout(fetchWater(lat, lng, abort.signal), PART_MS), (v) => { got.water = v; ui.setWater(v); }, () => { failed.water = true; ui.setWater(undefined, true); }),
-    track('shelter', withTimeout(fetchShelters(lat, lng, abort.signal), PART_MS), (v) => { got.shelters = v; ui.setShelter(v); }, () => ui.setShelter(undefined, true)),
+    track('shelter', withTimeout(fetchShelters(lat, lng, abort.signal), PART_MS), (v) => { got.shelters = v; ui.setShelter(v); ui.setNearBuilding(nearBuildingNote(v)); }, () => ui.setShelter(undefined, true)),
     track('ground', withTimeout(fetchGround(lat, lng, abort.signal), PART_MS), (v) => (got.ground = v)),
     track('avalanche', withTimeout(fetchBulletin(abort.signal), PART_MS).then((fc) => bulletinAt(fc, lat, lng, new Date())), (v) => { got.avalanche = v; ui.setAvalanche(v); }, () => { failed.avalanche = true; ui.setAvalanche(undefined, true); }),
     track('rules', withTimeout(fetchRestrictions(lat, lng, abort.signal), PART_MS), (v) => ui.setRules(v), () => ui.setRules({ failed: ['fire', 'drones'] })),

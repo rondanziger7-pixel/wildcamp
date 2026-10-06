@@ -168,7 +168,7 @@ export function assess(input: {
     } else {
       const t = tr('Municipal police regulations can add rules and are not checked here; look for the municipality\'s Polizeireglement / règlement de police.');
       reasons.push(tr('Municipality: {name}. {text}', { name: municipality, text: t }));
-      // no per-spot item: it would repeat on nearly every result; the footer disclaimer says the same
+      items.push({ tone: 'info', title: tr('Municipality: {name}', { name: municipality }), text: t });
     }
   }
   const bz = input.buildingZone;
@@ -184,6 +184,7 @@ export function assess(input: {
   }
   if (verdict === 'likely_ok' || verdict === 'caution') {
     reasons.push(tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).'));
+    items.push({ tone: 'info', title: tr('Not checked'), text: tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).') });
   }
   return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality };
 }
