@@ -67,7 +67,25 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
   const sorted = [...items].sort((x, y) => TONE_ORDER[x.tone] - TONE_ORDER[y.tone]);
   sorted.forEach((it, i) => {
     const li = el('li', `check ${it.tone}${i >= VISIBLE ? ' more' : ''}`);
-    li.append(el('h3', undefined, it.title), el('p', undefined, it.text));
+    const body = el('p', undefined, it.text);
+    li.append(el('h3', undefined, it.title), body);
+    // long text is cut to two lines; tapping the item shows all of it
+    if (it.text.length > 110 || it.sources?.length) {
+      li.classList.add('long');
+      li.tabIndex = 0;
+      li.setAttribute('role', 'button');
+      li.setAttribute('aria-expanded', 'false');
+      const toggle = () => li.setAttribute('aria-expanded', String(li.classList.toggle('open')));
+      li.onclick = (ev) => {
+        if (!(ev.target as HTMLElement).closest('a, button')) toggle();
+      };
+      li.onkeydown = (ev) => {
+        if ((ev.key === 'Enter' || ev.key === ' ') && ev.target === li) {
+          ev.preventDefault();
+          toggle();
+        }
+      };
+    }
     const at = it.at;
     if (at && focus) {
       const go = el('button', 'linkish', '📍 ' + tr('Show on map'));
@@ -120,6 +138,13 @@ export interface ResultUi {
   setRules(r: Restrictions | undefined): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
+}
+
+/** Fire and drone rules sit in a tab that starts closed. */
+function fireTab(items: Parameters<typeof checklist>[0]) {
+  const tab = el('details', 'more rules-tab');
+  tab.append(el('summary', undefined, '🔥 ' + tr('Fire and drones')), el('p', 'where', tr('Live official data. These rules do not change the camping verdict above.')), ...checklist(items, 'fire and drone details'));
+  return tab;
 }
 
 function scoreCard(kind: string, title: string) {
@@ -317,7 +342,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       const items = r ? restrictionItems(r) : [];
       rulesHost.replaceChildren(
         ...(items.length
-          ? [el('h3', 'rules-title', tr('Fire and drones')), el('p', 'where', tr('Live official data. These rules do not change the camping verdict above.')), ...checklist(items, 'fire and drone details')]
+          ? [fireTab(items)]
           : []),
       );
     },
