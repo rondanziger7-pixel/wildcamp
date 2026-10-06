@@ -692,7 +692,16 @@ document.getElementById('locate')!.addEventListener('click', () => {
 });
 
 // Settings panel (opened from the map menu)
-document.getElementById('settings-close')!.addEventListener('click', () => (document.getElementById('legend')!.hidden = true));
+const layersPanel = document.getElementById('legend')!;
+const settingsPanel = document.getElementById('settings')!;
+document.getElementById('layers-close')!.addEventListener('click', () => (layersPanel.hidden = true));
+document.getElementById('settings-close')!.addEventListener('click', () => (settingsPanel.hidden = true));
+/** One panel at a time. */
+function togglePanel(open: HTMLElement) {
+  const show = open.hidden;
+  layersPanel.hidden = settingsPanel.hidden = true;
+  open.hidden = !show;
+}
 document.getElementById('toggle-trails')!.addEventListener('change', (ev) => {
   if ((ev.target as HTMLInputElement).checked) trailOverlay.addTo(map);
   else trailOverlay.remove();
@@ -792,11 +801,11 @@ const ICONS: Record<string, string> = {
   saved: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   trip: '<rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 14.5l2.5 2.5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
   save: '<path d="M12 3v11m0 0l-4-4m4 4l4-4M5 18v2h14v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  layers: '<path d="M12 3l9 5-9 5-9-5 9-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   settings: '<circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
 };
 const icon = (name: string) => `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${ICONS[name]}</svg>`;
 
-const settingsPanel = document.getElementById('legend')!;
 const MenuControl = L.Control.extend({
   onAdd() {
     const box = L.DomUtil.create('div', 'map-menu');
@@ -818,9 +827,8 @@ const MenuControl = L.Control.extend({
       ['saved', tr('Saved spots'), showSaved],
       ['trip', tr('Trip planner'), showTrip],
       ['save', tr('Save map for offline'), () => void saveArea()],
-      ['settings', tr('Settings'), () => {
-        settingsPanel.hidden = !settingsPanel.hidden;
-      }],
+      ['layers', tr('Map layers'), () => togglePanel(layersPanel)],
+      ['settings', tr('Settings'), () => togglePanel(settingsPanel)],
     ];
     for (const [name, label, run] of items) {
       const it = L.DomUtil.create('button', 'menu-item', list) as HTMLButtonElement;

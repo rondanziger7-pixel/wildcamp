@@ -49,10 +49,7 @@
     </header>
 
     <section id="legend" hidden>
-      <div class="panel-head"><h2 data-i18n>Settings</h2><button id="settings-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
-      <label class="lang-row"><span data-i18n>Language</span> <select id="lang-select" aria-label="Language" data-i18n-attr="aria-label"></select></label>
-      <p class="lang-note" data-i18n>The interface is translated; the detailed explanations and legal summaries stay in English.</p>
-      <h3 data-i18n>Map layers</h3>
+      <div class="panel-head"><h2 data-i18n>Map layers</h2><button id="layers-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
       <label><input type="checkbox" id="toggle-trails" checked /> <span data-i18n>Hiking trails</span></label>
       <ul class="swatches">
         <li><i style="background:#f2c200"></i> <span data-i18n>Hiking trail</span></li>
@@ -64,6 +61,11 @@
       <label><input type="checkbox" id="toggle-zones" checked /> <span data-i18n>Restricted zones</span></label>
       <p data-i18n>Colours come from the source layers (federal hunting reserves, wildlife quiet zones, floodplains, bogs and more). A coloured area is not always a ban: tap the spot to see what applies.</p>
       <p data-i18n>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, SO, JU) is checked when you tap a spot but is not drawn on the map.</p>
+    </section>
+    <section id="settings" class="panel" hidden>
+      <div class="panel-head"><h2 data-i18n>Settings</h2><button id="settings-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
+      <label class="lang-row"><span data-i18n>Language</span> <select id="lang-select" aria-label="Language" data-i18n-attr="aria-label"></select></label>
+      <p class="lang-note" data-i18n>The interface is translated; the detailed explanations and legal summaries stay in English.</p>
     </section>
 
     <div id="offline-banner" role="status" data-i18n hidden>Offline: the saved map and bundled data still work. Zone, canton, water and weather lookups need a connection, so results are incomplete.</div>
