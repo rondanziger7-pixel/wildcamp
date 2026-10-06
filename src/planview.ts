@@ -1,4 +1,4 @@
-import { compassName } from './comfort/weather';
+import { compassName, nightText } from './comfort/weather';
 import { el } from './resultview';
 import type { PlanRow, TripPlan } from './planner';
 import { tr } from './i18n';
@@ -15,7 +15,7 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, ba
   plan.rows.forEach((r: PlanRow, i) => {
     const li = el('li', `plan-row${plan.weakest === i && plan.rows.length > 1 ? ' weakest' : ''}`);
     const head = el('div', 'finder-head');
-    head.append(el('span', 'finder-num', String(i + 1)), el('strong', undefined, `${r.night}: ${r.spot.name}`));
+    head.append(el('span', 'finder-num', String(i + 1)), el('strong', undefined, `${nightText(r.night)}: ${r.spot.name}`));
     const chips = el('div', 'finder-scores');
     chips.append(
       el('span', `chip-score ${tone(r.legal)}`, `${tr('Legal')} ${r.legal ?? '–'}`),
@@ -23,14 +23,26 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: number, ba
     );
     const f = r.forecast;
     const detail = f
-      ? `${Math.round(f.minTempC)} °C low, gusts ${Math.round(f.maxGustKmh)} km/h from ${compassName(f.windFromDeg)}, ${f.precipMm >= 1 ? `${f.precipMm.toFixed(0)} mm rain` : 'dry'}${r.flags.length ? `. Watch for: ${r.flags.join(', ')}` : ''}.`
-      : 'The forecast could not be loaded for this spot.';
-    const note = el('p', 'finder-note', `${detail}${r.stop ? ' The weather rules this night out.' : ''}${plan.weakest === i && plan.rows.length > 1 ? ' Weakest night of the trip.' : ''}`);
+      ? tr('{low} °C low, gusts {gust} km/h from {dir}, {rain}{watch}.', {
+          low: Math.round(f.minTempC),
+          gust: Math.round(f.maxGustKmh),
+          dir: compassName(f.windFromDeg),
+          rain: f.precipMm >= 1 ? tr('{mm} mm rain', { mm: f.precipMm.toFixed(0) }) : tr('dry'),
+          watch: r.flags.length ? '. ' + tr('Watch for: {list}', { list: r.flags.join(', ') }) : '',
+        })
+      : tr('The forecast could not be loaded for this spot.');
+    const note = el('p', 'finder-note', `${detail}${r.stop ? ' ' + tr('The weather rules this night out.') : ''}${plan.weakest === i && plan.rows.length > 1 ? ' ' + tr('Weakest night of the trip.') : ''}`);
     li.append(head, chips, note);
     list.append(li);
   });
   const foot = el('p', 'disclaimer');
-  foot.textContent = `Legality is the saved check of each spot, not re-checked: open a spot to check it again before you go. The weather score is the forecast for that night at the spot's elevation, without the shelter of the terrain. Nights are assigned in the order you ticked the spots; the forecast covers about four nights.${plan.dropped.length ? ` Left out beyond the forecast: ${plan.dropped.map((d) => d.name).join(', ')}.` : ''}${failed ? ` ${failed} forecast${failed === 1 ? '' : 's'} could not be loaded.` : ''}`;
+  foot.textContent = [
+    tr('Legality is the saved check of each spot, not re-checked: open a spot to check it again before you go. The weather score is the forecast for that night at the spot\'s elevation, without the shelter of the terrain. Nights are assigned in the order you ticked the spots; the forecast covers about four nights.'),
+    plan.dropped.length ? tr('Left out beyond the forecast: {list}.', { list: plan.dropped.map((d) => d.name).join(', ') }) : '',
+    failed ? (failed === 1 ? tr('{n} forecast could not be loaded.', { n: failed }) : tr('{n} forecasts could not be loaded.', { n: failed })) : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
   // inside the trip planner the page already has its own header
   root.replaceChildren(...(back ? [back1, title] : []), list, foot);
 }

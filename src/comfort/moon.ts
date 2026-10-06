@@ -1,5 +1,6 @@
 import { getMoonIllumination, getMoonPosition } from 'suncalc';
 import { zurichNow } from './weather';
+import { tr } from '../i18n';
 
 /** Zurich wall-clock "YYYY-MM-DDTHH:MM" to an instant (handles summer and winter time). */
 export function zurichToDate(local: string): Date {
@@ -21,7 +22,7 @@ export interface MoonNight {
 }
 
 export function phaseName(phase: number): string {
-  const names = ['New moon', 'Waxing crescent', 'First quarter', 'Waxing gibbous', 'Full moon', 'Waning gibbous', 'Last quarter', 'Waning crescent'];
+  const names = [tr('New moon'), tr('Waxing crescent'), tr('First quarter'), tr('Waxing gibbous'), tr('Full moon'), tr('Waning gibbous'), tr('Last quarter'), tr('Waning crescent')];
   return names[Math.round(phase * 8) % 8]!;
 }
 

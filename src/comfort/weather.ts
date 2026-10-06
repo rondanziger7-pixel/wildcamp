@@ -1,3 +1,5 @@
+import { dateLocale, tr } from '../i18n';
+
 /** Forecast from Open-Meteo (https://open-meteo.com, CC BY 4.0), hourly values at the spot's elevation. */
 export interface Hourly {
   time: string[];
@@ -77,13 +79,13 @@ export interface NightWindow {
   /** Local "YYYY-MM-DDTHH:MM". */
   from: string;
   to: string;
-  /** "Tonight", "Tomorrow", then weekday names. */
+  /** "Tonight", "Tomorrow" (English keys, translated where shown), then weekday names in the current language. */
   label: string;
   /** The calendar day the evening falls on. */
   day: string;
 }
 
-const WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'short', timeZone: 'UTC' });
+const weekday = (d: Date) => new Intl.DateTimeFormat(dateLocale(), { weekday: 'short', timeZone: 'UTC' }).format(d);
 
 /** The nights to plan for, from the evening (18:00) to the next morning (08:00). Before 08:00 the first is the night in progress. */
 export function nightWindows(now: string, count = FORECAST_DAYS - 1): NightWindow[] {
@@ -96,10 +98,31 @@ export function nightWindows(now: string, count = FORECAST_DAYS - 1): NightWindo
     return {
       from: inProgress ? now : `${day}T${pad(EVENING_HOUR)}:00`,
       to: `${addDays(day, 1)}T${pad(MORNING_HOUR)}:00`,
-      label: i === 0 ? 'Tonight' : i === 1 ? 'Tomorrow' : WEEKDAY.format(new Date(`${day}T12:00:00Z`)),
+      label: i === 0 ? 'Tonight' : i === 1 ? 'Tomorrow' : weekday(new Date(`${day}T12:00:00Z`)),
       day,
     };
   });
+}
+
+/**
+ * A night label in the current language: "Tonight" / "Tomorrow" (a window's label), "tonight" / "tomorrow night" and "Sat night"
+ * (the lower-case forms the result sheet uses in sentences). Anything else, such as a weekday, is returned as it is.
+ */
+export function nightText(label: string): string {
+  switch (label) {
+    case 'Tonight':
+      return tr('Tonight');
+    case 'Tomorrow':
+      return tr('Tomorrow');
+    case 'tonight':
+      return tr('tonight');
+    case 'tomorrow night':
+      return tr('tomorrow night');
+    default: {
+      const m = label.match(/^(.+) night$/);
+      return m ? tr('{day} night', { day: m[1]! }) : label;
+    }
+  }
 }
 
 /** First window of `nightWindows`. */
@@ -192,20 +215,20 @@ export interface Sky {
 
 /** WMO weather interpretation codes as used by Open-Meteo. */
 export function describeCode(code: number): Sky {
-  if (code === 0) return { emoji: '☀️', label: 'Clear' };
-  if (code === 1) return { emoji: '🌤️', label: 'Mostly clear' };
-  if (code === 2) return { emoji: '⛅', label: 'Partly cloudy' };
-  if (code === 3) return { emoji: '☁️', label: 'Overcast' };
-  if (code === 45 || code === 48) return { emoji: '🌫️', label: 'Fog' };
-  if (code >= 51 && code <= 57) return { emoji: '🌦️', label: 'Drizzle' };
-  if (code === 66 || code === 67) return { emoji: '🌧️', label: 'Freezing rain' };
-  if (code >= 61 && code <= 65) return { emoji: '🌧️', label: code === 65 ? 'Heavy rain' : 'Rain' };
-  if (code >= 71 && code <= 77) return { emoji: '🌨️', label: 'Snow' };
-  if (code >= 80 && code <= 82) return { emoji: '🌦️', label: 'Showers' };
-  if (code === 85 || code === 86) return { emoji: '🌨️', label: 'Snow showers' };
-  if (code === 95) return { emoji: '⛈️', label: 'Thunderstorm' };
-  if (code >= 96) return { emoji: '⛈️', label: 'Thunderstorm with hail' };
-  return { emoji: '❔', label: 'Unknown' };
+  if (code === 0) return { emoji: '☀️', label: tr('Clear') };
+  if (code === 1) return { emoji: '🌤️', label: tr('Mostly clear') };
+  if (code === 2) return { emoji: '⛅', label: tr('Partly cloudy') };
+  if (code === 3) return { emoji: '☁️', label: tr('Overcast') };
+  if (code === 45 || code === 48) return { emoji: '🌫️', label: tr('Fog') };
+  if (code >= 51 && code <= 57) return { emoji: '🌦️', label: tr('Drizzle') };
+  if (code === 66 || code === 67) return { emoji: '🌧️', label: tr('Freezing rain') };
+  if (code >= 61 && code <= 65) return { emoji: '🌧️', label: code === 65 ? tr('Heavy rain') : tr('Rain') };
+  if (code >= 71 && code <= 77) return { emoji: '🌨️', label: tr('Snow') };
+  if (code >= 80 && code <= 82) return { emoji: '🌦️', label: tr('Showers') };
+  if (code === 85 || code === 86) return { emoji: '🌨️', label: tr('Snow showers') };
+  if (code === 95) return { emoji: '⛈️', label: tr('Thunderstorm') };
+  if (code >= 96) return { emoji: '⛈️', label: tr('Thunderstorm with hail') };
+  return { emoji: '❔', label: tr('Unknown') };
 }
 
 /** Rough order of how unpleasant a sky is for camping, for picking the worst hour. */
@@ -222,7 +245,8 @@ export function severity(code: number): number {
 }
 
 export const COMPASS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-export const compassName = (deg: number) => COMPASS[Math.round((((deg % 360) + 360) % 360) / 45) % 8]!;
+/** Compass point of a bearing; the letters are English (N, NE, E ...) and shown in the current language (German NO, O, SO). */
+export const compassName = (deg: number) => tr(COMPASS[Math.round((((deg % 360) + 360) % 360) / 45) % 8]!);
 
 export interface HourPoint {
   time: string;

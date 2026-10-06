@@ -19,10 +19,10 @@ describe('dictionaries', () => {
       }
   });
   it('every text passed to tr() as a plain literal, and every data-i18n text of the page, is translated', () => {
-    const files = readdirSync('src').filter((f) => f.endsWith('.ts') && !f.startsWith('i18n'));
+    const files = ['src', 'src/comfort'].flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.ts') && !f.startsWith('i18n')).map((f) => `${d}/${f}`));
     const missing: string[] = [];
     for (const f of files) {
-      const src = readFileSync(`src/${f}`, 'utf8');
+      const src = readFileSync(f, 'utf8');
       for (const m of src.matchAll(/\btr\(\s*'((?:[^'\\]|\\.)*)'/g)) {
         const key = m[1]!.replace(/\\'/g, "'");
         if (!(key in DE)) missing.push(`${f}: ${key}`);
@@ -36,7 +36,7 @@ describe('dictionaries', () => {
     expect(missing).toEqual([]);
   });
   it('covers the dynamic keys: months, avalanche levels and table headers', () => {
-    for (const k of ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'low', 'moderate', 'considerable', 'high', 'very high', 'Hour', 'Rain mm', 'Rain %', 'Wind km/h', 'From']) expect(DE[k], k).toBeDefined();
+    for (const k of ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'low', 'moderate', 'considerable', 'high', 'very high', 'Hour', 'Rain mm', 'Rain %', 'Wind km/h', 'From', 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'Geneva nature reserve', 'Exception: sectors of zone C with a cantonal authorisation.']) expect(DE[k], k).toBeDefined();
   });
 });
 

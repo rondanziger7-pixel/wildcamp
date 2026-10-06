@@ -2,6 +2,7 @@ import { el } from './resultview';
 import { tr } from './i18n';
 import type { SavedSpot } from './saved';
 import { MAX_NIGHTS } from './trip';
+import { nightText } from './comfort/weather';
 
 export interface TripHandlers {
   onAdd(id: string): void;
@@ -20,7 +21,7 @@ export function renderTrip(root: HTMLElement, spots: SavedSpot[], inTrip: SavedS
   const nights = el('ol', 'trip-nights');
   inTrip.forEach((s, i) => {
     const li = el('li', 'trip-night');
-    const label = el('span', 'trip-label', nightLabels[i] ?? tr('Night {n}', { n: i + 1 }));
+    const label = el('span', 'trip-label', nightLabels[i] ? nightText(nightLabels[i]!) : tr('Night {n}', { n: i + 1 }));
     const open = el('button', 'saved-open');
     open.type = 'button';
     open.append(el('strong', undefined, s.name));

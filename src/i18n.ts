@@ -44,6 +44,12 @@ export function tr(en: string, params?: Record<string, string | number>): string
   return params ? s.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)) : s;
 }
 
+/** The locale for dates and weekday names in the current language. */
+export const dateLocale = () => ({ en: 'en-GB', de: 'de-CH', fr: 'fr-CH', it: 'it-CH' })[current];
+
+/** Lower-case a phrase for use inside a sentence; German nouns keep their capital letter. */
+export const lower = (s: string) => (current === 'de' ? s : s.toLowerCase());
+
 /** Translate the static page: elements with data-i18n use their own English text as the key; data-i18n-attr names attributes. */
 export function applyStatic(root: ParentNode = document): void {
   document.documentElement.lang = current;

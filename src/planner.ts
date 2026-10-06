@@ -2,6 +2,7 @@ import { comfortFor } from './comfort/comfort';
 import { summariseNight, type Hourly, type Night, type NightWindow } from './comfort/weather';
 import type { SavedSpot } from './saved';
 import { weatherScore } from './scores';
+import { tr } from './i18n';
 
 export interface PlanRow {
   /** "Tonight", "Tomorrow", then weekday names. */
@@ -29,14 +30,14 @@ export interface TripPlan {
 
 export function flagsFor(n: Night): string[] {
   const f: string[] = [];
-  if (n.thunder) f.push('thunderstorm');
-  if (n.maxGustKmh >= 80) f.push('storm gusts');
-  else if (n.maxGustKmh >= 50) f.push('strong wind');
-  if (n.precipMm >= 10) f.push('heavy rain');
-  else if (n.precipMm >= 5) f.push('rain');
-  if (n.snowCm !== undefined && n.snowCm >= 1) f.push('new snow');
-  if (n.minTempC <= -5) f.push('hard frost');
-  else if (n.minTempC <= 0) f.push('frost');
+  if (n.thunder) f.push(tr('thunderstorm'));
+  if (n.maxGustKmh >= 80) f.push(tr('storm gusts'));
+  else if (n.maxGustKmh >= 50) f.push(tr('strong wind'));
+  if (n.precipMm >= 10) f.push(tr('heavy rain'));
+  else if (n.precipMm >= 5) f.push(tr('rain'));
+  if (n.snowCm !== undefined && n.snowCm >= 1) f.push(tr('new snow'));
+  if (n.minTempC <= -5) f.push(tr('hard frost'));
+  else if (n.minTempC <= 0) f.push(tr('frost'));
   return f;
 }
 

@@ -2,6 +2,7 @@ import { wgs84ToLv95 } from './coords';
 import { ZONE_LAYERS, type ZoneLayer } from './zones';
 import type { ZoneHit } from './assess';
 import { findCanton, type Canton } from './cantons';
+import { tr } from './i18n';
 
 const API = 'https://api3.geo.admin.ch/rest/services';
 
@@ -68,12 +69,12 @@ function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { la
   const bits = [rule, season && `(${season})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
   if (statutory && entryRule && running) return { layer, detail: bits, season };
   let why: string;
-  if (!statutory) why = 'This zone is only recommended, not binding.';
-  else if (winterSportsOnly) why = 'The rule covers winter sports only.';
-  else if (!entryRule) why = 'The zone\'s rule is not a plain entry or path rule; read it.';
-  else why = `The restriction applies ${season} and is not running today (${fmtDate(today)}), but check the zone's rule.`;
+  if (!statutory) why = tr('This zone is only recommended, not binding.');
+  else if (winterSportsOnly) why = tr('The rule covers winter sports only.');
+  else if (!entryRule) why = tr('The zone\'s rule is not a plain entry or path rule; read it.');
+  else why = tr('The restriction applies {season} and is not running today ({date}), but check the zone\'s rule.', { season: season ?? '', date: fmtDate(today) });
   return {
-    layer: { ...layer, severity: 'caution', note: `Wildlife quiet zone. ${why}` },
+    layer: { ...layer, severity: 'caution', note: tr('Wildlife quiet zone. {why}', { why }) },
     detail: bits,
     season,
   };
@@ -92,11 +93,11 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }, today: Date 
       continue;
     }
     let detail: string | undefined;
-    if (r.layerBodId.startsWith('ch.bafu.bundesinventare-auen')) detail = str(a.auen_type_de) && `Type: ${str(a.auen_type_de)}.`;
+    if (r.layerBodId.startsWith('ch.bafu.bundesinventare-auen')) detail = str(a.auen_type_de) && tr('Type: {type}.', { type: str(a.auen_type_de)! });
     if (r.layerBodId === 'ch.vbs.schiessanzeigen') {
       const sh = shootingDetail(a, today);
       hits.push({
-        layer: sh.active ? { ...layer, severity: 'caution', note: 'Shooting is scheduled here today. Do not stay in the danger area; read the firing notice.' } : layer,
+        layer: sh.active ? { ...layer, severity: 'caution', note: tr('Shooting is scheduled here today. Do not stay in the danger area; read the firing notice.') } : layer,
         name: str(a.label) ?? str(a.name),
         detail: sh.detail,
       });
@@ -116,8 +117,8 @@ function shootingDetail(a: Record<string, unknown>, today: Date): { detail: stri
   const to = Array.isArray(a.zeit_bis) ? (a.zeit_bis as string[])[i] : undefined;
   const link = str(a.url_en) ?? str(a.url_de);
   const fmt = (t?: string) => (t && t.length === 4 ? `${t.slice(0, 2)}:${t.slice(2)}` : t);
-  const state = i < 0 ? 'No firing is listed for today.' : off ? 'No shooting is listed for today.' : `Shooting is listed for today${from ? ` (${fmt(from)} to ${fmt(to)})` : ''}.`;
-  return { detail: `${state}${link ? ` Notice: ${link}` : ''}`, active: i >= 0 && off === false };
+  const state = i < 0 ? tr('No firing is listed for today.') : off ? tr('No shooting is listed for today.') : from ? tr('Shooting is listed for today ({from} to {to}).', { from: fmt(from)!, to: fmt(to) ?? '' }) : tr('Shooting is listed for today.');
+  return { detail: `${state}${link ? ' ' + tr('Notice: {link}', { link }) : ''}`, active: i >= 0 && off === false };
 }
 
 /** Canton at a point from swissBOUNDARIES3D, or undefined if the point is outside every canton. */

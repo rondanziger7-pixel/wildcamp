@@ -1,4 +1,5 @@
 import { zurichNow } from './weather';
+import { tr } from '../i18n';
 
 /**
  * The SLF avalanche bulletin (https://www.slf.ch, CAAML as GeoJSON: one feature per bulletin, its polygon the union of the
@@ -38,6 +39,7 @@ export interface BulletinCollection {
 
 export const LEVELS = { low: 1, moderate: 2, considerable: 3, high: 4, very_high: 5 } as const;
 export const LEVEL_NAME = ['', 'low', 'moderate', 'considerable', 'high', 'very high'] as const;
+/** English names of the problem types (data); `problemText` gives them in the current language. */
 const PROBLEM_NAME: Record<string, string> = {
   new_snow: 'new snow',
   wind_slab: 'wind slabs',
@@ -127,8 +129,32 @@ export async function fetchBulletin(signal?: AbortSignal, now = Date.now()): Pro
 
 /** "above 2400 m", "below 2000 m", "2000 to 2600 m" */
 export function bandText(above?: number, below?: number): string {
-  if (above !== undefined && below !== undefined) return `${above} to ${below} m`;
-  if (above !== undefined) return `above ${above} m`;
-  if (below !== undefined) return `below ${below} m`;
-  return 'at all elevations';
+  if (above !== undefined && below !== undefined) return tr('{above} to {below} m', { above, below });
+  if (above !== undefined) return tr('above {above} m', { above });
+  if (below !== undefined) return tr('below {below} m', { below });
+  return tr('at all elevations');
+}
+
+/** A problem type's name in the current language. */
+export function problemText(type: string): string {
+  switch (type) {
+    case 'new snow':
+      return tr('new snow');
+    case 'wind slabs':
+      return tr('wind slabs');
+    case 'persistent weak layers':
+      return tr('persistent weak layers');
+    case 'wet snow':
+      return tr('wet snow');
+    case 'gliding snow':
+      return tr('gliding snow');
+    case 'cornices':
+      return tr('cornices');
+    case 'no distinct problem':
+      return tr('no distinct problem');
+    case 'favourable situation':
+      return tr('favourable situation');
+    default:
+      return type;
+  }
 }

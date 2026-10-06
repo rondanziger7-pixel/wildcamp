@@ -1,5 +1,6 @@
 import { wgs84ToLv95 } from '../coords';
 import { distanceTo } from './surroundings';
+import { tr } from '../i18n';
 
 const API = 'https://api3.geo.admin.ch/rest/services';
 const SEARCH_M = 800;
@@ -98,7 +99,7 @@ export function upstreamPlants(body: { results?: { attributes?: Record<string, u
     const x = Number(a.rechtswert) + 2000000;
     const y = Number(a.hochwert) + 1000000;
     out.push({
-      name: String(a.name ?? a.label ?? 'Treatment plant'),
+      name: String(a.name ?? a.label ?? tr('Treatment plant')),
       meters: Number.isFinite(x) && Number.isFinite(y) ? Math.hypot(x - e, y - n) : Infinity,
       sharePct: typeof a.abwasseranteil_q347 === 'number' ? a.abwasseranteil_q347 : undefined,
       receiving: typeof a.name_vorfluter === 'string' ? a.name_vorfluter : undefined,

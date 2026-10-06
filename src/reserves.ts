@@ -1,3 +1,4 @@
+import { tr } from './i18n';
 import { gunzipIfNeeded } from './binary';
 import type { ZoneHit } from './assess';
 import { RESERVE_ZONES, type ZoneLayer } from './zones';
@@ -86,9 +87,14 @@ function generatedLayer(set: ReserveSet, level: ReserveLevel): ZoneLayer {
   if (!layer) {
     layer = {
       id: `${set.canton.toLowerCase()}-reserve-${level}`,
-      label: set.label ?? `${set.canton} nature reserve`,
+      // read at display time, so the language in force then decides; the texts come with the data and are translated by key
+      get label() {
+        return tr(set.label ?? `${set.canton} nature reserve`);
+      },
       severity: level,
-      note: set.notes?.[level] ?? '',
+      get note() {
+        return tr(set.notes?.[level] ?? '');
+      },
     };
     generated.set(key, layer);
   }
@@ -111,6 +117,6 @@ export function reserveZoneHits(set: ReserveSet, e: number, n: number): ZoneHit[
   return reservesAt(set, e, n).map((r) => ({
     layer: layerFor(set, r),
     name: r.name,
-    detail: [r.exception, r.scan === 'unchecked' ? '' : `${r.scan === 'law' ? 'Legal basis' : 'Decree'}: ${r.decree}`].filter(Boolean).join(' '),
+    detail: [r.exception && tr(r.exception), r.scan === 'unchecked' ? '' : `${r.scan === 'law' ? tr('Legal basis') : tr('Decree')}: ${r.decree}`].filter(Boolean).join(' '),
   }));
 }

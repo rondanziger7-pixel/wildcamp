@@ -31,8 +31,7 @@ export function renderFinder(root: HTMLElement, heading: string, onPick: (c: Can
   const status = el('p', 'where');
   const list = el('ol', 'finder-list');
   const note = el('p', 'disclaimer');
-  note.textContent =
-    'A first screening: slope and wind shelter come from a 100 m elevation grid, the ground from land-cover sample points on the same grid, water and legality are looked up for the best few. The ranking is half legality, half sleep score and ignores the weather. Tap a spot for the full check.';
+  note.textContent = tr('A first screening: slope and wind shelter come from a 100 m elevation grid, the ground from land-cover sample points on the same grid, water and legality are looked up for the best few. The ranking is half legality, half sleep score and ignores the weather. Tap a spot for the full check.');
   root.replaceChildren(title, status, list, note);
   return {
     update(rows, text, done) {

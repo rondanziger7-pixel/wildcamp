@@ -39,7 +39,7 @@ export function renderSaved(root: HTMLElement, spots: SavedSpot[], h: SavedHandl
     const li = el('li', 'saved-row');
     const box = el('input');
     box.type = 'checkbox';
-    box.setAttribute('aria-label', `Compare ${s.name}`);
+    box.setAttribute('aria-label', tr('Compare {name}', { name: s.name }));
     box.onchange = () => {
       if (box.checked && picked.size >= MAX_COMPARE) {
         box.checked = false;
@@ -57,7 +57,7 @@ export function renderSaved(root: HTMLElement, spots: SavedSpot[], h: SavedHandl
     const del = el('button', 'saved-del', '✕');
     del.type = 'button';
     del.title = tr('Remove this spot');
-    del.setAttribute('aria-label', `Remove ${s.name}`);
+    del.setAttribute('aria-label', tr('Remove {name}', { name: s.name }));
     del.onclick = () => h.onRemove(s.id);
     li.append(box, open, del);
     list.append(li);

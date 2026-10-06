@@ -1,27 +1,41 @@
 import type { SavedSpot, SpotSnapshot } from './saved';
+import { nightText } from './comfort/weather';
+import { lower, tr } from './i18n';
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
 /** One line of scores for a spot, used in the GPX description and the share text. */
 export function scoreLine(s: SpotSnapshot): string {
-  const parts = [`Legality ${s.legal ?? '–'}/100`, `Sleep ${s.sleep ?? '–'}/100${s.sleep !== undefined && !s.complete ? ' (partial)' : ''}`];
-  if (s.weather !== undefined) parts.push(`Weather ${s.weather}/100${s.night ? ` (${s.night.toLowerCase()})` : ''}`);
+  const parts = [`${tr('Legality')} ${s.legal ?? '–'}/100`, `${tr('Sleep')} ${s.sleep ?? '–'}/100${s.sleep !== undefined && !s.complete ? ' ' + tr('(partial)') : ''}`];
+  if (s.weather !== undefined) parts.push(`${tr('Weather')} ${s.weather}/100${s.night ? ` (${lower(nightText(s.night))})` : ''}`);
   return parts.join(', ');
 }
 
-const VERDICT = { no: 'not allowed', caution: 'be careful', likely_ok: 'likely OK', unknown: 'unknown' } as const;
+/** The verdict as a phrase inside a sentence, in the current language. */
+function verdictWord(v: SpotSnapshot['verdict']): string {
+  switch (v) {
+    case 'no':
+      return tr('not allowed');
+    case 'caution':
+      return tr('be careful');
+    case 'likely_ok':
+      return tr('likely OK');
+    default:
+      return tr('unknown');
+  }
+}
 
 /** GPX 1.1 with one waypoint per saved spot: name, elevation, saved time and the scores as they were. */
 export function spotsToGpx(spots: SavedSpot[]): string {
   const wpts = spots.map((sp) => {
     const s = sp.snapshot;
     const desc = [
-      `${scoreLine(s)}. Legality verdict: ${VERDICT[s.verdict]}.`,
-      s.water && `Water: ${s.water}.`,
-      s.hut && `Hut: ${s.hut}.`,
-      s.pros.length ? `For: ${s.pros.join('; ')}.` : '',
-      s.cons.length ? `Against: ${s.cons.join('; ')}.` : '',
-      'Guidance only, not legal advice; scores are as of the save date.',
+      tr('{scores}. Legality verdict: {verdict}.', { scores: scoreLine(s), verdict: verdictWord(s.verdict) }),
+      s.water && tr('Water: {water}.', { water: s.water }),
+      s.hut && tr('Hut: {hut}.', { hut: s.hut }),
+      s.pros.length ? tr('For: {list}.', { list: s.pros.join('; ') }) : '',
+      s.cons.length ? tr('Against: {list}.', { list: s.cons.join('; ') }) : '',
+      tr('Guidance only, not legal advice; scores are as of the save date.'),
     ]
       .filter(Boolean)
       .join(' ');
@@ -37,12 +51,12 @@ export function spotsToGpx(spots: SavedSpot[]): string {
       .filter(Boolean)
       .join('\n');
   });
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Wildcamp CH" xmlns="http://www.topografix.com/GPX/1/1">\n  <metadata><name>Wildcamp CH saved spots</name></metadata>\n${wpts.join('\n')}\n</gpx>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Wildcamp CH" xmlns="http://www.topografix.com/GPX/1/1">\n  <metadata><name>${esc(tr('Wildcamp CH saved spots'))}</name></metadata>\n${wpts.join('\n')}\n</gpx>\n`;
 }
 
 /** Plain text to share a spot: place, scores and the link. */
 export function shareText(name: string, s: Omit<SpotSnapshot, 'savedAt'>, link: string): string {
-  return `${name}: ${scoreLine({ ...s, savedAt: 0 })}. Legality verdict: ${VERDICT[s.verdict]}. Guidance only, not legal advice.\n${link}`;
+  return `${tr('{name}: {scores}. Legality verdict: {verdict}. Guidance only, not legal advice.', { name, scores: scoreLine({ ...s, savedAt: 0 }), verdict: verdictWord(s.verdict) })}\n${link}`;
 }
 
 export function downloadText(filename: string, text: string, type = 'application/gpx+xml'): void {

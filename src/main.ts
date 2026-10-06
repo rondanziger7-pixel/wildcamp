@@ -377,7 +377,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false) {
   share.onclick = async () => {
     const text = shareText(name, ui.snapshot(), location.href);
     try {
-      if (navigator.share) await navigator.share({ title: `Wild camping: ${name}`, text });
+      if (navigator.share) await navigator.share({ title: tr('Wild camping: {name}', { name }), text });
       else {
         await navigator.clipboard.writeText(text);
         say(tr('Copied the scores and link.'));

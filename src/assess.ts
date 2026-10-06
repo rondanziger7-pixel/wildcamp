@@ -1,6 +1,7 @@
 import type { BuildingZoneInfo } from './buildingzone';
 import type { Canton, CantonRule } from './cantons';
 import type { Severity, ZoneLayer } from './zones';
+import { tr } from './i18n';
 
 export type TreelineStatus = 'above' | 'forest' | 'below' | 'unknown';
 export type Verdict = 'no' | 'caution' | 'likely_ok' | 'unknown';
@@ -73,8 +74,8 @@ export function assess(input: {
   outsideSwitzerland?: boolean;
 }): Assessment {
   if (input.outsideSwitzerland) {
-    const text = 'This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.';
-    return { verdict: 'unknown', reasons: [text], items: [{ tone: 'warn', title: 'Outside Switzerland', text }], zones: [], treeline: input.treeline, outside: true };
+    const text = tr('This spot is outside Switzerland (or in Liechtenstein). The rules, zones and parks checked here are Swiss, so nothing can be said about it. Look up the local rules of that country.');
+    return { verdict: 'unknown', reasons: [text], items: [{ tone: 'warn', title: tr('Outside Switzerland'), text }], zones: [], treeline: input.treeline, outside: true };
   }
   const { zones, treeline, treelineNote, canton, municipality, municipalRule, municipalNote } = input;
   const reasons: string[] = [];
@@ -96,26 +97,26 @@ export function assess(input: {
     verdict = 'no';
   } else if (input.zoneLookupFailed) {
     verdict = 'unknown';
-    reasons.push('Protected-zone data could not be loaded, so this spot is unchecked.');
-    items.push({ tone: 'warn', title: 'Protected zones', text: 'Protected-zone data could not be loaded, so this spot is unchecked.' });
+    reasons.push(tr('Protected-zone data could not be loaded, so this spot is unchecked.'));
+    items.push({ tone: 'warn', title: tr('Protected zones'), text: tr('Protected-zone data could not be loaded, so this spot is unchecked.') });
   } else if (worst === rank.caution) {
     verdict = 'caution';
   } else if (treeline === 'forest' || treeline === 'below') {
     verdict = 'caution';
     const t =
       treeline === 'forest'
-        ? 'In forest. Most cantons prohibit or restrict camping in forest.'
-        : 'Below the treeline. Camping is tolerated in some cantons only above it.';
+        ? tr('In forest. Most cantons prohibit or restrict camping in forest.')
+        : tr('Below the treeline. Camping is tolerated in some cantons only above it.');
     reasons.push(t);
-    items.push({ tone: 'warn', title: treeline === 'forest' ? 'In forest' : 'Below the treeline', text: t });
+    items.push({ tone: 'warn', title: treeline === 'forest' ? tr('In forest') : tr('Below the treeline'), text: t });
   } else if (treeline === 'unknown') {
     verdict = 'unknown';
-    reasons.push('Could not determine whether this spot is above the treeline.');
-    items.push({ tone: 'warn', title: 'Treeline', text: 'Could not determine whether this spot is above the treeline.' });
+    reasons.push(tr('Could not determine whether this spot is above the treeline.'));
+    items.push({ tone: 'warn', title: tr('Treeline'), text: tr('Could not determine whether this spot is above the treeline.') });
   } else {
     verdict = 'likely_ok';
-    reasons.push('Above the treeline and outside the federal protected zones checked.');
-    items.push({ tone: 'ok', title: 'Above the treeline', text: 'Outside the federal protected zones checked.' });
+    reasons.push(tr('Above the treeline and outside the federal protected zones checked.'));
+    items.push({ tone: 'ok', title: tr('Above the treeline'), text: tr('Outside the federal protected zones checked.') });
   }
 
   const rule = canton?.rule;
@@ -124,12 +125,12 @@ export function assess(input: {
     // municipalities set the rules, and a notice repeated on every spot in 20 cantons drowned out the real ones.
     if (rule) {
       const stance = treeline === 'above' && rule.aboveTreeline ? rule.aboveTreeline : rule.stance;
-      const note = stance !== rule.stance ? ' Above the treeline is treated as "in the mountains", which the law does not define.' : '';
-      reasons.push(`${canton.name}: ${rule.summary}${note} (source: ${rule.sources.map((x) => x.url).join(', ')}, checked ${rule.checkedOn})`);
+      const note = stance !== rule.stance ? ' ' + tr('Above the treeline is treated as "in the mountains", which the law does not define.') : '';
+      reasons.push(tr('{name}: {summary}{note} (source: {sources}, checked {date})', { name: canton.name, summary: rule.summary, note, sources: rule.sources.map((x) => x.url).join(', '), date: rule.checkedOn }));
       items.push({
         tone: stance === 'banned' ? 'bad' : stance === 'restricted' ? 'warn' : 'info',
-        title: `${canton.name} rules`,
-        text: `${rule.summary}${note} (checked ${rule.checkedOn})`,
+        title: tr('{name} rules', { name: canton.name }),
+        text: tr('{summary}{note} (checked {date})', { summary: rule.summary, note, date: rule.checkedOn }),
         sources: rule.sources.map((x) => x.url),
       });
       if (stance === 'banned') verdict = 'no';
@@ -138,43 +139,43 @@ export function assess(input: {
   }
   if (treelineNote && !zones.some((z) => rank[z.layer.severity] >= rank.restricted)) {
     reasons.push(treelineNote);
-    items.push({ tone: 'info', title: 'How the treeline was checked', text: treelineNote });
+    items.push({ tone: 'info', title: tr('How the treeline was checked'), text: treelineNote });
   }
   if (municipality) {
     if (municipalRule) {
-      reasons.push(`${municipality} (municipality): ${municipalRule.summary} (source: ${municipalRule.sources.map((x) => x.url).join(', ')}, checked ${municipalRule.checkedOn})`);
+      reasons.push(tr('{name} (municipality): {summary} (source: {sources}, checked {date})', { name: municipality, summary: municipalRule.summary, sources: municipalRule.sources.map((x) => x.url).join(', '), date: municipalRule.checkedOn }));
       items.push({
         tone: municipalRule.stance === 'banned' ? 'bad' : municipalRule.stance === 'restricted' ? 'warn' : 'info',
-        title: `${municipality} (municipality)`,
-        text: `${municipalRule.summary} (checked ${municipalRule.checkedOn})`,
+        title: tr('{name} (municipality)', { name: municipality }),
+        text: tr('{summary} (checked {date})', { summary: municipalRule.summary, date: municipalRule.checkedOn }),
         sources: municipalRule.sources.map((x) => x.url),
       });
       if (municipalRule.stance === 'banned') verdict = 'no';
       else if (municipalRule.stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
     } else if (municipalNote) {
-      reasons.push(`${municipality} (municipality, unverified): ${municipalNote.text}`);
-      items.push({ tone: 'warn', title: `${municipality}: reported camping ban, not verified`, text: `${municipalNote.text} (checked ${municipalNote.checkedOn})`, sources: municipalNote.sources.map((x) => x.url) });
+      reasons.push(tr('{name} (municipality, unverified): {text}', { name: municipality, text: municipalNote.text }));
+      items.push({ tone: 'warn', title: tr('{name}: reported camping ban, not verified', { name: municipality }), text: tr('{text} (checked {date})', { text: municipalNote.text, date: municipalNote.checkedOn }), sources: municipalNote.sources.map((x) => x.url) });
       if (verdict === 'likely_ok') verdict = 'caution';
     } else {
-      const t = `Municipal police regulations can add rules and are not checked here; look for the municipality's Polizeireglement / règlement de police.`;
-      reasons.push(`Municipality: ${municipality}. ${t}`);
-      items.push({ tone: 'info', title: `Municipality: ${municipality}`, text: t });
+      const t = tr('Municipal police regulations can add rules and are not checked here; look for the municipality\'s Polizeireglement / règlement de police.');
+      reasons.push(tr('Municipality: {name}. {text}', { name: municipality, text: t }));
+      items.push({ tone: 'info', title: tr('Municipality: {name}', { name: municipality }), text: t });
     }
   }
   const bz = input.buildingZone;
   if (bz?.failed) {
-    items.push({ tone: 'info', title: 'Building zones could not be checked', text: 'Whether this spot is inside a village or city could not be checked. Land in settlements is private or municipal and outside the public access right; check before you camp.' });
+    items.push({ tone: 'info', title: tr('Building zones could not be checked'), text: tr('Whether this spot is inside a village or city could not be checked. Land in settlements is private or municipal and outside the public access right; check before you camp.') });
   } else if (bz?.inside) {
-    const t = `The spot lies inside a building zone (${bz.inside.name}, national harmonised map of building zones). In settlements the public right of access does not apply: Art. 699 ZGB opens only forest and pasture to everyone. Built-up land is private or municipal, so camping needs the owner's consent (the owner may repel any unjustified use, Art. 641 ZGB), an enclosed garden or yard is also protected by the trespass offence (Art. 186 StGB), and municipal police regulations commonly ban camping on public ground (see the municipality line). Move out of the settlement, or ask.`;
+    const t = tr('The spot lies inside a building zone ({name}, national harmonised map of building zones). In settlements the public right of access does not apply: Art. 699 ZGB opens only forest and pasture to everyone. Built-up land is private or municipal, so camping needs the owner\'s consent (the owner may repel any unjustified use, Art. 641 ZGB), an enclosed garden or yard is also protected by the trespass offence (Art. 186 StGB), and municipal police regulations commonly ban camping on public ground (see the municipality line). Move out of the settlement, or ask.', { name: bz.inside.name });
     reasons.push(t);
-    items.push({ tone: 'warn', title: 'In a village or city (building zone)', text: t, sources: ['https://fedlex.data.admin.ch/eli/cc/24/233_245_233', 'https://fedlex.data.admin.ch/eli/cc/54/757_781_799', 'https://map.geo.admin.ch/?layers=ch.are.bauzonen'] });
+    items.push({ tone: 'warn', title: tr('In a village or city (building zone)'), text: t, sources: ['https://fedlex.data.admin.ch/eli/cc/24/233_245_233', 'https://fedlex.data.admin.ch/eli/cc/54/757_781_799', 'https://map.geo.admin.ch/?layers=ch.are.bauzonen'] });
     if (verdict === 'likely_ok' || verdict === 'unknown') verdict = 'caution';
   } else if (bz?.near) {
-    items.push({ tone: 'info', title: 'Close to a village or city', text: 'A building zone lies within about 150 m. Land next to settlements is mostly private farmland or gardens: Art. 699 ZGB gives access to forest and pasture only, owners can refuse camping on their land, and a tent here is rarely unnoticed. Ask the landowner, or walk further out.', sources: ['https://fedlex.data.admin.ch/eli/cc/24/233_245_233', 'https://map.geo.admin.ch/?layers=ch.are.bauzonen'] });
+    items.push({ tone: 'info', title: tr('Close to a village or city'), text: tr('A building zone lies within about 150 m. Land next to settlements is mostly private farmland or gardens: Art. 699 ZGB gives access to forest and pasture only, owners can refuse camping on their land, and a tent here is rarely unnoticed. Ask the landowner, or walk further out.'), sources: ['https://fedlex.data.admin.ch/eli/cc/24/233_245_233', 'https://map.geo.admin.ch/?layers=ch.are.bauzonen'] });
   }
   if (verdict === 'likely_ok' || verdict === 'caution') {
-    reasons.push('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).');
-    items.push({ tone: 'info', title: 'Not checked', text: 'Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).' });
+    reasons.push(tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).'));
+    items.push({ tone: 'info', title: tr('Not checked'), text: tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).') });
   }
   return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality };
 }

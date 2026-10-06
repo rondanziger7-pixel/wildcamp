@@ -3,6 +3,7 @@ import { comfortFor, type Comfort } from './comfort/comfort';
 import { analyseTerrain, parseProfile, type Profiles, type TerrainMetrics } from './comfort/terrain';
 import type { WaterInfo } from './comfort/water';
 import { lv95ToWgs84 } from './coords';
+import { tr } from './i18n';
 
 /**
  * "Best spots nearby": a coarse scan of the ground around a point, before any per-spot lookups.
@@ -224,5 +225,5 @@ export async function fetchCoverGrid(centre: { e: number; n: number }, signal?: 
 
 /** Cell of the compass: "NE", "S" … */
 export function compass8(bearing: number): string {
-  return ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round((((bearing % 360) + 360) % 360) / 45) % 8]!;
+  return tr(['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round((((bearing % 360) + 360) % 360) / 45) % 8]!);
 }

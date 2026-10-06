@@ -1,7 +1,8 @@
 import type { Assessment } from './assess';
 import type { Comfort } from './comfort/comfort';
 import { LEVEL_NAME, type AvalancheInfo } from './comfort/avalanche';
-import { compassName, describeCode, type Night } from './comfort/weather';
+import { compassName, describeCode, nightText, type Night } from './comfort/weather';
+import { missingText } from './comfort/comfort';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
 import type { SpotSnapshot } from './saved';
@@ -21,7 +22,34 @@ const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: 
 };
 const RATING: Record<Comfort['rating'], string> = { great: tr('Great for sleeping'), good: tr('Good for sleeping'), fair: tr('Okay for sleeping'), poor: tr('Poor for sleeping') };
 const RATING_SHORT: Record<Comfort['rating'], string> = { great: tr('Great'), good: tr('Good'), fair: tr('Okay'), poor: tr('Poor') };
-const RATING_WORD: Record<Comfort['rating'], string> = { great: 'great', good: 'good', fair: 'okay', poor: 'poor' };
+/** The rating as a word inside a sentence. */
+const ratingWord = (r: Comfort['rating']) => (r === 'great' ? tr('great') : r === 'good' ? tr('good') : r === 'fair' ? tr('okay') : tr('poor'));
+
+/** What the sleep score still waits for (the names main.ts passes), in the current language. */
+function loadingText(x: string): string {
+  switch (x) {
+    case 'terrain':
+      return tr('terrain');
+    case 'trails and roads':
+      return tr('trails and roads');
+    case 'water':
+      return tr('water');
+    case 'huts':
+      return tr('huts');
+    case 'ground cover':
+      return tr('ground cover');
+    case 'avalanche bulletin':
+      return tr('avalanche bulletin');
+    case 'noise':
+      return tr('noise');
+    case 'natural hazards':
+      return tr('natural hazards');
+    case 'forecast':
+      return tr('forecast');
+    default:
+      return x;
+  }
+}
 
 export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) {
   const e = document.createElement(tag);
@@ -32,7 +60,9 @@ export function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, 
 
 export type Focus = (e: number, n: number, label: string) => void;
 
-function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: string; sources?: string[]; at?: { e: number; n: number; label: string } }[], more: string, focus?: Focus) {
+type More = 'details' | 'weather details' | 'comfort details' | 'fire and drone details';
+
+function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: string; sources?: string[]; at?: { e: number; n: number; label: string } }[], more: More, focus?: Focus) {
   const list = el('ul', 'checks');
   const sorted = [...items].sort((x, y) => TONE_ORDER[x.tone] - TONE_ORDER[y.tone]);
   sorted.forEach((it, i) => {
@@ -62,11 +92,12 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
   });
   const parts: Node[] = [list];
   if (sorted.length > VISIBLE) {
-    const btn = el('button', 'linkish', `Show all ${sorted.length} ${more}`);
+    const n = sorted.length;
+    const btn = el('button', 'linkish', more === 'details' ? tr('Show all {n} details', { n }) : more === 'weather details' ? tr('Show all {n} weather details', { n }) : more === 'comfort details' ? tr('Show all {n} comfort details', { n }) : tr('Show all {n} fire and drone details', { n }));
     btn.type = 'button';
     btn.onclick = () => {
       const open = list.classList.toggle('expanded');
-      btn.textContent = open ? tr('Show fewer') : tr('Show all {n} items', { n: sorted.length });
+      btn.textContent = open ? tr('Show fewer') : tr('Show all {n} items', { n });
     };
     parts.push(btn);
   }
@@ -132,7 +163,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
   legal.b.classList.add('primary');
   // one line of why, so the answer needs no further tap: the most serious finding, or the verdict's own sentence
   const why = a.items.find((i) => i.tone === 'bad') ?? a.items.find((i) => i.tone === 'warn');
-  const reason = why ? (/\(municipality\)$/.test(why.title) ? tr('Municipal rule: {name}', { name: a.municipality ?? '' }) : why.title) : b.sub;
+  const reason = why ? (a.municipality && why.title === tr('{name} (municipality)', { name: a.municipality }) ? tr('Municipal rule: {name}', { name: a.municipality }) : why.title) : b.sub;
   legal.b.insertBefore(el('span', 'sc-reason', reason), legal.b.querySelector('.sc-bar'));
   sleep.set({ tone: 'none' }, tr('Checking…'));
   weather.set({ tone: 'none' }, tr('Checking…'));
@@ -217,19 +248,19 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         cons: c.spotFactors.filter((x) => x.tone === 'bad' || x.tone === 'warn').slice(0, 3).map((x) => x.title),
       });
       if (w.value !== undefined) weather.set(w, tr(c.weatherStop ? 'Dangerous' : c.weatherScore >= 1 ? 'Good' : c.weatherScore >= 0 ? 'Fine' : c.weatherScore > -3 ? 'Poor' : 'Bad'));
-      weatherFactors.replaceChildren(...(c.weatherFactors.length ? [el('h3', 'wx-factors-title', `What the forecast means for ${nightLabel}`), ...checklist(c.weatherFactors, 'weather details', focus)] : []));
-      const wx = c.weatherStop ? 'the weather rules this night out' : c.weatherScore > 0 ? 'the weather helps' : c.weatherScore < 0 ? 'the weather hurts' : 'the weather is neutral';
+      weatherFactors.replaceChildren(...(c.weatherFactors.length ? [el('h3', 'wx-factors-title', tr('What the forecast means for {night}', { night: nightText(nightLabel) })), ...checklist(c.weatherFactors, 'weather details', focus)] : []));
+      const wx = c.weatherStop ? tr('the weather rules this night out') : c.weatherScore > 0 ? tr('the weather helps') : c.weatherScore < 0 ? tr('the weather hurts') : tr('the weather is neutral');
       const head = el('div', `comfort-head ${c.rating}`);
       const t = el('div');
-      t.append(el('h2', undefined, `${RATING[c.rating]} · ${nightLabel}`), el('p', 'comfort-split', `The spot alone: ${RATING_WORD[c.spotRating]}. For this night ${wx}.`), el('p', undefined, c.summary));
+      t.append(el('h2', undefined, `${RATING[c.rating]} · ${nightText(nightLabel)}`), el('p', 'comfort-split', tr('The spot alone: {rating}. For this night {wx}.', { rating: ratingWord(c.spotRating), wx })), el('p', undefined, c.summary));
       head.append(t);
       const parts: Node[] = [];
-      if (loading.length) parts.push(el('p', 'panel-lead', `Still checking: ${loading.join(', ')}. The score updates when they arrive.`));
+      if (loading.length) parts.push(el('p', 'panel-lead', tr('Still checking: {list}. The score updates when they arrive.', { list: loading.map(loadingText).join(', ') })));
       if (a.verdict === 'no') parts.push(el('p', 'panel-lead warnnote', tr('Camping is not allowed here, so this only shows what the spot would be like.')));
       parts.push(head, nearby, ...checklist(c.spotFactors, 'comfort details', focus));
-      if (c.missing.length) parts.push(el('p', 'where', `Could not check: ${c.missing.join(', ')}.`));
+      if (c.missing.length) parts.push(el('p', 'where', tr('Could not check: {list}.', { list: c.missing.map(missingText).join(', ') })));
       const how = el('details', 'more how');
-      how.append(el('summary', undefined, tr('How is this scored?')), el('p', 'disclaimer', 'Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees and snow are not modelled, ground cover is read from 100 m survey points, and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.'));
+      how.append(el('summary', undefined, tr('How is this scored?')), el('p', 'disclaimer', tr('Comfort is a rule-of-thumb rating from terrain (swisstopo elevation model, within 5 km), the weather for the chosen night (Open-Meteo), distances to trails, huts and stops, and the nearest water. Trees and snow are not modelled, ground cover is read from 100 m survey points, and the thresholds are judgement, not measurements. The 0 to 100 score is the factor total mapped linearly; a storm caps it at 25.')));
       parts.push(how);
       sleepPanel.replaceChildren(...parts);
     },
@@ -246,7 +277,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
       waterAt = w.kind !== 'none' && w.at ? { ...w.at, label: w.name ? `${w.kind === 'lake' ? tr('Lake') : tr('Stream')} ${w.name}` : w.kind === 'lake' ? tr('Nearest lake') : tr('Nearest stream') } : undefined;
       const kind = w.kind === 'lake' ? tr('Lake') : w.kind === 'stream' ? tr('Stream') : '';
       const base = w.kind === 'none' ? '💧 ' + tr('No water within 800 m') : `💧 ${kind}${w.name ? ` ${w.name}` : ''} · ${Math.round(w.meters / 10) * 10 || 5} m`;
-      snap.water = base.replace('💧 ', '') + (w.kind !== 'none' && w.glacierM !== undefined ? ', glacier water' : '') + (w.upstreamPlants.length ? ', sewage upstream' : '');
+      snap.water = base.replace('💧 ', '') + (w.kind !== 'none' && w.glacierM !== undefined ? ', ' + tr('glacier water') : '') + (w.upstreamPlants.length ? ', ' + tr('sewage upstream') : '');
       waterChip.replaceChildren(base);
       if (waterAt) waterChip.append(el('span', 'tag go', '📍 ' + tr('map')));
       if (w.kind !== 'none') {
@@ -328,7 +359,7 @@ export function renderResult(root: HTMLElement, a: Assessment, elevation: number
         return;
       }
       const sky = night.worstCode !== undefined ? describeCode(night.worstCode).emoji : '🌙';
-      weatherChip.textContent = `${sky} ${nightLabel}: ${Math.round(night.minTempC)} °C, gusts ${Math.round(night.maxGustKmh)} km/h ${compassName(night.windFromDeg)}${night.precipMm >= 1 ? `, ${night.precipMm.toFixed(0)} mm rain` : ''}`;
+      weatherChip.textContent = `${sky} ${tr('{night}: {low} °C, gusts {gust} km/h {dir}', { night: nightText(nightLabel), low: Math.round(night.minTempC), gust: Math.round(night.maxGustKmh), dir: compassName(night.windFromDeg) })}${night.precipMm >= 1 ? ', ' + tr('{mm} mm rain', { mm: night.precipMm.toFixed(0) }) : ''}`;
       if (night.thunder || night.maxGustKmh >= 80) weatherChip.classList.add('bad');
       else if (night.maxGustKmh >= 50 || night.precipMm >= 5 || night.minTempC <= -5) weatherChip.classList.add('warn');
     },
