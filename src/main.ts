@@ -298,6 +298,7 @@ async function assessSpot(lat: number, lng: number, knownElevation?: number) {
     zoneLookupFailed: zones.status === 'rejected',
     treeline,
     treelineNote,
+    elevationKnown: elevation !== undefined,
     canton: canton.status === 'fulfilled' ? canton.value : undefined,
     municipality: muni.status === 'fulfilled' ? muni.value?.name : undefined,
     municipalRule: muni.status === 'fulfilled' ? findMunicipalRule(muni.value?.bfs)?.rule : undefined,

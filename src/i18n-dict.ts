@@ -681,6 +681,8 @@ export const DE: Record<string, string> = {
   "Thunderstorm": "Gewitter",
   "Thunderstorm with hail": "Gewitter mit Hagel",
   "Wild camping: {name}": "Wildcampen: {name}",
+  "It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.": "Es ist unklar, ob dieser Platz oberhalb der Waldgrenze liegt. Behandle ihn als unterhalb, wo die meisten Kantone das Campieren einschränken.",
+  "Close to the treeline": "Nahe der Waldgrenze",
 };
 
 export const FR: Record<string, string> = {
@@ -1365,6 +1367,8 @@ export const FR: Record<string, string> = {
   "Thunderstorm": "Orage",
   "Thunderstorm with hail": "Orage avec grêle",
   "Wild camping: {name}": "Bivouac sauvage : {name}",
+  "It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.": "On ne sait pas si cet endroit se trouve au-dessus de la limite de la forêt. Considérez-le comme en dessous, où la plupart des cantons restreignent le camping.",
+  "Close to the treeline": "Près de la limite de la forêt",
 };
 
 export const IT: Record<string, string> = {
@@ -2049,4 +2053,6 @@ export const IT: Record<string, string> = {
   "Thunderstorm": "Temporale",
   "Thunderstorm with hail": "Temporale con grandine",
   "Wild camping: {name}": "Campeggio libero: {name}",
+  "It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.": "Non è chiaro se questo posto si trovi sopra il limite del bosco. Consideralo sotto, dove la maggior parte dei cantoni limita il campeggio.",
+  "Close to the treeline": "Vicino al limite del bosco",
 };

@@ -60,6 +60,8 @@ export function assess(input: {
   /** Set when a zone lookup failed, so "no hits" can't be trusted. */
   zoneLookupFailed?: boolean;
   treelineNote?: string;
+  /** False when the elevation could not be read (the treeline cannot be judged at all). Default true. */
+  elevationKnown?: boolean;
   /** Canton at the spot, if it could be determined. */
   canton?: Canton;
   /** Municipality at the spot, if it could be determined. */
@@ -109,6 +111,13 @@ export function assess(input: {
         : tr('Below the treeline. Camping is tolerated in some cantons only above it.');
     reasons.push(t);
     items.push({ tone: 'warn', title: treeline === 'forest' ? tr('In forest') : tr('Below the treeline'), text: t });
+  } else if (treeline === 'unknown' && input.elevationKnown !== false) {
+    // elevation known but the spot sits in the band where the treeline can't be placed: judge it as the cautious case
+    // (below the treeline) instead of giving no answer, and say why
+    verdict = 'caution';
+    const t = tr('It is unclear whether this spot counts as above the treeline. Treat it as below it, where most cantons restrict camping.');
+    reasons.push(t);
+    items.push({ tone: 'warn', title: tr('Close to the treeline'), text: t });
   } else if (treeline === 'unknown') {
     verdict = 'unknown';
     reasons.push(tr('Could not determine whether this spot is above the treeline.'));

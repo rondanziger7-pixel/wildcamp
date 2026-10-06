@@ -90,7 +90,7 @@ describe('assess with a canton', () => {
   });
   it('a verified restriction downgrades likely_ok to caution only', () => {
     expect(assess({ ...clear, canton: withRule(rule({ stance: 'restricted' })) }).verdict).toBe('caution');
-    expect(assess({ zones: [], treeline: 'unknown', canton: withRule(rule({ stance: 'restricted' })) }).verdict).toBe('unknown');
+    expect(assess({ zones: [], treeline: 'unknown', elevationKnown: false, canton: withRule(rule({ stance: 'restricted' })) }).verdict).toBe('unknown');
   });
   it('a tolerated stance does not make anything more permissive', () => {
     expect(assess({ zones: [], treeline: 'forest', canton: withRule(rule()) }).verdict).toBe('caution');

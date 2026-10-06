@@ -133,7 +133,7 @@ export function comfortFor(input: ComfortInput): Comfort {
     if (sl < 5) f.push({ tone: 'ok', score: 1, title: tr('Flat ground'), text: tr('Slope about {deg}° over 20 m. Small bumps and rocks are not in the elevation data.', { deg }) });
     else if (sl < 10) f.push({ tone: 'info', score: 0, title: tr('Slightly sloping'), text: tr('Slope about {deg}° over 20 m. Look for a flatter patch close by.', { deg }) });
     else if (sl < 15) f.push({ tone: 'warn', score: -1, title: tr('Sloping ground'), text: tr('Slope about {deg}° over 20 m. You will slide in the tent; find a flatter spot.', { deg }) });
-    else f.push({ tone: 'bad', score: -2, title: tr('Too steep to pitch'), text: tr('Slope about {deg}° over 20 m.', { deg }) });
+    else f.push({ tone: 'bad', score: sl >= 25 ? -4 : -2, title: tr('Too steep to pitch'), text: tr('Slope about {deg}° over 20 m.', { deg }) });
 
     // wind shelter from terrain
     const ridge = t.tpi >= 15 && t.meanHorizon < 3;
@@ -425,14 +425,23 @@ export function comfortFor(input: ComfortInput): Comfort {
     });
   }
 
-  const score = f.reduce((a, x) => a + x.score, 0);
+  const raw = f.reduce((a, x) => a + x.score, 0);
+  // Some ground cannot be slept on whatever else is good about it, so it caps the spot: open water, ice and slopes of 25
+  // degrees or more cannot hold a tent ("poor"); paved or built-up ground and slopes of 15 degrees or more at best "fair".
+  // The caps are on the total, so a sunny, sheltered hillside of 35 degrees does not read as "good".
+  const POOR = -2;
+  const FAIR = 1;
+  const cover = input.ground?.cover;
+  const sl = t?.slopeDeg ?? 0;
+  const cap = cover === 'water' || cover === 'glacier' || sl >= 25 ? POOR : cover === 'built' || sl >= 15 ? FAIR : Infinity;
+  const score = Math.min(raw, cap);
   const weatherScore = f.filter((x) => x.wx).reduce((a, x) => a + x.score, 0);
   const good = f.filter((x) => x.score > 0).map((x) => lower(x.title));
   const bad = f.filter((x) => x.score < 0).map((x) => lower(x.title));
   const summary = [good.length ? tr('For: {list}', { list: good.slice(0, 3).join(', ') }) : '', bad.length ? tr('Against: {list}', { list: bad.slice(0, 3).join(', ') }) : ''].filter(Boolean).join('. ') || tr('Nothing stands out either way');
   return {
     rating: weatherStop ? 'poor' : rate(score),
-    spotRating: rate(score - weatherScore),
+    spotRating: rate(Math.min(raw - weatherScore, cap)),
     weatherScore,
     weatherStop,
     score,

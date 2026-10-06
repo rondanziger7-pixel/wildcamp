@@ -30,13 +30,13 @@ describe('legality score', () => {
     expect(v).toBeLessThan(55);
   });
   it('unknown is 40 and outside Switzerland has no score', () => {
-    expect(legalityScore(assess({ zones: [], treeline: 'unknown' }))).toEqual({ value: 40, tone: 'warn' });
+    expect(legalityScore(assess({ zones: [], treeline: 'unknown', elevationKnown: false }))).toEqual({ value: 40, tone: 'warn' });
     expect(legalityScore(assess({ zones: [], treeline: 'above', outsideSwitzerland: true })).value).toBeUndefined();
   });
   it('is ordered like the verdicts: no < unknown < caution <= likely OK', () => {
     const v = (a: ReturnType<typeof assess>) => legalityScore(a).value!;
     const no = v(assess({ zones: [{ layer: layer('restricted') }], treeline: 'above' }));
-    const unknown = v(assess({ zones: [], treeline: 'unknown' }));
+    const unknown = v(assess({ zones: [], treeline: 'unknown', elevationKnown: false }));
     const ok = v(assess({ zones: [], treeline: 'above' }));
     expect(no).toBeLessThan(unknown);
     expect(unknown).toBeLessThan(ok);
