@@ -15,6 +15,7 @@ import { fetchJuraReserves } from './jura';
 import { LocalData } from './localstore';
 import { assessInputs, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS, type DetailsRun } from './spotcheck';
 import { searchPlaces, type Place } from './search';
+import { isLocationError, parseLocation } from './coordsearch';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
 import { renderEmergency } from './emergencyview';
@@ -643,6 +644,14 @@ map.on('click', (ev: L.LeafletMouseEvent) => {
   void checkSpot(ev.latlng.lat, ev.latlng.lng);
 });
 if (hashView) void checkSpot(hLat!, hLon!);
+// a link pasted into an open tab (or a changed address) opens that place
+window.addEventListener('hashchange', () => {
+  const [la, lo, z] = location.hash.slice(1).split(',').map(Number);
+  if (!Number.isFinite(la) || !Number.isFinite(lo)) return;
+  if (lastSpot && spotId(lastSpot.lat, lastSpot.lng) === spotId(la!, lo!)) return;
+  map.setView([la!, lo!], z || Math.max(map.getZoom(), 14));
+  void checkSpot(la!, lo!);
+});
 
 // Search
 const q = document.getElementById('q') as HTMLInputElement;
@@ -654,17 +663,39 @@ function closeSuggest() {
   suggest.hidden = true;
   suggest.replaceChildren();
 }
-function goTo(p: Place) {
+function goTo(p: Place, zoom?: number) {
   closeSuggest();
   q.value = p.label;
   q.blur();
-  map.setView([p.lat, p.lon], Math.max(map.getZoom(), 14));
+  map.setView([p.lat, p.lon], zoom ?? Math.max(map.getZoom(), 14));
   void checkSpot(p.lat, p.lon);
+}
+
+/** Coordinates, Plus codes and map links typed or pasted into the box: opened directly, with no search. */
+function locationFromText(text: string): { place?: Place; zoom?: number; message?: string } | undefined {
+  const r = parseLocation(text);
+  if (!r) return undefined;
+  if (isLocationError(r)) return { message: tr(r.message) };
+  return { place: { label: `${r.lat.toFixed(5)}, ${r.lon.toFixed(5)}`, lat: r.lat, lon: r.lon }, zoom: r.zoom };
+}
+function showLocation(loc: NonNullable<ReturnType<typeof locationFromText>>) {
+  if (loc.message) {
+    suggest.replaceChildren(el('li', 'suggest-note', loc.message));
+    suggest.hidden = false;
+    return;
+  }
+  const place = loc.place!;
+  const li = el('li', undefined, `📍 ${place.label} · ${tr('coordinates')}`);
+  li.onclick = () => goTo(place, loc.zoom);
+  suggest.replaceChildren(li);
+  suggest.hidden = false;
 }
 q.addEventListener('input', () => {
   window.clearTimeout(timer);
   const text = q.value.trim();
   if (text.length < 2) return closeSuggest();
+  const loc = locationFromText(text);
+  if (loc) return showLocation(loc);
   timer = window.setTimeout(async () => {
     searchAbort?.abort();
     searchAbort = new AbortController();
@@ -677,7 +708,7 @@ q.addEventListener('input', () => {
           return li;
         }),
       );
-      if (!places.length) suggest.append(el('li', undefined, 'No places found'));
+      if (!places.length) suggest.append(el('li', undefined, tr('No places found')));
       suggest.hidden = false;
     } catch (err) {
       if ((err as Error).name !== 'AbortError') closeSuggest();
@@ -688,6 +719,12 @@ document.getElementById('search')!.addEventListener('submit', async (ev) => {
   ev.preventDefault();
   const text = q.value.trim();
   if (!text) return;
+  const loc = locationFromText(text);
+  if (loc) {
+    if (loc.place) goTo(loc.place, loc.zoom);
+    else showLocation(loc);
+    return;
+  }
   try {
     const [first] = await searchPlaces(text);
     if (first) goTo(first);

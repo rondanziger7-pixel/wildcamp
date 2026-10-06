@@ -373,3 +373,5 @@ button { font: inherit; cursor: pointer; }
 .night-chip.far { color: var(--muted); border-style: dashed; }
 .night-date-row { display: block; margin-top: 6px; font-size: .85rem; color: var(--muted); }
 .night-date { font: inherit; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+
+.suggest-note { color: var(--muted); font-size: .85rem; line-height: 1.35; cursor: default; }

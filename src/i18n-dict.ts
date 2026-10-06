@@ -789,6 +789,11 @@ export const DE: Record<string, string> = {
   "{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.": "{label}: Rebberg, Obstgarten oder Ackerland. Das ist genutztes Privatland, und das öffentliche Zutrittsrecht gilt nur für Wald und Weide (Art. 699 ZGB): Frage die Eigentümer.",
   "Stream beside the spot may rise tonight": "Der Bach neben dem Platz kann heute Nacht steigen",
   "Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.": "Es ist Regen vorhergesagt ({mm} mm), und der Bach ist etwa {dist} entfernt. Bergbäche können innert einer Stunde steigen und das Zelt mitreissen: Campiere höher und weit vom Ufer entfernt.",
+  "coordinates": "Koordinaten",
+  "No places found": "Keine Orte gefunden",
+  "Short links cannot be opened here. Open the link, then copy the coordinates or the full address from the browser.": "Kurzlinks lassen sich hier nicht öffnen. Öffne den Link und kopiere dann die Koordinaten oder die vollständige Adresse aus dem Browser.",
+  "A short plus code needs its town to be located and cannot be opened here. Use the full code (8 characters before the +, like 8FVC9G8F+6W) or the coordinates.": "Ein kurzer Plus Code braucht seinen Ortsnamen, um gefunden zu werden, und lässt sich hier nicht öffnen. Verwende den vollständigen Code (8 Zeichen vor dem +, wie 8FVC9G8F+6W) oder die Koordinaten.",
+  "Latitude must be between -90 and 90 and longitude between -180 and 180.": "Die Breite muss zwischen -90 und 90 liegen und die Länge zwischen -180 und 180.",
 };
 
 export const FR: Record<string, string> = {
@@ -1581,6 +1586,11 @@ export const FR: Record<string, string> = {
   "{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.": "{label} : vigne, verger ou terre cultivée. C'est un terrain privé en exploitation, et le droit d'accès public ne vaut que pour la forêt et les pâturages (art. 699 CC) : demandez au propriétaire.",
   "Stream beside the spot may rise tonight": "Le ruisseau à côté de l'endroit peut monter cette nuit",
   "Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.": "De la pluie est prévue ({mm} mm) et le ruisseau est à environ {dist}. Les ruisseaux de montagne peuvent monter en une heure et emporter la tente : campez plus haut et loin de la rive.",
+  "coordinates": "coordonnées",
+  "No places found": "Aucun lieu trouvé",
+  "Short links cannot be opened here. Open the link, then copy the coordinates or the full address from the browser.": "Les liens courts ne peuvent pas être ouverts ici. Ouvrez le lien, puis copiez les coordonnées ou l'adresse complète depuis le navigateur.",
+  "A short plus code needs its town to be located and cannot be opened here. Use the full code (8 characters before the +, like 8FVC9G8F+6W) or the coordinates.": "Un plus code court a besoin de sa localité pour être situé et ne peut pas être ouvert ici. Utilisez le code complet (8 caractères avant le +, comme 8FVC9G8F+6W) ou les coordonnées.",
+  "Latitude must be between -90 and 90 and longitude between -180 and 180.": "La latitude doit être comprise entre -90 et 90 et la longitude entre -180 et 180.",
 };
 
 export const IT: Record<string, string> = {
@@ -2373,4 +2383,9 @@ export const IT: Record<string, string> = {
   "{label}: vineyard, orchard or crop land. It is private land in use, and the public right of access covers forest and pasture only (Art. 699 ZGB): ask the owner.": "{label}: vigneto, frutteto o campo coltivato. È terreno privato in uso, e il diritto di accesso pubblico vale solo per bosco e pascolo (art. 699 CC): chiedi al proprietario.",
   "Stream beside the spot may rise tonight": "Il torrente accanto al posto può crescere stanotte",
   "Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.": "È prevista pioggia ({mm} mm) e il torrente è a circa {dist}. I torrenti di montagna possono crescere in un'ora e portare via la tenda: campeggia più in alto e ben lontano dalla riva.",
+  "coordinates": "coordinate",
+  "No places found": "Nessun luogo trovato",
+  "Short links cannot be opened here. Open the link, then copy the coordinates or the full address from the browser.": "I link brevi non si possono aprire qui. Apri il link, poi copia le coordinate o l'indirizzo completo dal browser.",
+  "A short plus code needs its town to be located and cannot be opened here. Use the full code (8 characters before the +, like 8FVC9G8F+6W) or the coordinates.": "Un plus code breve ha bisogno della sua località per essere localizzato e non si può aprire qui. Usa il codice completo (8 caratteri prima del +, come 8FVC9G8F+6W) oppure le coordinate.",
+  "Latitude must be between -90 and 90 and longitude between -180 and 180.": "La latitudine deve essere compresa tra -90 e 90 e la longitudine tra -180 e 180.",
 };

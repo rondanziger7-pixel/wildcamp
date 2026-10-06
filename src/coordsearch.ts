@@ -26,8 +26,8 @@ export interface LocationError {
 export type LocationResult = ParsedLocation | LocationError;
 
 export const SHORT_LINK_MESSAGE = 'Short links cannot be opened here. Open the link, then copy the coordinates or the full address from the browser.';
-const SHORT_CODE_MESSAGE = 'A short plus code needs its town to be located and cannot be opened here. Use the full code (8 characters before the +, like 8FVC9G8F+6W) or the coordinates.';
-const RANGE_MESSAGE = 'Latitude must be between -90 and 90 and longitude between -180 and 180.';
+export const SHORT_CODE_MESSAGE = 'A short plus code needs its town to be located and cannot be opened here. Use the full code (8 characters before the +, like 8FVC9G8F+6W) or the coordinates.';
+export const RANGE_MESSAGE = 'Latitude must be between -90 and 90 and longitude between -180 and 180.';
 
 type Result = LocationResult | undefined;
 
