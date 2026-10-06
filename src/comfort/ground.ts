@@ -1,4 +1,5 @@
 import { wgs84ToLv95 } from '../coords';
+import { getLang } from '../i18n';
 
 const API = 'https://api3.geo.admin.ch/rest/services/api/MapServer';
 const LAYER = 'ch.bfs.arealstatistik-bodenbedeckung';
@@ -7,7 +8,7 @@ export type Cover = 'grass' | 'shrub' | 'rock' | 'loose' | 'wet' | 'forest' | 'g
 
 export interface GroundInfo {
   cover: Cover;
-  /** The category's English name in the land-cover statistics. */
+  /** The category's name in the land-cover statistics, in the language of the page (English where the service has none). */
   label: string;
   /** Distance in metres to the 100 m survey point the class comes from. */
   meters: number;
@@ -37,14 +38,16 @@ type Body = { results?: { attributes?: Record<string, unknown> }[] };
 
 /** The latest survey record of a point in the land-cover statistics response. */
 export function parseGround(body: Body, meters: number): GroundInfo | undefined {
-  let best: { year: number; desc: string } | undefined;
+  let best: { year: number; desc: string; local: string } | undefined;
   for (const r of body.results ?? []) {
     const a = r.attributes ?? {};
     const year = Number(a.year);
     const desc = a.desc_lc09r_27_en;
-    if (Number.isFinite(year) && typeof desc === 'string' && (!best || year > best.year)) best = { year, desc };
+    const local = a[`desc_lc09r_27_${getLang()}`];
+    if (Number.isFinite(year) && typeof desc === 'string' && (!best || year > best.year)) best = { year, desc, local: typeof local === 'string' && local ? local : desc };
   }
-  return best && { cover: classifyCover(best.desc), label: best.desc, meters, year: best.year };
+  // the class is told from the English name; the name shown is in the language of the page
+  return best && { cover: classifyCover(best.desc), label: best.local, meters, year: best.year };
 }
 
 /**

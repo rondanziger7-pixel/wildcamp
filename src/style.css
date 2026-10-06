@@ -440,3 +440,8 @@ button { font: inherit; cursor: pointer; }
 .stage-pin { background: #1a73e8; color: #fff; border: 2px solid #fff; border-radius: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; box-shadow: 0 1px 4px #0006; }
 .stage-pin.blocked { background: #c62828; }
 @media print { .route-strip-svg { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .strip-ok, .strip-caution, .strip-ban, .strip-unknown { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+/* best spots: how far to look, tonight's weather there */
+.finder-radius { display: flex; gap: 6px; margin: 4px 0 2px; }
+.finder-headline { margin: 8px 2px 0; font-size: .88rem; line-height: 1.4; }
+.finder-offer .finder-btn { margin-top: 6px; }

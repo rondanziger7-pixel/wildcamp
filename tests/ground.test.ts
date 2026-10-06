@@ -49,3 +49,21 @@ describe('ground cover', () => {
     expect(far.factors.find((x) => x.title === 'Grassy ground')?.text).toMatch(/about 70 m away/);
   });
 });
+
+describe('the name of the ground in the language of the page', () => {
+  it('is shown in the language, while the class still comes from the English name', async () => {
+    const { setLangForTest } = await import('../src/i18n');
+    const body = { results: [{ attributes: { year: 2023, desc_lc09r_27_en: 'Solid rock', desc_lc09r_27_de: 'Fels', desc_lc09r_27_fr: 'Rocher', desc_lc09r_27_it: 'Roccia' } }] };
+    try {
+      expect(parseGround(body, 10)).toMatchObject({ cover: 'rock', label: 'Solid rock' });
+      setLangForTest('de');
+      expect(parseGround(body, 10)).toMatchObject({ cover: 'rock', label: 'Fels' });
+      setLangForTest('fr');
+      expect(parseGround(body, 10)).toMatchObject({ cover: 'rock', label: 'Rocher' });
+      setLangForTest('it');
+      expect(parseGround(body, 10)).toMatchObject({ cover: 'rock', label: 'Roccia' });
+    } finally {
+      setLangForTest('en');
+    }
+  });
+});

@@ -282,12 +282,15 @@ export function comfortFor(input: ComfortInput): Comfort {
     const label = w.name ? `${what} ${w.name}` : what;
     const treat = ' ' + tr('Treat or filter all surface water before drinking: livestock and wildlife can contaminate it.');
     const wAt = w.at ? { ...w.at, label: w.name ? `${what} ${w.name}` : w.kind === 'lake' ? tr('Nearest lake') : tr('Nearest stream') } : undefined;
+    const sAt = w.spring ? { ...w.spring.at, label: tr('Mapped spring') } : undefined;
     if (w.failed.includes('water')) missing.push('water');
+    else if (w.kind === 'none' && w.spring) f.push({ tone: 'info', score: 0, at: sAt, title: tr('A mapped spring nearby'), text: tr('No stream or lake within 800 m in the hydrography map, but the geological map records a spring about {dist} away{captured}. A spring can run dry by autumn and the map does not say the water is drinkable: carry water, and treat what you collect.', { dist: m(w.spring.meters), captured: w.spring.captured ? ' ' + tr('(captured)') : '' }) });
     else if (w.kind === 'none') f.push({ tone: 'warn', score: -1, title: tr('No water found nearby'), text: tr('No stream or lake within 800 m in the hydrography map. Carry all the water you need, and check for springs.') });
     else if (w.meters <= 20) f.push({ tone: 'warn', score: 0, at: wAt, title: tr('Water right beside the spot'), text: tr('A {label} is about {dist} away. Handy, but noisy, damp and prone to flooding in heavy rain; camp a bit higher if you can.', { label, dist: m(w.meters) }) + treat });
     else if (w.meters <= 150) f.push({ tone: 'ok', score: 2, at: wAt, title: tr('Water close by'), text: tr('A {label} about {dist} away.', { label, dist: m(w.meters) }) + treat });
     else if (w.meters <= 400) f.push({ tone: 'ok', score: 1, at: wAt, title: tr('Water within 400 m'), text: tr('A {label} about {dist} away.', { label, dist: m(w.meters) }) + treat });
     else f.push({ tone: 'info', score: 0, at: wAt, title: tr('Water 400 to 800 m away'), text: tr('A {label} about {dist} away: a walk to fetch water.', { label, dist: m(w.meters) }) + treat });
+    if (w.kind !== 'none' && w.spring && w.spring.meters < w.meters - 100) f.push({ tone: 'info', score: 0, at: sAt, title: tr('A mapped spring is closer'), text: tr('The geological map records a spring about {dist} away{captured}. A spring can run dry by autumn and the map does not say the water is drinkable.', { dist: m(w.spring.meters), captured: w.spring.captured ? ' ' + tr('(captured)') : '' }) });
 
     if (w.kind === 'stream' && w.meters <= 50 && night && (night.precipMm >= 5 || night.thunder)) {
       // a stream beside the tent rises fast in heavy rain: the water that was a plus in dry weather is now the risk

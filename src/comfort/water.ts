@@ -8,6 +8,7 @@ const SEARCH_M = 800;
 export const GLACIER_CLOSE_M = 1000;
 export const GLACIER_NEAR_M = 3000;
 const ARA_SEARCH_M = 10000;
+const SPRING_LAYER = 'ch.swisstopo.geologie-swissgeocover2d_points';
 
 interface Feature {
   properties?: Record<string, unknown>;
@@ -36,8 +37,28 @@ export interface WaterInfo {
   glacierM?: number;
   /** Treatment plants on the same watercourse that lie higher than the water, so their discharge flows past it. */
   upstreamPlants: TreatmentPlant[];
+  /**
+   * A spring recorded on the geological map within the search radius (looked for when no water is mapped, or the water is far).
+   * The map is patchy, so a spring found is real and a spring not found proves nothing; it does not say the water is drinkable or flowing.
+   */
+  spring?: { meters: number; captured: boolean; at: { e: number; n: number } };
   /** Which lookups failed, so a missing flag is not read as an all-clear. */
   failed: ('water' | 'glacier' | 'plants')[];
+}
+
+/** Springs are points of the geological map (swissGEOCOVER2D) of kind "Quelle"; `gefasst` means captured (tapped). */
+export function nearestSpring(body: { results?: Feature[] }, e: number, n: number): { meters: number; captured: boolean; at: { e: number; n: number } } | undefined {
+  let best: { meters: number; captured: boolean; at: { e: number; n: number } } | undefined;
+  for (const f of body.results ?? []) {
+    const p = f.properties ?? {};
+    if (p.kind_de !== 'Quelle' && p.kind_de !== 'diffuse Quelle') continue;
+    const c = f.geometry?.coordinates as Pos | Pos[] | undefined;
+    const pt = Array.isArray(c) && Array.isArray(c[0]) ? (c[0] as Pos) : (c as Pos | undefined);
+    if (!pt || !Number.isFinite(pt[0]) || !Number.isFinite(pt[1])) continue;
+    const meters = Math.hypot(pt[0]! - e, pt[1]! - n);
+    if (!best || meters < best.meters) best = { meters, captured: p.spec_de === 'gefasst', at: { e: pt[0]!, n: pt[1]! } };
+  }
+  return best;
 }
 
 /** Streams are swissTLM3D hydrography objects of type 4; lakes are its polygon objects (type 101). Other line types are not used. */
@@ -146,7 +167,12 @@ export async function fetchWater(lat: number, lon: number, signal?: AbortSignal)
     info.failed.push('water');
     return info;
   }
-  if (!found) return info;
+  // where no water is mapped, or it is a walk away, the geological map may know a spring (a failed lookup only means no spring is shown)
+  const springs = !found || found.meters > 400 ? identify(SPRING_LAYER, e, n, SEARCH_M, true, signal).then((b) => nearestSpring(b as never, e, n)).catch(() => undefined) : Promise.resolve(undefined);
+  if (!found) {
+    info.spring = await springs;
+    return info;
+  }
   const [we, wn] = found.point as [number, number];
   Object.assign(info, { kind: found.kind, name: found.name, meters: found.meters, at: { e: we, n: wn } });
   const gl = 'ch.swisstopo.geologie-gletscherausdehnung';
@@ -167,5 +193,6 @@ export async function fetchWater(lat: number, lon: number, signal?: AbortSignal)
   if (plants.status === 'fulfilled') {
     if (plants.value) info.upstreamPlants = upstreamPlants(plants.value[0] as never, found.gwl, plants.value[1], we, wn);
   } else info.failed.push('plants');
+  info.spring = await springs;
   return info;
 }

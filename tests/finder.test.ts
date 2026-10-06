@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import tile from './fixtures/cover-tile.json';
-import { fetchElevationGrid, CANDIDATE_RADIUS_M, MIN_SEPARATION_M, STEP, bearingTo, compass8, gridFromProfile, makeGrid, parseCoverTile, profilesAt, rankCells, serpentine, withWater, zAt, type Grid } from '../src/finder';
+import { fetchElevationGrid, CANDIDATE_RADIUS_M, FINDER_RADII, MIN_SEPARATION_M, elevationRadiusFor, separationFor, STEP, bearingTo, compass8, gridFromProfile, makeGrid, parseCoverTile, profilesAt, rankCells, serpentine, withWater, zAt, type Grid } from '../src/finder';
 import type { Cover } from '../src/comfort/ground';
 
 const CE = 2622000;
@@ -139,6 +139,67 @@ describe('ranking', () => {
   });
 });
 
+describe('a wider search', () => {
+  const R = 1500;
+  const E_R = elevationRadiusFor(R);
+  const wide = (() => {
+    const base = makeGrid(CE, CN, E_R);
+    return gridFromProfile(base, serpentine(base).map(() => 2000));
+  })();
+  it('offers the default and 1.5 km, reads 400 m beyond the candidates, and keeps wider candidates further apart', () => {
+    expect([...FINDER_RADII]).toEqual([CANDIDATE_RADIUS_M, 1500]);
+    expect(elevationRadiusFor(CANDIDATE_RADIUS_M)).toBe(1100);
+    expect(E_R).toBe(1900);
+    expect(makeGrid(CE, CN, E_R).size).toBe(39); // one request of 1521 points
+    expect(separationFor(CANDIDATE_RADIUS_M)).toBe(MIN_SEPARATION_M);
+    expect(separationFor(R)).toBeGreaterThan(MIN_SEPARATION_M);
+  });
+  it('finds candidates out to the radius asked for and not beyond it', () => {
+    const c = rankCells(wide, { e: CE, n: CN }, new Map(), 40, R, separationFor(R));
+    expect(Math.max(...c.map((x) => x.meters))).toBeGreaterThan(CANDIDATE_RADIUS_M);
+    for (const x of c) expect(x.meters).toBeLessThanOrEqual(R);
+    for (let i = 0; i < c.length; i++) for (let j = i + 1; j < c.length; j++) expect(Math.hypot(c[i]!.e - c[j]!.e, c[i]!.n - c[j]!.n)).toBeGreaterThanOrEqual(separationFor(R));
+  });
+  it('the default radius is unchanged', () => {
+    const c = rankCells(wide, { e: CE, n: CN }, new Map(), 40);
+    for (const x of c) expect(x.meters).toBeLessThanOrEqual(CANDIDATE_RADIUS_M);
+  });
+  it('requests the elevation grid of the radius asked for', async () => {
+    let points = 0;
+    const real = globalThis.fetch;
+    globalThis.fetch = (async (_u: string, init?: RequestInit) => {
+      const body = new URLSearchParams(String(init?.body));
+      points = Number(body.get('nbPoints'));
+      return new Response(JSON.stringify(Array.from({ length: points }, () => ({ alts: { COMB: 2000 } }))), { status: 200 });
+    }) as typeof fetch;
+    try {
+      await fetchElevationGrid(CE, CN, undefined, E_R);
+    } finally {
+      globalThis.fetch = real;
+    }
+    expect(points).toBe(39 * 39);
+  });
+});
+
+describe('walking time to a candidate', () => {
+  it('is Naismith over the straight line: 4 km/h flat, ten minutes more per 100 m climbed, none saved on the way down', () => {
+    // 1 m of height per 2 m east: the east side climbs, the west side descends
+    const hill = surface((e) => 2000 + (e - CE) * 0.05);
+    const all = rankCells(hill, { e: CE, n: CN }, new Map(), 60);
+    const east = all.filter((c) => c.e > CE + 400)[0]!;
+    const west = all.filter((c) => c.e < CE - 400)[0]!;
+    expect(east).toBeDefined();
+    expect(west).toBeDefined();
+    const flatMin = (d: number) => (d / 4000) * 60;
+    expect(east.walkMin!).toBeGreaterThan(flatMin(east.meters) + 1);
+    expect(west.walkMin!).toBeCloseTo(flatMin(west.meters), 5);
+  });
+  it('is the flat walking time on level ground', () => {
+    const c = rankCells(surface(() => 2000), { e: CE, n: CN }, new Map(), 5)[0]!;
+    expect(c.walkMin).toBeCloseTo((c.meters / 4000) * 60, 5);
+  });
+});
+
 describe('bearings', () => {
   it('names the compass point', () => {
     expect(bearingTo(0, 100)).toBe(0);
@@ -146,5 +207,33 @@ describe('bearings', () => {
     expect(bearingTo(-100, -100)).toBe(225);
     expect(compass8(225)).toBe('SW');
     expect(compass8(359)).toBe('N');
+  });
+});
+
+describe('ground names in the language of the page', () => {
+  const body = { results: [{ geometry: { type: 'Point', coordinates: [2622000, 1150000] }, properties: { year: 2023, desc_lc09r_27_en: 'Grass and herb vegetation', desc_lc09r_27_de: 'Gras-, Krautvegetation', desc_lc09r_27_fr: 'Végétation herbacée', desc_lc09r_27_it: 'Vegetazione erbacea' } }] };
+  it('keeps the class from the English name and shows the name in the language', async () => {
+    const { setLangForTest } = await import('../src/i18n');
+    try {
+      expect([...parseCoverTile(body as never).values()][0]).toEqual({ cover: 'grass', label: 'Grass and herb vegetation' });
+      setLangForTest('de');
+      expect([...parseCoverTile(body as never).values()][0]).toEqual({ cover: 'grass', label: 'Gras-, Krautvegetation' });
+      setLangForTest('fr');
+      expect([...parseCoverTile(body as never).values()][0]!.label).toBe('Végétation herbacée');
+      setLangForTest('it');
+      expect([...parseCoverTile(body as never).values()][0]!.label).toBe('Vegetazione erbacea');
+    } finally {
+      setLangForTest('en');
+    }
+  });
+  it('falls back to English where the service has no name in the language', async () => {
+    const { setLangForTest } = await import('../src/i18n');
+    try {
+      setLangForTest('de');
+      const only = { results: [{ geometry: { type: 'Point', coordinates: [1, 2] }, properties: { year: 2023, desc_lc09r_27_en: 'Solid rock' } }] };
+      expect([...parseCoverTile(only as never).values()][0]).toEqual({ cover: 'rock', label: 'Solid rock' });
+    } finally {
+      setLangForTest('en');
+    }
   });
 });

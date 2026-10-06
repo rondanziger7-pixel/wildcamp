@@ -3,7 +3,8 @@ import { comfortFor, type Comfort } from './comfort/comfort';
 import { analyseTerrain, parseProfile, type Profiles, type TerrainMetrics } from './comfort/terrain';
 import type { WaterInfo } from './comfort/water';
 import { lv95ToWgs84 } from './coords';
-import { tr } from './i18n';
+import { getLang, tr } from './i18n';
+import { naismithMinutes } from './route';
 
 /**
  * "Best spots nearby": a coarse scan of the ground around a point, before any per-spot lookups.
@@ -17,6 +18,12 @@ export const CANDIDATE_RADIUS_M = 700;
 export const ELEVATION_RADIUS_M = 1100;
 /** Candidates closer than this to a better one are dropped, so the list offers distinct places. */
 export const MIN_SEPARATION_M = 250;
+/** The search radii offered: the default, and a wider one (the grid grows with the square of the radius: 1.5 km is 39 x 39 points, one request). */
+export const FINDER_RADII = [CANDIDATE_RADIUS_M, 1500] as const;
+/** Elevations are read this far beyond the candidate radius (horizon and ridge tests need terrain around the outermost candidates). */
+export const elevationRadiusFor = (candidateRadiusM: number) => candidateRadiusM + (ELEVATION_RADIUS_M - CANDIDATE_RADIUS_M);
+/** A wider search keeps its candidates further apart. */
+export const separationFor = (candidateRadiusM: number) => (candidateRadiusM > CANDIDATE_RADIUS_M ? 400 : MIN_SEPARATION_M);
 /** Survey year requested from the land-cover statistics (one record per point instead of one per year). */
 export const COVER_YEAR = 2023;
 /** Cover classes a tent cannot go on, or that make no sense as a recommendation. */
@@ -62,8 +69,8 @@ export function gridFromProfile(g: { e0: number; n0: number; size: number }, val
   return { ...g, z };
 }
 
-export async function fetchElevationGrid(e: number, n: number, signal?: AbortSignal): Promise<Grid> {
-  const base = makeGrid(e, n);
+export async function fetchElevationGrid(e: number, n: number, signal?: AbortSignal, radius = ELEVATION_RADIUS_M): Promise<Grid> {
+  const base = makeGrid(e, n, radius);
   const body = new URLSearchParams({
     geom: JSON.stringify({ type: 'LineString', coordinates: serpentine(base) }),
     sr: '2056',
@@ -115,6 +122,8 @@ export interface Candidate {
   comfort: Comfort;
   /** Straight-line distance from the centre in metres. */
   meters: number;
+  /** Walking time from the centre by Naismith's rule over the straight line (the path is longer: a guide only), minutes. */
+  walkMin?: number;
   /** Bearing from the centre, degrees clockwise from north. */
   bearing: number;
 }
@@ -132,14 +141,17 @@ export function rankCells(
   centre: { e: number; n: number },
   covers: Map<string, { cover: Cover; label: string }>,
   limit: number,
+  radius = CANDIDATE_RADIUS_M,
+  separation = MIN_SEPARATION_M,
 ): Candidate[] {
   const all: Candidate[] = [];
+  const centreZ = zAt(g, centre.e, centre.n);
   for (let j = 0; j < g.size; j++) {
     for (let i = 0; i < g.size; i++) {
       const e = g.e0 + i * STEP;
       const n = g.n0 + j * STEP;
       const d = Math.hypot(e - centre.e, n - centre.n);
-      if (d > CANDIDATE_RADIUS_M) continue;
+      if (d > radius) continue;
       const z = g.z[j * g.size + i]!;
       if (!Number.isFinite(z)) continue;
       const c = covers.get(`${e},${n}`);
@@ -148,14 +160,15 @@ export function rankCells(
       if (!Number.isFinite(terrain.slopeDeg) || terrain.slopeDeg >= MAX_SLOPE_DEG || !Number.isFinite(terrain.meanHorizon) || !Number.isFinite(terrain.tpi)) continue;
       const comfort = comfortFor({ terrain, ground: groundInfo(c?.cover, c?.label) });
       const { lat, lon } = lv95ToWgs84(e, n);
-      all.push({ e, n, lat, lon, elevation: z, cover: c?.cover, coverLabel: c?.label, terrain, comfort, meters: d, bearing: bearingTo(e - centre.e, n - centre.n) });
+      const walkMin = Number.isFinite(centreZ) ? naismithMinutes(d, Math.max(0, z - centreZ), Math.max(0, centreZ - z)) : naismithMinutes(d, 0);
+      all.push({ e, n, lat, lon, elevation: z, cover: c?.cover, coverLabel: c?.label, terrain, comfort, meters: d, walkMin, bearing: bearingTo(e - centre.e, n - centre.n) });
     }
   }
   all.sort((a, b) => b.comfort.score - a.comfort.score || a.meters - b.meters);
   const kept: Candidate[] = [];
   for (const c of all) {
     if (kept.length >= limit) break;
-    if (kept.every((k) => Math.hypot(k.e - c.e, k.n - c.n) >= MIN_SEPARATION_M)) kept.push(c);
+    if (kept.every((k) => Math.hypot(k.e - c.e, k.n - c.n) >= separation)) kept.push(c);
   }
   return kept;
 }
@@ -185,23 +198,25 @@ type PointFeature = { geometry?: { type?: string; coordinates?: number[] }; prop
 
 /** Ground cover of the sample points in an identify response (geojson), latest survey year per point. */
 export function parseCoverTile(body: { results?: PointFeature[] }): Map<string, { cover: Cover; label: string }> {
-  const best = new Map<string, { year: number; label: string }>();
+  const best = new Map<string, { year: number; en: string; local: string }>();
   for (const f of body.results ?? []) {
     const c = f.geometry?.coordinates;
     const p = f.properties ?? {};
-    const label = p.desc_lc09r_27_en;
+    const en = p.desc_lc09r_27_en;
     const year = Number(p.year);
-    if (f.geometry?.type !== 'Point' || !c || c.length < 2 || typeof label !== 'string' || !Number.isFinite(year)) continue;
+    if (f.geometry?.type !== 'Point' || !c || c.length < 2 || typeof en !== 'string' || !Number.isFinite(year)) continue;
     const key = `${Math.round(c[0]!)},${Math.round(c[1]!)}`;
-    if (!best.has(key) || best.get(key)!.year < year) best.set(key, { year, label });
+    const local = p[`desc_lc09r_27_${getLang()}`];
+    if (!best.has(key) || best.get(key)!.year < year) best.set(key, { year, en, local: typeof local === 'string' && local ? local : en });
   }
-  return new Map([...best].map(([k, v]) => [k, { cover: classifyCover(v.label), label: v.label }]));
+  // the class is told from the English name; the name shown is in the language of the page
+  return new Map([...best].map(([k, v]) => [k, { cover: classifyCover(v.en), label: v.local }]));
 }
 
 /** Ground cover for every node within the candidate radius: a few identify requests over envelopes of up to 1 km. */
-export async function fetchCoverGrid(centre: { e: number; n: number }, signal?: AbortSignal): Promise<Map<string, { cover: Cover; label: string }>> {
-  const lo = (v: number) => Math.floor((v - CANDIDATE_RADIUS_M) / STEP) * STEP;
-  const hi = (v: number) => Math.ceil((v + CANDIDATE_RADIUS_M) / STEP) * STEP;
+export async function fetchCoverGrid(centre: { e: number; n: number }, signal?: AbortSignal, radius = CANDIDATE_RADIUS_M): Promise<Map<string, { cover: Cover; label: string }>> {
+  const lo = (v: number) => Math.floor((v - radius) / STEP) * STEP;
+  const hi = (v: number) => Math.ceil((v + radius) / STEP) * STEP;
   const e0 = lo(centre.e);
   const n0 = lo(centre.n);
   const e1 = hi(centre.e);

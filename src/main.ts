@@ -26,9 +26,9 @@ import { fetchGround, type GroundInfo } from './comfort/ground';
 import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
 import { MAX_SAVED, defaultName, importSpots, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateLegality, updateSnapshot, updateSpot, verdictLabel, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
-import { fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, withWater } from './finder';
-import { combined, renderFinder, type FinderRow } from './finderview';
-import { beyondForecast, firstEvening, planTrip } from './planner';
+import { CANDIDATE_RADIUS_M, FINDER_RADII, elevationRadiusFor, fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, separationFor, withWater, zAt } from './finder';
+import { combined, radiusText, renderFinder, type FinderRow } from './finderview';
+import { beyondForecast, firstEvening, flagsFor, planTrip } from './planner';
 import { MAX_NIGHTS, addNight, loadTrip, moveNight, nightsFor, removeNight, saveTrip, setNightSpot, tripNights, type TripNight } from './trip';
 import { InputsCache, legalForNight, recheckSpots } from './recheck';
 import { MAX_SHARE_SPOTS, decodeShare, isShareHash, shareLink, type DecodedShare, type SharePayload } from './share';
@@ -984,14 +984,18 @@ function finderNote(c: { coverLabel?: string; elevation: number }, water: WaterI
   const parts: string[] = [];
   if (c.coverLabel) parts.push(c.coverLabel);
   if (waterDone) {
-    if (!water || water.failed.includes('water')) parts.push('water not checked');
-    else if (water.kind === 'none') parts.push('no water within 800 m');
-    else parts.push(`${water.kind === 'lake' ? 'lake' : 'stream'}${water.name ? ` ${water.name}` : ''} ${Math.round(water.meters / 10) * 10} m away${water.glacierM !== undefined ? ' (glacier water)' : ''}${water.upstreamPlants.length ? ' (sewage upstream)' : ''}`);
+    if (!water || water.failed.includes('water')) parts.push(tr('water not checked'));
+    else if (water.kind === 'none') parts.push(water.spring ? tr('no stream or lake within 800 m; a mapped spring {m} m away', { m: Math.round(water.spring.meters / 10) * 10 }) : tr('no water within 800 m'));
+    else {
+      const what = `${water.kind === 'lake' ? tr('lake') : tr('stream')}${water.name ? ` ${water.name}` : ''}`;
+      parts.push(`${tr('{what} {m} m away', { what, m: Math.round(water.meters / 10) * 10 })}${water.glacierM !== undefined ? ' ' + tr('(glacier water)') : ''}${water.upstreamPlants.length ? ' ' + tr('(sewage upstream)') : ''}`);
+    }
   }
-  return `${parts.join(' · ') || 'ground not classified'}.`;
+  return `${parts.join(' · ') || tr('ground not classified')}.`;
 }
 
-async function findBest(lat: number, lng: number, opts: { back?: { label: string; run: () => void } } = {}) {
+async function findBest(lat: number, lng: number, opts: { back?: { label: string; run: () => void }; radiusM?: number } = {}) {
+  const radius = opts.radiusM ?? CANDIDATE_RADIUS_M;
   const id = ++finderId;
   ++checkId; // stops a running spot check from painting over the list
   delete result.dataset.page;
@@ -1004,7 +1008,7 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
   result.hidden = false;
   const gone = () => id !== finderId;
   const mount = () => {
-    const ui = renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true));
+    const ui = renderFinder(result, tr('Best spots nearby'), (c) => void checkSpot(c.lat, c.lon, true), { radius, radii: FINDER_RADII, onRadius: (m) => void findBest(lat, lng, { ...opts, radiusM: m }) });
     if (opts.back) {
       const back = el('button', 'linkish', '← ' + opts.back.label);
       back.type = 'button';
@@ -1021,12 +1025,23 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
   const abort = new AbortController();
   const stop = window.setTimeout(() => abort.abort(), 40000);
   try {
-    const grid = await withTimeout(fetchElevationGrid(e, n, abort.signal), 12000);
+    const grid = await withTimeout(fetchElevationGrid(e, n, abort.signal, elevationRadiusFor(radius)), radius > CANDIDATE_RADIUS_M ? 20000 : 12000);
     if (gone()) return;
-    const covers = await withTimeout(fetchCoverGrid({ e, n }, abort.signal), 10000).catch(() => new Map());
+    const covers = await withTimeout(fetchCoverGrid({ e, n }, abort.signal, radius), radius > CANDIDATE_RADIUS_M ? 16000 : 10000).catch(() => new Map());
     if (gone()) return;
-    const cands = rankCells(grid, { e, n }, covers, FINDER_CANDIDATES);
-    if (!cands.length) return ui.update([], tr('No suitable flat ground found within about 700 m (steep, glacier, water or built-up). Try another place.'), true);
+    const cands = rankCells(grid, { e, n }, covers, FINDER_CANDIDATES, radius, separationFor(radius));
+    // tonight's weather around here, one line above the list (the centre's own height, from the grid)
+    const here = zAt(grid, e, n);
+    void withTimeout(fetchForecast(lat, lng, Number.isFinite(here) ? here : undefined), 9000).then((h) => {
+      const nowZ = zurichNow(new Date());
+      const night = summariseNight(h, nightWindows(nowZ, 1)[0]!);
+      if (!night || gone()) return;
+      const flags = flagsFor(night);
+      ui.setHeadline(tr('Tonight around here: {low} °C low, gusts {gust} km/h, {rain}{watch}.', { low: Math.round(night.minTempC), gust: Math.round(night.maxGustKmh), rain: night.precipMm >= 1 ? tr('{mm} mm rain', { mm: night.precipMm.toFixed(0) }) : tr('dry'), watch: flags.length ? '. ' + tr('Watch for: {list}', { list: flags.join(', ') }) : '' }));
+    }, () => undefined);
+    const wider = FINDER_RADII.find((r) => r > radius);
+    const offer = wider ? { label: tr('Look within {radius}', { radius: radiusText(wider) }), run: () => void findBest(lat, lng, { ...opts, radiusM: wider }) } : undefined;
+    if (!cands.length) return ui.update([], tr('No suitable flat ground found within about {radius} (steep, glacier, water or built-up). Try another place.', { radius: radiusText(radius) }), true, offer);
 
     const rows: FinderRow[] = cands.map((c) => ({ candidate: c, sleep: sleepScore(c.comfort), note: finderNote(c, undefined, false), waterDone: false }));
     let hidden = 0;
@@ -1042,7 +1057,7 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
       if (gone()) return;
       const list = done ? shown().slice(0, FINDER_SHOWN) : shown();
       const checked = rows.filter((r) => r.legal && r.waterDone).length;
-      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about 700 m' : '{n} spots within about 700 m', { n: list.length }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + (steep ? '; ' + tr('{n} more skipped because they are too steep to pitch on', { n: steep }) : '') + '.' : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done);
+      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about {radius}' : '{n} spots within about {radius}', { n: list.length, radius: radiusText(radius) }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + (steep ? '; ' + tr('{n} more skipped because they are too steep to pitch on', { n: steep }) : '') + '.' : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done, done && list.length < 3 ? offer : undefined);
       finderPins.clearLayers();
       list.forEach((r, i) =>
         L.marker([r.candidate.lat, r.candidate.lon], { icon: L.divIcon({ className: '', html: `<div class="finder-pin">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) })

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import spots from './fixtures/water-spots.json';
 import { comfortFor } from '../src/comfort/comfort';
-import { closestPoint, nearestWater, upstreamPlants, type WaterInfo } from '../src/comfort/water';
+import { closestPoint, nearestSpring, nearestWater, upstreamPlants, type WaterInfo } from '../src/comfort/water';
 
 type Spot = { e: number; n: number; water: never; info: WaterInfo; plants?: never };
 const S = spots as unknown as Record<string, Spot>;
@@ -134,5 +134,51 @@ describe('what each kind of water does to the comfort result', () => {
   });
   it('reminds to treat surface water', () => {
     expect(run(water({ meters: 100 })).factors[0]!.text).toMatch(/Treat or filter/);
+  });
+});
+
+describe('springs from the geological map', () => {
+  const pt = (e: number, n: number, kind: string, spec?: string) => ({ geometry: { type: 'MultiPoint', coordinates: [[e, n, 1300]] }, properties: { kind_de: kind, spec_de: spec } });
+  it('finds the nearest spring and says whether it is captured', () => {
+    const body = { results: [pt(2619391.9, 1149535.1, 'Quelle', 'gefasst'), pt(2619100, 1149500, 'Quelle', 'nicht gefasst'), pt(2619300, 1149500, 'Orientierung der Schichten')] };
+    const s = nearestSpring(body as never, 2619400, 1149500)!;
+    expect(s.captured).toBe(true);
+    expect(s.meters).toBeCloseTo(Math.hypot(8.1, 35.1), 0);
+    expect(s.at).toEqual({ e: 2619391.9, n: 1149535.1 });
+  });
+  it('counts a diffuse spring, ignores every other kind of point, and finds nothing in an empty answer', () => {
+    expect(nearestSpring({ results: [pt(10, 10, 'diffuse Quelle')] } as never, 0, 0)!.captured).toBe(false);
+    expect(nearestSpring({ results: [pt(10, 10, 'Sturzblock'), pt(5, 5, 'Versickerungsstelle eines Baches')] } as never, 0, 0)).toBeUndefined();
+    expect(nearestSpring({ results: [] }, 0, 0)).toBeUndefined();
+    expect(nearestSpring({}, 0, 0)).toBeUndefined();
+  });
+  it('reads a plain point too, and skips a feature without a position', () => {
+    const plain = { geometry: { type: 'Point', coordinates: [30, 40] }, properties: { kind_de: 'Quelle' } };
+    expect(nearestSpring({ results: [plain, { properties: { kind_de: 'Quelle' } }] } as never, 0, 0)!.meters).toBe(50);
+  });
+});
+
+describe('water items with a spring', () => {
+  const info = (over: Partial<WaterInfo>): WaterInfo => ({ kind: 'none', meters: Infinity, upstreamPlants: [], failed: [], ...over });
+  const titles = (w: WaterInfo) => comfortFor({ water: w }).spotFactors.map((f) => f.title);
+  it('no mapped water but a spring: an information item instead of a warning, and no score loss', () => {
+    const w = info({ spring: { meters: 350, captured: true, at: { e: 1, n: 2 } } });
+    expect(titles(w)).toContain('A mapped spring nearby');
+    expect(titles(w)).not.toContain('No water found nearby');
+    const c = comfortFor({ water: w });
+    expect(c.spotFactors.find((f) => f.title === 'A mapped spring nearby')).toMatchObject({ tone: 'info' });
+    expect(c.spotFactors.find((f) => f.title === 'A mapped spring nearby')!.text).toContain('(captured)');
+    // the missing water costs a point; a mapped spring does not give it back as a stream would, but it does not cost it either
+    expect(c.score).toBe(comfortFor({ water: info({}) }).score + 1);
+  });
+  it('no mapped water and no spring is still a warning', () => {
+    expect(titles(info({}))).toContain('No water found nearby');
+  });
+  it('water that is far and a spring that is much closer: both are said', () => {
+    const w = info({ kind: 'stream', meters: 700, spring: { meters: 200, captured: false, at: { e: 1, n: 2 } } });
+    expect(titles(w)).toEqual(expect.arrayContaining(['Water 400 to 800 m away', 'A mapped spring is closer']));
+  });
+  it('water close by needs no spring item', () => {
+    expect(titles(info({ kind: 'stream', meters: 60, spring: { meters: 30, captured: false, at: { e: 1, n: 2 } } }))).not.toContain('A mapped spring is closer');
   });
 });
