@@ -154,8 +154,8 @@ function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { la
   if (!statutory) why = tr('This zone is only recommended, not binding.');
   else if (winterSportsOnly) why = tr('The rule covers winter sports only.');
   else if (!entryRule) why = tr('The zone\'s rule is not a plain entry or path rule; read it.');
-  else if (st.state === 'unsure') why = tr('The restriction applies "{season}", which cannot be placed exactly on a calendar (ski season, snow or lift operation), so it may be in force today ({date}); check the zone\'s notice.', { season: season ?? '', date: fmtDate(today) });
-  else why = tr('The restriction applies {season} and is not running today ({date}), but check the zone\'s rule.', { season: season ?? '', date: fmtDate(today) });
+  else if (st.state === 'unsure') why = tr('The restriction applies "{season}", which cannot be placed exactly on a calendar (ski season, snow or lift operation), so it may be in force on {date}; check the zone\'s notice.', { season: season ?? '', date: fmtDate(today) });
+  else why = tr('The restriction applies {season} and is not running on {date}, but check the zone\'s rule.', { season: season ?? '', date: fmtDate(today) });
   return {
     layer: { ...layer, severity: 'caution', note: tr('Wildlife quiet zone. {why}', { why }) },
     detail: bits,

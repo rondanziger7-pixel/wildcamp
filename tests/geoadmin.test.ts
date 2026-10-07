@@ -70,7 +70,7 @@ describe('parseZoneHits', () => {
     it('out of season it is only caution and says so', () => {
       const [h] = parseZoneHits({ results: [wrz({})] }, summer);
       expect(h!.layer.severity).toBe('caution');
-      expect(h!.layer.note).toMatch(/not running today/);
+      expect(h!.layer.note).toMatch(/not running on 15.7.2026/);
     });
     it('year-round entry bans stay restricted in summer', () => {
       expect(sev(wrz({ schutzzeit: undefined }), summer)).toBe('restricted');

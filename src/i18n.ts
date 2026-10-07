@@ -14,12 +14,21 @@ export function detectLang(stored: string | null | undefined, browser: string | 
   return LANGS.some(([l]) => l === b) ? (b as Lang) : 'en';
 }
 
-function initial(): Lang {
-  try {
-    return detectLang(globalThis.localStorage?.getItem(LANG_KEY), globalThis.navigator?.language);
-  } catch {
-    return 'en';
+/** The language kept in either kind of storage (the session one still works where the permanent one is blocked or full). */
+function storedLang(): string | null {
+  for (const kind of ['localStorage', 'sessionStorage'] as const) {
+    try {
+      const v = globalThis[kind]?.getItem(LANG_KEY);
+      if (v) return v;
+    } catch {
+      /* blocked: try the next */
+    }
   }
+  return null;
+}
+
+function initial(): Lang {
+  return detectLang(storedLang(), globalThis.navigator?.language);
 }
 
 let current: Lang = initial();
@@ -28,10 +37,12 @@ export const getLang = () => current;
 /** Switching the language reloads the page: everything is drawn in the language it started in. */
 export function setLang(l: Lang, reload = true): void {
   current = l;
-  try {
-    globalThis.localStorage?.setItem(LANG_KEY, l);
-  } catch {
-    /* storage blocked: the choice lasts until reload */
+  for (const kind of ['localStorage', 'sessionStorage'] as const) {
+    try {
+      globalThis[kind]?.setItem(LANG_KEY, l);
+    } catch {
+      /* blocked or full: the other one may take it */
+    }
   }
   if (reload && typeof location !== 'undefined') location.reload();
 }
