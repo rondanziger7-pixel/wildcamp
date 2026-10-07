@@ -16,6 +16,18 @@ export interface MunicipalEntry {
  */
 export const MUNICIPAL_RULES: MunicipalEntry[] = [
   {
+    bfs: 1711,
+    name: 'Zug',
+    officialHost: 'zug.tlex.ch',
+    rule: {
+      stance: 'restricted',
+      summary:
+        'City regulation on the use of public facilities (SRS 7.7.1-1), § 5 para. 1 let. b and § 22: camping without a permit is forbidden in the city\'s public facilities, meaning its squares, parks and lawns, public lakeshore facilities and playgrounds; breaches are fined. It does not cover facilities of third parties (§ 2), private land, or forest and shore outside the city\'s lakeshore facilities. "Camping" is not defined in the regulation.',
+      sources: [{ title: 'Reglement über die Benützung der öffentlichen Anlagen (SRS 7.7.1-1), § 2, 3, 5, 22', url: 'https://zug.tlex.ch/app/de/texts_of_law/7.7.1-1' }],
+      checkedOn: '2026-10-04',
+    },
+  },
+  {
     bfs: 351,
     name: 'Bern',
     officialHost: 'bern.ch',
@@ -639,6 +651,17 @@ export interface UnverifiedNote {
 }
 
 export const UNVERIFIED_NOTES: UnverifiedNote[] = [
+  {
+    bfs: 1631,
+    name: 'Glarus Süd',
+    text:
+      'Press reports say the municipality of Glarus Süd has banned camping at the Panixerpass, the Oberblegisee and the Muttenchopf, with fines of up to CHF 2,000. The municipality says it can only issue bans on its own land; the reported bans appear to be court-ordered prohibitions by landowners (Art. 258 ZPO), not a municipal regulation. The primary text could not be found, so this is not verified: treat these places as probably banned and check with the municipality.',
+    sources: [
+      { title: 'Glarus24: Gemeinde Glarus Süd reguliert das Campen in freier Natur (press report)', url: 'https://www.glarus24.ch/artikel/gemeinde-glarus-sued-reguliert-das-campen-in-freier-natur-2440693' },
+      { title: 'Glarnerland: Gemeinde Glarus Süd reguliert das Campen in freier Natur (press report)', url: 'https://glarnerland.ch/de/service/medien/detail/gemeinde-glarus-sued-reguliert-das-campen-in-freier-natur.html' },
+    ],
+    checkedOn: '2026-10-04',
+  },
   {
     bfs: 6300,
     name: 'Zermatt',

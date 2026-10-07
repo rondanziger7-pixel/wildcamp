@@ -62,9 +62,11 @@ describe('city police regulations (texts read 2026-10-04)', () => {
     expect(findMunicipalRule(6458)!.rule.summary).toMatch(/could not be confirmed/);
   });
   it('cities with no general camping rule are read and deliberately not recorded', () => {
-    for (const bfs of [2701, 1061, 5002, 6621, 5192, 1711]) expect(findMunicipalRule(bfs), String(bfs)).toBeUndefined();
+    for (const bfs of [2701, 1061, 5002, 6621, 5192]) expect(findMunicipalRule(bfs), String(bfs)).toBeUndefined();
     expect(text('6621_Geneve', 'Reglement-plage-Eaux-Vives-LC213164_2022-11-01.txt')).toContain('toute forme de camping est interdite');
     expect(text('5192_Lugano', 'Ordinanza-parchi-urbani-giardini-pubblici_2024-11-07.txt')).toContain('è vietato campeggiare o pernottare nei parchi');
+    // Zug: the permit duty for public facilities (incl. lakeshore) is recorded as a restriction
+    expect(findMunicipalRule(1711)!.rule.stance).toBe('restricted');
     expect(text('1711_Zug', 'Benuetzung-oeffentliche-Anlagen_2025-01-01.txt')).toContain('verbot des unbewilligten campierens');
   });
 });
