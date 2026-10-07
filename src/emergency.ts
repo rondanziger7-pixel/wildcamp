@@ -30,12 +30,12 @@ export function formatLv95(e: number, n: number): string {
   return `${f(e)} / ${f(n)}`;
 }
 
-function dms(v: number, pos: string, neg: string): string {
-  const a = Math.abs(v);
-  const d = Math.floor(a);
-  const mFull = (a - d) * 60;
-  const m = Math.floor(mFull);
-  const s = ((mFull - m) * 60).toFixed(1);
+export function dms(v: number, pos: string, neg: string): string {
+  // whole tenths of a second first, so 59.96 seconds carries into the minute instead of printing 60.0
+  const tenths = Math.round(Math.abs(v) * 3600 * 10);
+  const d = Math.floor(tenths / 36000);
+  const m = Math.floor((tenths % 36000) / 600);
+  const s = ((tenths % 600) / 10).toFixed(1);
   return `${d}°${String(m).padStart(2, '0')}'${s.padStart(4, '0')}"${v >= 0 ? pos : neg}`;
 }
 

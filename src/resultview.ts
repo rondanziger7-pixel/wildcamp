@@ -15,6 +15,8 @@ import { buildAlerts, type Alert } from './alerts';
 import { dateLocale, tr } from './i18n';
 import { applyNearBuilding, type NearBuildingNote } from './comfort/nearbuilding';
 
+/** Smooth scrolling unless the person asked their system for less motion. */
+const smoothScroll = (): ScrollBehavior => (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
 /** The tone as a sign and a word, so it does not depend on the colour of the item's edge (the word is for screen readers). */
 const toneMark = (tone: keyof typeof TONE_ORDER): [string, string] => (tone === 'bad' ? ['⛔', tr('Problem')] : tone === 'warn' ? ['⚠️', tr('Caution')] : tone === 'ok' ? ['✅', tr('Fine')] : ['', tr('Note')]);
@@ -159,6 +161,8 @@ export interface ResultUi {
   setHazards(h: { comfort?: Comfort; fire?: Restrictions['fire']; dogs?: DogArea[]; date?: Date; soon?: Night }): void;
   /** What the result shows right now, for saving the spot. */
   snapshot(): Omit<SpotSnapshot, 'savedAt'>;
+  /** The dangers on the first view (their texts), for the announcement a screen reader gets. */
+  alertTexts(): string[];
 }
 
 /** Fire and drone rules sit in a tab that starts closed. */
@@ -270,6 +274,9 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   total.b.querySelector('.sc-more')!.textContent = tr('View details');
   let spotComfort: number | undefined;
   let comfortUnavailable = false;
+  /** A red danger is on the first view: the headline must not read as a recommendation above it. */
+  let hasRed = false;
+  let lastAlerts: string[] = [];
   const paintTotal = () => {
     const s = shown();
     const unchecked = !!a.incomplete?.length && s.verdict !== 'no';
@@ -279,7 +286,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     else if (unchecked) word = '❔ ' + tr('Unchecked');
     else if (t.value === undefined) word = tr('Checking…');
     else {
-      word = t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 50 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
+      word = hasRed && t.value >= 30 ? '⚠️ ' + tr('Read the warnings first') : t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 50 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
       if (comfortUnavailable && spotComfort === undefined) word += ' · ' + tr('comfort not checked');
     }
     total.set(t, word);
@@ -318,6 +325,12 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   let openFromAlert: (alert: Alert) => void = () => undefined;
   const paintAlerts = () => {
     const list = buildAlerts({ ...hazardInput, assessment: shown() });
+    lastAlerts = list.map((x) => x.text);
+    const red = list.some((x) => x.tone === 'bad');
+    if (red !== hasRed) {
+      hasRed = red;
+      paintTotal();
+    }
     alertsHost.hidden = list.length === 0;
     const rows = list.slice(0, 3).map((al) => {
       const li = el('li');
@@ -449,7 +462,9 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
       for (const [bt] of opener) bt.setAttribute('aria-expanded', 'false');
       scores.classList.remove('compact');
     }
-    document.getElementById('sheet')?.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('sheet')?.scrollTo({ top: 0, behavior: smoothScroll() });
+    // the button that was pressed is gone (hidden): keyboard focus goes to its successor instead of dropping to the page
+    (on ? backBtn : total.b).focus({ preventScroll: true });
   };
   total.b.onclick = () => showDetails(true);
   backBtn.onclick = () => showDetails(false);
@@ -466,7 +481,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
       for (const [bt, pn] of opener) bt.setAttribute('aria-expanded', String(!pn.hidden));
       // while a section is open the cards shrink to a row of tabs, and the sheet returns to its top so they stay in view
       scores.classList.toggle('compact', !panel.hidden);
-      document.getElementById('sheet')?.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('sheet')?.scrollTo({ top: 0, behavior: smoothScroll() });
     };
   }
 
@@ -584,6 +599,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
         shelterChip.classList.add('far');
       }
     },
+    alertTexts: () => lastAlerts,
     setHutLink(link) {
       hutLinkEl.hidden = !link;
       if (!link) return;

@@ -1,4 +1,4 @@
-import { assessInputs, fetchLegalityInputs, type LegalityInputs } from './spotcheck';
+import { assessInputs, assessNight, fetchLegalityInputs, type LegalityInputs } from './spotcheck';
 import { nightDate, nightWindowFor } from './comfort/weather';
 import { legalSummary, overallFrom, type LegalSummary } from './scores';
 import type { LocalData } from './localstore';
@@ -26,7 +26,7 @@ export class InputsCache {
 
 /** The legality of a spot on the evening of `date` ("YYYY-MM-DD"), from lookups already made: no requests. */
 export function legalForNight(inp: LegalityInputs, data: LocalData, date: string, now: string): LegalSummary {
-  return legalSummary(assessInputs(inp, data, nightDate(nightWindowFor(date, now), now)));
+  return legalSummary(assessNight(inp, data, nightDate(nightWindowFor(date, now), now)));
 }
 
 export interface RecheckOutcome {

@@ -1,4 +1,5 @@
-import { assess, type Assessment, type NearZone, type ZoneHit } from './assess';
+import { assess, type Assessment, type Item, type NearZone, type ZoneHit } from './assess';
+import { dateLocale, tr } from './i18n';
 import { wgs84ToLv95 } from './coords';
 import { fetchCanton, fetchElevation, fetchMunicipality, fetchNearZoneBody, fetchZoneBody, parseZoneHits, type Municipality, type ZoneBody } from './geoadmin';
 import type { Canton } from './cantons';
@@ -117,6 +118,23 @@ export function assessInputs(inp: LegalityInputs, data: LocalData, date: Date = 
     outsideSwitzerland: inp.cantonKnown && inp.canton === undefined,
     incomplete,
   });
+}
+
+const worse: Record<string, number> = { no: 3, caution: 2, unknown: 1, likely_ok: 0 };
+
+/**
+ * The verdict for a night, not a day: a night runs past midnight into the next day, so a quiet-zone season that starts at midnight
+ * (14 to 15 November) is already in force for the sleeping hours. When the next day is judged more strictly, that verdict is shown with a
+ * note saying why.
+ */
+export function assessNight(inp: LegalityInputs, data: LocalData, evening: Date = new Date()): Assessment {
+  const first = assessInputs(inp, data, evening);
+  const next = new Date(evening);
+  next.setDate(next.getDate() + 1);
+  const second = assessInputs(inp, data, next);
+  if ((worse[second.verdict] ?? 0) <= (worse[first.verdict] ?? 0)) return first;
+  const note: Item = { tone: 'warn', title: tr('A restriction starts during this night'), text: tr('Something that is not in force on the evening of {date} is from midnight, and counts for the hours you would sleep: read the points below for the next day.', { date: evening.toLocaleDateString(dateLocale(), { day: 'numeric', month: 'short' }) }) };
+  return { ...second, items: [note, ...second.items], reasons: [note.text, ...second.reasons] };
 }
 
 /** Ban zones that begin close to the spot but do not contain it: the federal layers within the search radius, the bundled polygons with their exact distance. */

@@ -57,7 +57,6 @@ describe('how a rule text treats sleeping without a tent', () => {
 describe('notes for another set-up', () => {
   it('has none for a tent', () => {
     expect(gearItems(DEFAULT_GEAR, ctx('Bern', 'BE'))).toEqual([]);
-    expect(gearItems({ ...DEFAULT_GEAR, dog: true }, ctx('Bern', 'BE'))).toEqual([]);
   });
   it('a bivy bag: the municipal rule can count it as camping, leave it out, or say nothing', () => {
     const bivy = { ...DEFAULT_GEAR, shelter: 'bivy' as const };
@@ -96,7 +95,11 @@ describe('notes for another set-up', () => {
   it('a group: only where a text mentions groups', () => {
     const group = { ...DEFAULT_GEAR, people: 6 };
     expect(gearItems(group, { canton: canton('NW') }).map((i) => i.title)).toEqual(['The rule texts mention groups']);
-    expect(gearItems(group, { canton: canton('AG') })).toEqual([]);
+    // where no text mentions groups, the app says what it did find: no group-size law
+    const none = gearItems(group, { canton: canton('AG') });
+    expect(none.map((i) => i.title)).toEqual(['No group-size limit found']);
+    expect(none[0]!.text).toMatch(/No law read sets a group size/);
+    expect(none[0]!.sources!.length).toBeGreaterThan(0);
     expect(gearItems({ ...DEFAULT_GEAR, people: 2 }, { canton: canton('NW') })).toEqual([]);
   });
   it('never changes a verdict and never says a spot is legal', () => {
@@ -109,5 +112,57 @@ describe('notes for another set-up', () => {
         }
       }
     }
+  });
+});
+
+describe('a dog', () => {
+  const dog = { ...DEFAULT_GEAR, dog: true };
+  const at = (code: string, date: string, extra = {}) => gearItems(dog, { canton: { code, name: code }, date: new Date(`${date}T20:00:00`), ...extra });
+  it('has a lead in forest from 1 April to 31 July in the cantons whose texts say so', () => {
+    for (const code of ['AG', 'LU', 'SO', 'TG', 'BL']) {
+      const it = at(code, '2026-06-15').find((i) => i.title === 'Dogs on a lead in forest')!;
+      expect(it, code).toBeTruthy();
+      expect(it.tone).toBe('warn');
+      expect(it.text).toContain('1 April');
+      expect(it.sources!.length).toBeGreaterThan(0);
+    }
+  });
+  it('knows the edges of the period', () => {
+    expect(at('SO', '2026-03-31').some((i) => i.title === 'Dogs on a lead in forest: not in this period')).toBe(true);
+    expect(at('SO', '2026-04-01').some((i) => i.title === 'Dogs on a lead in forest')).toBe(true);
+    expect(at('SO', '2026-07-31').some((i) => i.title === 'Dogs on a lead in forest')).toBe(true);
+    expect(at('SO', '2026-08-01').some((i) => i.title === 'Dogs on a lead in forest: not in this period')).toBe(true);
+    // Fribourg ends on 15 July
+    expect(at('FR', '2026-07-15').some((i) => i.title === 'Dogs on a lead in forest')).toBe(true);
+    expect(at('FR', '2026-07-16').some((i) => i.title === 'Dogs on a lead in forest: not in this period')).toBe(true);
+  });
+  it('names the 50 m edge where the text does (AG, LU) and not elsewhere', () => {
+    expect(at('AG', '2026-05-01').find((i) => i.title === 'Dogs on a lead in forest')!.text).toContain('50 m');
+    expect(at('SO', '2026-05-01').find((i) => i.title === 'Dogs on a lead in forest')!.text).not.toContain('50 m');
+  });
+  it('marks Uri as announced, not as a law it could cite', () => {
+    const it = at('UR', '2026-05-01')[0]!;
+    expect(it.title).toBe('Dogs on a lead in forest (announced)');
+    expect(it.text).toMatch(/article of the ordinance was not found/);
+  });
+  it('says none was found where the texts read have no general period, and never that dogs may run free', () => {
+    for (const code of ['BE', 'SG', 'GR', 'VS', 'NW', 'ZG']) {
+      const it = at(code, '2026-05-01').find((i) => i.title === 'No general forest leash period found')!;
+      expect(it, code).toBeTruthy();
+      expect(it.text).toMatch(/not a sign that dogs may run free/);
+    }
+    expect(at('ZH', '2026-05-01').some((i) => i.title === 'The leash rules of this canton were not checked')).toBe(true);
+  });
+  it('always adds the federal note: no general leash duty, and the fine for letting a dog hunt', () => {
+    const it = at('BE', '2026-05-01').find((i) => i.title === 'Federal law: no general leash duty')!;
+    expect(it.text).toMatch(/CHF 20,000/);
+  });
+  it('bans dogs in the National Park, even on a lead', () => {
+    const it = at('GR', '2026-08-01', { inNationalPark: true })[0]!;
+    expect(it.tone).toBe('bad');
+    expect(it.text).toMatch(/not even on a lead/);
+  });
+  it('says when the forest map puts the spot in forest', () => {
+    expect(at('LU', '2026-05-01', { inForest: true }).find((i) => i.title === 'Dogs on a lead in forest')!.text).toContain('in forest');
   });
 });

@@ -32,6 +32,10 @@ export interface ParsedGpx {
   tracks: ParsedLine[];
   routes: ParsedLine[];
   waypoints: Waypoint[];
+  /** The file ends in the middle (cut off): only what was before the cut was read. */
+  truncated?: boolean;
+  /** The file had more than `MAX_POINTS` points: they were thinned evenly, so the line keeps its shape but its length and climb are approximate. */
+  thinned?: boolean;
 }
 
 /** Track and route points kept per file (tracks + routes together); further points are dropped. */
@@ -233,7 +237,7 @@ const multiLine = (s: string) => s.replace(/\r\n?/g, '\n').trim();
  * this app's own files). Handles namespace prefixes, extensions (skipped), CDATA, entities, any attribute
  * order and quote style, self-closing tags, a BOM and Windows line endings. Points with a missing, junk or
  * out-of-range coordinate are skipped; multiple `trkseg` of one track are joined. At most `MAX_POINTS`
- * track/route points are kept (the rest of the file is ignored). A file with a gpx root but no points gives
+ * track/route points are kept: a longer file is thinned evenly (`thinned`). A file with a gpx root but no points gives
  * empty arrays; a truncated file gives what was read before the cut.
  * @throws Error('not a GPX file') when there is no gpx root element.
  */
@@ -250,6 +254,10 @@ export function parseGpx(xml: string): ParsedGpx {
   let metaName: string | undefined;
   let rootName: string | undefined;
   let total = 0;
+  // too many points: every second point of every line is dropped and only every second new point is kept from then on (and again, and again)
+  let step = 1;
+  let seen = 0;
+  let thinned = false;
 
   const enclosingLine = (name: string): ParsedLine | undefined => {
     for (let i = stack.length - 1; i >= 0; i--) {
@@ -291,7 +299,15 @@ export function parseGpx(xml: string): ParsedGpx {
       case 'rtept': {
         const d = f.pt;
         const line = enclosingLine(f.name === 'trkpt' ? 'trk' : 'rte');
-        if (!d || !d.ok || !line || total >= MAX_POINTS) break;
+        if (!d || !d.ok || !line) break;
+        if (seen++ % step !== 0) break;
+        if (total >= MAX_POINTS) {
+          const lines = [...tracks, ...routes, ...stack.flatMap((fr) => (fr.line ? [fr.line] : []))];
+          for (const l of lines) l.points = l.points.filter((_, i) => i % 2 === 0 || i === l.points.length - 1);
+          total = lines.reduce((n, l) => n + l.points.length, 0);
+          step *= 2;
+          thinned = true;
+        }
         const p: RoutePoint = { lat: d.lat, lon: d.lon };
         if (d.ele !== undefined) p.ele = d.ele;
         if (d.time !== undefined) p.time = d.time;
@@ -350,12 +366,15 @@ export function parseGpx(xml: string): ParsedGpx {
       top.text += cdata ? raw : decodeEntities(raw);
     },
   });
+  const truncated = stack.length > 0; // closing tags are missing: the file was cut off
   // A file cut off mid-way: a half-read value (say '10' of an elevation '1000') is dropped, the rest is kept.
   while (stack.length > 0 && stack[stack.length - 1]!.collect) stack.pop();
   while (stack.length > 0) finish(stack.pop()!);
 
   if (!sawRoot) throw new Error('not a GPX file');
   const out: ParsedGpx = { tracks, routes, waypoints };
+  if (truncated) out.truncated = true;
+  if (thinned) out.thinned = true;
   const name = metaName ?? rootName;
   if (name !== undefined) out.name = name;
   return out;

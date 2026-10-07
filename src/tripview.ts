@@ -1,5 +1,5 @@
 import { el } from './resultview';
-import { tr } from './i18n';
+import { dateLocale, tr } from './i18n';
 import type { SavedSpot } from './saved';
 import { MAX_AHEAD_DAYS, MAX_NIGHTS, type PlannedNight } from './trip';
 import { addDays, nightText, nightWindowFor } from './comfort/weather';
@@ -90,6 +90,16 @@ export function renderTrip(root: HTMLElement, spots: SavedSpot[], nights: Planne
   }
   const planHost = el('div', 'trip-plan');
   parts.push(planHost);
+  // only on paper: when it was made, what it rests on, and the numbers to have in the mountains
+  parts.push(
+    el(
+      'div',
+      'print-only',
+      el('p', undefined, tr('Printed {date} from Wildcamp CH. Guidance only, not legal advice: rules, closures and the weather can change, and a spot that looks fine here may still be banned.', { date: new Date().toLocaleDateString(dateLocale(), { day: 'numeric', month: 'long', year: 'numeric' }) })),
+      el('p', undefined, tr('Sources: swisstopo and the federal offices (zones, map), cantons and municipalities (rules), Open-Meteo (forecast).')),
+      el('p', undefined, tr('Emergency: 112 (all emergencies), 144 (ambulance), 1414 (Rega air rescue), 117 (police).')),
+    ),
+  );
   root.replaceChildren(...parts);
   return planHost;
 }

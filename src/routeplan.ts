@@ -1,4 +1,4 @@
-import { ascentDescent, cumulativeM, haversineM, mainLine, naismithMinutes, simplify, splitStages, type ParsedGpx, type RoutePoint } from './route';
+import { ascentDescent, cumulativeM, haversineM, mainLine, naismithMinutes, simplify, splitStages, type ParsedGpx, type ParsedLine, type RoutePoint } from './route';
 import { cellAt, nearestLegal, positionAt, sharesBetween, type Cell, type NearestLegal, type RouteReport, type Sample, type StripClass } from './routecheck';
 
 /** What the route page shows besides the zone check: length, climb, walking time, and the stages with where to sleep. */
@@ -110,27 +110,59 @@ export function stageInfos(points: readonly RoutePoint[], stageKm: number, repor
 export const JOIN_M = 3000;
 
 /**
- * The line to plan with. A file with several tracks (one per day, as some apps export) is one route when the tracks connect end to start in
- * file order; otherwise the longest track (or route) is used. `joined` is how many tracks make up the line.
+ * The line to plan with. A file with several tracks (one per day, as some apps export) is one route when the tracks connect end to start:
+ * in file order, or failing that in the order the ends and starts fit (a file with Day 2 before Day 1). Otherwise the longest track (or
+ * route) is used. `joined` is how many tracks make up the line, `dropped` how many tracks of the file are not in it.
  */
-export function routeLine(g: ParsedGpx): { points: RoutePoint[]; joined: number } {
+export function routeLine(g: ParsedGpx): { points: RoutePoint[]; joined: number; dropped: number } {
   for (const lines of [g.tracks, g.routes]) {
     const usable = lines.filter((l) => l.points.length > 1);
     if (usable.length < 2) continue;
-    const chain: RoutePoint[] = [...usable[0]!.points];
-    let ok = true;
-    for (const l of usable.slice(1)) {
-      const end = chain[chain.length - 1]!;
-      if (haversineM(end, l.points[0]!) > JOIN_M) {
-        ok = false;
-        break;
-      }
-      chain.push(...l.points);
-    }
-    if (ok) return { points: chain, joined: usable.length };
+    const chain = bestChain(usable);
+    if (chain.length >= 2) return { points: chain.flatMap((l) => l.points), joined: chain.length, dropped: usable.length - chain.length };
+    // nothing connects: the longest one is the route, and the others are reported as left out
+    const longest = mainLine({ ...g, tracks: lines === g.tracks ? usable : [], routes: lines === g.routes ? usable : [], waypoints: [] });
+    return { points: longest, joined: 1, dropped: usable.length - 1 };
   }
   const points = mainLine(g);
-  return { points, joined: points.length ? 1 : 0 };
+  return { points, joined: points.length ? 1 : 0, dropped: 0 };
+}
+
+/** The longest chain of tracks that fit end to start (each next one starts within JOIN_M of where the last ended); the file order wins a tie. */
+function bestChain(usable: ParsedLine[]): ParsedLine[] {
+  const fits = (a: ParsedLine, b: ParsedLine) => haversineM(a.points[a.points.length - 1]!, b.points[0]!) <= JOIN_M;
+  // the file order first: the usual case, and the cheapest
+  let ok = true;
+  for (let i = 1; i < usable.length; i++) if (!fits(usable[i - 1]!, usable[i]!)) ok = false;
+  if (ok) return usable;
+  let best: ParsedLine[] = [];
+  let bestLen = 0;
+  const lengthOf = (c: ParsedLine[]) => c.reduce((n, l) => n + l.points.length, 0);
+  for (let start = 0; start < Math.min(usable.length, 40); start++) {
+    const chain = [usable[start]!];
+    const used = new Set([start]);
+    for (;;) {
+      const last = chain[chain.length - 1]!;
+      let pick = -1;
+      let pickD = Infinity;
+      usable.forEach((l, idx) => {
+        if (used.has(idx)) return;
+        const d = haversineM(last.points[last.points.length - 1]!, l.points[0]!);
+        if (d <= JOIN_M && d < pickD) {
+          pick = idx;
+          pickD = d;
+        }
+      });
+      if (pick < 0) break;
+      used.add(pick);
+      chain.push(usable[pick]!);
+    }
+    if (chain.length > best.length || (chain.length === best.length && lengthOf(chain) > bestLen)) {
+      best = chain;
+      bestLen = lengthOf(chain);
+    }
+  }
+  return best;
 }
 
 /** The route as kept in the browser between visits: a simplified line (at most `maxPoints`), the stage length and the first day. */

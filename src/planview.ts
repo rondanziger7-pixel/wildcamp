@@ -6,7 +6,7 @@ import { tr } from './i18n';
 
 const tone = (v: number | undefined) => (v === undefined ? 'none' : v >= 60 ? 'good' : v >= 35 ? 'warn' : 'bad');
 
-const VERDICT = (r: PlanRow) => (r.verdict === 'no' ? tr('Not allowed') : r.unchecked ? tr('Unchecked') : r.verdict === 'caution' ? tr('Be careful') : r.verdict === 'likely_ok' ? tr('Likely OK') : tr('Unknown'));
+const VERDICT = (r: PlanRow) => (r.outside ? tr('Outside Switzerland') : r.verdict === 'no' ? tr('Not allowed') : r.unchecked ? tr('Unchecked') : r.verdict === 'caution' ? tr('Be careful') : r.verdict === 'likely_ok' ? tr('Likely OK') : tr('Unknown'));
 
 /** The sentence for one night: the weather, or why there is none. */
 function weatherLine(r: PlanRow, weakest: boolean, many: boolean): string {
@@ -48,7 +48,7 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: { forecast
     head.append(el('span', 'finder-num', String(i + 1)), el('strong', undefined, `${when}: ${r.spot.name}`));
     const chips = el('div', 'finder-scores');
     chips.append(
-      el('span', `chip-score ${r.verdict === 'no' ? 'bad' : r.unchecked ? 'none' : tone(r.legal)}`, `${tr('Legal')} ${r.verdict === 'no' ? 0 : r.unchecked ? '?' : r.legal ?? '–'} · ${VERDICT(r)}`),
+      el('span', `chip-score ${r.outside ? 'none' : r.verdict === 'no' ? 'bad' : r.unchecked ? 'none' : tone(r.legal)}`, `${tr('Legal')} ${r.outside ? '–' : r.verdict === 'no' ? 0 : r.unchecked ? '?' : r.legal ?? '–'} · ${VERDICT(r)}`),
       el('span', `chip-score ${r.stop ? 'bad' : tone(r.weather)}`, r.forecast ? `${tr('Weather')} ${r.weather ?? '–'}` : r.forecastState === 'beyond' ? tr('Weather: too far ahead') : tr('Weather: no forecast')),
     );
     li.append(head, chips);

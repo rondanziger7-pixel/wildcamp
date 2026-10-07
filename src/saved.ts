@@ -72,7 +72,13 @@ export function loadSaved(store: Store | undefined): SavedSpot[] {
   try {
     const raw = store?.getItem(SAVED_KEY);
     const list = raw ? (JSON.parse(raw) as unknown) : [];
-    return Array.isArray(list) ? list.filter(isSpot) : [];
+    if (!Array.isArray(list)) return [];
+    // what is read is held to the same limits as what is written: a damaged or hand-edited list must not carry a huge name, an odd position or too many spots
+    return list
+      .filter(isSpot)
+      .filter((x) => Math.abs(x.lat) <= 90 && Math.abs(x.lng) <= 180)
+      .slice(0, MAX_SAVED)
+      .map((x) => ({ ...x, name: cleanName(x.name) || x.id, note: typeof x.note === 'string' ? cleanNote(x.note) : undefined, snapshot: { ...x.snapshot, pros: x.snapshot.pros.slice(0, 12).map((v) => String(v).slice(0, 300)), cons: x.snapshot.cons.slice(0, 12).map((v) => String(v).slice(0, 300)) } }));
   } catch {
     return [];
   }

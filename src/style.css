@@ -173,9 +173,9 @@ button { font: inherit; cursor: pointer; }
 .finder-btn { width: 100%; margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--green); background: transparent; color: var(--fg); font-weight: 600; cursor: pointer; }
 .finder-pin { background: var(--green); color: #fff; border: 2px solid #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; box-shadow: 0 1px 4px #0006; }
 
-#offline-banner { position: absolute; z-index: 1100; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 8px); transform: translateX(-50%); max-width: min(420px, calc(100vw - 24px)); background: #5a3b00; color: #fff; padding: 8px 12px; border-radius: 10px; font-size: .8rem; line-height: 1.35; box-shadow: 0 2px 10px #0006; }
+#offline-banner { position: absolute; z-index: 1100; left: 50%; top: calc(max(10px, env(safe-area-inset-top)) + 62px); transform: translateX(-50%); width: max-content; max-width: min(380px, calc(100vw - 100px)); pointer-events: none; background: #5a3b00; color: #fff; padding: 8px 12px; border-radius: 10px; font-size: .8rem; line-height: 1.35; box-shadow: 0 2px 10px #0006; }
 #offline-banner[hidden] { display: none; }
-@media (min-width: 720px) { #offline-banner { left: auto; right: 12px; transform: none; bottom: 12px; } }
+@media (min-width: 720px) { #offline-banner { left: auto; right: 62px; transform: none; top: auto; bottom: 12px; } }
 
 .saved-list { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 6px; }
 .saved-row { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 6px 8px; }
@@ -496,3 +496,11 @@ button { font: inherit; cursor: pointer; }
 .gear-cue[hidden] { display: none; }
 .gear-notes { margin: 0 0 8px; }
 .gear-title { font-size: .85rem; margin: 6px 0 4px; }
+
+/* panels stay above the map's own buttons (the zoom control no longer covers the close button) and fit a narrow screen */
+#legend, #settings { z-index: 1070; box-sizing: border-box; }
+@media (max-width: 330px) { .gear-shelters { grid-template-columns: 1fr; } #settings { left: 4px; width: calc(100vw - 8px); } }
+
+/* paper only: the note at the end of a printed trip */
+.print-only { display: none; }
+@media print { .print-only { display: block; margin-top: 14px; padding-top: 8px; border-top: 1px solid #999; font-size: 9pt; } }

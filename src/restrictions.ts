@@ -1,7 +1,7 @@
 import { fetchFloodWarnings, type FloodWarning } from './flood';
 import type { Item } from './assess';
 import { wgs84ToLv95 } from './coords';
-import { tr } from './i18n';
+import { getLang, tr, type Lang } from './i18n';
 import { fetchDogAreas, type DogArea } from './wildlife';
 
 const API = 'https://api3.geo.admin.ch/rest/services/api/MapServer';
@@ -71,33 +71,38 @@ export function fireLevel(title: string): number | undefined {
   return undefined;
 }
 
-export function parseFire(danger: Body, measures: Body): FireInfo {
+/** An attribute of a federal layer in the language of the page: the layers send every language (`title_de`, `title_fr` ...), the English one is the fallback. */
+const loc = (a: Attrs | undefined, base: string, lang: Lang) => str(a?.[`${base}_${lang}`]) ?? str(a?.[`${base}_en`]);
+
+/** What the page shows is in the page's language; what the code decides on (the level, the kind, a ban) is read from the English text. */
+export function parseFire(danger: Body, measures: Body, lang: Lang = getLang()): FireInfo {
   const d = danger.results?.[0]?.attributes;
   const m = measures.results?.[0]?.attributes;
   const info: FireInfo = {};
   const dt = str(d?.title_en);
-  if (d && dt) info.danger = { title: dt, level: fireLevel(dt), region: str(d.name_en), validFrom: str(d.valid_from) };
+  if (d && dt) info.danger = { title: loc(d, 'title', lang) ?? dt, level: fireLevel(dt), region: loc(d, 'name', lang), validFrom: str(d.valid_from) };
   const mt = str(m?.title_en);
-  if (m && mt) info.measure = { title: mt, description: str(m.description_en), ban: /\b(ban|prohibit)/i.test(`${mt} ${str(m.description_en) ?? ''}`) && !/\bno ban\b/i.test(mt), kind: fireKind(mt), validFrom: str(m.valid_from), canton: str(m.canton) };
+  if (m && mt) info.measure = { title: loc(m, 'title', lang) ?? mt, description: loc(m, 'description', lang), ban: /\b(ban|prohibit)/i.test(`${mt} ${str(m.description_en) ?? ''}`) && !/\bno ban\b/i.test(mt), kind: fireKind(mt), validFrom: str(m.valid_from), canton: str(m.canton) };
   return info;
 }
 
-export function parseDrones(body: Body): DroneZone[] {
+export function parseDrones(body: Body, lang: Lang = getLang()): DroneZone[] {
   const out: DroneZone[] = [];
   for (const r of body.results ?? []) {
     const a = r.attributes ?? {};
-    const restriction = str(a.zone_restriction_en);
-    if (!restriction) continue;
-    const urls = Array.isArray(a.auth_url_en) ? (a.auth_url_en as string[]) : [];
-    const names = Array.isArray(a.auth_name_en) ? (a.auth_name_en as string[]) : [];
+    const restrictionEn = str(a.zone_restriction_en);
+    if (!restrictionEn) continue;
+    const list = (base: string) => (Array.isArray(a[`${base}_${lang}`]) ? (a[`${base}_${lang}`] as string[]) : Array.isArray(a[`${base}_en`]) ? (a[`${base}_en`] as string[]) : []);
+    const urls = list('auth_url');
+    const names = list('auth_name');
     out.push({
-      name: str(a.zone_name_en) ?? tr('Drone zone'),
-      restriction,
+      name: loc(a, 'zone_name', lang) ?? tr('Drone zone'),
+      restriction: loc(a, 'zone_restriction', lang) ?? restrictionEn,
       reason: str(a.zone_reason_id),
-      message: str(a.zone_message_en),
+      message: loc(a, 'zone_message', lang),
       authority: names[0],
       url: urls[0],
-      all: /REQ_AUTHORISATION\.(MTOM_ALL)\b/.test(String(a.zone_restriction_id ?? '')) || /^The operation of unmanned aircraft is prohibited/i.test(restriction),
+      all: /REQ_AUTHORISATION\.(MTOM_ALL)\b/.test(String(a.zone_restriction_id ?? '')) || /^The operation of unmanned aircraft is prohibited/i.test(restrictionEn),
     });
   }
   // the zone that forbids the most comes first
@@ -139,7 +144,7 @@ export async function fetchRestrictions(lat: number, lon: number, signal?: Abort
 }
 
 const SRC_FIRE = ['https://map.geo.admin.ch/?layers=ch.bafu.gefahren-waldbrand_warnung,ch.bafu.gefahren-waldbrand_praeventionsmassnahmen_kantone'];
-const SRC_DRONE = ['https://map.geo.admin.ch/?layers=ch.bazl.einschraenkungen-drohnen'];
+const SRC_DRONE = ['https://map.geo.admin.ch/?layers=ch.bazl.einschraenkungen-drohnen', 'https://www.bazl.admin.ch/de/flugregeln-drohnen', 'https://www.bazl.admin.ch/de/geografische-flugeinschraenkungen'];
 
 const SRC_FIRE_OFFICES = 'https://www.waldbrandgefahr.ch/de/kantonale-fachstellen';
 
@@ -188,7 +193,7 @@ export function restrictionItems(r: Restrictions): Item[] {
       items.push({ tone: z.all ? 'bad' : 'warn', title: tr('Drones: {name}', { name: z.name }), text: `${z.restriction}${z.message ? ` ${z.message}` : ''}${z.authority ? ' ' + tr('Authority: {authority}.', { authority: `${z.authority}${z.url ? ` (${z.url})` : ''}` }) : ''}`, sources: SRC_DRONE });
     }
   } else if (r.drones) {
-    items.push({ tone: 'info', title: tr('Drones: no geographic restriction listed'), text: tr('The federal map of geographic UAS zones lists nothing here. The general rules still apply: stay below 120 m above ground, keep the drone in sight, keep away from crowds, and respect people\'s privacy and nature reserves, where local rules can apply that are not on this map.'), sources: SRC_DRONE });
+    items.push({ tone: 'info', title: tr('Drones: no geographic restriction listed'), text: tr('The federal map of geographic UAS zones lists nothing here. That is not permission: a drone may be flown without a BAZL permit only in the open category (registered operator, below 120 m above ground, in sight, never over crowds, a safe distance from people). Civil drones are banned in federal hunting reserves and in water and migratory bird reserves, and above 250 g within 5 km of an airport runway; the National Park forbids aircraft. Look at the federal drone map and the daily airspace bulletin before every flight: the map is not guaranteed complete, and local nature rules may not be on it.'), sources: SRC_DRONE });
   }
   if (r.failed.includes('fire')) items.push({ tone: 'info', title: tr('Fire rules could not be checked'), text: tr('The forest-fire danger and canton measures could not be loaded. Check the canton\'s fire notices before lighting any fire or stove.') });
   if (r.failed.includes('drones')) items.push({ tone: 'info', title: tr('Drone zones could not be checked'), text: tr('The federal UAS zone map could not be loaded. Check it before flying.') });

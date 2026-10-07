@@ -29,6 +29,8 @@ export interface PlanRow {
   legalFresh: boolean;
   /** A lookup failed, so there is no verdict to rely on for this night. */
   unchecked: boolean;
+  /** The place turned out to lie outside Switzerland (a link can carry a place just over the border): the rules here do not apply to it. */
+  outside: boolean;
   /** The legality for this night differs from what was saved with the spot. */
   changed?: 'worse' | 'better';
   /** Weather score for that night at that spot's elevation: the forecast alone, terrain shelter is not known here. */
@@ -85,7 +87,7 @@ export function planTrip(nights: PlanInput[], hourly: (Hourly | undefined)[], le
     const saved = spot.snapshot;
     const verdict = fresh ? fresh.verdict : saved.verdict;
     const savedRank = RANK[saved.verdict];
-    const freshRank = fresh && !fresh.unchecked ? RANK[fresh.verdict] : undefined;
+    const freshRank = fresh && !fresh.unchecked && !fresh.outside ? RANK[fresh.verdict] : undefined;
     const changed = !saved.unrated && savedRank !== undefined && freshRank !== undefined && savedRank !== freshRank ? (freshRank < savedRank ? 'worse' : 'better') : undefined;
     return {
       date,
@@ -96,7 +98,8 @@ export function planTrip(nights: PlanInput[], hourly: (Hourly | undefined)[], le
       verdict,
       why: fresh?.why,
       legalFresh: !!fresh,
-      unchecked: fresh ? fresh.unchecked : !!saved.unrated || !!saved.unchecked?.length,
+      unchecked: fresh ? fresh.unchecked && !fresh.outside : !!saved.unrated || !!saved.unchecked?.length,
+      outside: !!fresh?.outside,
       changed,
       weather: ws?.value,
       forecast,

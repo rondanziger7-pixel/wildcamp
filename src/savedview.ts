@@ -195,7 +195,19 @@ export function renderSaved(root: HTMLElement, initial: SavedSpot[], h: SavedHan
   const refresh = el('button', 'linkish', tr('Check the legality of all again'));
   refresh.type = 'button';
   const changes = el('div', 'refresh-changes');
+  let armed: number | undefined;
   refresh.onclick = async () => {
+    // a long list means many requests on mobile data (about seven per spot): ask once first
+    if (spots.length > 25 && armed === undefined) {
+      refresh.textContent = tr('Check {n} spots (about {req} requests)? Tap again', { n: spots.length, req: spots.length * 7 });
+      armed = window.setTimeout(() => {
+        armed = undefined;
+        refresh.textContent = tr('Check the legality of all again');
+      }, 8000);
+      return;
+    }
+    window.clearTimeout(armed);
+    armed = undefined;
     refresh.disabled = true;
     changes.replaceChildren();
     try {
@@ -232,7 +244,10 @@ function refreshSummary(done: RefreshChange[]): HTMLElement {
     for (const c of changed) ul.append(el('li', undefined, `${c.spot.name}: ${c.before} → ${c.after}`));
     box.append(ul);
   }
-  if (failed.length) box.append(el('p', 'where', failed.length === 1 ? tr('{n} spot could not be checked (no connection?).', { n: failed.length }) : tr('{n} spots could not be checked (no connection?).', { n: failed.length })));
+  if (failed.length) {
+    const names = failed.slice(0, 5).map((c) => c.spot.name).join(', ') + (failed.length > 5 ? ', …' : '');
+    box.append(el('p', 'where', (failed.length === 1 ? tr('{n} spot could not be checked (no connection?).', { n: failed.length }) : tr('{n} spots could not be checked (no connection?).', { n: failed.length })) + ' ' + tr('Their scores are as saved: {names}.', { names })));
+  }
   return box;
 }
 

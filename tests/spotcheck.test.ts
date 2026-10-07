@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { assessInputs, checkLegality, fetchLegalityInputs } from '../src/spotcheck';
+import { assessInputs, assessNight, checkLegality, fetchLegalityInputs, type LegalityInputs } from '../src/spotcheck';
 import { LocalData } from '../src/localstore';
 import { legalityScore, overallScore } from '../src/scores';
 import { RESERVE_FILES } from '../src/localdata';
@@ -136,5 +136,27 @@ describe('a failed or missing lookup is never read as "nothing found"', () => {
     const data = await loaded();
     expect(assessInputs(inputs, data, new Date(2027, 1, 10)).verdict).toBe('no');
     expect(assessInputs(inputs, data, new Date(2026, 6, 15)).verdict).not.toBe('no');
+  });
+});
+
+describe('a night runs past midnight', () => {
+  // Gamserrugg (SG): the entry ban of the quiet zone runs 15.11. - 30.04.
+  const zone = { layerBodId: 'ch.bafu.wrz-wildruhezonen_portal', attributes: { label: 'Gamserrugg (Nr. 100.0)', best_de: 'Zutrittsverbot', schutzzeit: '15.11. - 30.04.', schutzs_de: 'rechtsverbindlich', kanton: 'SG' } };
+  const inputs = (): LegalityInputs => ({ lat: 47.1567, lng: 9.3316, elevation: 1800, zones: { results: [zone] }, nearRadiusM: 150, canton: { code: 'SG', name: 'St. Gallen' }, cantonKnown: true, jura: [], buildingZone: { near: false }, failed: [] });
+  it('judges the evening of 14 November as out of season, and the night as in season, because the ban starts at midnight', async () => {
+    const d = await loaded();
+    const evening = new Date(2026, 10, 14, 20);
+    expect(assessInputs(inputs(), d, evening).verdict).toBe('caution');
+    const night = assessNight(inputs(), d, evening);
+    expect(night.verdict).toBe('no');
+    expect(night.items[0]!.title).toBe('A restriction starts during this night');
+  });
+  it('leaves an ordinary night alone', async () => {
+    const d = await loaded();
+    const a = assessNight(inputs(), d, new Date(2026, 5, 10, 20));
+    expect(a.items.some((i) => i.title === 'A restriction starts during this night')).toBe(false);
+    const inSeason = assessNight(inputs(), d, new Date(2026, 11, 10, 20));
+    expect(inSeason.verdict).toBe('no');
+    expect(inSeason.items.some((i) => i.title === 'A restriction starts during this night')).toBe(false);
   });
 });

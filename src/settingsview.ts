@@ -197,6 +197,7 @@ function gearSection(hooks: SettingsHooks): HTMLElement {
   n.inputMode = 'numeric';
   n.value = String(g.people);
   n.onchange = () => {
+    if (Number(n.value) > MAX_PEOPLE) hooks.say(tr('At most {n} people.', { n: MAX_PEOPLE }));
     change({ people: Number(n.value) });
     n.value = String(g.people);
   };

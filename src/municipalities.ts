@@ -36,7 +36,7 @@ export const MUNICIPAL_RULES: MunicipalEntry[] = [
     rule: {
       stance: 'banned',
       summary:
-        'Municipal police regulation (Art. 7): camping outside the specially designated and authorised areas is not permitted anywhere in the municipality, including forest, pasture and public waters (Art. 6 let. a); ' +
+        'Municipal police regulation (Art. 7): camping outside the specially designated and authorised areas is not permitted in the public space, meaning all freely accessible land of the municipality, including forest, pasture and public waters (Art. 6 let. a); ' +
         'breaches can be fined up to CHF 5,000 (Art. 26), usually CHF 200. "Camping" means overnight stays in tents, caravans, motorhomes or cars; the regulation expressly excludes sleeping outdoors without a tent ("Biwakieren", Art. 6 let. c). ' +
         'Around Oeschinensee a separate court prohibition by the landowners also covers bivouacking.',
       sources: [

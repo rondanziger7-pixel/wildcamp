@@ -198,3 +198,21 @@ describe('legality written back after a re-check', () => {
     expect(updateLegality(s, 'nope', { verdict: 'no' })).toBe(false);
   });
 });
+
+describe('reading a damaged list', () => {
+  const mem = (raw: unknown) => ({ getItem: () => JSON.stringify(raw), setItem: () => undefined });
+  const spot = (over: Record<string, unknown>) => ({ id: 'a', lat: 46.5, lng: 8.4, name: 'N', snapshot: { verdict: 'no', pros: [], cons: [], complete: true, savedAt: 1 }, savedAt: 1, ...over });
+  it('cuts a huge name and note to their limits and drops impossible positions', () => {
+    const list = loadSaved(mem([spot({ name: 'N'.repeat(100000), note: 'x'.repeat(100000) }), spot({ id: 'b', lat: 500 }), spot({ id: 'c', lng: -999 })]));
+    expect(list).toHaveLength(1);
+    expect(list[0]!.name.length).toBeLessThanOrEqual(MAX_NAME);
+    expect(list[0]!.note!.length).toBeLessThanOrEqual(MAX_NOTE);
+  });
+  it('keeps at most the limit and shortens huge lists of points', () => {
+    const many = Array.from({ length: MAX_SAVED + 30 }, (_, i) => spot({ id: `s${i}` }));
+    expect(loadSaved(mem(many))).toHaveLength(MAX_SAVED);
+    const big = loadSaved(mem([spot({ snapshot: { verdict: 'no', pros: Array(50).fill('p'.repeat(1000)), cons: [], complete: true, savedAt: 1 } })]));
+    expect(big[0]!.snapshot.pros.length).toBeLessThanOrEqual(12);
+    expect(big[0]!.snapshot.pros[0]!.length).toBeLessThanOrEqual(300);
+  });
+});

@@ -1,3 +1,4 @@
+import { getLang } from './i18n';
 export interface Place {
   label: string;
   lat: number;
@@ -21,7 +22,7 @@ export function parsePlaces(json: unknown): Place[] {
 }
 
 export async function searchPlaces(text: string, signal?: AbortSignal): Promise<Place[]> {
-  const q = new URLSearchParams({ searchText: text, type: 'locations', limit: '6', sr: '4326' });
+  const q = new URLSearchParams({ searchText: text, type: 'locations', limit: '6', sr: '4326', lang: getLang() });
   const res = await fetch(`https://api3.geo.admin.ch/rest/services/api/SearchServer?${q}`, { signal });
   if (!res.ok) throw new Error(`search ${res.status}`);
   return parsePlaces(await res.json());

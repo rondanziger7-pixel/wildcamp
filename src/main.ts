@@ -13,7 +13,7 @@ import { spotIcon } from './markers';
 import { RetryTileLayer, RetryWmsLayer } from './tilelayer';
 import { fetchJuraReserves } from './jura';
 import { LocalData } from './localstore';
-import { assessInputs, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS, type DetailsRun } from './spotcheck';
+import { assessNight, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS, type DetailsRun } from './spotcheck';
 import { searchPlaces, type Place } from './search';
 import { isLocationError, parseLocation } from './coordsearch';
 import { comfortFor } from './comfort/comfort';
@@ -38,7 +38,7 @@ import { InputsCache, legalForNight, recheckSpots } from './recheck';
 import { MAX_SHARE_SPOTS, decodeShare, isShareHash, shareLink, type DecodedShare, type SharePayload } from './share';
 import { renderShared } from './sharedview';
 import { cumulativeM, parseGpx, routeToGpx, type ParsedGpx, type RoutePoint } from './route';
-import { gatherRouteInputs, reportForDates, type RouteInputs, type RouteReport } from './routecheck';
+import { OUTSIDE, gatherRouteInputs, reportForDates, type RouteInputs, type RouteReport } from './routecheck';
 import { ROUTE_KEY, packRoute, pointAt, routeLine, routeStats, slicePoints, stageInfos, thin, unpackRoute, type StageInfo } from './routeplan';
 import { STAGE_KM, renderRoute, runsOf, type RouteViewState } from './routeview';
 import { renderTrip } from './tripview';
@@ -93,6 +93,7 @@ document.addEventListener('keydown', (ev) => {
   if (menuBtn) return void menuBtn.click();
   if (!layersPanel.hidden || !settingsPanel.hidden) {
     layersPanel.hidden = settingsPanel.hidden = true;
+    focusMenuButton();
     return;
   }
   if (!sheet.classList.contains('closed') && sheet.dataset.state !== 'intro') {
@@ -176,12 +177,18 @@ function showLoading() {
   result.append(p);
 }
 
+/** Late autumn to spring: when avalanche danger can matter (the bulletin itself runs roughly December to April). */
+const winterSeason = (day: string) => {
+  const m = Number(day.slice(5, 7));
+  return m >= 11 || m <= 5;
+};
+
 /**
  * Terrain, surroundings, water and forecast for a spot. Every part is requested at once with a shared deadline
  * (about 10 s from the tap): the sleep score appears as soon as the main parts are in, refreshes as the rest
  * arrives, and anything still missing at the deadline is dropped and listed as not checked.
  */
-async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number, tappedAt: number, opts: { onNight?: (w: NightWindow) => void } = {}) {
+async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: number | undefined, id: number, tappedAt: number, opts: { onNight?: (w: NightWindow) => void; onRetry?: () => void } = {}) {
   ui.setSleepLoading();
   ui.weatherHost.replaceChildren(el('p', 'where', tr('Loading the forecast…')));
   const { e, n } = wgs84ToLv95(lat, lng);
@@ -230,7 +237,10 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       ground: got.ground,
       // the bulletin and the snow cover are today's: they say nothing about a night weeks away
       avalanche: isToday || w.day <= addDays(today, 1) ? got.avalanche : undefined,
-      avalancheFailed: failed.avalanche,
+      // a bulletin that could not be loaded only counts as missing for the nights it could cover (today and tomorrow)
+      avalancheFailed: failed.avalanche && (isToday || w.day <= addDays(today, 1)),
+      avalancheUnrated: failed.avalanche && (isToday || w.day <= addDays(today, 1)) && winterSeason(w.day),
+      forecastFailed: done.forecast && !got.hourly,
       noise: got.noise,
       noiseFailed: failed.noise,
       hazards: got.hazards,
@@ -249,7 +259,12 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
     ui.setHazards({ comfort, fire: isToday ? got.rules?.fire : undefined, dogs: got.rules?.dogs, date: new Date(`${w.day}T12:00:00`), soon: isToday && got.hourly && soonW ? summariseNight(got.hourly, soonW) : undefined });
     ui.setWeatherChip(night, nightName, done.forecast && !got.hourly);
     if (!done.forecast) return;
-    if (!got.hourly) ui.weatherHost.replaceChildren(el('h2', 'wx-title', tr('Weather')), el('p', 'where', tr('The forecast could not be loaded.')));
+    if (!got.hourly) {
+      const again = el('button', 'save-btn', '↻ ' + tr('Check again'));
+      again.type = 'button';
+      again.onclick = () => opts.onRetry?.();
+      ui.weatherHost.replaceChildren(el('h2', 'wx-title', tr('Weather')), el('p', 'where', tr('The forecast could not be loaded.')), again);
+    }
     else {
       const end = forecastEnd(got.hourly);
       renderWeather(ui.weatherHost, {
@@ -320,6 +335,29 @@ const assessSpot = (lat: number, lng: number, knownElevation?: number, accuracyM
 /** The spot checked last, for the emergency page. */
 let lastSpot: Position | undefined;
 
+
+/**
+ * Keep the checked spot in the part of the map the sheet leaves free (above it on a phone, beside it on a wide screen): a tap low on the
+ * screen, a deep link, the location button or Enter on the map would otherwise leave the pin hidden under the result.
+ */
+function revealPin(lat: number, lng: number) {
+  window.requestAnimationFrame(() => {
+    if (sheet.classList.contains('closed')) return;
+    const box = sheet.getBoundingClientRect();
+    const wide = window.matchMedia('(min-width: 720px)').matches;
+    const at = map.latLngToContainerPoint([lat, lng]);
+    const mapBox = map.getContainer().getBoundingClientRect();
+    if (wide) {
+      const left = box.right - mapBox.left + 40;
+      if (at.x < left) map.panBy([at.x - (left + (mapBox.width - left) / 2), 0], { animate: !calm });
+    } else {
+      const free = box.top - mapBox.top; // map height above the sheet
+      if (free < 160) return; // no room worth moving for
+      if (at.y > free - 50 || at.y < 90) map.panBy([0, at.y - Math.max(110, free * 0.5)], { animate: !calm });
+    }
+  });
+}
+
 async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM?: number) {
   const id = ++checkId;
   delete result.dataset.page;
@@ -333,7 +371,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   focusMarker?.remove();
   focusMarker = undefined;
   marker = L.marker([lat, lng], { icon: spotIcon(), keyboard: false }).addTo(map);
-  history.replaceState(null, '', `#${lat.toFixed(5)},${lng.toFixed(5)},${map.getZoom()}`);
+  history.replaceState(null, '', `#${lat.toFixed(5)},${lng.toFixed(5)},${Math.round(map.getZoom())}`);
   if (!isInSwitzerland(lat, lng)) {
     sheet.dataset.state = 'result';
     result.hidden = false;
@@ -343,6 +381,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   }
   showLoading();
   announce(tr('Checking this spot…'));
+  if (map.getZoom() < 12) say(tr('The map is zoomed far out: zoom in and tap again to place the pin exactly.'));
   const assessed = await assessSpot(lat, lng, undefined, accuracyM);
   if (id !== checkId) return; // a newer tap superseded this one
   const { assessment, elevation, inputs } = assessed;
@@ -359,24 +398,40 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     void checkSpot(lat, lng, fromFinder, accuracyM);
   };
   const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry(), accuracyM });
+  /** The day the legality is judged for (the evening of the chosen night). */
+  let judgedFor = new Date();
   // notes for a set-up other than a tent for one person, from how the rule texts of this place read
   const paintGear = () => {
     if (id !== checkId) return;
-    ui.setGear(isDefaultGear(gear) ? undefined : { line: gearLine(gear), items: gearItems(gear, { canton: assessment.canton, municipality: assessment.municipality, municipalRule: assessment.municipalRule }) });
+    ui.setGear(
+      isDefaultGear(gear)
+        ? undefined
+        : {
+            line: gearLine(gear),
+            items: gearItems(gear, {
+              canton: assessment.canton,
+              municipality: assessment.municipality,
+              municipalRule: assessment.municipalRule,
+              date: judgedFor,
+              inNationalPark: assessment.zones.some((z) => z.layer.id === 'ch.bafu.schutzgebiete-paerke_nationaler_bedeutung'),
+              inForest: assessment.treeline === 'forest',
+            }),
+          },
+    );
   };
   refreshGear = paintGear;
   paintGear();
   // another night: the legality of the same spot is judged again for its date (zone seasons, firing days), without new requests
   const nowStr = zurichNow(new Date());
-  let judgedFor = new Date();
   const onNight = (w: NightWindow) => {
     judgedFor = nightDate(w, nowStr);
-    ui.setAssessment(assessInputs(inputs, data, judgedFor));
+    ui.setAssessment(assessNight(inputs, data, judgedFor));
+    paintGear();
   };
   // bundled data that was still loading when the check went ahead: judge the same spot again as soon as it is in
   if (assessment.incomplete?.includes('local rule data') && data.loading) {
     void data.load().then(() => {
-      if (id === checkId) ui.setAssessment(assessInputs(inputs, data, judgedFor));
+      if (id === checkId) ui.setAssessment(assessNight(inputs, data, judgedFor));
     });
   }
   if (fromFinder && finderBack) {
@@ -394,6 +449,8 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     save.textContent = on ? '★ ' + tr('Saved') : '☆ ' + tr('Save');
   };
   paintSave();
+  /** The spot was saved while this check was running: only then do the final scores replace the early ones (opening a saved spot must not rewrite what was saved). */
+  let savedDuringCheck = false;
   // saving is one tap; taking a spot off the list asks once (a stray tap must not lose a spot with its notes)
   let confirming: number | undefined;
   save.onclick = () => {
@@ -421,6 +478,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
         snapshot: { ...ui.snapshot(), savedAt: Date.now() },
       };
       const r = saveSpot(store, spot);
+      savedDuringCheck = true;
       if (r.full) say(tr('The list of saved spots is full ({n}). Remove some to save more.', { n: MAX_SAVED }));
       else if (!r.stored) say(tr('This browser would not keep the spot (private mode or storage blocked).'));
     }
@@ -473,16 +531,17 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
   result.append(actions, more, sosLink());
   sheet.scrollTop = 0;
+  revealPin(lat, lng);
   // where to sleep instead (shown only when the spot is not allowed or doubtful)
   void ensureCampsites().then((list) => {
     if (list && id === checkId) ui.setCampsites(campsiteLine(nearestCampsites(list, lat, lng)));
   });
-  void loadDetails(ui, lat, lng, elevation, id, tappedAt, { onNight }).then(() => {
+  void loadDetails(ui, lat, lng, elevation, id, tappedAt, { onNight, onRetry: () => void retry() }).then(() => {
     // a spot saved while the checks were still running keeps the final scores, not the early ones
-    if (id === checkId && isSaved(store, sid)) updateSnapshot(store, sid, ui.snapshot());
+    if (id === checkId && savedDuringCheck && isSaved(store, sid)) updateSnapshot(store, sid, ui.snapshot());
     if (id !== checkId) return;
     const snap = ui.snapshot();
-    announce(`${name}. ${verdictLabel(snap.verdict)}.` + (snap.overall === undefined ? '' : ' ' + tr('Overall {n} out of 100.', { n: snap.overall })));
+    announce(`${name}. ${verdictLabel(snap.verdict)}.` + (snap.overall === undefined ? '' : ' ' + tr('Overall {n} out of 100.', { n: snap.overall })) + ui.alertTexts().slice(0, 3).map((t) => ` ${t}.`).join(''));
   });
 }
 
@@ -766,7 +825,7 @@ function showTrip() {
         const inp = await legalInputs.get(spot);
         await ready;
         const sum = legalForNight(inp, data, night.date, now);
-        return sum.unchecked || sum.outside ? undefined : sum; // a check that could not be made falls back to the saved score, marked as such
+        return sum.unchecked && !sum.outside ? undefined : sum; // a check that could not be made falls back to the saved score, marked as such; a place outside Switzerland is said to be
       } catch {
         return undefined;
       }
@@ -848,6 +907,9 @@ function routeState(): RouteViewState | undefined {
   if (campsiteData) {
     for (const s of stages) {
       if (!s.endCell || s.endCell.cls === 'ok' || s.camp.moved) continue;
+      // a day that ends outside Switzerland has no Swiss campsite to offer
+      const at = r.inputs?.cantonAt;
+      if (at && at[Math.min(at.length - 1, Math.max(0, Math.round(s.camp.distM / 250)))] === OUTSIDE) continue;
       const line = campsiteLine(nearestCampsites(campsiteData, s.camp.lat, s.camp.lon));
       if (line) campsites[s.n] = line;
     }
@@ -975,7 +1037,7 @@ function loadRoute(text: string, fileName: string) {
   } catch {
     return say(tr('This file could not be read as GPX.'));
   }
-  const { points: raw, joined } = routeLine(g);
+  const { points: raw, joined, dropped } = routeLine(g);
   if (raw.length < 2) return say(g.waypoints.length ? tr('This file holds spots, not a route. Import it under "Saved spots".') : tr('No route found in {file}.', { file: fileName }));
   const step = Math.max(1, Math.ceil(raw.length / 300));
   if (!raw.some((p, i) => i % step === 0 && isInSwitzerland(p.lat, p.lon))) return say(tr('This route is outside Switzerland, so the rules checked here do not apply.'));
@@ -983,7 +1045,13 @@ function loadRoute(text: string, fileName: string) {
   const points = thin(raw, 6000);
   const today = firstEvening(zurichNow(new Date()));
   route = { name: (g.name ?? g.tracks[0]?.name ?? fileName.replace(/\.gpx$/i, '')).trim().slice(0, 120) || tr('Route'), points, stageKm: STAGE_KM.initial, date: today, status: 'checking' };
-  if (joined > 1) say(tr('{n} tracks in the file were joined into one route.', { n: joined }));
+  // what was not read, said once: tracks that do not connect, a file that is cut off, a file so dense that it was thinned
+  const notes: string[] = [];
+  if (joined > 1) notes.push(tr('{n} tracks in the file were joined into one route.', { n: joined }));
+  if (dropped > 0) notes.push(joined > 1 ? tr('{n} other tracks do not connect to it (they start more than 3 km from where another ends) and are not used.', { n: dropped }) : tr('The file has {n} tracks that do not connect end to start (more than 3 km apart): only the longest is used.', { n: dropped + 1 }));
+  if (g.truncated) notes.push(tr('The file is cut off: only the part before the cut is used, so the route ends early.'));
+  if (g.thinned) notes.push(tr('The file has very many points: they were thinned evenly, so length and climb are approximate.'));
+  if (notes.length) say(notes.join(' '), 9000);
   persistRoute();
   routeFocus?.remove();
   drawRoute();
@@ -1110,6 +1178,7 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
     return ui;
   };
   let ui = mount();
+  void ensureCampsites();
   finderBack = undefined;
   ui.update([], tr('Reading the terrain and ground around here…'), false);
   if (!isInSwitzerland(lat, lng)) return ui.update([], tr('This app only covers Switzerland.'), true);
@@ -1154,7 +1223,9 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
       if (gone()) return;
       const list = done ? shown().slice(0, FINDER_SHOWN) : shown();
       const checked = rows.filter((r) => r.legal && r.waterDone).length;
-      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about {radius}' : '{n} spots within about {radius}', { n: list.length, radius: radiusText(radius) }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + (steep ? '; ' + tr('{n} more skipped because they are too steep to pitch on', { n: steep }) : '') + '.' : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done, done && list.length < 3 ? offer : undefined);
+      // nothing left once the banned and the too steep are skipped: the nearest official campsites are named
+      const campLine = done && list.length === 0 && campsiteData ? campsiteLine(nearestCampsites(campsiteData, lat, lng)) : undefined;
+      ui.update(list, done ? tr(list.length === 1 ? '{n} spot within about {radius}' : '{n} spots within about {radius}', { n: list.length, radius: radiusText(radius) }) + (hidden ? '; ' + tr('{n} more skipped because camping is not allowed there', { n: hidden }) : '') + (steep ? '; ' + tr('{n} more skipped because they are too steep to pitch on', { n: steep }) : '') + '.' + (campLine ? ' ' + campLine : '') : tr('Checking legality and water: {done} of {total} done…', { done: checked, total: rows.length }), done, done && list.length < 3 ? offer : undefined);
       finderPins.clearLayers();
       list.forEach((r, i) =>
         L.marker([r.candidate.lat, r.candidate.lon], { icon: L.divIcon({ className: '', html: `<div class="finder-pin">${i + 1}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) })
@@ -1351,28 +1422,45 @@ const locateFailed = (err: unknown) =>
 document.getElementById('locate')!.addEventListener('click', () => {
   if (!navigator.geolocation) return say(tr('This browser cannot share your location.'));
   say(tr('Finding your location…'));
+  const done = stillLooking();
   bestFix().then(
     (pos) => {
+      done();
       toast.hidden = true;
       showMe(pos, true);
       void checkSpot(pos.coords.latitude, pos.coords.longitude, false, pos.coords.accuracy);
     },
-    locateFailed,
+    (err) => {
+      done();
+      locateFailed(err);
+    },
   );
 });
 
 // Settings panel (opened from the map menu)
 const layersPanel = document.getElementById('legend')!;
 const settingsPanel = document.getElementById('settings')!;
-document.getElementById('layers-close')!.addEventListener('click', () => (layersPanel.hidden = true));
-document.getElementById('settings-close')!.addEventListener('click', () => (settingsPanel.hidden = true));
+document.getElementById('layers-close')!.addEventListener('click', () => {
+  layersPanel.hidden = true;
+  focusMenuButton();
+});
+document.getElementById('settings-close')!.addEventListener('click', () => {
+  settingsPanel.hidden = true;
+  focusMenuButton();
+});
 /** One panel at a time. */
 function togglePanel(open: HTMLElement) {
   const show = open.hidden;
   layersPanel.hidden = settingsPanel.hidden = true;
   open.hidden = !show;
   if (show && open === settingsPanel) drawSettings();
+  // a panel opened from the menu takes keyboard focus; one that is closed gives it back to the menu button
+  if (show) {
+    open.tabIndex = -1;
+    open.focus({ preventScroll: true });
+  } else focusMenuButton();
 }
+const focusMenuButton = () => document.querySelector<HTMLButtonElement>('.map-menu > button')?.focus({ preventScroll: true });
 listenInstall();
 function drawSettings() {
   renderSettings(document.getElementById('settings-more')!, {
@@ -1412,11 +1500,11 @@ document.getElementById('toggle-zones')!.addEventListener('change', (ev) => {
 // "My location" map button: shows where you are and brings the map back to it
 const toast = document.getElementById('toast')!;
 let toastTimer: number | undefined;
-function say(text: string) {
+function say(text: string, ms = 5000) {
   toast.textContent = text;
   toast.hidden = false;
   window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => (toast.hidden = true), 5000);
+  toastTimer = window.setTimeout(() => (toast.hidden = true), ms);
 }
 let me: { dot: L.CircleMarker; ring: L.Circle; at: L.LatLng } | undefined;
 const MY_ZOOM = 15;
@@ -1436,13 +1524,24 @@ function showMe(pos: GeolocationPosition, recentre: boolean) {
   if (recentre) map.flyTo(at, Math.max(map.getZoom(), MY_ZOOM), { duration: 0.6 });
 }
 
+/** A GPS receiver can need several seconds for a good fix: say so once, instead of a toast that vanishes and silence. */
+function stillLooking(): () => void {
+  const t = window.setTimeout(() => say(tr('Still looking for a more exact position…')), 5500);
+  return () => window.clearTimeout(t);
+}
+
 function locateMe() {
   if (!navigator.geolocation) return say(tr('This browser cannot share your location.'));
   say(tr('Finding your location…'));
+  const done = stillLooking();
   bestFix().then((pos) => {
+    done();
     toast.hidden = true;
     showMe(pos, true);
-  }, locateFailed);
+  }, (err) => {
+    done();
+    locateFailed(err);
+  });
 }
 
 // Offline: a service worker keeps the app, its data and viewed map tiles; a button saves the visible area on purpose.

@@ -1,5 +1,6 @@
 import type { Item } from './assess';
 import type { CantonRule } from './cantons';
+import { dogItems } from './leash';
 import { tr } from './i18n';
 
 /**
@@ -71,9 +72,13 @@ const namesGroups = (s: string) => /\bgroups?\b/i.test(s);
 const namesBivouac = (s: string) => /\bbivou?ac(k|king|s)?\b/i.test(s);
 
 export interface GearContext {
-  canton?: { name: string; rule?: CantonRule };
+  canton?: { code?: string; name: string; rule?: CantonRule };
   municipality?: string;
   municipalRule?: CantonRule;
+  /** The night chosen (its evening); today when not given. */
+  date?: Date;
+  inNationalPark?: boolean;
+  inForest?: boolean;
 }
 
 /**
@@ -102,11 +107,16 @@ export function gearItems(g: Gear, c: GearContext): Item[] {
   }
 
   if (g.shelter === 'vehicle') {
-    if (both.some(namesVehicles)) out.push({ tone: 'warn', title: tr('The rule texts name vehicles'), text: tr('A rule text for this place names caravans, motorhomes, cars or car parks: read it in the details above, it applies to a night in your vehicle.') });
+    if (both.some(namesVehicles)) out.push({ tone: 'warn', title: tr('The rule texts name vehicles'), text: tr('A rule text for this place names caravans, motorhomes, cars or car parks: read it in the details above to see whether it is a rule in force, a guidance or only a plan.') });
     else out.push({ tone: 'warn', title: tr('The rules read here are about tents'), text: tr('None of the rule texts read for this place mentions vehicles, and this app has no source on sleeping in a vehicle here. Parking rules and municipal police rules can apply to a vehicle: look for signs, and ask the municipality.') });
   }
 
-  if (g.people >= 3 && both.some(namesGroups)) out.push({ tone: 'warn', title: tr('The rule texts mention groups'), text: tr('A rule text for this place mentions groups: with {n} people you may be a group in its sense. Read the rule in the details above.', { n: g.people }) });
+  if (g.people >= 3) {
+    if (both.some(namesGroups)) out.push({ tone: 'warn', title: tr('The rule texts mention groups'), text: tr('A rule text for this place mentions groups: with {n} people you may be a group in its sense. Read the rule in the details above.', { n: g.people }) });
+    else out.push({ tone: 'info', title: tr('No group-size limit found'), text: tr('No law read sets a group size for camping. What exists are permits for large events in forest (hundreds of people, or over 100 at night in Aargau), municipal permits for youth tent camps (Obwalden), and a registration of groups of more than 20 in the National Park. A private group is not clearly an event, so ask the landowner and the municipality.'), sources: ['https://fedlex.data.admin.ch/eli/cc/1992/2521_2521_2521/20250101', 'https://gdb.ow.ch/app/de/texts_of_law/971.4'] });
+  }
+
+  if (g.dog) out.push(...dogItems({ canton: c.canton?.code, date: c.date ?? new Date(), inNationalPark: c.inNationalPark, inForest: c.inForest }));
 
   return out;
 }

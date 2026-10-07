@@ -61,6 +61,10 @@ export interface ComfortInput {
   noiseFailed?: boolean;
   /** The bulletin could not be fetched (so its absence is not read as "no danger"). */
   avalancheFailed?: boolean;
+  /** The bulletin could not be fetched in the season when it matters (late autumn to spring) and the spot has slopes: a line on the first view. */
+  avalancheUnrated?: boolean;
+  /** The forecast could not be loaded: storm, wind, rain and cold are not checked (a line on the first view). */
+  forecastFailed?: boolean;
   /** Huts, bivouac boxes, inns and alps nearby. */
   shelters?: ShelterResult;
   sun?: SunTimes;
@@ -268,7 +272,7 @@ export function comfortFor(input: ComfortInput): Comfort {
     const stop = s.stops?.[0];
     if (stop && stop.meters <= 500) {
       busy++;
-      const kind = stop.kind.toLowerCase();
+      const kind = stop.kind.toLowerCase() === 'stop' ? 'stop' : tr(stop.kind.toLowerCase());
       // a stop without a name is described without one, and the layer's generic kind is not repeated ("stop stop")
       found.push(stop.name ? (kind === 'stop' ? tr('Stop “{name}” {dist} away', { name: stop.name, dist: m(stop.meters) }) : tr('{kind} stop “{name}” {dist} away', { kind, name: stop.name, dist: m(stop.meters) })) : tr('a public transport stop {dist} away', { dist: m(stop.meters) }));
     }
@@ -374,6 +378,8 @@ export function comfortFor(input: ComfortInput): Comfort {
   }
 
   if (input.avalancheFailed) missing.push('avalanche bulletin');
+  if (input.avalancheUnrated) f.push({ wx: true, alert: true, tone: 'warn', score: 0, title: tr('Avalanche danger not checked'), text: tr('The SLF avalanche bulletin could not be loaded, and in this season slopes can slide. Look at the bulletin (slf.ch) before you go, and keep the tent off and away from steep slopes.') });
+  if (input.forecastFailed) f.push({ wx: true, alert: true, tone: 'warn', score: 0, title: tr('Forecast not checked: storm, wind and cold unknown'), text: tr('The weather forecast could not be loaded, so storms, strong wind, rain and frost are not part of this result. Check the forecast (MeteoSwiss) yourself, or try again.') });
 
   // night noise from roads and railways (modelled, BAFU), and livestock bells near alps in the grazing season
   const nz = input.noise;

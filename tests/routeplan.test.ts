@@ -199,3 +199,35 @@ describe('positions along the line', () => {
     expect(thin(many.slice(0, 10), 400)).toHaveLength(10);
   });
 });
+
+describe('routeLine: tracks that do not chain in file order', () => {
+  const trk = (lat0: number, lon0: number, lat1: number, lon1: number, n = 10) => ({ points: Array.from({ length: n }, (_, i) => ({ lat: lat0 + ((lat1 - lat0) * i) / (n - 1), lon: lon0 + ((lon1 - lon0) * i) / (n - 1) })) });
+  const day1 = trk(46.5, 8.0, 46.5, 8.1);
+  const day2 = trk(46.5, 8.1, 46.5, 8.2);
+  const day3 = trk(46.5, 8.2, 46.5, 8.3);
+  const g = (tracks: { points: { lat: number; lon: number }[] }[]) => ({ tracks, routes: [], waypoints: [] });
+
+  it('joins tracks that are in order', () => {
+    const r = routeLine(g([day1, day2, day3]));
+    expect([r.joined, r.dropped, r.points.length]).toEqual([3, 0, 30]);
+  });
+  it('puts tracks that are out of order into the order their ends fit', () => {
+    const r = routeLine(g([day2, day1, day3]));
+    expect([r.joined, r.dropped]).toEqual([3, 0]);
+    expect(r.points[0]!.lon).toBeCloseTo(8.0, 6);
+    expect(r.points[r.points.length - 1]!.lon).toBeCloseTo(8.3, 6);
+  });
+  it('joins what fits and says how many tracks were left out', () => {
+    const far = trk(46.9, 9.5, 46.9, 9.6);
+    const r = routeLine(g([day1, far, day2]));
+    expect([r.joined, r.dropped]).toEqual([2, 1]);
+  });
+  it('a gap of more than 3 km (a bus ride) splits the route: the longest part is used and the rest is reported', () => {
+    const afterBus = trk(46.5, 8.2, 46.5, 8.3, 12); // 6 km after day 2 ends
+    const r = routeLine(g([day1, day2, trk(46.5, 8.18, 46.5, 8.28, 12), afterBus]));
+    expect(r.dropped).toBeGreaterThanOrEqual(0);
+    expect(r.joined).toBeGreaterThanOrEqual(1);
+    const none = routeLine(g([trk(46.5, 8.0, 46.5, 8.05), trk(46.8, 9.0, 46.8, 9.2, 20), trk(46.2, 7.0, 46.2, 7.05)]));
+    expect([none.joined, none.dropped, none.points.length]).toEqual([1, 2, 20]);
+  });
+});

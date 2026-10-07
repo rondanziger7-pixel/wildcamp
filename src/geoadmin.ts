@@ -20,6 +20,21 @@ export async function fetchElevation(lat: number, lon: number): Promise<number |
 /** The identify response for the zone layers at a point (seasons and firing days are evaluated later, per date). */
 export type ZoneBody = { results?: IdentifyResult[] };
 
+/**
+ * The body of an identify answer. A 2xx answer without a `results` list (an error body, a proxy page) is a failed lookup, not "nothing
+ * found": reading it as empty would call a spot inside a ban zone clear.
+ */
+export async function identifyBody<T extends { results?: unknown }>(res: Response): Promise<T> {
+  let body: unknown;
+  try {
+    body = await res.json();
+  } catch {
+    throw new Error('identify: the answer is not JSON');
+  }
+  if (!body || typeof body !== 'object' || !Array.isArray((body as { results?: unknown }).results)) throw new Error('identify: the answer has no results list');
+  return body as T;
+}
+
 /** Identify all protected-zone layers at a point. Throws if the request fails. */
 export async function fetchZoneBody(lat: number, lon: number): Promise<ZoneBody> {
   const { e, n } = wgs84ToLv95(lat, lon);
@@ -36,7 +51,7 @@ export async function fetchZoneBody(lat: number, lon: number): Promise<ZoneBody>
   });
   const res = await fetch(`${API}/api/MapServer/identify?${params}`);
   if (!res.ok) throw new Error(`identify ${res.status}`);
-  return (await res.json()) as ZoneBody;
+  return identifyBody<ZoneBody>(res);
 }
 
 /**
@@ -60,7 +75,7 @@ export async function fetchNearZoneBody(lat: number, lon: number, radiusM: numbe
   });
   const res = await fetch(`${API}/api/MapServer/identify?${params}`);
   if (!res.ok) throw new Error(`identify ${res.status}`);
-  return (await res.json()) as ZoneBody;
+  return identifyBody<ZoneBody>(res);
 }
 
 /** The zones at a point for a date (default today). Throws if the request fails. */
@@ -117,6 +132,11 @@ function wrzHit(a: Record<string, unknown>, layer: ZoneLayer, today: Date): { la
   // the data's rule text is German: shown in plain language in the language in force
   const bits = [rule && explainWrzRule(rule, getLang()), season && `(${season})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
   const ban = campingBanSentence(str(a.zusatzinformation));
+  // "Zutrittsverbot bei Schneelage": the entry ban is for when snow lies, whatever the season column says (01.01.-31.12.)
+  if (!ban && entryRule && /schneelage|bei schnee/i.test(str(a.zusatzinformation) ?? '')) {
+    const shown = [rule && explainWrzRule(rule, getLang()), `(${tr('when snow lies')})`, str(a.kanton) && `[${str(a.kanton)}]`].filter(Boolean).join(' ');
+    return { layer: { ...layer, severity: 'caution', note: tr('Wildlife quiet zone. The entry ban applies when snow lies (the zone\'s own text); check the zone\'s notice.') }, detail: shown, season };
+  }
   if (ban) {
     const st = seasonState(ban.season, today);
     const detail = `${bits} «${ban.text}»`;
@@ -156,11 +176,11 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }, today: Date 
       continue;
     }
     let detail: string | undefined;
-    if (r.layerBodId.startsWith('ch.bafu.bundesinventare-auen')) detail = str(a.auen_type_de) && tr('Type: {type}.', { type: str(a.auen_type_de)! });
+    if (r.layerBodId.startsWith('ch.bafu.bundesinventare-auen')) detail = (str(a[`auen_type_${getLang()}`]) ?? str(a.auen_type_de)) && tr('Type: {type}.', { type: (str(a[`auen_type_${getLang()}`]) ?? str(a.auen_type_de))! });
     if (r.layerBodId === 'ch.vbs.schiessanzeigen') {
       const sh = shootingDetail(a, today);
       hits.push({
-        layer: sh.active ? { ...layer, severity: 'caution', note: tr('Shooting is scheduled here today. Do not stay in the danger area; read the firing notice.') } : layer,
+        layer: sh.active ? { ...layer, severity: 'caution', note: sh.isToday ? tr('Shooting is scheduled here today. Do not stay in the danger area; read the firing notice.') : tr('Shooting is scheduled here on {date}. Do not stay in the danger area; read the firing notice.', { date: fmtDate(today) }) } : layer,
         name: str(a.label) ?? str(a.name),
         detail: sh.detail,
       });
@@ -168,11 +188,16 @@ export function parseZoneHits(body: { results?: IdentifyResult[] }, today: Date 
     }
     hits.push({ layer, name: str(a.label) ?? str(a.name), detail });
   }
-  return hits;
+  // one protected area can come back as several features (its parts): said once
+  const seen = new Set<string>();
+  return hits.filter((h) => {
+    const key = `${h.layer.id}|${h.name ?? ''}|${h.detail ?? ''}`;
+    return seen.has(key) ? false : (seen.add(key), true);
+  });
 }
 
 /** Today's firing times from an army shooting-notice feature, with the notice link. */
-function shootingDetail(a: Record<string, unknown>, today: Date): { detail: string; active: boolean } {
+function shootingDetail(a: Record<string, unknown>, today: Date): { detail: string; active: boolean; isToday: boolean } {
   const dates = Array.isArray(a.belegungsdatum) ? (a.belegungsdatum as string[]) : [];
   const i = dates.indexOf(`${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`);
   const off = Array.isArray(a.kein_schiessen) ? (a.kein_schiessen as boolean[])[i] : undefined;
@@ -180,8 +205,26 @@ function shootingDetail(a: Record<string, unknown>, today: Date): { detail: stri
   const to = Array.isArray(a.zeit_bis) ? (a.zeit_bis as string[])[i] : undefined;
   const link = str(a.url_en) ?? str(a.url_de);
   const fmt = (t?: string) => (t && t.length === 4 ? `${t.slice(0, 2)}:${t.slice(2)}` : t);
-  const state = i < 0 ? tr('No firing is listed for today.') : off ? tr('No shooting is listed for today.') : from ? tr('Shooting is listed for today ({from} to {to}).', { from: fmt(from)!, to: fmt(to) ?? '' }) : tr('Shooting is listed for today.');
-  return { detail: `${state}${link ? ' ' + tr('Notice: {link}', { link }) : ''}`, active: i >= 0 && off === false };
+  // the chosen night may be another day: the federal list only reaches the next few days, so for a later date silence is not "no shooting"
+  const now = new Date();
+  const isToday = now.getFullYear() === today.getFullYear() && now.getMonth() === today.getMonth() && now.getDate() === today.getDate();
+  const date = fmtDate(today);
+  const state = !isToday
+    ? i < 0
+      ? tr('No firing is listed for {date}; the federal list only covers the next few days.', { date })
+      : off
+        ? tr('No shooting is listed for {date}.', { date })
+        : from
+          ? tr('Shooting is listed for {date} ({from} to {to}).', { date, from: fmt(from)!, to: fmt(to) ?? '' })
+          : tr('Shooting is listed for {date}.', { date })
+    : i < 0
+      ? tr('No firing is listed for today.')
+      : off
+        ? tr('No shooting is listed for today.')
+        : from
+          ? tr('Shooting is listed for today ({from} to {to}).', { from: fmt(from)!, to: fmt(to) ?? '' })
+          : tr('Shooting is listed for today.');
+  return { detail: `${state}${link ? ' ' + tr('Notice: {link}', { link }) : ''}`, active: i >= 0 && off === false, isToday };
 }
 
 /** Canton at a point from swissBOUNDARIES3D, or undefined if the point is outside every canton. */
@@ -200,7 +243,7 @@ export async function fetchCanton(lat: number, lon: number): Promise<Canton | un
   });
   const res = await fetch(`${API}/api/MapServer/identify?${params}`);
   if (!res.ok) throw new Error(`canton ${res.status}`);
-  return parseCanton(await res.json());
+  return parseCanton(await identifyBody(res));
 }
 
 export function parseCanton(body: { results?: IdentifyResult[] }): Canton | undefined {
@@ -238,7 +281,7 @@ export async function fetchMunicipality(
     });
     const res = await fetch(`${API}/api/MapServer/identify?${params}`);
     if (!res.ok) throw new Error(`municipality ${res.status}`);
-    const m = parseMunicipality(await res.json());
+    const m = parseMunicipality(await identifyBody(res));
     if (m) return m;
   }
   return undefined;

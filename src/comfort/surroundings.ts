@@ -109,6 +109,25 @@ export function parseNames(body: { results?: Feature[] }, e: number, n: number):
   return { huts: nearest(huts), settlementM, parkingM };
 }
 
+/** The layer names the kind of stop in German; the app keeps an English word and translates it where it shows. */
+const STOP_KINDS: Record<string, string> = {
+  bus: 'bus',
+  tram: 'tram',
+  zug: 'train',
+  bahn: 'train',
+  schiff: 'boat',
+  sesselbahn: 'chairlift',
+  standseilbahn: 'funicular',
+  gondelbahn: 'gondola lift',
+  seilbahn: 'cableway',
+  luftseilbahn: 'cableway',
+  kabinenbahn: 'cable car',
+  skilift: 'ski lift',
+  schlepplift: 'ski lift',
+  zahnradbahn: 'rack railway',
+};
+export const stopKind = (de: string) => STOP_KINDS[de.trim().toLowerCase()] ?? de.trim().toLowerCase();
+
 export function parseStops(body: { results?: Feature[] }, e: number, n: number): Stop[] {
   const out: Stop[] = [];
   for (const f of body.results ?? []) {
@@ -116,7 +135,7 @@ export function parseStops(body: { results?: Feature[] }, e: number, n: number):
     const m = distanceTo(f.geometry, e, n);
     // the stop layer names a stop in `haltestelle` (and `label`); older fixtures use `name`
     const name = [p.haltestelle, p.label, p.name].find((v) => typeof v === 'string' && v.trim() !== '');
-    if (Number.isFinite(m)) out.push({ name: typeof name === 'string' ? name.trim() : '', kind: String(p.verkehrsmittel_de ?? p.betriebspunkttyp_de ?? 'Stop'), meters: m });
+    if (Number.isFinite(m)) out.push({ name: typeof name === 'string' ? name.trim() : '', kind: stopKind(String(p.verkehrsmittel_de ?? p.betriebspunkttyp_de ?? 'Stop')), meters: m });
   }
   return nearest(out);
 }

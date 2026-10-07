@@ -383,16 +383,36 @@ describe('parseGpx: junk and broken files', () => {
     expect(parseGpx(manyAttrs).waypoints).toHaveLength(1);
   });
 
-  it('keeps at most MAX_POINTS track and route points', () => {
+  it('thins a file of more than MAX_POINTS points evenly instead of cutting it off', () => {
     expect(MAX_POINTS).toBe(200000);
-    const n = MAX_POINTS + 50;
+    const n = MAX_POINTS * 2 + 50;
     const pts: string[] = [];
     for (let i = 0; i < n; i++) pts.push(`<trkpt lat="46.5" lon="${(8 + i * 1e-6).toFixed(6)}"/>`);
     const g = parseGpx(wrap(`<trk><trkseg>${pts.join('')}</trkseg></trk><rte><rtept lat="46.5" lon="9"/></rte><wpt lat="46.5" lon="8.1"><name>after the cap</name></wpt>`));
-    expect(g.tracks[0]!.points).toHaveLength(MAX_POINTS);
-    expect(g.tracks[0]!.points[MAX_POINTS - 1]!.lon).toBeCloseTo(8 + (MAX_POINTS - 1) * 1e-6, 9);
-    expect(g.routes).toEqual([]); // the budget is shared by tracks and routes
+    const line = g.tracks[0]!.points;
+    expect(g.thinned).toBe(true);
+    expect(line.length).toBeLessThanOrEqual(MAX_POINTS);
+    expect(line.length).toBeGreaterThan(MAX_POINTS / 4);
+    // the whole line is kept, start to end: the last point is near the real end, not at the cut
+    expect(line[0]!.lon).toBeCloseTo(8, 6);
+    expect(line[line.length - 1]!.lon).toBeGreaterThan(8 + (n - 1000) * 1e-6);
+    // order is kept and the spacing is even
+    for (let i = 1; i < line.length; i++) expect(line[i]!.lon).toBeGreaterThan(line[i - 1]!.lon);
     expect(g.waypoints).toEqual([{ lat: 46.5, lon: 8.1, name: 'after the cap' }]); // waypoints are still read
+  });
+
+  it('does not mark a file that fits as thinned or truncated', () => {
+    const g = parseGpx(wrap('<trk><trkseg><trkpt lat="46.5" lon="8"/><trkpt lat="46.6" lon="8.1"/></trkseg></trk>'));
+    expect(g.thinned).toBeUndefined();
+    expect(g.truncated).toBeUndefined();
+  });
+
+  it('marks a file that is cut off', () => {
+    const full = wrap('<trk><trkseg><trkpt lat="46.5" lon="8"/><trkpt lat="46.6" lon="8.1"/><trkpt lat="46.7" lon="8.2"/></trkseg></trk>');
+    const cut = full.slice(0, full.indexOf('<trkpt lat="46.7"') + 12);
+    const g = parseGpx(cut);
+    expect(g.truncated).toBe(true);
+    expect(g.tracks[0]!.points.length).toBeGreaterThanOrEqual(2);
   });
 });
 
