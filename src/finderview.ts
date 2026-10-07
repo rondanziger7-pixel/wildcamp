@@ -4,6 +4,7 @@ import { el } from './resultview';
 import type { Score } from './scores';
 import { formatDuration } from './route';
 import { tr } from './i18n';
+import { announce } from './a11y';
 
 export interface FinderRow {
   candidate: Candidate;
@@ -70,6 +71,7 @@ export function renderFinder(root: HTMLElement, heading: string, onPick: (c: Can
     },
     update(rows, text, done, offer) {
       status.replaceChildren(...(done ? [] : [el('span', 'spinner')]), text);
+      if (done && text) announce(text);
       if (offer) {
         const b = el('button', 'finder-btn', offer.label);
         b.type = 'button';

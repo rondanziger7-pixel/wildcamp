@@ -44,7 +44,8 @@
     <link rel="dns-prefetch" href="https://api3.geo.admin.ch" />
   </head>
   <body>
-    <div id="map" aria-label="Map of Switzerland"></div>
+    <div id="map" role="region" aria-roledescription="map"></div>
+    <div id="crosshair" aria-hidden="true"></div>
 
     <header id="topbar">
       <form id="search" role="search" autocomplete="off">
@@ -54,8 +55,8 @@
       </form>
     </header>
 
-    <section id="legend" hidden>
-      <div class="panel-head"><h2 data-i18n>Map layers</h2><button id="layers-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
+    <section id="legend" aria-labelledby="legend-title" hidden>
+      <div class="panel-head"><h2 id="legend-title" data-i18n>Map layers</h2><button id="layers-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
       <label><input type="checkbox" id="toggle-trails" checked /> <span data-i18n>Hiking trails</span></label>
       <ul class="swatches">
         <li><i style="background:#f2c200"></i> <span data-i18n>Hiking trail</span></li>
@@ -69,8 +70,8 @@
       <p data-i18n>Colours come from the source layers (federal hunting reserves, wildlife quiet zones, floodplains, bogs and more). A coloured area is not always a ban: tap the spot to see what applies.</p>
       <p data-i18n>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, SO, JU) is checked when you tap a spot but is not drawn on the map.</p>
     </section>
-    <section id="settings" class="panel" hidden>
-      <div class="panel-head"><h2 data-i18n>Settings</h2><button id="settings-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
+    <section id="settings" class="panel" aria-labelledby="settings-title" hidden>
+      <div class="panel-head"><h2 id="settings-title" data-i18n>Settings</h2><button id="settings-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
       <label class="lang-row"><span data-i18n>Language</span> <select id="lang-select" aria-label="Language" data-i18n-attr="aria-label"></select></label>
       <p class="lang-note" data-i18n>The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.</p>
       <div id="settings-more"></div>
@@ -78,13 +79,14 @@
 
     <div id="offline-banner" role="status" data-i18n hidden>Offline: the saved map and bundled data still work. Zone, canton, water and weather lookups need a connection, so results are incomplete.</div>
     <div id="toast" role="status" hidden></div>
+    <div id="announce" class="sr-only" role="status" aria-live="polite"></div>
     <div id="update-bar" role="status" hidden>
       <span data-i18n>A new version of the app is ready.</span>
       <button type="button" id="update-reload" data-i18n>Reload</button>
       <button type="button" id="update-later" aria-label="Not now" data-i18n-attr="aria-label">✕</button>
     </div>
 
-    <aside id="sheet" data-state="intro" aria-live="polite">
+    <aside id="sheet" data-state="intro" aria-label="Result" data-i18n-attr="aria-label">
       <div id="grab" aria-hidden="true"></div>
       <button id="sheet-close" type="button" aria-label="Close panel" data-i18n-attr="aria-label">✕</button>
       <div id="intro">

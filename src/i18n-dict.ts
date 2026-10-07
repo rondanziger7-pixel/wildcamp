@@ -1059,6 +1059,13 @@ export const DE: Record<string, string> = {
   "The map area you are looking at: map pictures, the zone layers and the mobile coverage prediction.": "Der Kartenausschnitt, den Sie ansehen: Kartenbilder, die Zonenebenen und die Mobilfunkprognose.",
   "The spot (to about ten metres) and its elevation: the weather forecast.": "Der Platz (auf etwa zehn Meter genau) und seine Höhe: die Wettervorhersage.",
   "Nothing about you: the national avalanche bulletin is downloaded whole and matched here.": "Nichts über Sie: Das nationale Lawinenbulletin wird als Ganzes heruntergeladen und hier zugeordnet.",
+  "Map of Switzerland. Arrow keys move the map, plus and minus zoom, Enter checks the spot in the middle.": "Karte der Schweiz. Mit den Pfeiltasten verschieben Sie die Karte, mit Plus und Minus zoomen Sie, mit Enter prüfen Sie den Platz in der Mitte.",
+  "Overall {n} out of 100.": "Gesamt {n} von 100.",
+  "Route checked.": "Route geprüft.",
+  "The route could not be checked.": "Die Route konnte nicht geprüft werden.",
+  "Problem": "Problem",
+  "Caution": "Achtung",
+  "Result": "Ergebnis",
 };
 
 export const FR: Record<string, string> = {
@@ -2121,6 +2128,13 @@ export const FR: Record<string, string> = {
   "The map area you are looking at: map pictures, the zone layers and the mobile coverage prediction.": "La zone de carte que vous regardez : images de carte, couches de zones et prévision de couverture mobile.",
   "The spot (to about ten metres) and its elevation: the weather forecast.": "L’emplacement (à une dizaine de mètres près) et son altitude : les prévisions météo.",
   "Nothing about you: the national avalanche bulletin is downloaded whole and matched here.": "Rien sur vous : le bulletin d’avalanches national est téléchargé en entier et associé ici.",
+  "Map of Switzerland. Arrow keys move the map, plus and minus zoom, Enter checks the spot in the middle.": "Carte de la Suisse. Les flèches déplacent la carte, plus et moins zooment, Entrée vérifie l’emplacement au centre.",
+  "Overall {n} out of 100.": "Global {n} sur 100.",
+  "Route checked.": "Itinéraire vérifié.",
+  "The route could not be checked.": "L’itinéraire n’a pas pu être vérifié.",
+  "Problem": "Problème",
+  "Caution": "Attention",
+  "Result": "Résultat",
 };
 
 export const IT: Record<string, string> = {
@@ -3183,4 +3197,11 @@ export const IT: Record<string, string> = {
   "The map area you are looking at: map pictures, the zone layers and the mobile coverage prediction.": "L’area di mappa che stai guardando: immagini della mappa, livelli delle zone e previsione della copertura mobile.",
   "The spot (to about ten metres) and its elevation: the weather forecast.": "Il posto (con una precisione di circa dieci metri) e la sua quota: le previsioni del tempo.",
   "Nothing about you: the national avalanche bulletin is downloaded whole and matched here.": "Nulla su di te: il bollettino valanghe nazionale viene scaricato per intero e abbinato qui.",
+  "Map of Switzerland. Arrow keys move the map, plus and minus zoom, Enter checks the spot in the middle.": "Mappa della Svizzera. Le frecce spostano la mappa, più e meno ingrandiscono, Invio controlla il posto al centro.",
+  "Overall {n} out of 100.": "Complessivo {n} su 100.",
+  "Route checked.": "Itinerario controllato.",
+  "The route could not be checked.": "Non è stato possibile controllare l’itinerario.",
+  "Problem": "Problema",
+  "Caution": "Attenzione",
+  "Result": "Risultato",
 };

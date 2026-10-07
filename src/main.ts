@@ -25,6 +25,7 @@ import { bulletinAt, fetchBulletin, type AvalancheInfo } from './comfort/avalanc
 import { fetchGround, type GroundInfo } from './comfort/ground';
 import { MAX_SAVED_TILES, MAX_TILES, addArea, megabytes, planCorridor, planSpots, planTiles, registerOffline, saveShell, saveTiles, savedTileCount, tileUrl, type TilePlan } from './offline';
 import { listenInstall, renderSettings } from './settingsview';
+import { announce } from './a11y';
 import { MAX_SAVED, defaultName, importSpots, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateLegality, updateSnapshot, updateSpot, verdictLabel, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
 import { CANDIDATE_RADIUS_M, FINDER_RADII, elevationRadiusFor, fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, separationFor, withWater, zAt } from './finder';
@@ -65,7 +66,37 @@ langSelect.onchange = () => setLang(langSelect.value as Lang);
 // Optional deep link: #lat,lon,zoom
 const [hLat, hLon, hZoom] = location.hash.slice(1).split(',').map(Number);
 const hashView = Number.isFinite(hLat) && Number.isFinite(hLon);
-const map = L.map('map', { zoomControl: false }).setView(hashView ? [hLat!, hLon!] : [46.8, 8.2], hashView ? hZoom || 14 : 8);
+// People who asked their system for less motion get a map that jumps instead of gliding and fading.
+const calm = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+const map = L.map('map', { zoomControl: false, zoomAnimation: !calm, fadeAnimation: !calm, markerZoomAnimation: !calm }).setView(hashView ? [hLat!, hLon!] : [46.8, 8.2], hashView ? hZoom || 14 : 8);
+if (calm) {
+  const still = map as unknown as { flyTo: L.Map['setView']; flyToBounds: (b: L.LatLngBoundsExpression, o?: L.FitBoundsOptions) => L.Map };
+  still.flyTo = (at, zoom) => map.setView(at, zoom ?? map.getZoom(), { animate: false });
+  still.flyToBounds = (b, o) => map.fitBounds(b, { ...o, animate: false });
+}
+// Keyboard: the map takes focus, the arrow keys move it and + and - zoom it (Leaflet), Enter checks the spot in the middle, where a cross shows.
+const mapBox = map.getContainer();
+mapBox.setAttribute('aria-label', tr('Map of Switzerland. Arrow keys move the map, plus and minus zoom, Enter checks the spot in the middle.'));
+mapBox.addEventListener('keydown', (ev) => {
+  if (ev.key !== 'Enter' || ev.target !== mapBox) return;
+  ev.preventDefault();
+  const c = map.getCenter();
+  void checkSpot(c.lat, c.lng);
+});
+// Escape closes what is open, the innermost first: the map menu, a panel, the sheet.
+document.addEventListener('keydown', (ev) => {
+  if (ev.key !== 'Escape' || ev.defaultPrevented) return;
+  const menuBtn = document.querySelector<HTMLButtonElement>('.map-menu button[aria-expanded="true"]');
+  if (menuBtn) return void menuBtn.click();
+  if (!layersPanel.hidden || !settingsPanel.hidden) {
+    layersPanel.hidden = settingsPanel.hidden = true;
+    return;
+  }
+  if (!sheet.classList.contains('closed') && sheet.dataset.state !== 'intro') {
+    sheet.classList.add('closed');
+    mapBox.focus();
+  }
+});
 
 L.control.zoom({ position: 'topright' }).addTo(map);
 
@@ -288,9 +319,11 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     sheet.dataset.state = 'result';
     result.hidden = false;
     result.replaceChildren(el('p', 'where', tr('This app only covers Switzerland.')));
+    announce(tr('This app only covers Switzerland.'));
     return;
   }
   showLoading();
+  announce(tr('Checking this spot…'));
   const assessed = await assessSpot(lat, lng, undefined, accuracyM);
   if (id !== checkId) return; // a newer tap superseded this one
   const { assessment, elevation, inputs } = assessed;
@@ -417,6 +450,9 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   void loadDetails(ui, lat, lng, elevation, id, tappedAt, { onNight }).then(() => {
     // a spot saved while the checks were still running keeps the final scores, not the early ones
     if (id === checkId && isSaved(store, sid)) updateSnapshot(store, sid, ui.snapshot());
+    if (id !== checkId) return;
+    const snap = ui.snapshot();
+    announce(`${name}. ${verdictLabel(snap.verdict)}.` + (snap.overall === undefined ? '' : ' ' + tr('Overall {n} out of 100.', { n: snap.overall })));
   });
 }
 
@@ -932,10 +968,12 @@ async function checkRoute() {
     r.inputs = inputs;
     reassessRoute();
     r.status = 'done';
+    announce(tr('Route checked.'));
   } catch (err) {
     if (!live()) return;
     console.warn('route check failed', err);
     r.status = 'failed';
+    announce(tr('The route could not be checked.'));
   }
   drawRoute();
   renderRouteNow();

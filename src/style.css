@@ -467,3 +467,16 @@ button { font: inherit; cursor: pointer; }
 
 /* the map's own buttons and the menu they open stay above the bottom sheet, however tall it is */
 .leaflet-top.leaflet-right { z-index: 1060; }
+
+/* accessibility: text for screen readers only, a cross for keyboard users, a visible focus on the map */
+.sr-only { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+.tone-mark { margin-right: 5px; font-size: .85em; }
+#crosshair { display: none; position: absolute; z-index: 600; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; pointer-events: none; }
+#crosshair::before, #crosshair::after { content: ''; position: absolute; background: #1b1f1d; box-shadow: 0 0 0 1.5px #fff; }
+#crosshair::before { left: 16px; top: 0; width: 2px; height: 34px; }
+#crosshair::after { top: 16px; left: 0; height: 2px; width: 34px; }
+#map:focus-visible { outline: 3px solid var(--green); outline-offset: -3px; }
+#map:focus-visible ~ #crosshair { display: block; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

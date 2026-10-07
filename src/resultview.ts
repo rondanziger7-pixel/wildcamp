@@ -16,6 +16,8 @@ import { dateLocale, tr } from './i18n';
 import { applyNearBuilding, type NearBuildingNote } from './comfort/nearbuilding';
 
 const TONE_ORDER = { bad: 0, warn: 1, ok: 2, info: 3 } as const;
+/** The tone as a sign and a word, so it does not depend on the colour of the item's edge (the word is for screen readers). */
+const toneMark = (tone: keyof typeof TONE_ORDER): [string, string] => (tone === 'bad' ? ['⛔', tr('Problem')] : tone === 'warn' ? ['⚠️', tr('Caution')] : tone === 'ok' ? ['✅', tr('Fine')] : ['', tr('Note')]);
 const VISIBLE = 3;
 
 const BANNER: Record<Assessment['verdict'], { icon: string; label: string; sub: string }> = {
@@ -72,7 +74,8 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
   sorted.forEach((it, i) => {
     const li = el('li', `check ${it.tone}${i >= VISIBLE ? ' more' : ''}`);
     const body = el('p', undefined, it.text);
-    li.append(el('h3', undefined, it.title), body);
+    const [sign, word] = toneMark(it.tone);
+    li.append(el('h3', undefined, ...(sign ? [el('span', 'tone-mark', sign)] : []), el('span', 'sr-only', `${word}: `), it.title), body);
     // long text is cut to two lines; tapping the item shows all of it
     if (it.text.length > 110 || it.sources?.length) {
       li.classList.add('long');
