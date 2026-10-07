@@ -6,7 +6,7 @@ import { getLang, tr } from './i18n';
 /**
  * Hunting and animals: the reported pastures with herd-protection dogs (a federal layer), the hunting seasons of 2026 as the cantons
  * published them, and the official advice for camping where wolves and bears can pass. All of it is information; none of it changes the
- * camping verdict. Sources and what could not be verified: docs/sources/CH/README_wildlife.md.
+ * camping verdict. Sources and what could not be verified: docs/sources/CH/README_hunting.md, README_herdenschutz.md and README_predators.md.
  */
 
 const API = 'https://api3.geo.admin.ch/rest/services/api/MapServer';

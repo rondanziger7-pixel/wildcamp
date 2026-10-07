@@ -550,7 +550,7 @@ export const MUNICIPAL_RULES: MunicipalEntry[] = [
     rule: {
       stance: 'banned',
       summary:
-        'Ordinanza municipale sul campeggio (in force 1.1.2010), Art. 2: camping on municipal public ground (gardens, parks, streets, squares, car parks, forests, floodplains) and on private areas open to the public is prohibited; camping with mobile installations is allowed only on authorised sites (Art. 1), with a 24-hour emergency stop for motorhomes (Art. 3). Fines CHF 50 to 5,000 (Art. 4). Bivouacking without a tent and fully closed private land are not addressed.',
+        'Ordinanza municipale sul campeggio (in force 1.1.2010), Art. 2: camping on municipal public ground (gardens, parks, streets, squares, car parks, forests, floodplains) and on private areas open to the public is prohibited; camping with mobile installations is allowed only on authorised sites (Art. 1), the Municipio designates emergency areas for motorhomes, where a stop is limited to 24 hours (Art. 3). Fines CHF 50 to 5,000 (Art. 4). Bivouacking without a tent and fully closed private land are not addressed.',
       sources: [
         { title: 'Ordinanza municipale sul campeggio della Città di Locarno (100.5), Art. 1 to 4', url: 'https://www.locarno.ch/files/documenti/100-5%20OM%20campeggio.pdf' },
       ],

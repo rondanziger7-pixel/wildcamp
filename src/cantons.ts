@@ -40,6 +40,7 @@ export const CANTONS: Canton[] = [
       summary:
         'Official statement of 2025-06-18: there is currently no legal basis regulating bivouacking. ' +
         'The cantonal government prefers, and plans to create, a general ban on wild bivouacking, to be allowed only under conditions with the landowner\'s explicit permission (and agreement with the herdsman on alpine farms). ' +
+        'The same statement says that overnight stays in motorhomes have risen sharply, and that parking a motorhome is to be allowed only on designated areas besides the two campsites, with wild camping on private and public car parks to be banned (planned, not in force). ' +
         'Rules may have changed since; check for a new law.',
       sources: [{ title: 'Standeskommission Appenzell I.Rh., Kanton stellt Weichen im Campingtourismus, 18.06.2025', url: 'https://www.ai.ch/politik/standeskommission/mitteilungen/aktuelles/kanton-appenzell-i-rh-stellt-weichen-im-campingtourismus' }],
       checkedOn: '2026-10-04',
@@ -116,7 +117,7 @@ export const CANTONS: Canton[] = [
       stance: 'restricted',
       aboveTreeline: 'tolerated',
       summary:
-        'Camping (any temporary stop and overnight stay outside your home using tents, caravans or motorhomes) is only possible in authorised campsite areas (Art. 2 para. 1, Art. 3). ' +
+        'Camping (any temporary stop and overnight stay outside your home, in particular using mobile installations such as tents, caravans or motorhomes) is only possible in authorised campsite areas (Art. 2 para. 1, Art. 3). ' +
         'The exception is tenting for a bivouac in the mountains (Art. 2 para. 2); the law does not define "in the mountains". ' +
         'Municipalities enforce the law and can fine breaches from CHF 50 to 10,000 (Art. 27).',
       sources: [{ title: 'Legge sui campeggi del 26 gennaio 2004 (stato 1.1.2024)', url: 'https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/legge/num/631' }],
