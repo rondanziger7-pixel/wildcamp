@@ -485,3 +485,14 @@ button { font: inherit; cursor: pointer; }
 .campsite-line { margin: 8px 0 0; font-size: .85rem; line-height: 1.4; color: var(--muted); }
 .hut-link { display: block; flex-basis: 100%; margin-top: 4px; font-size: .82rem; color: var(--green); }
 @media (prefers-color-scheme: dark) { .hut-link { color: #8fd1a8; } }
+
+/* how you sleep: settings form, the cue under the place, the notes in the legality details */
+.gear-set { border: 0; padding: 0; margin: 10px 0 0; }
+.gear-set legend { font-weight: 600; padding: 0; margin-bottom: 4px; }
+.gear-shelters { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+.gear-option, .gear-row { display: flex; align-items: center; gap: 6px; font-size: .85rem; padding: 4px 0; }
+.gear-people { width: 64px; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 1rem; }
+.gear-cue { margin: 2px 0 6px; font-size: .78rem; color: var(--muted); }
+.gear-cue[hidden] { display: none; }
+.gear-notes { margin: 0 0 8px; }
+.gear-title { font-size: .85rem; margin: 6px 0 4px; }

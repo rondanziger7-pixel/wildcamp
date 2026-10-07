@@ -26,6 +26,7 @@ import { fetchGround, type GroundInfo } from './comfort/ground';
 import { MAX_SAVED_TILES, MAX_TILES, addArea, megabytes, planCorridor, planSpots, planTiles, registerOffline, saveShell, saveTiles, savedTileCount, tileUrl, type TilePlan } from './offline';
 import { listenInstall, renderSettings } from './settingsview';
 import { announce } from './a11y';
+import { gearItems, gearLine, isDefaultGear, loadGear, saveGear, type Gear } from './gear';
 import { campsiteLine, loadCampsites, nearestCampsites, type CampsiteList } from './campsites';
 import { MAX_SAVED, defaultName, importSpots, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateLegality, updateSnapshot, updateSpot, verdictLabel, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
@@ -283,6 +284,16 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
   window.clearTimeout(deadline);
 }
 
+/** How the person sleeps (tent, tarp, bivy bag, vehicle; people; a dog): kept in the browser, read again by the open result when it changes. */
+let gear: Gear = (() => {
+  try {
+    return loadGear(window.localStorage);
+  } catch {
+    return loadGear(undefined);
+  }
+})();
+let refreshGear: (() => void) | undefined;
+
 let marker: L.Marker | undefined;
 let checkId = 0;
 let focusMarker: L.CircleMarker | undefined;
@@ -348,6 +359,13 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     void checkSpot(lat, lng, fromFinder, accuracyM);
   };
   const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry(), accuracyM });
+  // notes for a set-up other than a tent for one person, from how the rule texts of this place read
+  const paintGear = () => {
+    if (id !== checkId) return;
+    ui.setGear(isDefaultGear(gear) ? undefined : { line: gearLine(gear), items: gearItems(gear, { canton: assessment.canton, municipality: assessment.municipality, municipalRule: assessment.municipalRule }) });
+  };
+  refreshGear = paintGear;
+  paintGear();
   // another night: the legality of the same spot is judged again for its date (zone seasons, firing days), without new requests
   const nowStr = zurichNow(new Date());
   let judgedFor = new Date();
@@ -1361,6 +1379,12 @@ function drawSettings() {
     store,
     today: () => firstEvening(zurichNow(new Date())),
     saveVisible: () => void saveArea(),
+    gear: () => gear,
+    onGear: (g) => {
+      gear = g;
+      if (!saveGear(store, g) && !isDefaultGear(g)) say(tr('This browser would not keep the change (private mode or storage blocked).'));
+      refreshGear?.();
+    },
     onWiped: () => {
       route?.abort?.abort();
       route = undefined;

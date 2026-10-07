@@ -1,6 +1,7 @@
 import { AREAS_KEY, clearMaps, loadAreas, megabytes, savedTileCount, sizeText, storageUsed } from './offline';
 import { SENT, keptSummary, wipeKept, wipePlans } from './privacy';
 import { el } from './resultview';
+import { MAX_PEOPLE, SHELTERS, cleanGear, shelterName, type Gear } from './gear';
 import { tr } from './i18n';
 
 /** The parts of the settings panel that show what the app keeps and sends: saved maps and storage, installing, privacy. */
@@ -13,6 +14,9 @@ export interface SettingsHooks {
   /** Saved spots, trips or the route were removed: the map and pages must be redrawn. */
   onWiped(): void;
   say(text: string): void;
+  /** How the person sleeps now, and a change of it (the open result is read again for it). */
+  gear: () => Gear;
+  onGear(g: Gear): void;
 }
 
 interface InstallPrompt extends Event {
@@ -59,7 +63,7 @@ function twoStep(label: string, ask: string, run: () => void | Promise<void>, cl
 }
 
 export function renderSettings(host: HTMLElement, hooks: SettingsHooks): void {
-  host.replaceChildren(offlineSection(hooks), privacySection(hooks));
+  host.replaceChildren(gearSection(hooks), offlineSection(hooks), privacySection(hooks));
 }
 
 function offlineSection(hooks: SettingsHooks): HTMLElement {
@@ -162,4 +166,47 @@ function privacySection(hooks: SettingsHooks): HTMLElement {
   );
   d.append(actions);
   return d;
+}
+
+/** How you sleep: the shelter, how many people, a dog. The notes in the legality details follow it. */
+function gearSection(hooks: SettingsHooks): HTMLElement {
+  const box = el('fieldset', 'gear-set');
+  box.append(el('legend', undefined, tr('How you sleep')));
+  let g = hooks.gear();
+  const change = (patch: Partial<Gear>) => {
+    g = cleanGear({ ...g, ...patch });
+    hooks.onGear(g);
+  };
+  const grid = el('div', 'gear-shelters');
+  for (const s of SHELTERS) {
+    const label = el('label', 'gear-option');
+    const input = el('input') as HTMLInputElement;
+    input.type = 'radio';
+    input.name = 'gear-shelter';
+    input.value = s;
+    input.checked = g.shelter === s;
+    input.onchange = () => input.checked && change({ shelter: s });
+    label.append(input, ' ', shelterName(s));
+    grid.append(label);
+  }
+  const people = el('label', 'gear-row', tr('People'), ' ') as HTMLLabelElement;
+  const n = el('input', 'gear-people') as HTMLInputElement;
+  n.type = 'number';
+  n.min = '1';
+  n.max = String(MAX_PEOPLE);
+  n.inputMode = 'numeric';
+  n.value = String(g.people);
+  n.onchange = () => {
+    change({ people: Number(n.value) });
+    n.value = String(g.people);
+  };
+  people.append(n);
+  const dog = el('label', 'gear-row') as HTMLLabelElement;
+  const d = el('input') as HTMLInputElement;
+  d.type = 'checkbox';
+  d.checked = g.dog;
+  d.onchange = () => change({ dog: d.checked });
+  dog.append(d, ' ', tr('I have a dog with me'));
+  box.append(grid, people, dog, el('p', 'settings-note', tr('The rules in this app are written for tents. For another set-up the legality details add notes on how the texts read for it. They never make a spot legal.')));
+  return box;
 }

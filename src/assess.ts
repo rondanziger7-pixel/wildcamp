@@ -46,6 +46,8 @@ export interface Assessment {
   treeline: TreelineStatus;
   canton?: Canton;
   municipality?: string;
+  /** The verified municipal rule that was applied, for the notes that depend on how a rule is worded (gear, vehicles). */
+  municipalRule?: CantonRule;
   /** True when the spot is outside Switzerland, where none of these checks apply. */
   outside?: boolean;
   /** How the treeline status was determined, shown to the user. */
@@ -224,7 +226,7 @@ export function assess(input: {
     // a ban that was found stays a ban; anything softer cannot be called "likely OK" with a check missing
     if (verdict === 'likely_ok') verdict = 'unknown';
   }
-  return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality, incomplete: incomplete.length ? [...incomplete] : undefined, nearZones: nearZones.length ? nearZones : undefined };
+  return { verdict, reasons, items, zones, treeline, treelineNote, canton, municipality, municipalRule, incomplete: incomplete.length ? [...incomplete] : undefined, nearZones: nearZones.length ? nearZones : undefined };
 }
 
 /** A lookup's name as shown to the user. */

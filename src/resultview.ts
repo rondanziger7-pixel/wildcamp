@@ -1,4 +1,4 @@
-import { checkLabel, type Assessment } from './assess';
+import { checkLabel, type Assessment, type Item } from './assess';
 import { localCantonName } from './cantons';
 import type { Comfort } from './comfort/comfort';
 import { LEVEL_NAME, type AvalancheInfo } from './comfort/avalanche';
@@ -145,6 +145,8 @@ export interface ResultUi {
   setAvalanche(a: AvalancheInfo | undefined, failed?: boolean): void;
   /** Fire and drone rules, shown under the legality details; they do not change the camping verdict. */
   setRules(r: Restrictions | undefined): void;
+  /** How the person sleeps (when not a tent for one): the set-up as a line, shown under the place, and notes for it at the top of the legality details. */
+  setGear(g: { line: string; items: Item[] } | undefined): void;
   /** Where to sleep instead: the nearest official campsites, as one line (shown on the first view when the spot is not allowed or doubtful). */
   setCampsites(line: string | undefined): void;
   /** A hut, inn or alp right next to the spot: a note in the legality details (and "likely OK" becomes "caution"). */
@@ -253,6 +255,9 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   };
   const lead = el('p', 'panel-lead');
   const legalList = el('div', 'legal-list');
+  const gearHost = el('div', 'gear-notes');
+  const gearCue = el('p', 'gear-cue');
+  gearCue.hidden = true;
   const seasonsHost = el('div', 'seasons-host');
   sleep.set({ tone: 'none' }, tr('Checking…'));
   weather.set({ tone: 'none' }, tr('Checking…'));
@@ -415,7 +420,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
-  legalPanel.append(lead, retryBtn, legalList, seasonsHost);
+  legalPanel.append(lead, retryBtn, gearHost, legalList, seasonsHost);
   const rulesHost = el('section', 'rules');
   legalPanel.append(rulesHost);
   const sleepPanel = el('section', 'panel sleep');
@@ -476,7 +481,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   jump(shelterChip, () => hutAt);
 
   paintLegal();
-  root.replaceChildren(where, nightHost, total.b, reasonLine, alertsHost, campsiteHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
+  root.replaceChildren(where, gearCue, nightHost, total.b, reasonLine, alertsHost, campsiteHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
 
   const markSleepUnavailable = (why: string) => {
     sleep.set({ tone: 'none' }, tr('Unavailable'));
@@ -592,6 +597,11 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     setAssessment(next) {
       a = next;
       paintLegal();
+    },
+    setGear(g) {
+      gearCue.hidden = !g;
+      gearCue.textContent = g ? '🎒 ' + g.line : '';
+      gearHost.replaceChildren(...(g && g.items.length ? [el('h3', 'gear-title', '🎒 ' + tr('For your set-up: {line}', { line: g.line })), ...checklist(g.items, 'details')] : []));
     },
     setCampsites(line) {
       campsiteText = line;

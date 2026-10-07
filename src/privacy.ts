@@ -3,10 +3,11 @@ import { SAVED_KEY, loadSaved, type Store } from './saved';
 import { TRIP_KEY, TRIP_KEY_V2, loadTrip } from './trip';
 import { ROUTE_KEY } from './routeplan';
 import { LANG_KEY } from './i18n';
+import { GEAR_KEY } from './gear';
 
 /** What this app keeps in the browser and what it sends away, for the privacy panel (plain facts, nothing else is collected). */
 
-export const GEAR_KEY = 'wildcamp.gear.v1';
+export { GEAR_KEY };
 export const APP_KEY_PREFIX = 'wildcamp.';
 
 /** Every place the app writes in localStorage. A test checks that no other `wildcamp.` key is written anywhere in the source. */
