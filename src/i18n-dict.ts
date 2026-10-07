@@ -1206,6 +1206,7 @@ export const DE: Record<string, string> = {
   "Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.": "Es ist Regen auf etwa {cm} cm Schnee vorhergesagt. Der Schnee wird zu Matsch, Schmelzwasser läuft durch Mulden und der Schnee wird an Hängen instabil. Bauen Sie auf hohem, ebenem Boden abseits von Rinnen auf.",
   "Hunting season on in this canton": "Jagdzeit in diesem Kanton",
   "No place matches that exactly. Pick one from the list or try another spelling.": "Kein Ort passt genau. Wählen Sie einen aus der Liste oder versuchen Sie eine andere Schreibweise.",
+  "Farmland: ask the owner": "Kulturland: Eigentümer fragen",
 };
 
 export const FR: Record<string, string> = {
@@ -2415,6 +2416,7 @@ export const FR: Record<string, string> = {
   "Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.": "De la pluie est prévue sur environ {cm} cm de neige. La neige devient de la bouillie, l’eau de fonte coule dans les creux et la neige devient instable sur les pentes. Installez-vous sur un terrain haut et plat, loin des écoulements.",
   "Hunting season on in this canton": "Saison de chasse dans ce canton",
   "No place matches that exactly. Pick one from the list or try another spelling.": "Aucun lieu ne correspond exactement. Choisissez-en un dans la liste ou essayez une autre orthographe.",
+  "Farmland: ask the owner": "Terre cultivée : demandez au propriétaire",
 };
 
 export const IT: Record<string, string> = {
@@ -3624,4 +3626,5 @@ export const IT: Record<string, string> = {
   "Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.": "È prevista pioggia su circa {cm} cm di neve. La neve diventa fanghiglia, l’acqua di fusione scorre nelle conche e la neve diventa instabile sui pendii. Pianta la tenda su terreno alto e pianeggiante, lontano dai canali.",
   "Hunting season on in this canton": "Stagione di caccia in questo cantone",
   "No place matches that exactly. Pick one from the list or try another spelling.": "Nessun luogo corrisponde esattamente. Scegline uno dall’elenco o prova un’altra grafia.",
+  "Farmland: ask the owner": "Terreno coltivato: chiedi al proprietario",
 };
