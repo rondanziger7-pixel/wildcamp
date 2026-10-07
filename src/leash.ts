@@ -15,6 +15,8 @@ export interface LeashRule {
   /** Also within this many metres of the forest edge, where the text says so. */
   edgeM?: number;
   /** The law and article, as read. */
+  /** The law names the forest edge or its vicinity without a distance. */
+  edgeNear?: boolean;
   law: string;
   url: string;
   /** `announced`: an official announcement was read, the article was not found. */
@@ -25,8 +27,8 @@ export const LEASH: Record<string, LeashRule> = {
   AG: { from: [4, 1], to: [7, 31], edgeM: 50, law: 'Jagdverordnung SAR 933.211 § 21', url: 'https://gesetzessammlungen.ag.ch/app/de/texts_of_law/933.211', basis: 'law' },
   LU: { from: [4, 1], to: [7, 31], edgeM: 50, law: 'Kantonale Jagdverordnung SRL 725a § 27', url: 'https://srl.lu.ch/app/de/texts_of_law/725a', basis: 'law' },
   SO: { from: [4, 1], to: [7, 31], law: 'Hundeverordnung BGS 614.72 § 4', url: 'https://bgs.so.ch/app/de/texts_of_law/614.72', basis: 'law' },
-  TG: { from: [4, 1], to: [7, 31], law: 'Hundegesetz RB 641.2 § 3 para. 2', url: 'https://www.rechtsbuch.tg.ch/app/de/texts_of_law/641.2', basis: 'law' },
-  BL: { from: [4, 1], to: [7, 31], law: 'Wildtier- und Jagdgesetz SGS 520 § 12', url: 'https://bl.clex.ch/app/de/texts_of_law/520', basis: 'law' },
+  TG: { from: [4, 1], to: [7, 31], edgeNear: true, law: 'Hundegesetz RB 641.2 § 3 para. 2', url: 'https://www.rechtsbuch.tg.ch/app/de/texts_of_law/641.2', basis: 'law' },
+  BL: { from: [4, 1], to: [7, 31], edgeNear: true, law: 'Wildtier- und Jagdgesetz SGS 520 § 12', url: 'https://bl.clex.ch/app/de/texts_of_law/520', basis: 'law' },
   FR: { from: [4, 1], to: [7, 15], law: 'Règlement sur la détention des chiens RSF 725.31 Art. 26', url: 'https://bdlf.fr.ch/app/fr/texts_of_law/725.31', basis: 'law' },
   UR: { from: [4, 1], to: [7, 31], edgeM: 50, law: 'Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)', url: 'https://www.ur.ch/newsarchiv/112567', basis: 'announced' },
 };
@@ -60,15 +62,15 @@ export function dogItems(c: DogContext): Item[] {
   const rule = c.canton ? LEASH[c.canton] : undefined;
   if (rule) {
     const period = tr('from {from} to {to}', { from: fmt(rule.from), to: fmt(rule.to) });
-    const edge = rule.edgeM ? ' ' + tr('and within {m} m of its edge', { m: rule.edgeM }) : '';
+    const edge = rule.edgeM ? ' ' + tr('and within {m} m of its edge', { m: rule.edgeM }) : rule.edgeNear ? ' ' + tr('and at its edge') : '';
     const running = inPeriod(c.date, rule);
     const where = c.inForest ? ' ' + tr('The forest map puts this spot in forest.') : '';
     if (rule.basis === 'announced') {
-      out.push({ tone: running ? 'warn' : 'info', title: tr('Dogs on a lead in forest (announced)'), text: tr('The canton announced a duty to keep dogs on a lead in forest and at its edge {period}. The article of the ordinance was not found: {law}.', { period, law: rule.law }) + where, sources: [rule.url] });
+      out.push({ tone: running ? 'warn' : 'info', title: tr('Dogs on a lead in forest (announced)'), text: tr('The canton announced a duty to keep dogs on a lead in forest and at its edge {period}. The article of the ordinance was not found: {law}.', { period, law: tr(rule.law) }) + where, sources: [rule.url] });
     } else if (running) {
-      out.push({ tone: 'warn', title: tr('Dogs on a lead in forest'), text: tr('In this canton dogs must be kept on a lead in forest {period}{edge} ({law}). The night you chose falls in that period.', { period, edge, law: rule.law }) + where, sources: [rule.url] });
+      out.push({ tone: 'warn', title: tr('Dogs on a lead in forest'), text: tr('In this canton dogs must be kept on a lead in forest {period}{edge} ({law}). The night you chose falls in that period.', { period, edge, law: tr(rule.law) }) + where, sources: [rule.url] });
     } else {
-      out.push({ tone: 'info', title: tr('Dogs on a lead in forest: not in this period'), text: tr('In this canton dogs must be on a lead in forest {period}{edge} ({law}). It is not running on the night you chose; wildlife areas, livestock and municipal rules can still ask for a lead.', { period, edge, law: rule.law }), sources: [rule.url] });
+      out.push({ tone: 'info', title: tr('Dogs on a lead in forest: not in this period'), text: tr('In this canton dogs must be on a lead in forest {period}{edge} ({law}). It is not running on the night you chose; wildlife areas, livestock and municipal rules can still ask for a lead.', { period, edge, law: tr(rule.law) }), sources: [rule.url] });
     }
   } else if (c.canton && NO_FOREST_SEASON.includes(c.canton)) {
     out.push({ tone: 'info', title: tr('No general forest leash period found'), text: tr('The cantonal texts read for this canton have no general leash period for forest. Leads are asked for in wildlife areas, near livestock and by municipal rules, so this is not a sign that dogs may run free.') });

@@ -1189,6 +1189,8 @@ export const DE: Record<string, string> = {
   "Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.": "In diesem Kanton ist in dieser Nacht Jagd: Rechne mit Schüssen und Jägern in der Dämmerung. Trage helle Farben und meide in diesen Stunden die Waldränder.",
   "In a village or city: the owner must agree": "Im Siedlungsgebiet: der Eigentümer muss zustimmen",
   "A municipal camping ban is reported (not verified)": "Ein Camping-Verbot der Gemeinde ist gemeldet (nicht verifiziert)",
+  "and at its edge": "und am Waldrand",
+  "Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)": "Jagdverordnung (im Amtsblatt Nr. 13 vom 28. März 2024 angekündigt)",
 };
 
 export const FR: Record<string, string> = {
@@ -2381,6 +2383,8 @@ export const FR: Record<string, string> = {
   "Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.": "La chasse est ouverte dans ce canton cette nuit-là : attendez-vous à des coups de feu et à des chasseurs à l’aube et au crépuscule. Portez des couleurs vives et évitez les lisières de forêt à ces heures.",
   "In a village or city: the owner must agree": "En zone bâtie : le propriétaire doit être d’accord",
   "A municipal camping ban is reported (not verified)": "Une interdiction communale de camper est signalée (non vérifiée)",
+  "and at its edge": "et à sa lisière",
+  "Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)": "Ordonnance sur la chasse (annoncée dans la Feuille officielle no 13 du 28 mars 2024)",
 };
 
 export const IT: Record<string, string> = {
@@ -3573,4 +3577,6 @@ export const IT: Record<string, string> = {
   "Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.": "In questo cantone la caccia è aperta quella notte: aspettati spari e cacciatori all’alba e al tramonto. Indossa colori vivaci ed evita i margini del bosco a quelle ore.",
   "In a village or city: the owner must agree": "In zona edificabile: serve il consenso del proprietario",
   "A municipal camping ban is reported (not verified)": "È segnalato un divieto comunale di campeggio (non verificato)",
+  "and at its edge": "e al suo margine",
+  "Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)": "Ordinanza sulla caccia (annunciata nel Foglio ufficiale n. 13 del 28 marzo 2024)",
 };
