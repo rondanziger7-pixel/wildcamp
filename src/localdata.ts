@@ -13,4 +13,6 @@ export const RESERVE_FILES = [
 export const FOREST_FILE = 'forest-mask.bin.gz';
 export const TREELINE_FILE = 'treeline-surface.bin.gz';
 /** Everything the legality check reads locally. */
-export const LOCAL_DATA_FILES = [FOREST_FILE, TREELINE_FILE, ...RESERVE_FILES];
+/** Official campsites (swissNAMES3D), read only for the "where instead" suggestion, so a failed load does not make a legality check incomplete. */
+export const CAMPSITES_FILE = 'campsites.json.gz';
+export const LOCAL_DATA_FILES = [FOREST_FILE, TREELINE_FILE, ...RESERVE_FILES, CAMPSITES_FILE];

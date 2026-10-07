@@ -452,6 +452,14 @@ export function comfortFor(input: ComfortInput): Comfort {
     else f.push({ tone: 'info', score: 0, title: tr('Evening sun until {until}', { until }), text: tr('Sun reaches the spot until about {until}; sunset is {set}.', { until, set }) });
   }
 
+  // sun and sky: where it sets and rises (for the tent's door and the view), the warm light, and when the sky is fully dark
+  const sky: string[] = [];
+  if (ev?.sunset && ev.sunsetAzimuth !== undefined) sky.push(tr('Sunset about {at}, direction {dir} ({deg}°).', { at: formatLocalTime(ev.sunset), dir: compassName(ev.sunsetAzimuth), deg: Math.round(ev.sunsetAzimuth) }));
+  if (sun?.sunrise && sun.sunriseAzimuth !== undefined) sky.push(tr('Sunrise about {at}, direction {dir} ({deg}°).', { at: formatLocalTime(sun.sunrise), dir: compassName(sun.sunriseAzimuth), deg: Math.round(sun.sunriseAzimuth) }));
+  if (ev?.goldenFrom && ev.sunset) sky.push(tr('Warm, low light from about {from} until sunset.', { from: formatLocalTime(ev.goldenFrom) }));
+  if (ev?.darkFrom && sun?.darkUntil) sky.push(tr('The sky is fully dark (no twilight left) from about {from} to {to}.', { from: formatLocalTime(ev.darkFrom), to: formatLocalTime(sun.darkUntil) }));
+  if (sky.length) f.push({ tone: 'info', score: 0, title: tr('Sunset and darkness'), text: sky.join(' ') + ' ' + tr('Sun times are for a flat horizon; mountains around make sunset earlier and sunrise later.') });
+
   // moon: information about the night sky, it does not change the score
   const mo = input.moon;
   if (mo) {

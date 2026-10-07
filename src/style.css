@@ -480,3 +480,8 @@ button { font: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* where to sleep instead, and the link to a hut's SAC page */
+.campsite-line { margin: 8px 0 0; font-size: .85rem; line-height: 1.4; color: var(--muted); }
+.hut-link { display: block; flex-basis: 100%; margin-top: 4px; font-size: .82rem; color: var(--green); }
+@media (prefers-color-scheme: dark) { .hut-link { color: #8fd1a8; } }

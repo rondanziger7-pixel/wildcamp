@@ -1066,6 +1066,16 @@ export const DE: Record<string, string> = {
   "Problem": "Problem",
   "Caution": "Achtung",
   "Result": "Ergebnis",
+  "Campsite": "Campingplatz",
+  "Caravan site": "Stellplatz für Wohnwagen",
+  "Official campsites nearby: {list}. The map shows where a campsite is, not whether it is open or takes tents.": "Offizielle Campingplätze in der Nähe: {list}. Die Karte zeigt, wo ein Campingplatz liegt, nicht ob er geöffnet ist oder Zelte aufnimmt.",
+  "Sunset about {at}, direction {dir} ({deg}°).": "Sonnenuntergang gegen {at}, Richtung {dir} ({deg}°).",
+  "Sunrise about {at}, direction {dir} ({deg}°).": "Sonnenaufgang gegen {at}, Richtung {dir} ({deg}°).",
+  "Warm, low light from about {from} until sunset.": "Warmes, tiefes Licht ab etwa {from} bis Sonnenuntergang.",
+  "The sky is fully dark (no twilight left) from about {from} to {to}.": "Der Himmel ist völlig dunkel (keine Dämmerung mehr) von etwa {from} bis {to}.",
+  "Sunset and darkness": "Sonnenuntergang und Dunkelheit",
+  "Sun times are for a flat horizon; mountains around make sunset earlier and sunrise later.": "Die Sonnenzeiten gelten für einen flachen Horizont; Berge ringsum verfrühen den Sonnenuntergang und verspäten den Sonnenaufgang.",
+  "{name} on the SAC site: opening months, phone, beds": "{name} auf der SAC-Seite: Öffnungsmonate, Telefon, Schlafplätze",
 };
 
 export const FR: Record<string, string> = {
@@ -2135,6 +2145,16 @@ export const FR: Record<string, string> = {
   "Problem": "Problème",
   "Caution": "Attention",
   "Result": "Résultat",
+  "Campsite": "Camping",
+  "Caravan site": "Place pour caravanes",
+  "Official campsites nearby: {list}. The map shows where a campsite is, not whether it is open or takes tents.": "Campings officiels à proximité : {list}. La carte indique où se trouve un camping, pas s’il est ouvert ni s’il accepte les tentes.",
+  "Sunset about {at}, direction {dir} ({deg}°).": "Coucher du soleil vers {at}, direction {dir} ({deg}°).",
+  "Sunrise about {at}, direction {dir} ({deg}°).": "Lever du soleil vers {at}, direction {dir} ({deg}°).",
+  "Warm, low light from about {from} until sunset.": "Lumière chaude et basse à partir d’environ {from} jusqu’au coucher du soleil.",
+  "The sky is fully dark (no twilight left) from about {from} to {to}.": "Le ciel est complètement noir (plus de crépuscule) d’environ {from} à {to}.",
+  "Sunset and darkness": "Coucher du soleil et obscurité",
+  "Sun times are for a flat horizon; mountains around make sunset earlier and sunrise later.": "Les heures du soleil valent pour un horizon plat ; les montagnes alentour avancent le coucher et retardent le lever.",
+  "{name} on the SAC site: opening months, phone, beds": "{name} sur le site du CAS : mois d’ouverture, téléphone, places",
 };
 
 export const IT: Record<string, string> = {
@@ -3204,4 +3224,14 @@ export const IT: Record<string, string> = {
   "Problem": "Problema",
   "Caution": "Attenzione",
   "Result": "Risultato",
+  "Campsite": "Campeggio",
+  "Caravan site": "Area per roulotte",
+  "Official campsites nearby: {list}. The map shows where a campsite is, not whether it is open or takes tents.": "Campeggi ufficiali nelle vicinanze: {list}. La mappa indica dove si trova un campeggio, non se è aperto o se accetta tende.",
+  "Sunset about {at}, direction {dir} ({deg}°).": "Tramonto verso le {at}, direzione {dir} ({deg}°).",
+  "Sunrise about {at}, direction {dir} ({deg}°).": "Alba verso le {at}, direzione {dir} ({deg}°).",
+  "Warm, low light from about {from} until sunset.": "Luce calda e radente da circa le {from} fino al tramonto.",
+  "The sky is fully dark (no twilight left) from about {from} to {to}.": "Il cielo è completamente buio (niente più crepuscolo) da circa le {from} alle {to}.",
+  "Sunset and darkness": "Tramonto e buio",
+  "Sun times are for a flat horizon; mountains around make sunset earlier and sunrise later.": "Gli orari del sole valgono per un orizzonte piatto; le montagne intorno anticipano il tramonto e ritardano l’alba.",
+  "{name} on the SAC site: opening months, phone, beds": "{name} sul sito del CAS: mesi di apertura, telefono, posti letto",
 };

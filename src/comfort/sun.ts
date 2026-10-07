@@ -22,6 +22,8 @@ export function solarPosition(date: Date, lat: number, lon: number): { azimuth: 
 }
 
 const REFRACTION = -0.833; // standard sunrise/sunset altitude
+const GOLDEN = 6; // the sun this high or lower gives the warm, low light of the "golden hour"
+const DARK = -18; // astronomical twilight ends: the sky is fully dark
 
 export interface SunTimes {
   /** Sunrise and sunset with a flat horizon. */
@@ -30,6 +32,15 @@ export interface SunTimes {
   /** First and last sun at the spot once the terrain horizon is applied. */
   sunOnSpot?: Date;
   sunLeavesSpot?: Date;
+  /** Compass bearings of the sun at sunrise and at sunset (degrees clockwise from north). */
+  sunriseAzimuth?: number;
+  sunsetAzimuth?: number;
+  /** Evening: the sun drops below 6 degrees above a flat horizon, the start of the warm, low light. */
+  goldenFrom?: Date;
+  /** The sun is more than 18 degrees below the horizon (no twilight left in the sky): from this evening time ... */
+  darkFrom?: Date;
+  /** ... and until this morning time of the same calendar day. */
+  darkUntil?: Date;
 }
 
 /** Sun times around the day containing `day`, scanned every 2 minutes from 12 h before to 12 h after local solar noon. `horizon` is the 8-bearing horizon angle list, or undefined for a flat horizon. */
@@ -39,13 +50,26 @@ export function sunTimes(day: Date, lat: number, lon: number, horizon?: number[]
   const out: SunTimes = {};
   let prevFlat = false;
   let prevTerrain = false;
+  let prevEl: number | undefined;
   for (let t = noon - 12 * 3600000; t <= noon + 12 * 3600000; t += 120000) {
     const date = new Date(t);
     const { azimuth, elevation } = solarPosition(date, lat, lon);
+    if (prevEl !== undefined) {
+      if (prevEl > GOLDEN && elevation <= GOLDEN && !out.goldenFrom) out.goldenFrom = date;
+      if (prevEl > DARK && elevation <= DARK) out.darkFrom = date;
+      if (prevEl <= DARK && elevation > DARK && !out.darkUntil) out.darkUntil = date;
+    }
+    prevEl = elevation;
     const flat = elevation > REFRACTION;
     const terr = flat && (!horizon || elevation > Math.max(horizonToward(horizon, azimuth), REFRACTION));
-    if (flat && !prevFlat && !out.sunrise) out.sunrise = date;
-    if (!flat && prevFlat) out.sunset = date;
+    if (flat && !prevFlat && !out.sunrise) {
+      out.sunrise = date;
+      out.sunriseAzimuth = azimuth;
+    }
+    if (!flat && prevFlat) {
+      out.sunset = date;
+      out.sunsetAzimuth = azimuth;
+    }
     if (terr && !prevTerrain && !out.sunOnSpot) out.sunOnSpot = date;
     if (!terr && prevTerrain) out.sunLeavesSpot = date;
     prevFlat = flat;

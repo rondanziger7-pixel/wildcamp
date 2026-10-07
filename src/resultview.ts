@@ -138,11 +138,15 @@ export interface ResultUi {
   setSleepUnavailable(why: string): void;
   setWater(w: WaterInfo | undefined, failed?: boolean): void;
   setShelter(r: ShelterResult | undefined, failed?: boolean): void;
+  /** The SAC portal page of the hut named in the hut chip (opening months, phone, beds), when swisstopo's winter-accommodation layer has one. */
+  setHutLink(link: { name: string; url: string } | undefined): void;
   setWeatherChip(night: Night | undefined, nightLabel: string, failed?: boolean): void;
   /** The avalanche chip; shown only while a bulletin covers the spot (or could not be fetched). */
   setAvalanche(a: AvalancheInfo | undefined, failed?: boolean): void;
   /** Fire and drone rules, shown under the legality details; they do not change the camping verdict. */
   setRules(r: Restrictions | undefined): void;
+  /** Where to sleep instead: the nearest official campsites, as one line (shown on the first view when the spot is not allowed or doubtful). */
+  setCampsites(line: string | undefined): void;
   /** A hut, inn or alp right next to the spot: a note in the legality details (and "likely OK" becomes "caution"). */
   setNearBuilding(n: NearBuildingNote | undefined): void;
   /** A new verdict for the same spot (another date, or bundled data that arrived late). */
@@ -292,7 +296,17 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     seasonsHost.replaceChildren(...(seasons ? [seasons] : []));
     paintTotal();
     paintAlerts();
+    paintCampsites();
   };
+  // where to sleep instead, only for a spot that is not allowed or doubtful
+  const campsiteHost = el('p', 'campsite-line');
+  let campsiteText: string | undefined;
+  const paintCampsites = () => {
+    const v = shown().verdict;
+    campsiteHost.textContent = campsiteText ?? '';
+    campsiteHost.hidden = inDetails || !campsiteText || (v !== 'no' && v !== 'caution');
+  };
+  campsiteHost.hidden = true;
   // dangers on the first view: steep ground, a storm tonight, avalanche danger, a fire ban, a ban zone a few metres away ...
   const alertsHost = el('ul', 'alerts');
   let hazardInput: { comfort?: Comfort; fire?: Restrictions['fire']; dogs?: DogArea[]; date?: Date; soon?: Night } = {};
@@ -393,7 +407,11 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   // water and hut sit at the top of the sleep details, the avalanche line at the top of the weather details; the weather
   // card already says what the weather chip said, so that chip is not shown
   const nearby = el('div', 'chips');
-  nearby.append(waterChip, shelterChip);
+  const hutLinkEl = el('a', 'hut-link');
+  hutLinkEl.hidden = true;
+  hutLinkEl.target = '_blank';
+  hutLinkEl.rel = 'noopener';
+  nearby.append(waterChip, shelterChip, hutLinkEl);
 
   const legalPanel = el('section', 'panel legal');
   legalPanel.hidden = true;
@@ -419,6 +437,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     alertsHost.hidden = on || alertsHost.childElementCount === 0;
     scores.hidden = backBtn.hidden = !on;
     inDetails = on;
+    paintCampsites();
     syncRetry();
     if (!on) {
       for (const p of panels) p.hidden = true;
@@ -457,7 +476,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
   jump(shelterChip, () => hutAt);
 
   paintLegal();
-  root.replaceChildren(where, nightHost, total.b, reasonLine, alertsHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
+  root.replaceChildren(where, nightHost, total.b, reasonLine, alertsHost, campsiteHost, retryTop, backBtn, scores, legalPanel, sleepPanel, weatherPanel);
 
   const markSleepUnavailable = (why: string) => {
     sleep.set({ tone: 'none' }, tr('Unavailable'));
@@ -560,6 +579,12 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
         shelterChip.classList.add('far');
       }
     },
+    setHutLink(link) {
+      hutLinkEl.hidden = !link;
+      if (!link) return;
+      hutLinkEl.href = link.url;
+      hutLinkEl.textContent = '↗ ' + tr('{name} on the SAC site: opening months, phone, beds', { name: link.name });
+    },
     setNearBuilding(note) {
       near = note;
       paintLegal();
@@ -567,6 +592,10 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     setAssessment(next) {
       a = next;
       paintLegal();
+    },
+    setCampsites(line) {
+      campsiteText = line;
+      paintCampsites();
     },
     setNights(p) {
       nightsState = p;

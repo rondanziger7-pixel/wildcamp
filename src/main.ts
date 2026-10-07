@@ -26,6 +26,7 @@ import { fetchGround, type GroundInfo } from './comfort/ground';
 import { MAX_SAVED_TILES, MAX_TILES, addArea, megabytes, planCorridor, planSpots, planTiles, registerOffline, saveShell, saveTiles, savedTileCount, tileUrl, type TilePlan } from './offline';
 import { listenInstall, renderSettings } from './settingsview';
 import { announce } from './a11y';
+import { campsiteLine, loadCampsites, nearestCampsites, type CampsiteList } from './campsites';
 import { MAX_SAVED, defaultName, importSpots, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateLegality, updateSnapshot, updateSpot, verdictLabel, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
 import { CANDIDATE_RADIUS_M, FINDER_RADII, elevationRadiusFor, fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, separationFor, withWater, zAt } from './finder';
@@ -43,6 +44,7 @@ import { renderTrip } from './tripview';
 import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
 import { fetchNearShelters } from './comfort/shelters';
+import { fetchHutLink } from './comfort/hutlink';
 import { applyNearBuilding, nearBuildingNote } from './comfort/nearbuilding';
 import { el, renderOutside, renderResult, type ResultUi } from './resultview';
 import { fetchSurroundings, type Surroundings } from './comfort/surroundings';
@@ -263,6 +265,9 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       if (key === 'water') ui.setWater(failed.water ? undefined : got.water, failed.water);
       else if (key === 'shelter') {
         ui.setShelter(failed.shelter ? undefined : got.shelters, failed.shelter);
+        // the hut the chip names (the first hut or bivouac), when it is a hut: its SAC page, if swisstopo's winter list has one
+        const named = got.shelters?.shelters.find((x) => x.kind === 'hut' || x.kind === 'biwak');
+        if (named?.kind === 'hut' && !failed.shelter) void fetchHutLink(named.at, getLang()).then((l) => id === checkId && ui.setHutLink(l), () => undefined);
         if (got.shelters) ui.setNearBuilding(nearBuildingNote(got.shelters));
       } else if (key === 'avalanche') ui.setAvalanche(failed.avalanche ? undefined : got.avalanche, failed.avalanche);
       else if (key === 'rules') ui.setRules(failed.rules ? { failed: ['fire', 'drones'] } : got.rules);
@@ -447,6 +452,10 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
   result.append(actions, more, sosLink());
   sheet.scrollTop = 0;
+  // where to sleep instead (shown only when the spot is not allowed or doubtful)
+  void ensureCampsites().then((list) => {
+    if (list && id === checkId) ui.setCampsites(campsiteLine(nearestCampsites(list, lat, lng)));
+  });
   void loadDetails(ui, lat, lng, elevation, id, tappedAt, { onNight }).then(() => {
     // a spot saved while the checks were still running keeps the final scores, not the early ones
     if (id === checkId && isSaved(store, sid)) updateSnapshot(store, sid, ui.snapshot());
@@ -801,9 +810,27 @@ function reassessRoute() {
   r.report = reportForDates(r.inputs, data, base.map((s) => ({ fromM: s.fromM, toM: s.toM, date: noon(addDays(r.date, s.n - 1)) })));
 }
 
+/** The campsite list, loaded the first time a page wants it (a few kilobytes; undefined when it could not be loaded). */
+let campsiteData: CampsiteList | undefined;
+function ensureCampsites(): Promise<CampsiteList | undefined> {
+  return loadCampsites(import.meta.env.BASE_URL).then(
+    (l) => (campsiteData = l),
+    () => undefined,
+  );
+}
+
 function routeState(): RouteViewState | undefined {
   const r = route;
   if (!r) return undefined;
+  const stages = stageInfos(r.points, r.stageKm, r.report, r.inputs?.samples);
+  const campsites: Record<number, string> = {};
+  if (campsiteData) {
+    for (const s of stages) {
+      if (!s.endCell || s.endCell.cls === 'ok' || s.camp.moved) continue;
+      const line = campsiteLine(nearestCampsites(campsiteData, s.camp.lat, s.camp.lon));
+      if (line) campsites[s.n] = line;
+    }
+  }
   return {
     name: r.name,
     stats: routeStats(r.points, r.inputs?.samples),
@@ -813,7 +840,8 @@ function routeState(): RouteViewState | undefined {
     status: r.status,
     progress: r.progress,
     report: r.report,
-    stages: stageInfos(r.points, r.stageKm, r.report, r.inputs?.samples),
+    stages,
+    campsites,
   };
 }
 
@@ -900,6 +928,7 @@ function showRoute() {
   if (!route) restoreRoute(true);
   else if (!route.inputs && !route.abort) void checkRoute(); // restored at start, not checked yet
   renderRouteNow();
+  if (!campsiteData) void ensureCampsites().then((l) => l && inRoutePage() && renderRouteNow());
 }
 
 /** The route kept from the last visit (the line only; the check is made again). */
@@ -1083,7 +1112,12 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
     }, () => undefined);
     const wider = FINDER_RADII.find((r) => r > radius);
     const offer = wider ? { label: tr('Look within {radius}', { radius: radiusText(wider) }), run: () => void findBest(lat, lng, { ...opts, radiusM: wider }) } : undefined;
-    if (!cands.length) return ui.update([], tr('No suitable flat ground found within about {radius} (steep, glacier, water or built-up). Try another place.', { radius: radiusText(radius) }), true, offer);
+    if (!cands.length) {
+      const sites = await withTimeout(ensureCampsites(), 4000).catch(() => undefined);
+      if (gone()) return;
+      const line = sites ? campsiteLine(nearestCampsites(sites, lat, lng)) : undefined;
+      return ui.update([], tr('No suitable flat ground found within about {radius} (steep, glacier, water or built-up). Try another place.', { radius: radiusText(radius) }) + (line ? ' ' + line : ''), true, offer);
+    }
 
     const rows: FinderRow[] = cands.map((c) => ({ candidate: c, sleep: sleepScore(c.comfort), note: finderNote(c, undefined, false), waterDone: false }));
     let hidden = 0;

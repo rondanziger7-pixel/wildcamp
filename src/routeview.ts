@@ -20,6 +20,8 @@ export interface RouteViewState {
   stages: StageInfo[];
   /** Spots lookups were made for the page (the route checked at all): false when the line is not in Switzerland. */
   outside?: boolean;
+  /** For a day that has no place to sleep within reach: the nearest official campsites, as a line, by day number. */
+  campsites?: Record<number, string>;
 }
 
 export interface RouteHandlers {
@@ -139,7 +141,7 @@ function municipalRows(report: RouteReport): HTMLElement | undefined {
   return box;
 }
 
-function stageRow(s: StageInfo, h: RouteHandlers): HTMLElement {
+function stageRow(s: StageInfo, h: RouteHandlers, campsites?: string): HTMLElement {
   const li = el('li', 'plan-row route-stage');
   const head = el('div', 'finder-head');
   head.append(el('span', 'finder-num', String(s.n)), el('strong', undefined, tr('Day {n}', { n: s.n })));
@@ -155,6 +157,7 @@ function stageRow(s: StageInfo, h: RouteHandlers): HTMLElement {
       } else if (s.camp.blocked) line += ' ' + tr('Camping is not allowed anywhere within about {km} km of it along the route. Plan the day shorter or longer.', { km: 3 });
     }
     li.append(el('p', `finder-note stage-end ${c.cls}`, line));
+    if (campsites && c.cls !== 'ok' && !s.camp.moved) li.append(el('p', 'finder-note', campsites));
   }
   const buttons = el('div', 'stage-buttons');
   const show = el('button', 'save-btn', tr('Show on the map'));
@@ -248,7 +251,7 @@ export function renderRoute(root: HTMLElement, state: RouteViewState | undefined
   if (state.stages.length && !(state.report && state.report.outsideShare >= 0.95)) {
     parts.push(el('h3', 'trip-h3', tr(state.stages.length === 1 ? '{n} day' : '{n} days', { n: state.stages.length })));
     const list = el('ol', 'plan-list');
-    list.append(...state.stages.map((s) => stageRow(s, h)));
+    list.append(...state.stages.map((s) => stageRow(s, h, state.campsites?.[s.n])));
     parts.push(list);
     const plan = el('button', 'finder-btn', tr('Plan the nights with these camps'));
     plan.type = 'button';

@@ -111,6 +111,39 @@ describe('sun position and times against an independent library (astral)', () =>
     expect(p.azimuth).toBeCloseTo(134.94, 0);
     expect(p.elevation).toBeCloseTo(60.61, 0);
   });
+  it('gives the bearing of sunrise and sunset, the warm light and the dark hours (reference: astral)', () => {
+    const z = sunTimes(new Date('2026-10-04T12:00:00Z'), 47.3769, 8.5417);
+    expect(z.sunriseAzimuth).toBeCloseTo(95.6, 0);
+    expect(z.sunsetAzimuth).toBeCloseTo(264.1, 0);
+    near(z.goldenFrom, '18:19', 2);
+    near(z.darkFrom, '20:41', 3);
+    near(z.darkUntil, '05:46', 3);
+    // midsummer: the sun sets and rises far to the north, and the sky is dark for under three hours
+    const s = sunTimes(new Date('2026-06-21T12:00:00Z'), 46.02, 7.75);
+    expect(s.sunriseAzimuth).toBeCloseTo(54.0, 0);
+    expect(s.sunsetAzimuth).toBeCloseTo(305.9, 0);
+    near(s.goldenFrom, '20:38', 2);
+    near(s.darkFrom, '00:07', 4);
+    near(s.darkUntil, '02:53', 4);
+    // midwinter: south of the east-west line
+    const w = sunTimes(new Date('2026-12-21T12:00:00Z'), 46.0, 8.95);
+    expect(w.sunriseAzimuth).toBeCloseTo(123.9, 0);
+    expect(w.sunsetAzimuth).toBeCloseTo(236.1, 0);
+    near(w.darkFrom, '18:30', 3);
+    near(w.darkUntil, '06:13', 3);
+  });
+  it('shows the sun and sky in the sleep details, with the flat-horizon caveat', () => {
+    const sun = sunTimes(new Date('2026-10-05T12:00:00Z'), 46.5, 8.4);
+    const eveningSun = sunTimes(new Date('2026-10-04T12:00:00Z'), 46.5, 8.4);
+    const c = comfortFor({ sun, eveningSun });
+    const item = c.factors.find((f) => f.title === 'Sunset and darkness')!;
+    expect(item.tone).toBe('info');
+    expect(item.text).toMatch(/Sunset about 1[89]:\d\d, direction W/);
+    expect(item.text).toMatch(/Sunrise about 0[78]:\d\d, direction E/);
+    expect(item.text).toMatch(/fully dark/);
+    expect(item.text).toMatch(/flat horizon/);
+    expect(comfortFor({}).factors.find((f) => f.title === 'Sunset and darkness')).toBeUndefined();
+  });
   it('a mountain to the east delays the morning sun, one to the west brings the sunset forward', () => {
     const flat = sunTimes(new Date('2026-10-04T12:00:00Z'), 46.5, 8.4);
     const east = sunTimes(new Date('2026-10-04T12:00:00Z'), 46.5, 8.4, [0, 0, 20, 0, 0, 0, 0, 0]);
