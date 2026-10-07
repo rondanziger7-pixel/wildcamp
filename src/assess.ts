@@ -207,6 +207,13 @@ export function assess(input: {
     reasons.push(tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).'));
     items.push({ tone: 'info', title: tr('Not checked'), text: tr('Cantonal and municipal rules, private land and wildlife quiet zones that are not yet mapped are not checked (the federal map is incomplete: its status varies between cantons).') });
   }
+  if (verdict === 'likely_ok' || verdict === 'caution') {
+    items.push({
+      tone: 'info',
+      title: tr('If you are asked to leave'),
+      text: tr('The map cannot show who owns the ground. If the landowner, a farmer, a game warden, a ranger or the police asks you to move on or to take the tent down, do so, stay calm and polite, and ask where you may stay instead. A tent on someone\'s land without their consent is a matter for the owner (Art. 641 ZGB); for a fine, the notice names the authority to turn to.'),
+    });
+  }
   const nearZones = input.nearZones ?? [];
   for (const z of nearZones) {
     const where = z.name ? `${z.layer.label}: ${z.name}` : z.layer.label;

@@ -521,3 +521,4 @@ button { font: inherit; cursor: pointer; }
 
 /* a pasted link or a name without spaces must wrap, not push the buttons off the screen */
 .saved-row, .saved-open, .saved-note, .plan-row, .spot-note, .finder-head strong { min-width: 0; overflow-wrap: anywhere; }
+.em-warn { color: var(--warn); background: var(--warn-bg); border-radius: 8px; padding: 6px 10px; font-size: .88rem; font-weight: 600; margin: 8px 0; }

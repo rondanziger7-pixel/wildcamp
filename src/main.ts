@@ -738,7 +738,7 @@ function showEmergency() {
     spot,
     say,
     locate: async () => {
-      const pos = await bestFix(12000, 20);
+      const pos = await bestFix(12000, 50);
       showMe(pos, false);
       const here: Position = { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracyM: pos.coords.accuracy };
       // the height above sea level from the federal model when there is a connection (the phone's own altitude is not reliable)

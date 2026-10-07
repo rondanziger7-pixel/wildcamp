@@ -50,7 +50,8 @@ export function renderEmergency(root: HTMLElement, hooks: EmergencyHooks) {
     ];
     const dl = el('dl', 'em-dl');
     for (const [k, v] of rows) dl.append(el('dt', undefined, k), el('dd', undefined, v));
-    posBody.replaceChildren(el('p', 'em-source', source), dl);
+    const vague = p.accuracyM !== undefined && p.accuracyM > 100 ? [el('p', 'em-warn', tr('The fix is rough (about {m} m). Say so when you give the position, and move to open sky to improve it.', { m: Math.round(p.accuracyM / 10) * 10 }))] : [];
+    posBody.replaceChildren(el('p', 'em-source', source), ...vague, dl);
     const message = positionMessage(p);
     const copy = el('button', 'save-btn', '📋 ' + tr('Copy'));
     copy.type = 'button';

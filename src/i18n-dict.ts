@@ -1191,6 +1191,9 @@ export const DE: Record<string, string> = {
   "A municipal camping ban is reported (not verified)": "Ein Camping-Verbot der Gemeinde ist gemeldet (nicht verifiziert)",
   "and at its edge": "und am Waldrand",
   "Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)": "Jagdverordnung (im Amtsblatt Nr. 13 vom 28. März 2024 angekündigt)",
+  "If you are asked to leave": "Wenn du aufgefordert wirst zu gehen",
+  "The map cannot show who owns the ground. If the landowner, a farmer, a game warden, a ranger or the police asks you to move on or to take the tent down, do so, stay calm and polite, and ask where you may stay instead. A tent on someone's land without their consent is a matter for the owner (Art. 641 ZGB); for a fine, the notice names the authority to turn to.": "Die Karte zeigt nicht, wem der Boden gehört. Wenn der Grundeigentümer, ein Landwirt, ein Wildhüter, ein Ranger oder die Polizei dich auffordert weiterzuziehen oder das Zelt abzubauen, tu es, bleib ruhig und höflich und frag, wo du stattdessen bleiben darfst. Ein Zelt auf fremdem Boden ohne Zustimmung ist Sache des Eigentümers (Art. 641 ZGB); bei einer Busse nennt der Bescheid die zuständige Stelle.",
+  "The fix is rough (about {m} m). Say so when you give the position, and move to open sky to improve it.": "Der Standort ist ungenau (etwa {m} m). Sag das, wenn du die Position durchgibst, und geh an eine Stelle mit freiem Himmel, um ihn zu verbessern.",
 };
 
 export const FR: Record<string, string> = {
@@ -2385,6 +2388,9 @@ export const FR: Record<string, string> = {
   "A municipal camping ban is reported (not verified)": "Une interdiction communale de camper est signalée (non vérifiée)",
   "and at its edge": "et à sa lisière",
   "Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)": "Ordonnance sur la chasse (annoncée dans la Feuille officielle no 13 du 28 mars 2024)",
+  "If you are asked to leave": "Si on vous demande de partir",
+  "The map cannot show who owns the ground. If the landowner, a farmer, a game warden, a ranger or the police asks you to move on or to take the tent down, do so, stay calm and polite, and ask where you may stay instead. A tent on someone's land without their consent is a matter for the owner (Art. 641 ZGB); for a fine, the notice names the authority to turn to.": "La carte ne montre pas à qui appartient le terrain. Si le propriétaire, un agriculteur, un garde-chasse, un garde forestier ou la police vous demande de partir ou de démonter la tente, faites-le, restez calme et poli, et demandez où vous pouvez rester à la place. Une tente sur le terrain d’autrui sans son accord relève du propriétaire (art. 641 CC) ; pour une amende, l’avis indique l’autorité à contacter.",
+  "The fix is rough (about {m} m). Say so when you give the position, and move to open sky to improve it.": "La position est approximative (environ {m} m). Dites-le en donnant la position et placez-vous à ciel ouvert pour l’améliorer.",
 };
 
 export const IT: Record<string, string> = {
@@ -3579,4 +3585,7 @@ export const IT: Record<string, string> = {
   "A municipal camping ban is reported (not verified)": "È segnalato un divieto comunale di campeggio (non verificato)",
   "and at its edge": "e al suo margine",
   "Jagdverordnung (announced in the Amtsblatt Nr. 13 of 28 March 2024)": "Ordinanza sulla caccia (annunciata nel Foglio ufficiale n. 13 del 28 marzo 2024)",
+  "If you are asked to leave": "Se ti chiedono di andare via",
+  "The map cannot show who owns the ground. If the landowner, a farmer, a game warden, a ranger or the police asks you to move on or to take the tent down, do so, stay calm and polite, and ask where you may stay instead. A tent on someone's land without their consent is a matter for the owner (Art. 641 ZGB); for a fine, the notice names the authority to turn to.": "La mappa non mostra a chi appartiene il terreno. Se il proprietario, un agricoltore, un guardacaccia, un ranger o la polizia ti chiede di andare via o di smontare la tenda, fallo, mantieni la calma e la cortesia e chiedi dove puoi stare invece. Una tenda su terreno altrui senza consenso riguarda il proprietario (art. 641 CC); per una multa, l’avviso indica l’autorità a cui rivolgersi.",
+  "The fix is rough (about {m} m). Say so when you give the position, and move to open sky to improve it.": "La posizione è approssimativa (circa {m} m). Dillo quando comunichi la posizione e spostati dove il cielo è libero per migliorarla.",
 };
