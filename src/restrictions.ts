@@ -1,3 +1,4 @@
+import { fetchFloodWarnings, type FloodWarning } from './flood';
 import type { Item } from './assess';
 import { wgs84ToLv95 } from './coords';
 import { tr } from './i18n';
@@ -51,8 +52,10 @@ export interface Restrictions {
   drones?: DroneZone[];
   /** Pastures with herd-protection dogs within reach (nearest first); empty when none is reported. */
   dogs?: DogArea[];
+  /** The national flood warning for the spot's region, and for the river sections and lakes the map has there (live, for today). */
+  flood?: FloodWarning[];
   /** Which lookups failed, so a missing answer is not read as "nothing applies". */
-  failed: ('fire' | 'drones' | 'dogs')[];
+  failed: ('fire' | 'drones' | 'dogs' | 'flood')[];
 }
 
 const LEVELS: [RegExp, number][] = [
@@ -120,7 +123,7 @@ async function identify(layer: string, e: number, n: number, signal?: AbortSigna
 
 export async function fetchRestrictions(lat: number, lon: number, signal?: AbortSignal): Promise<Restrictions> {
   const { e, n } = wgs84ToLv95(lat, lon);
-  const [danger, measures, drones, dogs] = await Promise.allSettled([identify(FIRE_DANGER, e, n, signal), identify(FIRE_MEASURES, e, n, signal), identify(DRONES, e, n, signal), fetchDogAreas(lat, lon, signal)]);
+  const [danger, measures, drones, dogs, flood] = await Promise.allSettled([identify(FIRE_DANGER, e, n, signal), identify(FIRE_MEASURES, e, n, signal), identify(DRONES, e, n, signal), fetchDogAreas(lat, lon, signal), fetchFloodWarnings(e, n, signal)]);
   const out: Restrictions = { failed: [] };
   if (danger.status === 'fulfilled' || measures.status === 'fulfilled') {
     out.fire = parseFire(danger.status === 'fulfilled' ? danger.value : {}, measures.status === 'fulfilled' ? measures.value : {});
@@ -130,6 +133,8 @@ export async function fetchRestrictions(lat: number, lon: number, signal?: Abort
   else out.failed.push('drones');
   if (dogs.status === 'fulfilled') out.dogs = dogs.value;
   else out.failed.push('dogs');
+  if (flood.status === 'fulfilled') out.flood = flood.value;
+  else out.failed.push('flood');
   return out;
 }
 

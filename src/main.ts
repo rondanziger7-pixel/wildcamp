@@ -236,6 +236,9 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
       hazardsFailed: failed.hazards,
       sun: sunTimes(new Date(`${w.to.slice(0, 10)}T12:00:00Z`), lat, lng, horizon),
       eveningSun: sunTimes(new Date(`${w.day}T12:00:00Z`), lat, lng, horizon),
+      // the national flood warning is live data: it says nothing about a night weeks away
+      flood: isToday ? got.rules?.flood : undefined,
+      floodFailed: isToday && !!got.rules?.failed.includes('flood'),
       moon: moonNight(lat, lng, w),
       inForest: data.forestMask ? forestAt(data.forestMask, e, n) !== 0 : undefined,
     });

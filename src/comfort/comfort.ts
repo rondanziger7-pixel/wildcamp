@@ -5,6 +5,7 @@ import type { MoonNight } from './moon';
 import type { NoiseInfo } from './noise';
 import type { HazardInfo } from './hazards';
 import type { Coverage } from './coverage';
+import { floodFactor, type FloodWarning } from '../flood';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
@@ -67,6 +68,9 @@ export interface ComfortInput {
   eveningSun?: SunTimes;
   /** National hazard indications at the spot (flood, rockfall, landslide, debris flow). */
   hazards?: HazardInfo;
+  /** The national flood warning (BAFU) for the spot's region, today only; `floodFailed` when it could not be read. */
+  flood?: FloodWarning[];
+  floodFailed?: boolean;
   /** Modelled night-time road and rail noise. */
   noise?: NoiseInfo;
   /** The moon over the chosen night. */
@@ -129,6 +133,8 @@ export function missingText(key: string): string {
       return tr('natural hazards');
     case 'mobile coverage':
       return tr('mobile coverage');
+    case 'flood warning':
+      return tr('flood warning');
     case 'ground cover (rock or grass)':
       return tr('ground cover (rock or grass)');
     default:
@@ -414,6 +420,11 @@ export function comfortFor(input: ComfortInput): Comfort {
       else f.push({ tone: 'ok', score: 0, title: tr('Mobile signal predicted'), text: tr('The operators\' maps predict {tech} outdoors here from all three providers.', { tech }) + ' ' + note });
     } else if (hz.coverageFailed) missing.push('mobile coverage');
   } else if (input.hazardsFailed) missing.push('natural hazards');
+
+  // the national flood warning: live, today only
+  const fw = floodFactor(input.flood);
+  if (fw) f.push({ tone: fw.tone, score: fw.alert ? -1 : 0, alert: fw.alert, title: fw.title, text: fw.text, sources: fw.sources });
+  else if (input.floodFailed) missing.push('flood warning');
 
   // ground cover: what the tent sits on
   const g = input.ground;

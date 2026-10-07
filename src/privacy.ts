@@ -37,7 +37,7 @@ export function keptSummary(store: Store | undefined, today: string): KeptSummar
 /** What is sent where, when a spot is checked. `what` is in plain words for the panel. */
 export const SENT: { host: string; what: string }[] = [
   { host: 'api3.geo.admin.ch', what: 'The spot you checked: its zones, municipality, elevation, land cover and springs, from swisstopo and the federal offices. Also the text you type in the search box.' },
-  { host: 'wmts.geo.admin.ch, wms.geo.admin.ch', what: 'The map area you are looking at: map pictures, the zone layers and the mobile coverage prediction.' },
+  { host: 'wmts.geo.admin.ch, wms.geo.admin.ch', what: 'The map area you are looking at: map pictures and the zone layers. The spot you checked: the mobile coverage prediction and the flood warning.' },
   { host: 'api.open-meteo.com', what: 'The spot (to about ten metres) and its elevation: the weather forecast.' },
   { host: 'aws.slf.ch', what: 'Nothing about you: the national avalanche bulletin is downloaded whole and matched here.' },
 ];
