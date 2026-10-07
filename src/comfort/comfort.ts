@@ -4,6 +4,7 @@ import { formatLocalTime, type SunTimes } from './sun';
 import type { MoonNight } from './moon';
 import type { NoiseInfo } from './noise';
 import type { HazardInfo } from './hazards';
+import type { Coverage } from './coverage';
 import { horizonToward, type TerrainMetrics } from './terrain';
 import type { Surroundings } from './surroundings';
 import type { WaterInfo } from './water';
@@ -126,6 +127,8 @@ export function missingText(key: string): string {
       return tr('night noise');
     case 'natural hazards':
       return tr('natural hazards');
+    case 'mobile coverage':
+      return tr('mobile coverage');
     case 'ground cover (rock or grass)':
       return tr('ground cover (rock or grass)');
     default:
@@ -400,6 +403,16 @@ export function comfortFor(input: ComfortInput): Comfort {
     if (has('landslide')) f.push({ tone: 'info', score: 0, title: tr('In a landslide-prone area'), text: tr('A national indication map marks this area as prone to shallow landslides, mainly after long rain or snowmelt on steep slopes. Avoid camping on or under steep wet slopes in bad weather.') + src });
     if (has('debris')) f.push({ tone: 'info', score: 0, title: tr('In a debris-flow area'), text: tr('A national indication map marks this area as reachable by debris flows (mud and rock surging down a gully after heavy rain). Do not camp in or at the mouth of a gully or stream channel when heavy rain is forecast.') + src });
     if (hz.failed.length) missing.push('natural hazards');
+    // mobile coverage (BAKOM prediction): a safety note, no effect on the score
+    if (hz.coverage) {
+      const rank = (c: Coverage) => (c === 'all' ? 2 : c === 'some' ? 1 : 0);
+      const level = Math.max(rank(hz.coverage.g4), rank(hz.coverage.g5));
+      const tech = [hz.coverage.g4, hz.coverage.g5].map((c, i) => (rank(c) === level ? (i === 0 ? '4G' : '5G') : '')).filter(Boolean).join(' / ');
+      const note = tr('It is an operators\' prediction for outdoors, not a measurement: a hollow, a forest or a tent can still be a dead spot.');
+      if (level === 0) f.push({ tone: 'warn', score: 0, alert: true, title: tr('No mobile signal predicted'), text: tr('The operators\' coverage maps predict no 4G or 5G outdoors here. The prediction can be wrong either way (valley shadow, ridges), but plan as if you could not call for help: tell someone where you are going and when you will be back. The Emergency page in the menu says what to do without a signal.') });
+      else if (level === 1) f.push({ tone: 'info', score: 0, title: tr('Mobile signal possible'), text: tr('The operators\' maps predict {tech} outdoors here from some, not all, of the three providers.', { tech }) + ' ' + note });
+      else f.push({ tone: 'ok', score: 0, title: tr('Mobile signal predicted'), text: tr('The operators\' maps predict {tech} outdoors here from all three providers.', { tech }) + ' ' + note });
+    } else if (hz.coverageFailed) missing.push('mobile coverage');
   } else if (input.hazardsFailed) missing.push('natural hazards');
 
   // ground cover: what the tent sits on

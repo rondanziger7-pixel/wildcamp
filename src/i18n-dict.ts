@@ -1007,6 +1007,14 @@ export const DE: Record<string, string> = {
   "No hunting on Sundays; in October and November not on Tuesday, Thursday and Friday during the day (with exceptions).": "Sonntags wird nicht gejagt; im Oktober und November tagsüber nicht am Dienstag, Donnerstag und Freitag (mit Ausnahmen).",
   "No hunting on Mondays and Fridays (with exceptions).": "Montags und freitags wird nicht gejagt (mit Ausnahmen).",
   "Hunting is allowed on Mondays, Tuesdays, Thursdays and Fridays.": "Gejagt werden darf montags, dienstags, donnerstags und freitags.",
+  "mobile coverage": "Mobilfunkabdeckung",
+  "It is an operators' prediction for outdoors, not a measurement: a hollow, a forest or a tent can still be a dead spot.": "Es ist eine Prognose der Netzbetreiber für draussen, keine Messung: Eine Mulde, ein Wald oder ein Zelt kann trotzdem ein Funkloch sein.",
+  "No mobile signal predicted": "Kein Mobilfunksignal vorhergesagt",
+  "The operators' coverage maps predict no 4G or 5G outdoors here. The prediction can be wrong either way (valley shadow, ridges), but plan as if you could not call for help: tell someone where you are going and when you will be back. The Emergency page in the menu says what to do without a signal.": "Die Abdeckungskarten der Netzbetreiber sagen hier draussen kein 4G oder 5G voraus. Die Prognose kann in beide Richtungen falsch sein (Talschatten, Grate), aber planen Sie so, als könnten Sie keine Hilfe rufen: Sagen Sie jemandem, wohin Sie gehen und wann Sie zurück sind. Die Notfallseite im Menü sagt, was ohne Signal zu tun ist.",
+  "Mobile signal possible": "Mobilfunksignal möglich",
+  "The operators' maps predict {tech} outdoors here from some, not all, of the three providers.": "Die Karten der Netzbetreiber sagen hier draussen {tech} von einigen, nicht allen der drei Anbieter voraus.",
+  "Mobile signal predicted": "Mobilfunksignal vorhergesagt",
+  "The operators' maps predict {tech} outdoors here from all three providers.": "Die Karten der Netzbetreiber sagen hier draussen {tech} von allen drei Anbietern voraus.",
 };
 
 export const FR: Record<string, string> = {
@@ -2017,6 +2025,14 @@ export const FR: Record<string, string> = {
   "No hunting on Sundays; in October and November not on Tuesday, Thursday and Friday during the day (with exceptions).": "Pas de chasse le dimanche ; en octobre et novembre, pas de chasse de jour le mardi, le jeudi et le vendredi (avec des exceptions).",
   "No hunting on Mondays and Fridays (with exceptions).": "Pas de chasse le lundi et le vendredi (avec des exceptions).",
   "Hunting is allowed on Mondays, Tuesdays, Thursdays and Fridays.": "La chasse est autorisée le lundi, le mardi, le jeudi et le vendredi.",
+  "mobile coverage": "couverture mobile",
+  "It is an operators' prediction for outdoors, not a measurement: a hollow, a forest or a tent can still be a dead spot.": "C'est une prévision des opérateurs pour l'extérieur, pas une mesure : une cuvette, une forêt ou une tente peut quand même être une zone blanche.",
+  "No mobile signal predicted": "Pas de signal mobile prévu",
+  "The operators' coverage maps predict no 4G or 5G outdoors here. The prediction can be wrong either way (valley shadow, ridges), but plan as if you could not call for help: tell someone where you are going and when you will be back. The Emergency page in the menu says what to do without a signal.": "Les cartes de couverture des opérateurs ne prévoient ici ni 4G ni 5G à l'extérieur. La prévision peut se tromper dans les deux sens (ombre de vallée, crêtes), mais planifiez comme si vous ne pouviez pas appeler à l'aide : dites à quelqu'un où vous allez et quand vous serez de retour. La page Urgence du menu explique quoi faire sans signal.",
+  "Mobile signal possible": "Signal mobile possible",
+  "The operators' maps predict {tech} outdoors here from some, not all, of the three providers.": "Les cartes des opérateurs prévoient ici {tech} à l'extérieur de la part de certains, pas de tous, des trois fournisseurs.",
+  "Mobile signal predicted": "Signal mobile prévu",
+  "The operators' maps predict {tech} outdoors here from all three providers.": "Les cartes des opérateurs prévoient ici {tech} à l'extérieur de la part des trois fournisseurs.",
 };
 
 export const IT: Record<string, string> = {
@@ -3027,4 +3043,12 @@ export const IT: Record<string, string> = {
   "No hunting on Sundays; in October and November not on Tuesday, Thursday and Friday during the day (with exceptions).": "Non si caccia la domenica; in ottobre e novembre di giorno non il martedì, il giovedì e il venerdì (con eccezioni).",
   "No hunting on Mondays and Fridays (with exceptions).": "Non si caccia il lunedì e il venerdì (con eccezioni).",
   "Hunting is allowed on Mondays, Tuesdays, Thursdays and Fridays.": "Si può cacciare il lunedì, il martedì, il giovedì e il venerdì.",
+  "mobile coverage": "copertura mobile",
+  "It is an operators' prediction for outdoors, not a measurement: a hollow, a forest or a tent can still be a dead spot.": "È una previsione degli operatori per l'esterno, non una misurazione: una conca, un bosco o una tenda può comunque essere una zona senza segnale.",
+  "No mobile signal predicted": "Nessun segnale mobile previsto",
+  "The operators' coverage maps predict no 4G or 5G outdoors here. The prediction can be wrong either way (valley shadow, ridges), but plan as if you could not call for help: tell someone where you are going and when you will be back. The Emergency page in the menu says what to do without a signal.": "Le carte di copertura degli operatori non prevedono qui all'aperto né 4G né 5G. La previsione può sbagliare in entrambi i sensi (ombra di valle, creste), ma pianifica come se non potessi chiamare aiuto: di' a qualcuno dove vai e quando torni. La pagina Emergenza nel menu spiega cosa fare senza segnale.",
+  "Mobile signal possible": "Segnale mobile possibile",
+  "The operators' maps predict {tech} outdoors here from some, not all, of the three providers.": "Le carte degli operatori prevedono qui all'aperto {tech} da alcuni, non da tutti, i tre fornitori.",
+  "Mobile signal predicted": "Segnale mobile previsto",
+  "The operators' maps predict {tech} outdoors here from all three providers.": "Le carte degli operatori prevedono qui all'aperto {tech} da tutti e tre i fornitori.",
 };
