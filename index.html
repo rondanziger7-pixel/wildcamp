@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1f4d36" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Wildcamp" />
+    <meta name="description" content="Check whether a spot in Switzerland is likely legal for wild camping: treeline, protected zones, cantonal rules." />
+    <title>Wildcamp CH</title>
+    <script>
+      // Start fetching the first view's base-map tiles now, before the app's JavaScript has loaded and parsed, so they
+      // are already in flight (or cached) when the map asks for them. Same tile maths as the map; a miss costs nothing.
+      (function () {
+        try {
+          var h = location.hash.slice(1).split(',').map(Number);
+          var ok = h.length >= 2 && isFinite(h[0]) && isFinite(h[1]);
+          var lat = ok ? h[0] : 46.8, lon = ok ? h[1] : 8.2, z = ok ? Math.round(h[2]) || 14 : 8;
+          var n = Math.pow(2, z), lr = (lat * Math.PI) / 180;
+          var px = ((lon + 180) / 360) * n * 256;
+          var py = ((1 - Math.log(Math.tan(lr) + 1 / Math.cos(lr)) / Math.PI) / 2) * n * 256;
+          var w = innerWidth, hgt = innerHeight, count = 0;
+          for (var x = Math.floor((px - w / 2) / 256); x <= Math.floor((px + w / 2) / 256); x++) {
+            for (var y = Math.floor((py - hgt / 2) / 256); y <= Math.floor((py + hgt / 2) / 256); y++) {
+              if (count++ >= 30 || x < 0 || y < 0 || x >= n || y >= n) continue;
+              var l = document.createElement('link');
+              l.rel = 'preload';
+              l.as = 'image';
+              l.href = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/' + z + '/' + x + '/' + y + '.jpeg';
+              document.head.appendChild(l);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <!-- map images are plain <img> requests, which use a different connection than CORS requests: preconnect both ways -->
+    <link rel="preconnect" href="https://wmts.geo.admin.ch" />
+    <link rel="preconnect" href="https://wmts.geo.admin.ch" crossorigin />
+    <link rel="preconnect" href="https://wms.geo.admin.ch" />
+    <link rel="dns-prefetch" href="https://api3.geo.admin.ch" />
+    <script type="module" crossorigin src="./assets/index-BqGcgzsj.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Dkz67uCy.css">
+  </head>
+  <body>
+    <div id="map" role="region" aria-roledescription="map"></div>
+    <div id="crosshair" aria-hidden="true"></div>
+
+    <header id="topbar">
+      <form id="search" role="search" autocomplete="off">
+        <input id="q" type="search" placeholder="Search a place or peak…" aria-label="Search a place" data-i18n-attr="placeholder,aria-label" />
+        <button type="button" id="locate" title="Use my location" aria-label="Use my location" data-i18n-attr="title,aria-label">◎</button>
+        <ul id="suggest" hidden></ul>
+      </form>
+    </header>
+
+    <section id="legend" role="dialog" aria-labelledby="legend-title" hidden>
+      <div class="panel-head"><h2 id="legend-title" data-i18n>Map layers</h2><button id="layers-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
+      <label><input type="checkbox" id="toggle-trails" checked /> <span data-i18n>Hiking trails</span></label>
+      <ul class="swatches">
+        <li><i style="background:#f2c200"></i> <span data-i18n>Hiking trail</span></li>
+        <li><i style="background:#e02020"></i> <span data-i18n>Mountain trail</span></li>
+        <li><i style="background:#1f3fe0"></i> <span data-i18n>Alpine trail</span></li>
+      </ul>
+      <label><input type="checkbox" id="toggle-slope" /> <span data-i18n>Steep slopes over 30° (avalanche terrain)</span></label>
+      <p data-i18n>Orange-red shading marks slopes of 30° or more (swisstopo, 10 m model). Avalanches release on slopes from about 30°, so keep the tent away from them and from the runout below them.</p>
+      <label><input type="checkbox" id="toggle-saved" checked /> <span data-i18n>Saved spots</span></label>
+      <label><input type="checkbox" id="toggle-zones" checked /> <span data-i18n>Restricted zones</span></label>
+      <p data-i18n>Colours come from the source layers (federal hunting reserves, wildlife quiet zones, floodplains, bogs and more). A coloured area is not always a ban: tap the spot to see what applies.</p>
+      <p data-i18n>Cantonal reserve data (BE, TI, VS, GE, GL, FR, LU, SO, JU) is checked when you tap a spot but is not drawn on the map.</p>
+    </section>
+    <section id="settings" class="panel" role="dialog" aria-labelledby="settings-title" hidden>
+      <div class="panel-head"><h2 id="settings-title" data-i18n>Settings</h2><button id="settings-close" type="button" aria-label="Close" data-i18n-attr="aria-label">✕</button></div>
+      <label class="lang-row"><span data-i18n>Language</span> <select id="lang-select" aria-label="Language" data-i18n-attr="aria-label"></select></label>
+      <p class="lang-note" data-i18n>The interface and the summaries of cantonal and municipal rules are translated. Quotations from the laws stay in their original language.</p>
+      <div id="settings-more"></div>
+    </section>
+
+    <div id="offline-banner" role="status" data-i18n hidden>Offline: the saved map and bundled data still work. Zone, canton, water and weather lookups need a connection, so results are incomplete.</div>
+    <div id="toast" role="status" hidden></div>
+    <div id="announce" class="sr-only" role="status" aria-live="polite"></div>
+    <div id="update-bar" role="status" hidden>
+      <span data-i18n>A new version of the app is ready.</span>
+      <button type="button" id="update-reload" data-i18n>Reload</button>
+      <button type="button" id="update-later" aria-label="Not now" data-i18n-attr="aria-label">✕</button>
+    </div>
+
+    <aside id="sheet" data-state="intro" aria-label="Result" data-i18n-attr="aria-label">
+      <div id="grab" aria-hidden="true"></div>
+      <button id="sheet-close" type="button" aria-label="Close panel" data-i18n-attr="aria-label">✕</button>
+      <div id="intro">
+        <div class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30"><path d="M12 4L3 19h18L12 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 4v15M12 19l-3.5-5.5M12 19l3.5-5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h1 data-i18n>Can I camp here?</h1>
+        <p data-i18n>Tap the map to check a spot, or search for a place.</p>
+      </div>
+      <div id="result" hidden></div>
+      <details class="about">
+        <summary data-i18n>Guidance only, not legal advice.</summary>
+        <p data-i18n>Wild camping rules are set by cantons and municipalities and change. Check local rules and respect private land.</p>
+      </details>
+    </aside>
+  </body>
+</html>
