@@ -504,3 +504,7 @@ button { font: inherit; cursor: pointer; }
 /* paper only: the note at the end of a printed trip */
 .print-only { display: none; }
 @media print { .print-only { display: block; margin-top: 14px; padding-top: 8px; border-top: 1px solid #999; font-size: 9pt; } }
+
+/* long titles wrap instead of being clipped, and a wide comparison scrolls sideways */
+.check h3 { overflow-wrap: anywhere; }
+.compare-wrap { overflow-x: auto; max-width: 100%; }

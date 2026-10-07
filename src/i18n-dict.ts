@@ -1179,6 +1179,7 @@ export const DE: Record<string, string> = {
   "ski lift": "Skilift",
   "rack railway": "Zahnradbahn",
   "Herd-protection dogs on this pasture": "Herdenschutzhunde auf dieser Weide",
+  "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "Die Sonderjagd auf Hirsch und Reh findet je nach Region nur mittwochs, samstags und sonntags statt.",
 };
 
 export const FR: Record<string, string> = {
@@ -2361,6 +2362,7 @@ export const FR: Record<string, string> = {
   "ski lift": "remonte-pente",
   "rack railway": "chemin de fer à crémaillère",
   "Herd-protection dogs on this pasture": "Chiens de protection des troupeaux sur ce pâturage",
+  "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "La chasse spéciale au cerf et au chevreuil n’a lieu que les mercredis, samedis et dimanches, selon la région.",
 };
 
 export const IT: Record<string, string> = {
@@ -3543,4 +3545,5 @@ export const IT: Record<string, string> = {
   "ski lift": "sciovia",
   "rack railway": "ferrovia a cremagliera",
   "Herd-protection dogs on this pasture": "Cani da protezione del bestiame su questo pascolo",
+  "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "La caccia speciale al cervo e al capriolo si svolge solo il mercoledì, il sabato e la domenica, a seconda della regione.",
 };

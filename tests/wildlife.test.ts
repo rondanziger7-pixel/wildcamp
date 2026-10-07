@@ -219,3 +219,14 @@ describe('the first-view alert', () => {
     expect(buildAlerts({ dogs: [area(300, 'ganze Jahr')], date: d(2026, 7, 20) })).toEqual([]);
   });
 });
+
+describe('the hunting day notes are translated', () => {
+  it('every canton\'s `days` text exists in German, French and Italian', async () => {
+    const { HUNT_2026 } = await import('../src/wildlife');
+    const { DE, FR, IT } = await import('../src/i18n-dict');
+    for (const [code, h] of Object.entries(HUNT_2026)) {
+      if (!h.days) continue;
+      for (const d of [DE, FR, IT]) expect(d[h.days], `${code}: ${h.days}`).toBeTruthy();
+    }
+  });
+});
