@@ -37,7 +37,7 @@ import { MAX_NIGHTS, addNight, loadTrip, moveNight, nightsFor, removeNight, save
 import { InputsCache, legalForNight, recheckSpots } from './recheck';
 import { MAX_SHARE_SPOTS, decodeShare, isShareHash, shareLink, type DecodedShare, type SharePayload } from './share';
 import { renderShared } from './sharedview';
-import { cumulativeM, parseGpx, routeToGpx, type ParsedGpx, type RoutePoint } from './route';
+import { cumulativeM, densify, parseGpx, routeToGpx, type ParsedGpx, type RoutePoint } from './route';
 import { OUTSIDE, gatherRouteInputs, reportForDates, type RouteInputs, type RouteReport } from './routecheck';
 import { ROUTE_KEY, packRoute, pointAt, routeLine, routeStats, slicePoints, stageInfos, thin, unpackRoute, type StageInfo } from './routeplan';
 import { STAGE_KM, renderRoute, runsOf, type RouteViewState } from './routeview';
@@ -1057,7 +1057,7 @@ function loadRoute(text: string, fileName: string) {
   const step = Math.max(1, Math.ceil(raw.length / 300));
   if (!raw.some((p, i) => i % step === 0 && isInSwitzerland(p.lat, p.lon))) return say(tr('This route is outside Switzerland, so the rules checked here do not apply.'));
   route?.abort?.abort();
-  const points = thin(raw, 6000);
+  const points = thin(densify(raw), 6000);
   const today = firstEvening(zurichNow(new Date()));
   route = { name: (g.name ?? g.tracks[0]?.name ?? fileName.replace(/\.gpx$/i, '')).trim().slice(0, 120) || tr('Route'), points, stageKm: STAGE_KM.initial, date: today, status: 'checking' };
   // what was not read, said once: tracks that do not connect, a file that is cut off, a file so dense that it was thinned

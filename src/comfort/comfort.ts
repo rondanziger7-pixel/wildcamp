@@ -215,11 +215,15 @@ export function comfortFor(input: ComfortInput): Comfort {
       tone: cold <= -10 ? 'bad' : cold <= -3 ? 'warn' : 'info',
       score: cold <= -10 ? -2 : cold <= -5 ? -1 : cold >= 8 ? 1 : 0,
       title: tr('Low of {t} °C', { t: Math.round(cold) }),
-      text: cold <= -10 ? tr('Severe cold: only for a winter or expedition setup.') : cold <= 0 ? tr('Freezing overnight: bring a winter sleeping bag, expect frost on the tent, and keep water bottles inside.') : cold >= 8 ? tr('A mild night.') : tr('Forecast low at the spot’s elevation.'),
+      text: cold <= -10 ? tr('Severe cold: only for a winter or expedition setup.') : cold <= 0 ? tr('Freezing overnight: bring a winter sleeping bag, expect frost on the tent, and keep water bottles inside.') : cold >= 22 ? tr('A tropical night: expect a hot, stuffy tent. Use the lightest bag or a liner, and keep the tent open.') : cold >= 8 ? tr('A mild night.') : tr('Forecast low at the spot’s elevation.'),
     });
     if (night.snowCm !== undefined && night.snowCm >= 1) wx({ tone: 'warn', score: night.snowCm >= 5 ? -2 : -1, alert: true, title: tr('Snow forecast'), text: tr('About {cm} cm of new snow. It loads the tent, hides the ground and raises avalanche danger on steep slopes.', { cm: night.snowCm.toFixed(0) }) });
     else if (night.freezingLevelM !== undefined && t && night.freezingLevelM < t.elevation && night.precipMm >= 1) wx({ tone: 'warn', score: -1, title: tr('Wet snow or ice possible'), text: tr('The freezing level drops to about {level} m, below the spot ({elev} m), and precipitation is forecast.', { level: Math.round(night.freezingLevelM / 10) * 10, elev: Math.round(t.elevation / 10) * 10 }) });
 
+    // rain falling on a lasting snow cover turns it to slush and runs off in streams
+    if (rainOf(night) >= 5 && night.snowDepthM !== undefined && night.snowDepthM >= 0.3 && night.minTempC > -1) {
+      wx({ tone: 'warn', score: -1, title: tr('Rain on snow'), text: tr('Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.', { cm: Math.round(night.snowDepthM * 100) }) });
+    }
     // rain
     if (rainOf(night) >= 1) {
       const p = night.maxPrecipProb !== undefined ? ' ' + tr('(up to {p} % chance)', { p: Math.round(night.maxPrecipProb) }) : '';

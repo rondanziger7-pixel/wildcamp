@@ -755,3 +755,26 @@ export function routeToGpx(name: string, points: readonly RoutePoint[], waypoint
   out.push('</gpx>', '');
   return out.join('\n');
 }
+
+/**
+ * Points are added along any stretch where two neighbours are more than `maxGapM` apart (a straight or thinned track), so a stage can be cut
+ * near its target length instead of at the nearest far-off vertex. Height is interpolated; the line itself does not change.
+ */
+export function densify(points: readonly RoutePoint[], maxGapM = 1000): RoutePoint[] {
+  const out: RoutePoint[] = [];
+  for (let i = 0; i < points.length; i++) {
+    const a = points[i]!;
+    out.push(a);
+    const b = points[i + 1];
+    if (!b) break;
+    const d = haversineM(a, b);
+    if (d <= maxGapM || d > 200_000) continue;
+    const n = Math.min(400, Math.ceil(d / maxGapM));
+    for (let k = 1; k < n; k++) {
+      const f = k / n;
+      const ele = a.ele !== undefined && b.ele !== undefined ? a.ele + (b.ele - a.ele) * f : undefined;
+      out.push(ele === undefined ? { lat: a.lat + (b.lat - a.lat) * f, lon: a.lon + (b.lon - a.lon) * f } : { lat: a.lat + (b.lat - a.lat) * f, lon: a.lon + (b.lon - a.lon) * f, ele });
+    }
+  }
+  return out;
+}

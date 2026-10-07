@@ -1169,3 +1169,18 @@ describe('routeToGpx', () => {
     expect(again.tracks[0]!.points).toEqual(first.tracks[0]!.points);
   });
 });
+
+describe('densify', () => {
+  it('adds points along long gaps so stages can be cut near their target', async () => {
+    const { densify, splitStages } = await import('../src/route');
+    // two points 132 km apart on a straight line, thinned to nothing in between
+    const line = [{ lat: 47, lon: 7, ele: 400 }, { lat: 47, lon: 8.8, ele: 1000 }];
+    const dense = densify(line);
+    expect(dense.length).toBeGreaterThan(100);
+    expect(dense[0]).toEqual(line[0]);
+    expect(dense[dense.length - 1]).toEqual(line[1]);
+    const lengths = splitStages(dense, 15).map((s) => s.distM / 1000);
+    for (const km of lengths) expect(km).toBeGreaterThan(11);
+    for (const km of lengths) expect(km).toBeLessThan(19);
+  });
+});

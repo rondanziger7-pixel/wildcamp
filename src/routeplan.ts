@@ -1,4 +1,4 @@
-import { ascentDescent, cumulativeM, haversineM, mainLine, naismithMinutes, simplify, splitStages, type ParsedGpx, type ParsedLine, type RoutePoint } from './route';
+import { ascentDescent, cumulativeM, densify, haversineM, mainLine, naismithMinutes, simplify, splitStages, type ParsedGpx, type ParsedLine, type RoutePoint } from './route';
 import { cellAt, nearestLegal, positionAt, sharesBetween, type Cell, type NearestLegal, type RouteReport, type Sample, type StripClass } from './routecheck';
 
 /** What the route page shows besides the zone check: length, climb, walking time, and the stages with where to sleep. */
@@ -198,7 +198,7 @@ export function unpackRoute(raw: unknown): { name: string; points: RoutePoint[];
     points.push(Number.isFinite(p[2]) ? { lat: p[0]!, lon: p[1]!, ele: p[2] } : { lat: p[0]!, lon: p[1]! });
   }
   const stageKm = Number.isFinite(r.stageKm) ? Math.max(5, Math.min(40, Math.round(r.stageKm))) : 15;
-  return { name: r.name, points, stageKm, date: typeof r.date === 'string' ? r.date : '' };
+  return { name: r.name, points: densify(points), stageKm, date: typeof r.date === 'string' ? r.date : '' };
 }
 
 

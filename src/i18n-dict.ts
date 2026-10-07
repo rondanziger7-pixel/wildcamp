@@ -1201,6 +1201,9 @@ export const DE: Record<string, string> = {
   "Stop": "Stopp",
   "The search did not work. Try again.": "Die Suche hat nicht funktioniert. Versuche es noch einmal.",
   "You are offline: the place search needs a connection.": "Sie sind offline: Die Ortssuche braucht eine Verbindung.",
+  "A tropical night: expect a hot, stuffy tent. Use the lightest bag or a liner, and keep the tent open.": "Tropennacht: Rechnen Sie mit einem heissen, stickigen Zelt. Nehmen Sie den leichtesten Schlafsack oder ein Inlett und lassen Sie das Zelt offen.",
+  "Rain on snow": "Regen auf Schnee",
+  "Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.": "Es ist Regen auf etwa {cm} cm Schnee vorhergesagt. Der Schnee wird zu Matsch, Schmelzwasser läuft durch Mulden und der Schnee wird an Hängen instabil. Bauen Sie auf hohem, ebenem Boden abseits von Rinnen auf.",
 };
 
 export const FR: Record<string, string> = {
@@ -2405,6 +2408,9 @@ export const FR: Record<string, string> = {
   "Stop": "Arrêter",
   "The search did not work. Try again.": "La recherche a échoué. Réessayez.",
   "You are offline: the place search needs a connection.": "Vous êtes hors ligne : la recherche de lieux a besoin d’une connexion.",
+  "A tropical night: expect a hot, stuffy tent. Use the lightest bag or a liner, and keep the tent open.": "Nuit tropicale : attendez-vous à une tente chaude et étouffante. Prenez le sac le plus léger ou un drap de sac et gardez la tente ouverte.",
+  "Rain on snow": "Pluie sur la neige",
+  "Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.": "De la pluie est prévue sur environ {cm} cm de neige. La neige devient de la bouillie, l’eau de fonte coule dans les creux et la neige devient instable sur les pentes. Installez-vous sur un terrain haut et plat, loin des écoulements.",
 };
 
 export const IT: Record<string, string> = {
@@ -3609,4 +3615,7 @@ export const IT: Record<string, string> = {
   "Stop": "Ferma",
   "The search did not work. Try again.": "La ricerca non ha funzionato. Riprova.",
   "You are offline: the place search needs a connection.": "Sei offline: la ricerca dei luoghi richiede una connessione.",
+  "A tropical night: expect a hot, stuffy tent. Use the lightest bag or a liner, and keep the tent open.": "Notte tropicale: aspettati una tenda calda e afosa. Usa il sacco più leggero o un lenzuolo e tieni la tenda aperta.",
+  "Rain on snow": "Pioggia sulla neve",
+  "Rain is forecast on about {cm} cm of snow. The snow turns to slush, meltwater runs through hollows and the snow becomes unstable on slopes. Pitch on high, flat ground away from channels.": "È prevista pioggia su circa {cm} cm di neve. La neve diventa fanghiglia, l’acqua di fusione scorre nelle conche e la neve diventa instabile sui pendii. Pianta la tenda su terreno alto e pianeggiante, lontano dai canali.",
 };

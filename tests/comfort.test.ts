@@ -336,3 +336,17 @@ describe('snow is not rain', () => {
     expect(rainOf({ precipMm: 8, rainMm: 0 })).toBe(0);
   });
 });
+
+describe('rain on snow and tropical nights', () => {
+  const base = { from: '', to: '', minTempC: 1, maxGustKmh: 10, meanWindKmh: 5, windFromDeg: 0, precipMm: 8, rainMm: 8, thunder: false, snowDepthM: 0.8 };
+  it('warns about rain on a lasting snow cover', () => {
+    const c = comfortFor({ night: base });
+    expect(c.alerts.some((a) => a.title === 'Rain on snow') || c.factors.some((f) => f.title === 'Rain on snow')).toBe(true);
+    const dry = comfortFor({ night: { ...base, precipMm: 0, rainMm: 0 } });
+    expect(dry.factors.some((f) => f.title === 'Rain on snow')).toBe(false);
+  });
+  it('a 24 °C night is called tropical, not mild', () => {
+    const c = comfortFor({ night: { ...base, minTempC: 24, precipMm: 0, rainMm: 0, snowDepthM: 0 } });
+    expect(JSON.stringify(c)).toMatch(/tropical night/);
+  });
+});
