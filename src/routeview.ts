@@ -35,6 +35,8 @@ export interface RouteHandlers {
   /** Save the camps as spots and plan the nights. */
   onPlan(): void;
   onExport(): void;
+  /** Save the map along the route for offline use. */
+  onSaveMaps(): void;
   onRetry(): void;
   onClear(): void;
 }
@@ -254,7 +256,10 @@ export function renderRoute(root: HTMLElement, state: RouteViewState | undefined
     const exp = el('button', 'linkish', tr('Download the route with the camps (GPX)'));
     exp.type = 'button';
     exp.onclick = h.onExport;
-    parts.push(plan, exp);
+    const maps = el('button', 'linkish', tr('Save the map along the route for offline use'));
+    maps.type = 'button';
+    maps.onclick = h.onSaveMaps;
+    parts.push(plan, exp, maps);
   }
   const clear = el('button', 'linkish', tr('Remove the route'));
   clear.type = 'button';

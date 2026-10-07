@@ -23,7 +23,8 @@ import type { Position } from './emergency';
 import { fetchElevation } from './geoadmin';
 import { bulletinAt, fetchBulletin, type AvalancheInfo } from './comfort/avalanche';
 import { fetchGround, type GroundInfo } from './comfort/ground';
-import { MAX_TILES, megabytes, planTiles, registerOffline, saveShell, saveTiles, tileUrl } from './offline';
+import { MAX_SAVED_TILES, MAX_TILES, addArea, megabytes, planCorridor, planSpots, planTiles, registerOffline, saveShell, saveTiles, savedTileCount, tileUrl, type TilePlan } from './offline';
+import { listenInstall, renderSettings } from './settingsview';
 import { MAX_SAVED, defaultName, importSpots, isSaved, loadSaved, removeSpot, saveSpot, spotId, updateLegality, updateSnapshot, updateSpot, verdictLabel, type SavedSpot } from './saved';
 import { renderSaved } from './savedview';
 import { CANDIDATE_RADIUS_M, FINDER_RADII, elevationRadiusFor, fetchCoverGrid, fetchElevationGrid, rankCells, refineCandidate, separationFor, withWater, zAt } from './finder';
@@ -536,6 +537,7 @@ function showSaved() {
       showSaved();
     },
     onShowAll: showAllSaved,
+    onSaveMaps: (picked) => void saveSpotMaps(picked, tr('Saved spots')),
     onRefresh: async (progress) => {
       const outcomes = await recheckSpots(loadSaved(store), data, { onProgress: progress });
       for (const o of outcomes) if (o.patch) updateLegality(store, o.spot.id, o.patch);
@@ -686,6 +688,7 @@ function showTrip() {
       );
     },
     onPrint: () => window.print(),
+    onSaveMaps: () => void saveSpotMaps([...new Map(nights.map((n) => [n.spot.id, n.spot])).values()], tr('Trip')),
   });
   if (!nights.length) return;
   const token = ++tripToken;
@@ -841,6 +844,7 @@ function renderRouteNow() {
     onFind: (s) => void findBest(s.camp.lat, s.camp.lon, { back: { label: tr('Back to the route'), run: showRoute } }),
     onPlan: planRouteNights,
     onExport: exportRoute,
+    onSaveMaps: () => void saveRouteMaps(),
     onRetry: () => void checkRoute(),
     onClear: () => {
       route?.abort?.abort();
@@ -1274,6 +1278,24 @@ function togglePanel(open: HTMLElement) {
   const show = open.hidden;
   layersPanel.hidden = settingsPanel.hidden = true;
   open.hidden = !show;
+  if (show && open === settingsPanel) drawSettings();
+}
+listenInstall();
+function drawSettings() {
+  renderSettings(document.getElementById('settings-more')!, {
+    store,
+    today: () => firstEvening(zurichNow(new Date())),
+    saveVisible: () => void saveArea(),
+    onWiped: () => {
+      route?.abort?.abort();
+      route = undefined;
+      routeFocus?.remove();
+      drawRoute();
+      syncSaved();
+      sheet.classList.add('closed'); // a saved list, trip or route page on screen would show what was just deleted
+    },
+    say,
+  });
 }
 document.getElementById('toggle-trails')!.addEventListener('change', (ev) => {
   if ((ev.target as HTMLInputElement).checked) trailOverlay.addTo(map);
@@ -1325,7 +1347,10 @@ function locateMe() {
 }
 
 // Offline: a service worker keeps the app, its data and viewed map tiles; a button saves the visible area on purpose.
-if (import.meta.env.PROD) registerOffline(import.meta.env.BASE_URL);
+const updateBar = document.getElementById('update-bar')!;
+document.getElementById('update-reload')!.addEventListener('click', () => location.reload());
+document.getElementById('update-later')!.addEventListener('click', () => (updateBar.hidden = true));
+if (import.meta.env.PROD) registerOffline(import.meta.env.BASE_URL, () => (updateBar.hidden = false));
 const banner = document.getElementById('offline-banner')!;
 const syncOnline = () => (banner.hidden = navigator.onLine);
 window.addEventListener('online', syncOnline);
@@ -1333,26 +1358,58 @@ window.addEventListener('offline', syncOnline);
 syncOnline();
 
 let saving: AbortController | undefined;
-async function saveArea() {
+let asked: { key: string; at: number } | undefined;
+/**
+ * Save the tiles of a plan into the saved-maps cache. A stop is a second tap while it runs; a plan of more than the usual size
+ * (a route, many spots) is first announced and starts on a second tap within ten seconds.
+ */
+async function downloadMaps(plan: TilePlan, name: string, tooBig: string) {
   if (saving) {
     saving.abort();
     return;
   }
   if (!('caches' in window)) return say(tr('This browser cannot store maps for offline use.'));
   if (!navigator.onLine) return say(tr('You are offline: connect to save a map area.'));
-  const b = map.getBounds();
-  const plan = planTiles({ south: b.getSouth(), west: b.getWest(), north: b.getNorth(), east: b.getEast() }, Math.round(map.getZoom()));
-  if (!plan.tiles.length) return say(tr('This view is too large to save (more than {max} tiles). Zoom in and try again.', { max: MAX_TILES }));
+  if (!plan.tiles.length) return say(tooBig);
+  const have = await savedTileCount();
+  if (have + plan.tiles.length > MAX_SAVED_TILES) return say(tr('That would pass the limit of {max} saved map tiles. Delete saved maps in Settings first.', { max: MAX_SAVED_TILES }));
+  if (plan.tiles.length > MAX_TILES) {
+    const key = `${name}|${plan.tiles.length}`;
+    if (!asked || asked.key !== key || Date.now() - asked.at > 10_000) {
+      asked = { key, at: Date.now() };
+      return say(tr('This saves {n} map tiles (about {mb} MB, zoom {from} to {to}). Tap again within ten seconds to start.', { n: plan.tiles.length, mb: megabytes(plan.tiles.length), from: plan.from, to: plan.to }));
+    }
+    asked = undefined;
+  }
   const ctl = (saving = new AbortController());
   say(tr('Saving {n} map tiles (about {mb} MB, zoom {from} to {to}). Tap the button again to stop.', { n: plan.tiles.length, mb: megabytes(plan.tiles.length), from: plan.from, to: plan.to }));
   void navigator.storage?.persist?.();
   try {
     await saveShell(import.meta.env.BASE_URL);
     const r = await saveTiles(plan.tiles.map((tl) => tileUrl(tl.z, tl.x, tl.y)), (p) => say(tr('Saving map: {done} of {total} tiles…', { done: p.done, total: p.total })), ctl.signal);
+    if (!ctl.signal.aborted && !r.failed) addArea(store, { name, at: new Date().toISOString(), from: plan.from, to: plan.to, tiles: r.total });
     say(ctl.signal.aborted ? tr('Stopped: {n} tiles saved.', { n: r.done - r.failed }) : r.failed ? tr('Saved {ok} of {total} tiles; {failed} failed. Try again with a better connection.', { ok: r.total - r.failed, total: r.total, failed: r.failed }) : tr('Saved {n} tiles (zoom {from} to {to}) and the app data. The map and local checks now work offline here; zone, water and weather lookups still need a connection.', { n: r.total, from: plan.from, to: plan.to }));
   } finally {
     saving = undefined;
   }
+}
+
+function saveArea() {
+  const b = map.getBounds();
+  const c = map.getCenter();
+  const plan = planTiles({ south: b.getSouth(), west: b.getWest(), north: b.getNorth(), east: b.getEast() }, Math.round(map.getZoom()));
+  return downloadMaps(plan, `${tr('Map view')} ${c.lat.toFixed(2)}, ${c.lng.toFixed(2)}`, tr('This view is too large to save (more than {max} tiles). Zoom in and try again.', { max: MAX_TILES }));
+}
+
+function saveSpotMaps(spots: { lat: number; lng: number; name: string }[], label: string) {
+  const plan = planSpots(spots.map((p) => ({ lat: p.lat, lon: p.lng })));
+  return downloadMaps(plan, label, tr('Those places are too far apart or too many to save in one go. Choose fewer.'));
+}
+
+function saveRouteMaps() {
+  if (!route) return;
+  const plan = planCorridor(route.points);
+  return downloadMaps(plan, route.name, tr('This route is too long to save in one go. Save its parts separately: zoom in on a part and use “Save the map”.'));
 }
 
 // One menu button tucks the map's actions away; zoom stays beside it.

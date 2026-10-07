@@ -13,6 +13,8 @@ export interface TripHandlers {
   onDate(date: string, to: string): void;
   onOpen(spot: SavedSpot): void;
   onShare(): void;
+  /** Save the map around the nights' spots for offline use. */
+  onSaveMaps(): void;
   onPrint(): void;
 }
 
@@ -80,7 +82,10 @@ export function renderTrip(root: HTMLElement, spots: SavedSpot[], nights: Planne
     const print = el('button', 'save-btn', '🖨 ' + tr('Print'));
     print.type = 'button';
     print.onclick = h.onPrint;
-    tools.append(share, print);
+    const maps = el('button', 'save-btn', '⤓ ' + tr('Save the maps'));
+    maps.type = 'button';
+    maps.onclick = h.onSaveMaps;
+    tools.append(share, print, maps);
     parts.push(tools);
   }
   const planHost = el('div', 'trip-plan');

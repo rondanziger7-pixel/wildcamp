@@ -27,6 +27,8 @@ export interface SavedHandlers {
   onShare(spots: SavedSpot[]): void;
   /** The text of a chosen GPX file. */
   onImport(text: string, fileName: string): void;
+  /** Save the map around these spots (the ticked ones, or all when none is ticked) for offline use. */
+  onSaveMaps(spots: SavedSpot[]): void;
   /** The map centre or the person's position, for sorting by distance. */
   origin(): { lat: number; lng: number };
 }
@@ -209,10 +211,13 @@ export function renderSaved(root: HTMLElement, initial: SavedSpot[], h: SavedHan
   const share = el('button', 'linkish', tr('Share a link to these spots'));
   share.type = 'button';
   share.onclick = () => h.onShare(picked.size ? spots.filter((s) => picked.has(s.id)) : spots);
+  const maps = el('button', 'linkish', tr('Save the map around these spots for offline use'));
+  maps.type = 'button';
+  maps.onclick = () => h.onSaveMaps(picked.size ? spots.filter((s) => picked.has(s.id)) : spots);
   const exp = el('button', 'linkish', tr('Export all as GPX (for a navigation app)'));
   exp.type = 'button';
   exp.onclick = () => downloadText('wildcamp-spots.gpx', spotsToGpx(spots));
-  more.append(el('summary', undefined, tr('More options')), el('div', 'more-actions', showAll, refresh, share, exp, importBtn.button, importBtn.input));
+  more.append(el('summary', undefined, tr('More options')), el('div', 'more-actions', showAll, refresh, share, maps, exp, importBtn.button, importBtn.input));
   const full = spots.length >= MAX_SAVED - 20 ? [el('p', 'disclaimer', spots.length >= MAX_SAVED ? tr('The list is full ({n} spots). Remove some to save more.', { n: MAX_SAVED }) : tr('{n} of {max} spots used.', { n: spots.length, max: MAX_SAVED }))] : [];
   root.replaceChildren(title, el('div', 'saved-toolbar', sort), list, cmp, plan, out, more, changes, ...full);
 }
