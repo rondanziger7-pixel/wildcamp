@@ -482,13 +482,13 @@ export function comfortFor(input: ComfortInput): Comfort {
   if (mo) {
     const pct = Math.round(mo.illumination * 100);
     const dark = mo.upShare === 0 || mo.illumination < 0.15;
-    const upText = mo.up ? tr('The moon is above the horizon from about {from} to {to}.', { from: mo.up.from, to: mo.up.to }) : tr('The moon stays below the horizon all night.');
+    const upText = mo.up && mo.up.from === mo.up.to ? '' : mo.up ? tr('The moon is above the horizon from about {from} to {to}.', { from: mo.up.from, to: mo.up.to }) : tr('The moon stays below the horizon all night.');
     f.push({
       wx: true,
       tone: 'info',
       score: 0,
       title: mo.bright ? tr('Bright moonlight ({phase}, {pct} %)', { phase: lower(mo.phase), pct }) : dark ? tr('Dark sky ({phase}, {pct} %)', { phase: lower(mo.phase), pct }) : tr('{phase} ({pct} % lit)', { phase: mo.phase, pct }),
-      text: `${upText} ${mo.bright ? tr('Easy to see by, and the stars will be washed out; light through the tent can wake light sleepers.') : dark ? tr('A good night for stargazing, but take a headlamp: it will be very dark.') : tr('Some moonlight, so not fully dark.')} ${tr('Moon phase and rise from a standard astronomical model; the terrain horizon is ignored.')}`,
+      text: `${upText} ${mo.bright ? tr('Easy to see by, and the stars will be washed out; light through the tent can wake light sleepers.') : dark ? tr('A good night for stargazing, but take a headlamp: it will be very dark.') : tr('Some moonlight, so not fully dark.')} ${tr('Moon phase and rise from a standard astronomical model; the terrain horizon and light pollution are ignored.')}`,
     });
   }
 

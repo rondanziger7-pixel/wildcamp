@@ -25,7 +25,9 @@ export function renderShared(root: HTMLElement, d: DecodedShare, savedCount: num
     'p',
     'where',
     nights
-      ? tr('These spots and a trip of {nights} nights came in a link. Nothing is checked yet: each spot is judged with today\'s rules and forecast when you open it.', { nights })
+      ? nights === 1
+        ? tr('These spots and a trip of one night came in a link. Nothing is checked yet: each spot is judged with today\'s rules and forecast when you open it.')
+        : tr('These spots and a trip of {nights} nights came in a link. Nothing is checked yet: each spot is judged with today\'s rules and forecast when you open it.', { nights })
       : tr('These spots came in a link. Nothing is checked yet: each spot is judged with today\'s rules and forecast when you open it.'),
   );
   const list = el('ol', 'plan-list');

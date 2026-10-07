@@ -1181,6 +1181,14 @@ export const DE: Record<string, string> = {
   "Herd-protection dogs on this pasture": "Herdenschutzhunde auf dieser Weide",
   "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "Die Sonderjagd auf Hirsch und Reh findet je nach Region nur mittwochs, samstags und sonntags statt.",
   "Only for spots in the canton of Jura: the spot, to ask its cantonal nature-protection zones.": "Nur für Orte im Kanton Jura: der Ort, um die kantonalen Naturschutzzonen abzufragen.",
+  "Moon phase and rise from a standard astronomical model; the terrain horizon and light pollution are ignored.": "Mondphase und Aufgang aus einem astronomischen Standardmodell; Geländehorizont und Lichtverschmutzung sind nicht berücksichtigt.",
+  "Shared with you: {n} spot": "Mit dir geteilt: {n} Platz",
+  "Shared with you: {n} spots": "Mit dir geteilt: {n} Plätze",
+  "These spots and a trip of one night came in a link. Nothing is checked yet: each spot is judged with today's rules and forecast when you open it.": "Diese Plätze und eine Tour von einer Nacht kamen in einem Link. Noch ist nichts geprüft: Jeder Platz wird beim Öffnen mit den heutigen Regeln und der heutigen Vorhersage beurteilt.",
+  "Check the rules first": "Zuerst die Regeln prüfen",
+  "Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.": "In diesem Kanton ist in dieser Nacht Jagd: Rechne mit Schüssen und Jägern in der Dämmerung. Trage helle Farben und meide in diesen Stunden die Waldränder.",
+  "In a village or city: the owner must agree": "Im Siedlungsgebiet: der Eigentümer muss zustimmen",
+  "A municipal camping ban is reported (not verified)": "Ein Camping-Verbot der Gemeinde ist gemeldet (nicht verifiziert)",
 };
 
 export const FR: Record<string, string> = {
@@ -2365,6 +2373,14 @@ export const FR: Record<string, string> = {
   "Herd-protection dogs on this pasture": "Chiens de protection des troupeaux sur ce pâturage",
   "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "La chasse spéciale au cerf et au chevreuil n’a lieu que les mercredis, samedis et dimanches, selon la région.",
   "Only for spots in the canton of Jura: the spot, to ask its cantonal nature-protection zones.": "Seulement pour les lieux du canton du Jura : le lieu, pour interroger ses zones cantonales de protection de la nature.",
+  "Moon phase and rise from a standard astronomical model; the terrain horizon and light pollution are ignored.": "Phase et lever de la lune d’après un modèle astronomique standard ; l’horizon du terrain et la pollution lumineuse ne sont pas pris en compte.",
+  "Shared with you: {n} spot": "Partagé avec vous : {n} lieu",
+  "Shared with you: {n} spots": "Partagé avec vous : {n} lieux",
+  "These spots and a trip of one night came in a link. Nothing is checked yet: each spot is judged with today's rules and forecast when you open it.": "Ces lieux et une sortie d’une nuit sont arrivés dans un lien. Rien n’est encore vérifié : chaque lieu est jugé avec les règles et les prévisions du jour à son ouverture.",
+  "Check the rules first": "Vérifiez d’abord les règles",
+  "Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.": "La chasse est ouverte dans ce canton cette nuit-là : attendez-vous à des coups de feu et à des chasseurs à l’aube et au crépuscule. Portez des couleurs vives et évitez les lisières de forêt à ces heures.",
+  "In a village or city: the owner must agree": "En zone bâtie : le propriétaire doit être d’accord",
+  "A municipal camping ban is reported (not verified)": "Une interdiction communale de camper est signalée (non vérifiée)",
 };
 
 export const IT: Record<string, string> = {
@@ -3549,4 +3565,12 @@ export const IT: Record<string, string> = {
   "Herd-protection dogs on this pasture": "Cani da protezione del bestiame su questo pascolo",
   "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "La caccia speciale al cervo e al capriolo si svolge solo il mercoledì, il sabato e la domenica, a seconda della regione.",
   "Only for spots in the canton of Jura: the spot, to ask its cantonal nature-protection zones.": "Solo per i luoghi nel Canton Giura: il luogo, per interrogare le sue zone cantonali di protezione della natura.",
+  "Moon phase and rise from a standard astronomical model; the terrain horizon and light pollution are ignored.": "Fase e sorgere della luna da un modello astronomico standard; l’orizzonte del terreno e l’inquinamento luminoso non sono considerati.",
+  "Shared with you: {n} spot": "Condiviso con te: {n} luogo",
+  "Shared with you: {n} spots": "Condivisi con te: {n} luoghi",
+  "These spots and a trip of one night came in a link. Nothing is checked yet: each spot is judged with today's rules and forecast when you open it.": "Questi luoghi e un’uscita di una notte sono arrivati in un link. Nulla è ancora verificato: ogni luogo viene giudicato con le regole e le previsioni di oggi quando lo apri.",
+  "Check the rules first": "Controlla prima le regole",
+  "Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.": "In questo cantone la caccia è aperta quella notte: aspettati spari e cacciatori all’alba e al tramonto. Indossa colori vivaci ed evita i margini del bosco a quelle ore.",
+  "In a village or city: the owner must agree": "In zona edificabile: serve il consenso del proprietario",
+  "A municipal camping ban is reported (not verified)": "È segnalato un divieto comunale di campeggio (non verificato)",
 };

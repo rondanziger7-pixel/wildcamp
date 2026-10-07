@@ -33,6 +33,9 @@ export function buildAlerts(i: { comfort?: Comfort; assessment?: Assessment; fir
     if (z.layer.id === 'ch.vbs.schiessanzeigen' && z.layer.severity === 'caution') out.push({ tone: 'warn', text: sameDay(i.date) ? tr('Army shooting is scheduled here today') : tr('Army shooting is scheduled here on {date}', { date: (i.date ?? new Date()).toLocaleDateString(dateLocale(), { day: 'numeric', month: 'short' }) }), panel: 'legal' });
   }
   for (const z of i.assessment?.nearZones ?? []) out.push({ tone: 'warn', text: z.distanceM !== undefined ? tr('A ban zone begins about {m} m away', { m: Math.max(10, Math.round(z.distanceM / 10) * 10) }) : tr('A ban zone begins within about {m} m', { m: z.withinM ?? 150 }), panel: 'legal' });
+  // a village or city: the public right of access does not apply there, which the first view must not leave to the details
+  if (i.assessment?.items.some((x) => x.title === tr('In a village or city (building zone)'))) out.push({ tone: 'warn', text: tr('In a village or city: the owner must agree'), panel: 'legal' });
+  if (i.assessment?.municipality && i.assessment.items.some((x) => x.title === tr('{name}: reported camping ban, not verified', { name: i.assessment!.municipality! }))) out.push({ tone: 'warn', text: tr('A municipal camping ban is reported (not verified)'), panel: 'legal' });
   const seen = new Set<string>();
   return out
     .filter((a) => (seen.has(a.text) ? false : (seen.add(a.text), true)))

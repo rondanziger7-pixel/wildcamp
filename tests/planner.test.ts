@@ -109,3 +109,12 @@ describe('legality judged for the night\'s date', () => {
     expect(planTrip([night(imported, '2026-07-01')], [hourly()], [undefined], NOW).rows[0]).toMatchObject({ unchecked: true, legalFresh: false });
   });
 });
+
+describe('hunting on a trip night', () => {
+  it('is flagged for a night on a published hunt day, not otherwise', () => {
+    const gr = { ...spot('gr', 80), canton: 'GR' };
+    const p = planTrip([night(gr, '2026-11-04'), night(gr, '2026-07-02')], [undefined, undefined], [undefined, undefined], '2026-07-01T10:00');
+    expect(p.rows[0]!.hunting).toBe(true);
+    expect(p.rows[1]!.hunting).toBe(false);
+  });
+});

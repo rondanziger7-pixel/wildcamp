@@ -153,7 +153,7 @@ function stageRow(s: StageInfo, h: RouteHandlers, campsites?: string): HTMLEleme
     if (c.cls !== 'ok') {
       if (s.camp.moved) {
         const off = s.camp.distM - s.toM;
-        line += ' ' + (off < 0 ? tr('Nearest place not banned: {m} m before the end.', { m: Math.round(-off / 10) * 10 }) : tr('Nearest place not banned: {m} m after the end.', { m: Math.round(off / 10) * 10 }));
+        line += ' ' + (off < 0 ? tr('Nearest place not banned: {m} m before the end.', { m: Math.max(10, Math.round(-off / 10) * 10) }) : tr('Nearest place not banned: {m} m after the end.', { m: Math.max(10, Math.round(off / 10) * 10) }));
       } else if (s.camp.blocked) line += ' ' + tr('Camping is not allowed anywhere within about {km} km of it along the route. Plan the day shorter or longer.', { km: 3 });
     }
     li.append(el('p', `finder-note stage-end ${c.cls}`, line));

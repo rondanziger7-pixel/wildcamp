@@ -62,6 +62,7 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: { forecast
     else if (r.changed === 'better') legalBits.push(tr('Better than when you saved it.'));
     if (!r.legalFresh) legalBits.push(tr('Not checked again: this is the score saved with the spot.'));
     if (legalBits.length) li.append(el('p', `finder-note legal-note${r.verdict === 'no' || r.changed === 'worse' ? ' bad' : ''}`, legalBits.join(' · ')));
+    if (r.hunting) li.append(el('p', 'finder-note legal-note', '🦌 ' + tr('Hunting is on in this canton that night: expect shots and hunters around dawn and dusk. Wear bright colours and stay out of the forest edges at those hours.')));
     if (r.spot.note) li.append(el('p', 'finder-note spot-note', '📝 ' + r.spot.note));
     li.append(el('p', 'finder-note', weatherLine(r, plan.weakest === i, many)));
     list.append(li);

@@ -286,7 +286,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
     else if (unchecked) word = '❔ ' + tr('Unchecked');
     else if (t.value === undefined) word = tr('Checking…');
     else {
-      word = hasRed && t.value >= 30 ? '⚠️ ' + tr('Read the warnings first') : t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 50 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
+      word = hasRed && t.value >= 30 ? '⚠️ ' + tr('Read the warnings first') : s.verdict === 'caution' && t.value >= 50 ? '⚠️ ' + tr('Check the rules first') : t.value >= 70 && t.tone === 'good' ? '✅ ' + tr('Good spot') : t.value >= 50 ? '👍 ' + tr('Okay spot') : t.value >= 30 ? '⚠️ ' + tr('Poor spot') : '⚠️ ' + tr('Not recommended');
       if (comfortUnavailable && spotComfort === undefined) word += ' · ' + tr('comfort not checked');
     }
     total.set(t, word);

@@ -3,6 +3,7 @@ import { FORECAST_DAYS, nightWindowFor, nightWindows, rainOf, summariseNight, ty
 import type { SavedSpot } from './saved';
 import { legalSummary, weatherScore, type LegalSummary } from './scores';
 import { daysBetween } from './trip';
+import { huntingNote } from './wildlife';
 import { tr } from './i18n';
 
 export interface PlanInput {
@@ -42,6 +43,8 @@ export interface PlanRow {
   flags: string[];
   /** True when the weather alone rules this night out. */
   stop: boolean;
+  /** The canton's published hunt is on that night (2026 dates only). */
+  hunting: boolean;
 }
 
 export interface TripPlan {
@@ -106,6 +109,7 @@ export function planTrip(nights: PlanInput[], hourly: (Hourly | undefined)[], le
       forecastState: beyond ? 'beyond' : forecast ? 'ok' : 'failed',
       flags: forecast ? flagsFor(forecast) : [],
       stop: !!c?.weatherStop,
+      hunting: !!huntingNote(spot.canton, new Date(`${date}T12:00:00`))?.active,
     };
   });
   // the weakest night is named only when it is actually weak (below 70) and weaker than the rest
