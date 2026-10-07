@@ -216,3 +216,13 @@ describe('reading a damaged list', () => {
     expect(big[0]!.snapshot.pros[0]!.length).toBeLessThanOrEqual(300);
   });
 });
+
+describe('import order', () => {
+  it('keeps the order of the file, so Day 1 is listed before Day 2', async () => {
+    const { importSpots, loadSaved } = await import('../src/saved');
+    const mem = new Map<string, string>();
+    const store = { getItem: (k: string) => mem.get(k) ?? null, setItem: (k: string, v: string) => void mem.set(k, v), removeItem: (k: string) => void mem.delete(k) };
+    importSpots(store, [{ lat: 46.1, lng: 7.1, name: 'Day 1' }, { lat: 46.2, lng: 7.2, name: 'Day 2' }]);
+    expect(loadSaved(store).map((s) => s.name)).toEqual(['Day 1', 'Day 2']);
+  });
+});

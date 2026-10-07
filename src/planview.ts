@@ -2,7 +2,7 @@ import { compassName, nightText, rainOf } from './comfort/weather';
 import { el } from './resultview';
 import type { PlanRow, TripPlan } from './planner';
 import { FORECAST_DAYS } from './comfort/weather';
-import { tr } from './i18n';
+import { dateLocale, tr } from './i18n';
 
 const tone = (v: number | undefined) => (v === undefined ? 'none' : v >= 60 ? 'good' : v >= 35 ? 'warn' : 'bad');
 
@@ -44,7 +44,11 @@ export function renderPlan(root: HTMLElement, plan: TripPlan, failed: { forecast
     const li = el('li', `plan-row${plan.weakest === i ? ' weakest' : ''}`);
     const head = el('div', 'finder-head');
     // "Tue 6 · Tonight", "Fri 9": the weekday is not said twice
-    const when = r.night === 'Tonight' || r.night === 'Tomorrow' ? `${r.short} · ${nightText(r.night)}` : r.short;
+    // the month is added where it changes, so "Sat 31, Sun 1" does not leave the reader guessing
+    const newMonth = i > 0 && plan.rows[i - 1]!.date.slice(5, 7) !== r.date.slice(5, 7);
+    const month = newMonth ? ' ' + new Intl.DateTimeFormat(dateLocale(), { month: 'short', timeZone: 'UTC' }).format(new Date(`${r.date}T12:00:00Z`)) : '';
+    const shortWhen = r.short + month;
+    const when = r.night === 'Tonight' || r.night === 'Tomorrow' ? `${shortWhen} · ${nightText(r.night)}` : shortWhen;
     head.append(el('span', 'finder-num', String(i + 1)), el('strong', undefined, `${when}: ${r.spot.name}`));
     const chips = el('div', 'finder-scores');
     chips.append(

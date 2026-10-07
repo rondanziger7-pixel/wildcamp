@@ -40,7 +40,7 @@ import { renderShared } from './sharedview';
 import { cumulativeM, densify, parseGpx, routeToGpx, type ParsedGpx, type RoutePoint } from './route';
 import { OUTSIDE, gatherRouteInputs, reportForDates, type RouteInputs, type RouteReport } from './routecheck';
 import { ROUTE_KEY, packRoute, pointAt, routeLine, routeStats, slicePoints, stageInfos, thin, unpackRoute, type StageInfo } from './routeplan';
-import { STAGE_KM, renderRoute, runsOf, type RouteViewState } from './routeview';
+import { STAGE_KM, kmNumber, renderRoute, runsOf, type RouteViewState } from './routeview';
 import { renderTrip } from './tripview';
 import { renderPlan } from './planview';
 import { legalityScore, sleepScore } from './scores';
@@ -1128,7 +1128,7 @@ function planRouteNights() {
   window.clearTimeout(planArmed);
   planArmed = undefined;
   const used = stages.slice(0, MAX_NIGHTS);
-  const note = (s: StageInfo) => [tr('Day {n} of the route "{name}", about {km} km from its start.', { n: s.n, name: r.name, km: Math.round(s.camp.distM / 100) / 10 }), s.camp.moved ? tr('Moved from the end of the stage, which is not allowed or not clear.') : ''].filter(Boolean).join(' ');
+  const note = (s: StageInfo) => [tr('Day {n} of the route "{name}", about {km} km from its start.', { n: s.n, name: r.name, km: kmNumber(s.camp.distM) }), s.camp.moved ? tr('Moved from the end of the stage, which is not allowed or not clear.') : ''].filter(Boolean).join(' ');
   const got = importSpots(store, used.map((s) => ({ lat: s.camp.lat, lng: s.camp.lon, elevation: s.camp.ele, name: `${r.name} · ${tr('Day {n}', { n: s.n })}`, note: note(s) })));
   if (got.refused) say(tr('The list is full: {n} were left out.', { n: got.refused }));
   const nights = used.map((s) => ({ spot: spotId(s.camp.lat, s.camp.lon), date: addDays(r.date, s.n - 1) })).filter((n) => n.date >= today);

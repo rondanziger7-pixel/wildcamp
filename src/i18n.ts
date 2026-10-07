@@ -53,7 +53,8 @@ export const setLangForTest = (l: Lang) => void (current = l);
 /** The text in the current language (named tr so it never collides with local variables); the English text itself is the key, and a missing translation falls back to it. */
 export function tr(en: string, params?: Record<string, string | number>): string {
   const s = DICT[current][en] ?? en;
-  return params ? s.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)) : s;
+  // an abbreviation that ends a sentence ("oct.") must not get a second full stop from the sentence
+  return params ? s.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)).replace(/([^.])\.\.(?!\.)/g, '$1.') : s;
 }
 
 /** The locale for dates and weekday names in the current language. */

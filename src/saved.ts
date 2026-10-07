@@ -173,7 +173,7 @@ export function importSpots(store: Store | undefined, incoming: ImportedSpot[], 
       snapshot: unratedSnapshot(now),
     });
   }
-  const stored = fresh.length ? write(store, [...fresh.reverse(), ...list]) : true;
+  const stored = fresh.length ? write(store, [...fresh, ...list]) : true;
   return { added: fresh.length, existing, refused, stored };
 }
 

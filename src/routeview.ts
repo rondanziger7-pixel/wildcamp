@@ -1,6 +1,6 @@
 import { formatDuration } from './route';
 import { el } from './resultview';
-import { tr } from './i18n';
+import { dateLocale, tr } from './i18n';
 import { addDays } from './comfort/weather';
 import { MAX_AHEAD_DAYS } from './trip';
 import type { Cell, RouteReport, StripClass } from './routecheck';
@@ -46,7 +46,9 @@ export interface RouteHandlers {
 export const STAGE_KM = { min: 5, max: 40, step: 1, initial: 15 } as const;
 
 const km = (m: number) => (m >= 10_000 ? Math.round(m / 100) / 10 : Math.round(m / 10) / 100);
-const kmText = (m: number) => `${km(m).toLocaleString(undefined, { maximumFractionDigits: 1 })} km`;
+/** A number of kilometres written the way the app's language writes it (10,6 in French). */
+export const kmNumber = (m: number) => km(m).toLocaleString(dateLocale(), { maximumFractionDigits: 1 });
+const kmText = (m: number) => `${kmNumber(m)} km`;
 const metres = (m: number) => `${Math.round(m).toLocaleString()} m`;
 
 const CLASS_ICON: Record<StripClass, string> = { ban: '⛔', caution: '⚠️', ok: '✅', unknown: '❔' };
