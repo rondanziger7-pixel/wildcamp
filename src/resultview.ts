@@ -132,6 +132,8 @@ function checklist(items: { tone: keyof typeof TONE_ORDER; title: string; text: 
 }
 
 export interface ResultUi {
+  /** True while some of the lookups for this spot failed (the "Check again" button is showing). */
+  isUnchecked(): boolean;
   /** Where the weather card is drawn. */
   weatherHost: HTMLElement;
   setSleepLoading(): void;
@@ -509,6 +511,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
 
   return {
     weatherHost,
+    isUnchecked: () => uncheckedNow,
     setSleepLoading() {
       sleep.set({ tone: 'none' }, tr('Checking…'));
       sleepPanel.replaceChildren(nearby, el('p', 'where', tr('Checking sleep comfort…')));

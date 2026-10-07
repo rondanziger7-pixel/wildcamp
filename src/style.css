@@ -522,3 +522,8 @@ button { font: inherit; cursor: pointer; }
 /* a pasted link or a name without spaces must wrap, not push the buttons off the screen */
 .saved-row, .saved-open, .saved-note, .plan-row, .spot-note, .finder-head strong { min-width: 0; overflow-wrap: anywhere; }
 .em-warn { color: var(--warn); background: var(--warn-bg); border-radius: 8px; padding: 6px 10px; font-size: .88rem; font-weight: 600; margin: 8px 0; }
+
+#saving-bar { position: fixed; z-index: 1260; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; max-width: calc(100vw - 32px); background: #1b1f1d; color: #fff; border-radius: 12px; padding: 8px 8px 8px 14px; box-shadow: 0 4px 16px #0006; font-size: .9rem; }
+#saving-bar[hidden] { display: none; }
+#saving-bar button { border: 1px solid #fff9; background: #fff2; color: #fff; border-radius: 8px; padding: 6px 12px; font-size: .9rem; }
+@media print { #saving-bar { display: none !important; } }

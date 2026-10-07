@@ -7,7 +7,7 @@ import { lv95ToWgs84, wgs84ToLv95 } from './coords';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import { downloadText, shareText, spotsToGpx } from './gpx';
 import { LANGS, applyStatic, dayText, getLang, setLang, tr, type Lang } from './i18n';
-import { reportUrl } from './report';
+import { reportText, reportUrl } from './report';
 import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
 import { RetryTileLayer, RetryWmsLayer } from './tilelayer';
@@ -398,6 +398,10 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
     void checkSpot(lat, lng, fromFinder, accuracyM);
   };
   const ui = renderResult(result, assessment, elevation, focusOn, { onRetry: () => void retry(), accuracyM });
+  // when the connection returns, a spot whose lookups failed is checked again by itself
+  recheckWhenOnline = () => {
+    if (id === checkId && ui.isUnchecked()) void retry();
+  };
   /** The day the legality is judged for (the evening of the chosen night). */
   let judgedFor = new Date();
   // notes for a set-up other than a tent for one person, from how the rule texts of this place read
@@ -511,6 +515,17 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   report.href = reportUrl({ lat, lng, municipality: assessment.municipality, canton: assessment.canton?.name, verdict: assessment.verdict, link: location.href });
   report.target = '_blank';
   report.rel = 'noopener';
+  const reportCopy = el('button', 'linkish', tr('Copy the report text (no account needed)'));
+  reportCopy.type = 'button';
+  reportCopy.onclick = async () => {
+    const text = reportText({ lat, lng, municipality: assessment.municipality, canton: assessment.canton?.name, verdict: assessment.verdict, link: location.href });
+    try {
+      await navigator.clipboard.writeText(text);
+      say(tr('Report text copied. Send it with the source of the rule.'));
+    } catch {
+      say(text, 12000);
+    }
+  };
   const find = el('button', 'save-btn find-btn', '🔍 ' + tr('Best spots'));
   find.type = 'button';
   find.onclick = () => void findBest(lat, lng);
@@ -528,7 +543,7 @@ async function checkSpot(lat: number, lng: number, fromFinder = false, accuracyM
   const actions = el('div', 'actions');
   actions.append(save, find);
   const more = el('details', 'more');
-  more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report);
+  more.append(el('summary', undefined, tr('More options')), share, copy, gpx, report, reportCopy);
   result.append(actions, more, sosLink());
   sheet.scrollTop = 0;
   revealPin(lat, lng);
@@ -1373,8 +1388,9 @@ document.getElementById('search')!.addEventListener('submit', async (ev) => {
   try {
     const [first] = await searchPlaces(text);
     if (first) goTo(first);
+    else say(tr('No places found'));
   } catch {
-    /* ignore */
+    say(navigator.onLine ? tr('The search did not work. Try again.') : tr('You are offline: the place search needs a connection.'));
   }
 });
 
@@ -1555,12 +1571,31 @@ document.addEventListener('visibilitychange', () => {
 });
 if (import.meta.env.PROD) registerOffline(import.meta.env.BASE_URL, () => (updateBar.hidden = false));
 const banner = document.getElementById('offline-banner')!;
-const syncOnline = () => (banner.hidden = navigator.onLine);
+let recheckWhenOnline: (() => void) | undefined;
+const syncOnline = () => {
+  banner.hidden = navigator.onLine;
+  if (navigator.onLine) recheckWhenOnline?.();
+};
 window.addEventListener('online', syncOnline);
 window.addEventListener('offline', syncOnline);
 syncOnline();
 
 let saving: AbortController | undefined;
+/** While maps are being saved a bar shows the progress with a Stop button that is always in view. */
+const savingBar = (() => {
+  const bar = document.createElement('div');
+  bar.id = 'saving-bar';
+  bar.setAttribute('role', 'status');
+  bar.hidden = true;
+  const text = document.createElement('span');
+  const stop = document.createElement('button');
+  stop.type = 'button';
+  stop.textContent = tr('Stop');
+  stop.onclick = () => saving?.abort();
+  bar.append(text, stop);
+  document.body.append(bar);
+  return { show: (t: string) => ((text.textContent = t), (bar.hidden = false)), hide: () => (bar.hidden = true) };
+})();
 let asked: { key: string; at: number } | undefined;
 /**
  * Save the tiles of a plan into the saved-maps cache. A stop is a second tap while it runs; a plan of more than the usual size
@@ -1589,11 +1624,12 @@ async function downloadMaps(plan: TilePlan, name: string, tooBig: string) {
   void navigator.storage?.persist?.();
   try {
     await saveShell(import.meta.env.BASE_URL);
-    const r = await saveTiles(plan.tiles.map((tl) => tileUrl(tl.z, tl.x, tl.y)), (p) => say(tr('Saving map: {done} of {total} tiles…', { done: p.done, total: p.total })), ctl.signal);
+    const r = await saveTiles(plan.tiles.map((tl) => tileUrl(tl.z, tl.x, tl.y)), (p) => savingBar.show(tr('Saving map: {done} of {total} tiles…', { done: p.done, total: p.total })), ctl.signal);
     if (!ctl.signal.aborted && !r.failed) addArea(store, { name, at: new Date().toISOString(), from: plan.from, to: plan.to, tiles: r.total });
     say(ctl.signal.aborted ? tr('Stopped: {n} tiles saved.', { n: r.done - r.failed }) : r.failed ? tr('Saved {ok} of {total} tiles; {failed} failed. Try again with a better connection.', { ok: r.total - r.failed, total: r.total, failed: r.failed }) : tr('Saved {n} tiles (zoom {from} to {to}) and the app data. The map and local checks now work offline here; zone, water and weather lookups still need a connection.', { n: r.total, from: plan.from, to: plan.to }));
   } finally {
     saving = undefined;
+    savingBar.hide();
   }
 }
 
