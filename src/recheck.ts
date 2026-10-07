@@ -64,7 +64,7 @@ export async function recheckSpots(
       const before = spot.snapshot.verdict;
       try {
         const inp = await fetchInputs(spot.lat, spot.lng, spot.elevation);
-        const a = assessInputs(inp, data, date);
+        const a = assessNight(inp, data, date);
         const sum = legalSummary(a);
         if (sum.unchecked || sum.outside) {
           out[i] = { spot, before, failed: true, changed: false };

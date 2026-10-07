@@ -1,4 +1,4 @@
-import { AREAS_KEY, clearMaps, loadAreas, megabytes, savedTileCount, sizeText, storageUsed } from './offline';
+import { AREAS_KEY, clearAnswers, clearMaps, loadAreas, megabytes, savedTileCount, sizeText, storageUsed } from './offline';
 import { SENT, keptSummary, wipeKept, wipePlans } from './privacy';
 import { el } from './resultview';
 import { MAX_PEOPLE, SHELTERS, cleanGear, shelterName, type Gear } from './gear';
@@ -159,6 +159,7 @@ function privacySection(hooks: SettingsHooks): HTMLElement {
     twoStep(tr('Delete everything this app stored'), tr('Delete everything? Tap again'), async () => {
       wipeKept(hooks.store);
       await clearMaps();
+      await clearAnswers();
       hooks.say(tr('Everything this app stored on this device was deleted.'));
       hooks.onWiped();
       d.replaceWith(privacySection(hooks));

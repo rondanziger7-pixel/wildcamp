@@ -1,5 +1,5 @@
 import { hourLabel, linePath, nearestIndex, niceScale, xAt } from './chart';
-import { compassName, describeCode, type HourPoint, type Night, type NightWindow } from './comfort/weather';
+import { compassName, describeCode, rainOf, type HourPoint, type Night, type NightWindow } from './comfort/weather';
 import { dateLocale, tr } from './i18n';
 
 const SVG = 'http://www.w3.org/2000/svg';
@@ -206,7 +206,7 @@ export function renderWeather(host: HTMLElement, v: WeatherView) {
     tile(tr('Sky'), sky ? `${sky.emoji} ${sky.label}` : '—', n.meanCloud !== undefined ? tr('{n} % cloud', { n: Math.round(n.meanCloud) }) : undefined, n.thunder ? 'bad' : undefined),
     tile(tr('Low'), `${Math.round(n.minTempC)} °C`, n.freezingLevelM !== undefined ? tr('freezing level {m} m', { m: Math.round(n.freezingLevelM / 10) * 10 }) : undefined, n.minTempC <= -5 ? 'warn' : undefined),
     tile(tr('Gusts'), `${Math.round(n.maxGustKmh)} km/h`, tr('from {dir}, mean {mean}', { dir: compassName(n.windFromDeg), mean: Math.round(n.meanWindKmh) }), n.maxGustKmh >= 80 ? 'bad' : n.maxGustKmh >= 50 ? 'warn' : undefined),
-    tile(tr('Rain'), `${n.precipMm.toFixed(1)} mm`, n.maxPrecipProb !== undefined ? tr('up to {p} %', { p: Math.round(n.maxPrecipProb) }) : undefined, n.precipMm >= 5 ? 'warn' : undefined),
+    tile(tr('Rain'), `${rainOf(n).toFixed(1)} mm`, n.maxPrecipProb !== undefined ? tr('up to {p} %', { p: Math.round(n.maxPrecipProb) }) : undefined, rainOf(n) >= 5 ? 'warn' : undefined),
   );
   parts.push(tiles);
   if (v.note) parts.push(el('p', 'wx-note', v.note === 'This weather rules the night out, however good the spot is.' ? tr('This weather rules the night out, however good the spot is.') : v.note));

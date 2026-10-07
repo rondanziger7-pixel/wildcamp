@@ -55,7 +55,7 @@ import { fetchNoise, type NoiseInfo } from './comfort/noise';
 import { moonNight } from './comfort/moon';
 import { sunTimes } from './comfort/sun';
 import { analyseTerrain, fetchProfiles, FAR, NEAR, type Profiles, type TerrainMetrics } from './comfort/terrain';
-import { addDays, fetchForecast, forecastEnd, nightDate, nightWindowFor, nightWindows, soonWindow, summariseNight, windowHours, zurichNow, type Hourly, type NightWindow } from './comfort/weather';
+import { addDays, fetchForecast, forecastEnd, nightDate, nightWindowFor, nightWindows, rainOf, soonWindow, summariseNight, windowHours, zurichNow, type Hourly, type NightWindow } from './comfort/weather';
 import { renderWeather } from './weatherview';
 import { forestAt } from './forestmask';
 import { ZONE_LAYERS } from './zones';
@@ -1198,7 +1198,7 @@ async function findBest(lat: number, lng: number, opts: { back?: { label: string
       const night = summariseNight(h, nightWindows(nowZ, 1)[0]!);
       if (!night || gone()) return;
       const flags = flagsFor(night);
-      ui.setHeadline(tr('Tonight around here: {low} °C low, gusts {gust} km/h, {rain}{watch}.', { low: Math.round(night.minTempC), gust: Math.round(night.maxGustKmh), rain: night.precipMm >= 1 ? tr('{mm} mm rain', { mm: night.precipMm.toFixed(0) }) : tr('dry'), watch: flags.length ? '. ' + tr('Watch for: {list}', { list: flags.join(', ') }) : '' }));
+      ui.setHeadline(tr('Tonight around here: {low} °C low, gusts {gust} km/h, {rain}{watch}.', { low: Math.round(night.minTempC), gust: Math.round(night.maxGustKmh), rain: rainOf(night) >= 1 ? tr('{mm} mm rain', { mm: night.precipMm.toFixed(0) }) : tr('dry'), watch: flags.length ? '. ' + tr('Watch for: {list}', { list: flags.join(', ') }) : '' }));
     }, () => undefined);
     const wider = FINDER_RADII.find((r) => r > radius);
     const offer = wider ? { label: tr('Look within {radius}', { radius: radiusText(wider) }), run: () => void findBest(lat, lng, { ...opts, radiusM: wider }) } : undefined;

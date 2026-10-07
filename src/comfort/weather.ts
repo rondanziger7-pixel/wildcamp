@@ -173,7 +173,10 @@ export interface Night {
   meanWindKmh: number;
   /** Direction the wind comes from, degrees clockwise from north, weighted by wind speed. */
   windFromDeg: number;
+  /** All precipitation (rain and the water in snow), mm. */
   precipMm: number;
+  /** Rain alone: the precipitation minus the snowfall (cm of snow is never less than the mm of water in it), mm. */
+  rainMm?: number;
   /** Highest hourly rain probability, percent, if the forecast has it. */
   maxPrecipProb?: number;
   snowCm?: number;
@@ -232,6 +235,7 @@ export function summariseNight(h: Hourly, window: { from: string; to: string }):
     meanWindKmh: speeds.reduce((a, b) => a + b, 0) / speeds.length,
     windFromDeg,
     precipMm: nums(h.precipitation, idx).reduce((a, b) => a + b, 0),
+    rainMm: Math.max(0, nums(h.precipitation, idx).reduce((a, b) => a + b, 0) - (h.snowfall ? snow.reduce((a, b) => a + b, 0) : 0)),
     maxPrecipProb: probs.length ? Math.max(...probs) : undefined,
     snowDepthM: h.snow_depth ? Math.max(0, ...nums(h.snow_depth, idx)) : undefined,
     snowCm: h.snowfall ? snow.reduce((a, b) => a + b, 0) : undefined,
@@ -309,3 +313,6 @@ export function windowHours(h: Hourly, window: { from: string; to: string }): Ho
     cloud: h.cloud_cover?.[i] ?? null,
   }));
 }
+
+/** Rain alone, in mm: snow's water is not rain. Falls back to all precipitation when the split is unknown. */
+export const rainOf = (n: { precipMm: number; rainMm?: number }): number => n.rainMm ?? n.precipMm;

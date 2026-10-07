@@ -1180,6 +1180,7 @@ export const DE: Record<string, string> = {
   "rack railway": "Zahnradbahn",
   "Herd-protection dogs on this pasture": "Herdenschutzhunde auf dieser Weide",
   "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "Die Sonderjagd auf Hirsch und Reh findet je nach Region nur mittwochs, samstags und sonntags statt.",
+  "Only for spots in the canton of Jura: the spot, to ask its cantonal nature-protection zones.": "Nur für Orte im Kanton Jura: der Ort, um die kantonalen Naturschutzzonen abzufragen.",
 };
 
 export const FR: Record<string, string> = {
@@ -2363,6 +2364,7 @@ export const FR: Record<string, string> = {
   "rack railway": "chemin de fer à crémaillère",
   "Herd-protection dogs on this pasture": "Chiens de protection des troupeaux sur ce pâturage",
   "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "La chasse spéciale au cerf et au chevreuil n’a lieu que les mercredis, samedis et dimanches, selon la région.",
+  "Only for spots in the canton of Jura: the spot, to ask its cantonal nature-protection zones.": "Seulement pour les lieux du canton du Jura : le lieu, pour interroger ses zones cantonales de protection de la nature.",
 };
 
 export const IT: Record<string, string> = {
@@ -3546,4 +3548,5 @@ export const IT: Record<string, string> = {
   "rack railway": "ferrovia a cremagliera",
   "Herd-protection dogs on this pasture": "Cani da protezione del bestiame su questo pascolo",
   "The special hunt on red deer and roe deer runs on Wednesdays, Saturdays and Sundays only, depending on the region.": "La caccia speciale al cervo e al capriolo si svolge solo il mercoledì, il sabato e la domenica, a seconda della regione.",
+  "Only for spots in the canton of Jura: the spot, to ask its cantonal nature-protection zones.": "Solo per i luoghi nel Canton Giura: il luogo, per interrogare le sue zone cantonali di protezione della natura.",
 };

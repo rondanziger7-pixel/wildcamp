@@ -1,5 +1,5 @@
 import { comfortFor } from './comfort/comfort';
-import { FORECAST_DAYS, nightWindowFor, nightWindows, summariseNight, type Hourly, type Night } from './comfort/weather';
+import { FORECAST_DAYS, nightWindowFor, nightWindows, rainOf, summariseNight, type Hourly, type Night } from './comfort/weather';
 import type { SavedSpot } from './saved';
 import { legalSummary, weatherScore, type LegalSummary } from './scores';
 import { daysBetween } from './trip';
@@ -55,8 +55,8 @@ export function flagsFor(n: Night): string[] {
   if (n.thunder) f.push(tr('thunderstorm'));
   if (n.maxGustKmh >= 80) f.push(tr('storm gusts'));
   else if (n.maxGustKmh >= 50) f.push(tr('strong wind'));
-  if (n.precipMm >= 10) f.push(tr('heavy rain'));
-  else if (n.precipMm >= 5) f.push(tr('rain'));
+  if (rainOf(n) >= 10) f.push(tr('heavy rain'));
+  else if (rainOf(n) >= 5) f.push(tr('rain'));
   if (n.snowCm !== undefined && n.snowCm >= 1) f.push(tr('new snow'));
   if (n.minTempC <= -5) f.push(tr('hard frost'));
   else if (n.minTempC <= 0) f.push(tr('frost'));

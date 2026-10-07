@@ -1,5 +1,5 @@
 import type { Item } from '../assess';
-import { compassName, type Night } from './weather';
+import { compassName, rainOf, type Night } from './weather';
 import { formatLocalTime, type SunTimes } from './sun';
 import type { MoonNight } from './moon';
 import type { NoiseInfo } from './noise';
@@ -221,17 +221,17 @@ export function comfortFor(input: ComfortInput): Comfort {
     else if (night.freezingLevelM !== undefined && t && night.freezingLevelM < t.elevation && night.precipMm >= 1) wx({ tone: 'warn', score: -1, title: tr('Wet snow or ice possible'), text: tr('The freezing level drops to about {level} m, below the spot ({elev} m), and precipitation is forecast.', { level: Math.round(night.freezingLevelM / 10) * 10, elev: Math.round(t.elevation / 10) * 10 }) });
 
     // rain
-    if (night.precipMm >= 1) {
+    if (rainOf(night) >= 1) {
       const p = night.maxPrecipProb !== undefined ? ' ' + tr('(up to {p} % chance)', { p: Math.round(night.maxPrecipProb) }) : '';
-      wx({ tone: 'warn', score: night.precipMm >= 10 ? -3 : night.precipMm >= 5 ? -2 : -1, alert: night.precipMm >= 10, title: night.precipMm >= 10 ? tr('Heavy rain forecast') : tr('Rain forecast'), text: tr('About {mm} mm overnight{chance}. Avoid hollows, stream beds and slopes that drain across the spot.', { mm: night.precipMm.toFixed(1), chance: p }) });
+      wx({ tone: 'warn', score: rainOf(night) >= 10 ? -3 : rainOf(night) >= 5 ? -2 : -1, alert: rainOf(night) >= 10, title: rainOf(night) >= 10 ? tr('Heavy rain forecast') : tr('Rain forecast'), text: tr('About {mm} mm overnight{chance}. Avoid hollows, stream beds and slopes that drain across the spot.', { mm: rainOf(night).toFixed(1), chance: p }) });
     } else if (night.maxPrecipProb !== undefined && night.maxPrecipProb >= 50) {
-      wx({ tone: 'info', score: 0, title: tr('Showers possible'), text: tr('Up to {p} % chance of rain, but little expected ({mm} mm).', { p: Math.round(night.maxPrecipProb), mm: night.precipMm.toFixed(1) }) });
-    } else if (night.precipMm < 0.2) {
+      wx({ tone: 'info', score: 0, title: tr('Showers possible'), text: tr('Up to {p} % chance of rain, but little expected ({mm} mm).', { p: Math.round(night.maxPrecipProb), mm: rainOf(night).toFixed(1) }) });
+    } else if (rainOf(night) < 0.2) {
       wx({ tone: 'ok', score: 1, title: tr('Dry night forecast'), text: tr('No rain expected.') });
     }
 
     // fog and condensation
-    if (night.minDewSpreadC !== undefined && night.minDewSpreadC <= 1.5 && night.precipMm < 1) wx({ tone: 'info', score: 0, title: tr('Fog or heavy condensation likely'), text: tr('The air will be saturated. Expect a wet tent and sleeping bag; use a ventilated pitch and keep gear dry.') });
+    if (night.minDewSpreadC !== undefined && night.minDewSpreadC <= 1.5 && rainOf(night) < 1) wx({ tone: 'info', score: 0, title: tr('Fog or heavy condensation likely'), text: tr('The air will be saturated. Expect a wet tent and sleeping bag; use a ventilated pitch and keep gear dry.') });
     // ground frost: on clear, calm nights the ground and the tent are colder than the forecast air temperature at 2 m,
     // and cold air collects in hollows. Rule-of-thumb numbers, not a measurement.
     const cloud = night.meanCloud;
@@ -305,10 +305,10 @@ export function comfortFor(input: ComfortInput): Comfort {
     else f.push({ tone: 'info', score: 0, at: wAt, title: tr('Water 400 to 800 m away'), text: tr('A {label} about {dist} away: a walk to fetch water.', { label, dist: m(w.meters) }) + treat });
     if (w.kind !== 'none' && w.spring && w.spring.meters < w.meters - 100) f.push({ tone: 'info', score: 0, at: sAt, title: tr('A mapped spring is closer'), text: tr('The geological map records a spring about {dist} away{captured}. A spring can run dry by autumn and the map does not say the water is drinkable.', { dist: m(w.spring.meters), captured: w.spring.captured ? ' ' + tr('(captured)') : '' }) });
 
-    if (w.kind === 'stream' && w.meters <= 50 && night && (night.precipMm >= 5 || night.thunder)) {
+    if (w.kind === 'stream' && w.meters <= 50 && night && (rainOf(night) >= 5 || night.thunder)) {
       // a stream beside the tent rises fast in heavy rain: the water that was a plus in dry weather is now the risk
-      const heavy = night.precipMm >= 10 || night.thunder;
-      f.push({ wx: true, alert: heavy, tone: heavy ? 'bad' : 'warn', score: heavy ? -2 : -1, title: tr('Stream beside the spot may rise tonight'), text: tr('Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.', { mm: night.precipMm.toFixed(0), dist: m(w.meters) }) });
+      const heavy = rainOf(night) >= 10 || night.thunder;
+      f.push({ wx: true, alert: heavy, tone: heavy ? 'bad' : 'warn', score: heavy ? -2 : -1, title: tr('Stream beside the spot may rise tonight'), text: tr('Rain is forecast ({mm} mm) and the stream is about {dist} away. Streams in the mountains can rise within an hour and take the tent with them: camp higher and well back from the bank.', { mm: rainOf(night).toFixed(0), dist: m(w.meters) }) });
     }
     if (w.kind !== 'none') {
       if (w.glacierM !== undefined && w.glacierM <= 1000)

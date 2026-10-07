@@ -328,3 +328,11 @@ describe('ground frost', () => {
     expect(has(comfortFor({ terrain: terr(0), night: night({ meanCloud: undefined }) }))).toBe(false);
   });
 });
+
+describe('snow is not rain', () => {
+  it('splits the snow water out of the rain amount', async () => {
+    const { rainOf } = await import('../src/comfort/weather');
+    expect(rainOf({ precipMm: 8 })).toBe(8);
+    expect(rainOf({ precipMm: 8, rainMm: 0 })).toBe(0);
+  });
+});

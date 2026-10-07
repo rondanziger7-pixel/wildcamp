@@ -1,4 +1,4 @@
-import { compassName, nightText } from './comfort/weather';
+import { compassName, nightText, rainOf } from './comfort/weather';
 import { el } from './resultview';
 import type { PlanRow, TripPlan } from './planner';
 import { FORECAST_DAYS } from './comfort/weather';
@@ -18,7 +18,7 @@ function weatherLine(r: PlanRow, weakest: boolean, many: boolean): string {
         low: Math.round(f.minTempC),
         gust: Math.round(f.maxGustKmh),
         dir: compassName(f.windFromDeg),
-        rain: f.precipMm >= 1 ? tr('{mm} mm rain', { mm: f.precipMm.toFixed(0) }) : tr('dry'),
+        rain: rainOf(f) >= 1 ? tr('{mm} mm rain', { mm: rainOf(f).toFixed(0) }) : tr('dry'),
         watch: r.flags.length ? '. ' + tr('Watch for: {list}', { list: r.flags.join(', ') }) : '',
       }),
     );

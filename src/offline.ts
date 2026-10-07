@@ -241,6 +241,12 @@ export async function clearMaps(): Promise<boolean> {
   return true;
 }
 
+/** Also remove the cached zone and forecast answers (they hold the spots that were checked). */
+export async function clearAnswers(): Promise<void> {
+  if (!('caches' in globalThis)) return;
+  await Promise.all(['wc-api-v1', 'wc-meta-v1'].map((k) => caches.delete(k)));
+}
+
 /** The browser's estimate of what this site stores, in bytes (undefined where it cannot tell). */
 export async function storageUsed(): Promise<{ used: number; quota?: number } | undefined> {
   try {

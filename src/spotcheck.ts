@@ -168,7 +168,7 @@ export async function checkLegality(lat: number, lng: number, data: LocalData, o
   const ready = Promise.race([data.load(), new Promise<void>((r) => setTimeout(r, opts.waitMs ?? DATA_WAIT_MS))]); // runs alongside the lookups
   const inputs = await fetchLegalityInputs(lat, lng, opts.knownElevation, opts.accuracyM);
   await ready;
-  return { inputs, assessment: assessInputs(inputs, data, opts.date), elevation: inputs.elevation };
+  return { inputs, assessment: assessNight(inputs, data, opts.date), elevation: inputs.elevation };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

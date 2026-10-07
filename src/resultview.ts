@@ -2,7 +2,7 @@ import { checkLabel, type Assessment, type Item } from './assess';
 import { localCantonName } from './cantons';
 import type { Comfort } from './comfort/comfort';
 import { LEVEL_NAME, type AvalancheInfo } from './comfort/avalanche';
-import { RELIABLE_DAYS, addDays, compassName, describeCode, nightText, type Night, type NightWindow } from './comfort/weather';
+import { RELIABLE_DAYS, addDays, compassName, describeCode, nightText, rainOf, type Night, type NightWindow } from './comfort/weather';
 import { missingText } from './comfort/comfort';
 import type { WaterInfo } from './comfort/water';
 import type { ShelterResult } from './comfort/shelters';
@@ -680,7 +680,7 @@ export function renderResult(root: HTMLElement, a0: Assessment, elevation: numbe
       const sky = night.worstCode !== undefined ? describeCode(night.worstCode).emoji : '🌙';
       weatherChip.textContent = `${sky} ${tr('{night}: {low} °C, gusts {gust} km/h {dir}', { night: nightText(nightLabel), low: Math.round(night.minTempC), gust: Math.round(night.maxGustKmh), dir: compassName(night.windFromDeg) })}${night.precipMm >= 1 ? ', ' + tr('{mm} mm rain', { mm: night.precipMm.toFixed(0) }) : ''}`;
       if (night.thunder || night.maxGustKmh >= 80) weatherChip.classList.add('bad');
-      else if (night.maxGustKmh >= 50 || night.precipMm >= 5 || night.minTempC <= -5) weatherChip.classList.add('warn');
+      else if (night.maxGustKmh >= 50 || rainOf(night) >= 5 || night.minTempC <= -5) weatherChip.classList.add('warn');
     },
   };
 }

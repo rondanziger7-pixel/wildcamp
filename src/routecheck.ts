@@ -111,6 +111,8 @@ interface RawResult {
   layerBodId: string;
   featureId?: string | number;
   attributes?: Record<string, unknown>;
+  /** With `geometryFormat=geojson` the service sends the attributes as `properties`. */
+  properties?: Record<string, unknown>;
   geometry?: RouteGeometry;
   bbox?: number[];
 }
@@ -145,7 +147,7 @@ const ZONE_IDS = [...new Set(ZONE_LAYERS.map((l) => l.id))];
 /** The federal zone features the piece of route crosses, with their outlines. */
 export async function fetchRouteZones(path: [number, number][], signal?: AbortSignal): Promise<RouteFeature[]> {
   const raw = await identifyAlong(path, ZONE_IDS, { returnGeometry: 'true', geometryFormat: 'geojson' }, signal);
-  return raw.map((r) => ({ layerBodId: r.layerBodId, featureId: r.featureId, attributes: r.attributes ?? {}, geometry: r.geometry, bbox: r.bbox }));
+  return raw.map((r) => ({ layerBodId: r.layerBodId, featureId: r.featureId, attributes: r.attributes ?? r.properties ?? {}, geometry: r.geometry, bbox: r.bbox }));
 }
 
 export interface RouteMunicipality {
