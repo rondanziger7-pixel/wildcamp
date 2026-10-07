@@ -8,7 +8,7 @@ const main = readFileSync('src/main.ts', 'utf8');
 describe('page structure for assistive technology', () => {
   it('names every region and panel, so each is a landmark a screen reader can jump to', () => {
     expect(html).toMatch(/<div id="map" role="region"/);
-    expect(html).toMatch(/<section id="legend" aria-labelledby="legend-title"/);
+    expect(html).toMatch(/<section id="legend" role="dialog" aria-labelledby="legend-title"/);
     expect(html).toMatch(/<h2 id="legend-title"/);
     expect(html).toMatch(/<section id="settings"[^>]*aria-labelledby="settings-title"/);
     expect(html).toMatch(/<aside id="sheet"[^>]*aria-label=/);

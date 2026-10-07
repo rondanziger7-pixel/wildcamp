@@ -29,3 +29,13 @@ describe('villageFirst', () => {
     expect(villageFirst([muni])).toEqual([muni]);
   });
 });
+
+describe('answers', () => {
+  it('rejects a hit that does not match the typed words, accepts accents and prefixes', async () => {
+    const { answers } = await import('../src/search');
+    expect(answers('zzzzqqqq nonexist', 'Zeisigweg 1 8600 Dübendorf')).toBe(false);
+    expect(answers('Zurich', 'Zürich (ZH)')).toBe(true);
+    expect(answers('Saas', 'Saas-Fee (VS)')).toBe(true);
+    expect(answers('Grindelwald Grund', 'Grindelwald (BE)')).toBe(true);
+  });
+});

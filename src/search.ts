@@ -42,3 +42,13 @@ export async function searchPlaces(text: string, signal?: AbortSignal): Promise<
   if (!res.ok) throw new Error(`search ${res.status}`);
   return parsePlaces(await res.json());
 }
+
+const plain = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+/** True when the hit really answers the typed text: at least one word of 3+ letters of the text starts a word of the hit. The service always returns something. */
+export function answers(text: string, label: string): boolean {
+  const words = plain(text).split(/[^a-z0-9]+/).filter((w) => w.length >= 3);
+  if (!words.length) return plain(label).includes(plain(text).trim());
+  const have = plain(label).split(/[^a-z0-9]+/);
+  return words.some((w) => have.some((h) => h.startsWith(w) || w.startsWith(h) && h.length >= 4));
+}

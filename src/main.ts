@@ -14,7 +14,7 @@ import { RetryTileLayer, RetryWmsLayer } from './tilelayer';
 import { fetchJuraReserves } from './jura';
 import { LocalData } from './localstore';
 import { assessNight, checkLegality, collectDetails, terrainOf, withTimeout, CHECK_BUDGET_MS, type DetailsRun } from './spotcheck';
-import { searchPlaces, type Place } from './search';
+import { answers, searchPlaces, type Place } from './search';
 import { isLocationError, parseLocation } from './coordsearch';
 import { comfortFor } from './comfort/comfort';
 import { fetchWater, type WaterInfo } from './comfort/water';
@@ -1387,8 +1387,8 @@ document.getElementById('search')!.addEventListener('submit', async (ev) => {
   }
   try {
     const [first] = await searchPlaces(text);
-    if (first) goTo(first);
-    else say(tr('No places found'));
+    if (first && answers(text, first.label)) goTo(first);
+    else say(first ? tr('No place matches that exactly. Pick one from the list or try another spelling.') : tr('No places found'));
   } catch {
     say(navigator.onLine ? tr('The search did not work. Try again.') : tr('You are offline: the place search needs a connection.'));
   }
