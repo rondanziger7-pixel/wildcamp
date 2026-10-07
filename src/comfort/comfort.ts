@@ -12,7 +12,7 @@ import type { WaterInfo } from './water';
 import type { ShelterResult } from './shelters';
 import type { GroundInfo } from './ground';
 import { LEVEL_NAME, bandText, problemText, type AvalancheInfo } from './avalanche';
-import { lower, tr } from '../i18n';
+import { dayText, lower, tr } from '../i18n';
 
 export type ComfortRating = 'great' | 'good' | 'fair' | 'poor';
 
@@ -364,7 +364,7 @@ export function comfortFor(input: ComfortInput): Comfort {
       return p.aspects.length ? tr('{type} on {aspects} slopes {band}', { type: problemText(p.type), aspects: p.aspects.map((a) => tr(a)).join(', '), band }) : `${problemText(p.type)} ${band}`;
     });
     const where = av.region ? ' ' + tr('for {region}', { region: av.region }) : '';
-    const until = av.validUntilLocal?.replace('T', ' ') ?? '';
+    const until = av.validUntilLocal ? `${dayText(av.validUntilLocal)} ${av.validUntilLocal.slice(11, 16)}` : '';
     const steepNote = steep ? ' ' + tr('Steep terrain is close to this spot.') : '';
     const detail = `${probs.length ? ' ' + tr('Problems: {list}.', { list: probs.join('; ') }) : ''} ${tr('Valid until {time}. The level is for the most dangerous slopes of the region; flat ground away from steep slopes is much safer, but a slope of 30 degrees or more above or near the tent, and runout zones below one, are not.', { time: until })}`;
     if (later) f.push({ wx: true, tone: 'info', score: 0, title: tr('Avalanche bulletin ends before this night'), text: tr('The current bulletin{where} ends {time}, before this night begins. Read the new bulletin on the day (slf.ch).', { where, time: until }) });

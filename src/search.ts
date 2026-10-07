@@ -3,6 +3,21 @@ export interface Place {
   label: string;
   lat: number;
   lon: number;
+  /** geo.admin data set the hit comes from ("gg25" is a municipality, whose point is its centroid). */
+  origin?: string;
+}
+
+/**
+ * A municipality's point is its centroid, which for a mountain municipality lies on a glacier (Saas-Fee, Zermatt, Davos). When the same
+ * name also comes as a populated place, that place goes first, and the municipality stays in the list right after it.
+ */
+export function villageFirst(list: Place[]): Place[] {
+  const first = list[0];
+  if (first?.origin !== 'gg25') return list;
+  const name = first.label.replace(/\s*\([A-Z]{2}\)\s*$/, '').toLowerCase();
+  const i = list.findIndex((p, k) => k > 0 && p.origin === 'gazetteer' && p.label.toLowerCase().includes(name));
+  if (i < 0) return list;
+  return [list[i]!, ...list.slice(0, i), ...list.slice(i + 1)];
 }
 
 /** Parse a geo.admin SearchServer (type=locations, sr=4326) response; labels carry HTML markup. */
@@ -16,9 +31,9 @@ export function parsePlaces(json: unknown): Place[] {
     const label = a.label.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
     if (!label || seen.has(label)) continue;
     seen.add(label);
-    out.push({ label, lat: a.lat, lon: a.lon });
+    out.push({ label, lat: a.lat, lon: a.lon, origin: typeof a.origin === 'string' ? a.origin : undefined });
   }
-  return out;
+  return villageFirst(out);
 }
 
 export async function searchPlaces(text: string, signal?: AbortSignal): Promise<Place[]> {

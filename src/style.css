@@ -508,3 +508,16 @@ button { font: inherit; cursor: pointer; }
 /* long titles wrap instead of being clipped, and a wide comparison scrolls sideways */
 .check h3 { overflow-wrap: anywhere; }
 .compare-wrap { overflow-x: auto; max-width: 100%; }
+
+/* Printing from a dark-mode browser: paper is white, so the light colours are put back (this block must stay last) */
+@media print {
+  :root { --viz-temp: #eb6834; --viz-rain: #2a78d6; --viz-wind: #4a3aa7; --viz-grid: #e8ebe9; --bg: #fff; --fg: #1b1f1d; --muted: #5d6661; --line: #e2e6e3;
+    --bad: #b3261e; --bad-bg: #fdecea; --warn: #8a5300; --warn-bg: #fff4e0; --ok: #17692f; --ok-bg: #e6f4ea; --unk: #44504a; --unk-bg: #eceff0; }
+  .chip-score.good { background: #d9f2e0; color: #14532d; }
+  .compare td.best { background: #e6f4ea; color: #14532d; }
+  .chip .tag.ice { background: #d6ecff; color: #0b4a7a; }
+  .chip .tag.bad { background: #b3261e; color: #fff; }
+}
+
+/* a pasted link or a name without spaces must wrap, not push the buttons off the screen */
+.saved-row, .saved-open, .saved-note, .plan-row, .spot-note, .finder-head strong { min-width: 0; overflow-wrap: anywhere; }

@@ -68,3 +68,13 @@ export function applyStatic(root: ParentNode = document): void {
     }
   }
 }
+
+const LOCALE: Record<string, string> = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB' };
+
+/** A "YYYY-MM-DD" (optionally with a time) day as people write it in the current language: 7.10.2026, 07/10/2026. Anything else comes back unchanged. */
+export function dayText(iso: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), 12));
+  return new Intl.DateTimeFormat(LOCALE[current] ?? 'en-GB', { timeZone: 'UTC', day: 'numeric', month: 'numeric', year: 'numeric' }).format(d);
+}

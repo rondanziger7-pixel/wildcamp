@@ -1,7 +1,7 @@
 import type { BuildingZoneInfo } from './buildingzone';
 import type { Canton, CantonRule } from './cantons';
 import type { Severity, ZoneLayer } from './zones';
-import { tr } from './i18n';
+import { dayText, tr } from './i18n';
 import { localCantonName } from './cantons';
 
 export type TreelineStatus = 'above' | 'forest' | 'below' | 'unknown';
@@ -156,11 +156,11 @@ export function assess(input: {
     if (rule) {
       const stance = treeline === 'above' && rule.aboveTreeline ? rule.aboveTreeline : rule.stance;
       const note = stance !== rule.stance ? ' ' + tr('Above the treeline is treated as "in the mountains", which the law does not define.') : '';
-      reasons.push(tr('{name}: {summary}{note} (source: {sources}, checked {date})', { name: localCantonName(canton), summary: tr(rule.summary), note, sources: rule.sources.map((x) => x.url).join(', '), date: rule.checkedOn }));
+      reasons.push(tr('{name}: {summary}{note} (source: {sources}, checked {date})', { name: localCantonName(canton), summary: tr(rule.summary), note, sources: rule.sources.map((x) => x.url).join(', '), date: dayText(rule.checkedOn) }));
       items.push({
         tone: stance === 'banned' ? 'bad' : stance === 'restricted' ? 'warn' : 'info',
         title: tr('{name} rules', { name: localCantonName(canton) }),
-        text: tr('{summary}{note} (checked {date})', { summary: tr(rule.summary), note, date: rule.checkedOn }),
+        text: tr('{summary}{note} (checked {date})', { summary: tr(rule.summary), note, date: dayText(rule.checkedOn) }),
         sources: rule.sources.map((x) => x.url),
       });
       if (stance === 'banned') verdict = 'no';
@@ -173,18 +173,18 @@ export function assess(input: {
   }
   if (municipality) {
     if (municipalRule) {
-      reasons.push(tr('{name} (municipality): {summary} (source: {sources}, checked {date})', { name: municipality, summary: tr(municipalRule.summary), sources: municipalRule.sources.map((x) => x.url).join(', '), date: municipalRule.checkedOn }));
+      reasons.push(tr('{name} (municipality): {summary} (source: {sources}, checked {date})', { name: municipality, summary: tr(municipalRule.summary), sources: municipalRule.sources.map((x) => x.url).join(', '), date: dayText(municipalRule.checkedOn) }));
       items.push({
         tone: municipalRule.stance === 'banned' ? 'bad' : municipalRule.stance === 'restricted' ? 'warn' : 'info',
         title: tr('{name} (municipality)', { name: municipality }),
-        text: tr('{summary} (checked {date})', { summary: tr(municipalRule.summary), date: municipalRule.checkedOn }),
+        text: tr('{summary} (checked {date})', { summary: tr(municipalRule.summary), date: dayText(municipalRule.checkedOn) }),
         sources: municipalRule.sources.map((x) => x.url),
       });
       if (municipalRule.stance === 'banned') verdict = 'no';
       else if (municipalRule.stance === 'restricted' && verdict === 'likely_ok') verdict = 'caution';
     } else if (municipalNote) {
       reasons.push(tr('{name} (municipality, unverified): {text}', { name: municipality, text: tr(municipalNote.text) }));
-      items.push({ tone: 'warn', title: tr('{name}: reported camping ban, not verified', { name: municipality }), text: tr('{text} (checked {date})', { text: tr(municipalNote.text), date: municipalNote.checkedOn }), sources: municipalNote.sources.map((x) => x.url) });
+      items.push({ tone: 'warn', title: tr('{name}: reported camping ban, not verified', { name: municipality }), text: tr('{text} (checked {date})', { text: tr(municipalNote.text), date: dayText(municipalNote.checkedOn) }), sources: municipalNote.sources.map((x) => x.url) });
       if (verdict === 'likely_ok') verdict = 'caution';
     } else {
       const t = tr('Municipal police regulations can add rules and are not checked here; look for the municipality\'s Polizeireglement / règlement de police.');

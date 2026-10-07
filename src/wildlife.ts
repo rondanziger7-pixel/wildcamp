@@ -1,7 +1,7 @@
 import type { Item } from './assess';
 import { distanceTo } from './comfort/surroundings';
 import { wgs84ToLv95 } from './coords';
-import { getLang, tr } from './i18n';
+import { dayText, getLang, tr } from './i18n';
 
 /**
  * Hunting and animals: the reported pastures with herd-protection dogs (a federal layer), the hunting seasons of 2026 as the cantons
@@ -200,10 +200,10 @@ export function huntingNote(canton: string | undefined, date: Date): HuntingNote
     if (on.length) {
       return {
         active: true,
-        item: { tone: 'warn', title: tr('Hunting season in this canton'), text: `${tr('The main hunting periods of the canton in {year}: {list}.', { year: HUNT_YEAR, list })} ${common}${days} ${tr('Dates as published on {date}; check the canton\'s notice before you go.', { date: HUNT_CHECKED })}`, sources },
+        item: { tone: 'warn', title: tr('Hunting season in this canton'), text: `${tr('The main hunting periods of the canton in {year}: {list}.', { year: HUNT_YEAR, list })} ${common}${days} ${tr('Dates as published on {date}; check the canton\'s notice before you go.', { date: dayText(HUNT_CHECKED) })}`, sources },
       };
     }
-    return { active: false, item: { tone: 'info', title: tr('Hunting season in this canton'), text: `${tr('The main hunting periods of the canton in {year}: {list}. None of them is on at this date; other hunts (small game, special hunts) may be.', { year: HUNT_YEAR, list })} ${tr('Dates as published on {date}; check the canton\'s notice.', { date: HUNT_CHECKED })}`, sources } };
+    return { active: false, item: { tone: 'info', title: tr('Hunting season in this canton'), text: `${tr('The main hunting periods of the canton in {year}: {list}. None of them is on at this date; other hunts (small game, special hunts) may be.', { year: HUNT_YEAR, list })} ${tr('Dates as published on {date}; check the canton\'s notice.', { date: dayText(HUNT_CHECKED) })}`, sources } };
   }
   return { active: false, item: { tone: 'info', title: tr('Hunting season'), text: `${tr('Hunting seasons run mainly from September to December and differ by canton; the federal law only sets closed seasons, and the cantons publish the dates every year. Check your canton\'s dates before you go.')} ${common}`, sources } };
 }

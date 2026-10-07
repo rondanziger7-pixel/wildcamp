@@ -6,7 +6,7 @@ import { assess, type Assessment } from './assess';
 import { lv95ToWgs84, wgs84ToLv95 } from './coords';
 import { findMunicipalRule, findUnverifiedNote } from './municipalities';
 import { downloadText, shareText, spotsToGpx } from './gpx';
-import { LANGS, applyStatic, getLang, setLang, tr, type Lang } from './i18n';
+import { LANGS, applyStatic, dayText, getLang, setLang, tr, type Lang } from './i18n';
 import { reportUrl } from './report';
 import { fetchRestrictions } from './restrictions';
 import { spotIcon } from './markers';
@@ -272,7 +272,7 @@ async function loadDetails(ui: ResultUi, lat: number, lng: number, elevation: nu
         night,
         hours: windowHours(got.hourly, w),
         note: comfort.weatherStop ? 'This weather rules the night out, however good the spot is.' : undefined,
-        noForecastWhy: end ? tr('The weather forecast reaches only until {date}, so there is no weather for this night. Legality, sun and moon are still worked out for it.', { date: end.slice(0, 10) }) : undefined,
+        noForecastWhy: end ? tr('The weather forecast reaches only until {date}, so there is no weather for this night. Legality, sun and moon are still worked out for it.', { date: dayText(end.slice(0, 10)) }) : undefined,
       });
     }
   };
@@ -1548,6 +1548,11 @@ function locateMe() {
 const updateBar = document.getElementById('update-bar')!;
 document.getElementById('update-reload')!.addEventListener('click', () => location.reload());
 document.getElementById('update-later')!.addEventListener('click', () => (updateBar.hidden = true));
+// A tab left open for days still says "Tonight" for a night that is over: when it is looked at again on a later day, start afresh (the address keeps the spot)
+const openedOn = zurichNow(new Date()).slice(0, 10);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && zurichNow(new Date()).slice(0, 10) !== openedOn) location.reload();
+});
 if (import.meta.env.PROD) registerOffline(import.meta.env.BASE_URL, () => (updateBar.hidden = false));
 const banner = document.getElementById('offline-banner')!;
 const syncOnline = () => (banner.hidden = navigator.onLine);

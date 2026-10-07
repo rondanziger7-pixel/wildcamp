@@ -108,7 +108,7 @@ describe('hunting', () => {
     expect(n.item.text).toMatch(/1 Sep – 20 Sep: red deer/);
     expect(n.item.text).toMatch(/10 Oct – 15 Nov: follow-up hunt/);
     expect(n.item.text).toMatch(/No hunting on Sundays/);
-    expect(n.item.text).toMatch(/Dates as published on 2026-10-06/);
+    expect(n.item.text).toMatch(/Dates as published on 06\/10\/2026/);
     expect(n.item.sources?.[0]).toMatch(/weu\.be\.ch/);
   });
   it('between periods it says none is on, and that other hunts may be', () => {
