@@ -3,7 +3,7 @@ import type { Comfort } from './comfort/comfort';
 import type { Night } from './comfort/weather';
 import type { Restrictions } from './restrictions';
 import { dateLocale, tr } from './i18n';
-import { DOG_ALERT_TEXT, dogAlert, type DogArea } from './wildlife';
+import { DOG_ALERT_TEXT, dogAlert, huntingNote, type DogArea } from './wildlife';
 
 /** One danger on the first view. Tapping it opens the part of the details it comes from. */
 export interface Alert {
@@ -36,6 +36,9 @@ export function buildAlerts(i: { comfort?: Comfort; assessment?: Assessment; fir
   // a village or city: the public right of access does not apply there, which the first view must not leave to the details
   if (i.assessment?.items.some((x) => x.title === tr('In a village or city (building zone)'))) out.push({ tone: 'warn', text: tr('In a village or city: the owner must agree'), panel: 'legal' });
   if (i.assessment?.municipality && i.assessment.items.some((x) => x.title === tr('{name}: reported camping ban, not verified', { name: i.assessment!.municipality! }))) out.push({ tone: 'warn', text: tr('A municipal camping ban is reported (not verified)'), panel: 'legal' });
+  // a hunt that is on in the canton on this date (dates are published for 2026): shots and hunters at dawn and dusk
+  const huntDay = i.date ?? new Date();
+  if (huntingNote(i.assessment?.canton?.code, huntDay)?.active) out.push({ tone: 'warn', text: tr('Hunting season on in this canton'), panel: 'legal' });
   const seen = new Set<string>();
   return out
     .filter((a) => (seen.has(a.text) ? false : (seen.add(a.text), true)))

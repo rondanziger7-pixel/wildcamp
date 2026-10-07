@@ -230,3 +230,12 @@ describe('the hunting day notes are translated', () => {
     }
   });
 });
+
+describe('hunting on the first view', () => {
+  it('shows a line while the canton hunt is on, and none outside it', async () => {
+    const { buildAlerts } = await import('../src/alerts');
+    const a = { canton: { code: 'GR', name: 'Graubünden' }, items: [], zones: [], nearZones: [] } as never;
+    expect(buildAlerts({ assessment: a, date: new Date(2026, 10, 4, 12) }).map((x) => x.text)).toContain('Hunting season on in this canton');
+    expect(buildAlerts({ assessment: a, date: new Date(2026, 6, 4, 12) }).map((x) => x.text)).not.toContain('Hunting season on in this canton');
+  });
+});
